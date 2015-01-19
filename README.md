@@ -58,7 +58,7 @@ CBMongoDB will inspect your model properties to create your default document sch
 		property name="last_name" schema=true valiate="string";
 		property name="address" schema=true validate="struct";
 		/**Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents**/
-		/**Dot Notation Examples**/
+		/**Dot Notation Examples**
 		property name="address.street" schema=true validate="string";
 		property name="address.city" schema=true validate="string";
 		property name="address.state" schema=true validate="string" length=2;
@@ -117,7 +117,7 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 		//Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
 		var people = this.reset().find_all();	
 		for(var peep in people){
-			writeOutput('<h1>#peep.first_name# #peep.last_name# is in the house!</h1>';
+			writeOutput("<h1>#peep.first_name# #peep.last_name# is in the house!</h1>");
 		}
 
 Here's where we diverge from RDBMS:  MongoDB has a think called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
