@@ -1,0 +1,3 @@
+[submodule "modules/cfmongodb"]
+	path = modules/cfmongodb
+	url = git@github.com:jclausen/cfmongodb.git

@@ -1,0 +1,31 @@
+{
+	"name" 				: "CFMongoDB Coldbox SDK",
+	"version"			: "1.0.0",
+	"author" 			: "Silo <info@silowebworks.com>",
+	"slug"				: "cfmongodb",
+	"type"				: "nosql",
+	"directory"			: "modules",
+	"keywords"			: "nosql,mongo,mongodb,sdk",
+	"homepage"			: "https://github.com/jclausen/cfmongodb",
+	"documentation"		: "https://github.com/marcesher/cfmongodb/wiki",
+	"repository"		: { "type" : "git", "url" : "https://github.com/jclausen/cfmongodb" },
+	"bugs"				: "https://github.com/jclausen/cfmongodb/issues",
+	"shortDescription"	: "A CFML Library for interacting with MongoDB NoSQL Server",
+	"engines"			: [
+		{ "type" : "railo", "version" : ">4.1" },
+		{ "type" : "adobe", "version" : ">9.0.2" }
+	],
+	"license"			: [ 
+		{ "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" } 
+	],
+	"contributors"		: [
+		"Bill Shelton <bill@if.io>",
+		"Marc Escher <marc.esher@gmail.com>"
+	],
+	"ignore"			: [
+		"doc/*", "docs/*", "LICENSE", "README.md"
+	],
+	"testbox"			: {
+		"runner" : []
+	}
+}
