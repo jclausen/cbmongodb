@@ -58,7 +58,7 @@ CBMongoDB will inspect your model properties to create your default document sch
 		property name="last_name" schema=true valiate="string";
 		property name="address" schema=true validate="struct";
 		/**Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents**/
-		/**Dot Notation Examples**
+		/**Dot Notation Examples**/
 		property name="address.street" schema=true validate="string";
 		property name="address.city" schema=true validate="string";
 		property name="address.state" schema=true validate="string" length=2;
