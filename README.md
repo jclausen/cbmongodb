@@ -74,7 +74,7 @@ The major difference is that parent notation allows direct usage of the accessor
 
 
 CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries.  Using inheritance, for example you could call
-<pre>
+`
 		//Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties)
 		var person=this.properties({
 			'first_name'='John',
@@ -100,7 +100,7 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 		//There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is super-duper fast):
 		var pkey=person.get_id();
 		
-		//Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') - operators include =,!=,<,>,>=,<=,IN,EXISTS
+		//Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value')
 		person = person.reset().where('first_name','John').where('last_name','Doe').find();
 		
 		//Let's change our phone number
@@ -111,23 +111,27 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 		
 		//Now let's duplicate that document so we can play with multiple record sets
 		var newperson = structCopy(person.get_document());
+		
 		structDelete(newperson,'_id');
+		
 		newperson = this.reset().populate(newperson).set('first_name','Jane').set('last_name','Doe').create();
 		
 		//Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
 		var people = this.reset().find_all();	
+		
 		for(var peep in people){
 			writeOutput("#peep.first_name# #peep.last_name# is in the house!");
 		}
-
+`
 Here's where we diverge from RDBMS:  MongoDB has a think called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
 
-		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
+`		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
+		
 		while(people.hasNext()){
 			var peep=people.next();
-			writeOutput('<h1>#peep.first_name# #peep.last_name# is in the house!</h1>';
+			writeOutput('#peep.first_name# #peep.last_name# is in the house!');
 		}
-</pre>	
+`	
 		
 
 Issues
