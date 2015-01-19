@@ -13,15 +13,15 @@
 component{
 
 	// Module Properties
-	this.title 				= "CFMongoDB";
+	this.title 				= "CBMongoDB";
 	this.author 			= "Jon Clausen";
-	this.webURL 			= "http://https://github.com/jclausen/cfmongodb";
-	this.description 		= "ColdFusion SDK to interact with MongoDB NoSQL Server";
-	this.version			= "1.1.0.00074";
+	this.webURL 			= "http://https://github.com/jclausen/cbmongodb";
+	this.description 		= "Coldbox SDK and Virtual Entity Service for MongoDB";
+	this.version			= "0.1";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
-	this.viewParentLookup 	= true;
+	this.viewParentLookup 	= false;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
-	this.layoutParentLookup = true;
+	this.layoutParentLookup = false;
 	// Module Entry Point
 	this.entryPoint			= "cbmongodb";
 	// Model Namespace to use
@@ -29,7 +29,7 @@ component{
 	// CF Mapping to register
 	this.cfmapping			= "cbmongodb";
 	// Module Dependencies to be loaded in order
-	this.dependencies 		= [];
+	this.dependencies 		= ['cfmongodb'];
 
 	/**
 	* Fired on Module Registration
