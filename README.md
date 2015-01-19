@@ -8,7 +8,7 @@ Compatibility: ColdFusion 9.0.1+ and Railo 3.2+, Coldbox 4+
 Installation &amp; Configuration
 --------------------------------
 
-1. Install MongoDB and start up an instance of `mongod`
+1. [Install MongoDB](http://docs.mongodb.org/manual/installation/) and start up an instance of `mongod`
 2. Perform a recursive clone `git clone --recursive git@github.com:jclausen/cbmongodb.git modules/cbmongodb` or, once it's added to Forgebox:
 2. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
 3. Add the following (with your own config) to config/Coldbox.cfc*
