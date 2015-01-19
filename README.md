@@ -1,15 +1,16 @@
-CFMongoDB for Coldbox
-=====================
+MongoDB Module for Coldbox
+==========================
 
-This library has been adapted for Coldbox from Bill Shelton and Marc Escher's excellent [cfmongodb project](https://github.com/marcesher/cfmongodb). CFMongoDB is both partial wrapper for the MongoDB Java driver and a document-struct mapper for ColdFusion. It attempts to remove the need for constant javacasting in your CFML when working with MongoDB. Additionally, there's a simple DSL which provides ColdFusion developers the ability to easily search MongoDB document collections.
+This module uses Bill Shelton and Marc Escher's excellent [cfmongodb project](https://github.com/marcesher/cfmongodb), which is a partial wrapper for the MongoDB Java driver and a document-struct mapper for ColdFusion. It attempts to remove the need for constant javacasting in your CFML when working with MongoDB. Additionally, there's a simple DSL which provides ColdFusion developers the ability to easily search MongoDB document collections.
 
-CFMongoDB works with Adobe ColdFusion 9.0.1+ and Railo 3.2+
+Compatibility: ColdFusion 9.0.1+ and Railo 3.2+, Coldbox 4+
 
 Installation &amp; Configuration
 --------------------------------
 
-1. First install [MongoDB](http://docs.mongodb.org/manual/installation/),
-2. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cfmongodb` from the root of your project.  Otherwise, download the source code and drop in your /modules directory.
+1. Install MongoDB and start up an instance of `mongod`
+2. Perform a recursive clone `git clone --recursive git@github.com:jclausen/cbmongodb.git modules/cbmongodb` or, once it's added to Forgebox:
+2. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
 3. Add the following (with your own config) to config/Coldbox.cfc*
 	
 <pre>
@@ -20,14 +21,21 @@ Installation &amp; Configuration
 								serverPort='27017'
 							}
 						  ],
-			db 	= "test",
+			db 	= "mydbname",
 			viewTimeout	= "1000"
 		};
 </pre>
 
-<small>*MongoDB will create the db if it doesn't exist automatically, so you can use any name you choose for your database (or collections) from the get-go.</small>
+<small>*MongoDB will create your if it doesn't exist automatically, so you can use any name you choose for your database (or collections) from the get-go.</small>
 
-4.  Call Mongo db from your controllers:
+4. Extend your models to use the Virtual entity service
+
+		component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" accessors=true{
+		
+		}
+
+
+5. If you need to use cfmongodb client directly, you can also use:
 
 		variables.wirebox.getInstance('MongoClient@cfMongoDB')
 		
@@ -35,84 +43,97 @@ Installation &amp; Configuration
 
 
 
-Some Code
+Usage
 ---------
-
-Data can be created as a ColdFusion structure and persisted. Example:
-
-<pre>
-component name="MongoTester" accessors=true {
-	property name="MongoClient" inject="MongoClient@cfMongoDB" setter=false;
-	property name="collection" default="local";
+In your model, you will need to specify the collection to be used.  For those coming from relational databases, for our purposes, a collection is equivalent to a table;
+		property name="collection" default="peoplecollection";
+		
+Now all of our operations will be performed on the "peoplecollection" collection.
 	
-	public function db(){
-		return variables.MongoClient;
-	}
-	
-	public function collection(){
-		return this.db().getDBCollection(this.getCollection());
-	}
-	
-	public function mongo_example(){
-		col=this.collection();
-		my_struct = {
-  			name = 'Orc #getTickCount()#'
-  			foo = 'bar'
-  			bar = 123
-  			'tags'=[ 'cool', 'distributed', 'fast' ]
-		};
+CBMongoDB will inspect your model properties to create your default document schema.  All you need to do is add `schema=true` to your property and it will be included with the default document.  You can either use a dot notation in the property name field for nested documents (infinite recursion) or specify `parent="myParentProperty"` (single-level recursion).  For example a contact property might be:
+		/**Schema Properties**/
+		property name="first_name" schema=true validate="string";
+		property name="last_name" schema=true valiate="string";
+		property name="address" schema=true validate="struct";
+		/**Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents**/
+		/**Dot Notation Examples**
+		property name="address.street" schema=true validate="string";
+		property name="address.city" schema=true validate="string";
+		property name="address.state" schema=true validate="string" length=2;
+		property name="address.postalcode" schema=true validate="zipcode";
+		property name="address.country" schema=true validate="string";
+		/**Parent attribute**/
+		property name="phone" schema=true validate="struct";
+		property name="home" schema=true parent="phone" validate="telephone";
+		property name="work" schema=true parent="phone" validate="telephone";
+		property name="mobile" schema=true parent="phone" validate="telephone";
+		
+The major difference is that parent notation allows direct usage of the accessor (e.g. `this.getMobile()` ).  Dot notation, however, is more natural with the query syntax and is recommended.
 
-		col.save( my_struct );
 
-		//query
-		result = col.query().startsWith('name','Orc').find(limit=20);
-		writeOutput("Found #result.size()# of #result.totalCount()# Orcs");
+CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries.  Using inheritance, for example you could call
 
-		//use the native mongo cursor. it is case sensitive!
-		cursor = result.asCursor();
-		while( cursor.hasNext() ){
-  			thisOrc = cursor.next();
-  		writeOutput(" name = #thisOrc['name']# <br>");
+		//Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties)
+		var person=this.properties({
+			'first_name'='John',
+			'last_name'='Doe',
+			'testvar'='here',
+			'address'={
+				'street'='123 Anywhere Lane',
+				'city'='Grand Rapids',
+				'state'='Michigan',
+				'postalcode'='49546',
+				'country'='USA'
+			},
+			'phone'={
+				'home'='616-123-4567',
+				'work'='616-321-7654',
+				'mobile'='616-987-6543'
+			}
+			}).create();
+
+		//Once we've created the document, it will be returned as the active entity
+		var is_loaded=person.loaded(); //will return true	
+		
+		//There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is super-duper fast):
+		var pkey=person.get_id();
+		
+		//Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') - operators include =,!=,<,>,>=,<=,IN,EXISTS
+		person = person.reset().where('first_name','John').where('last_name','Doe').find();
+		
+		//Let's change our phone number
+		person.set('phone.home','616-555-8789').update();
+		
+		//We can use our dot notation to find that record again
+		person = person.reset().where('phone.home','616-555-8789').find()
+		
+		//Now let's duplicate that document so we can play with multiple record sets
+		var newperson = structCopy(person.get_document());
+		structDelete(newperson,'_id');
+		newperson = this.reset().populate(newperson).set('first_name','Jane').set('last_name','Doe').create();
+		
+		//Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
+		var people = this.reset().find_all();	
+		for(var peep in people){
+			writeOutput('<h1>#peep.first_name# #peep.last_name# is in the house!</h1>';
 		}
 
-		//use a ColdFusion array of structs. this is not case sensitive
-		orcs = result.asArray();
-		for(orc in orcs){
-  			writeOutput(" name = #orc.name# <br>");
-		}		
+Here's where we diverge from RDBMS:  MongoDB has a think called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
+
+		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
+		while(people.hasNext()){
+			var peep=people.next();
+			writeOutput('<h1>#peep.first_name# #peep.last_name# is in the house!</h1>';
+		}
 		
-		return;
-	
-	}
+		
+		
 
-}
-</pre>
-
-More Examples
--------------
-
-See examples/gettingstarted.cfm to start.
-
-Additional examples are in the various subdirectories in examples/
-
-The Wiki
---------
-
-Check out the base project wiki for additional info: "http://wiki.github.com/marcesher/cfmongodb/":http://wiki.github.com/marcesher/cfmongodb/
-
-Getting Help
-------------
-
-We have a Google group: "http://groups.google.com/group/cfmongodb":http://groups.google.com/group/cfmongodb
-
-Please limit conversations to MongoDB and ColdFusion. General MongoDB questions are best asked on the MongoDB group at "http://groups.google.com/group/mongodb-user":http://groups.google.com/group/mongodb-user
-
-Posting Issues
+Issues
 --------------
+Post issues with the core libraries to the github issue tracker for the [cfmongodb project](https://github.com/marcesher/cfmongodb). 
+For issues with CBMongoDB-specific functionality, post issues to the issue tracker(https://github.com/jclausen/cbmongodb).
 
-Post issues with the core libraries to the github issue tracker for the [upstream project](https://github.com/marcesher/cfmongodb). Better: post fixes. Best: post fixes with unit tests. 
-
-For issues with Colbox-specific functionality, post issues to the [forked repo issue tracker](https://github.com/jclausen/cfmongodb).
 
 Getting Involved
 ----------------
