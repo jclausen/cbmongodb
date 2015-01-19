@@ -46,11 +46,13 @@ Installation &amp; Configuration
 Usage
 ---------
 In your model, you will need to specify the collection to be used.  For those coming from relational databases, for our purposes, a collection is equivalent to a table;
+<pre>
 		property name="collection" default="peoplecollection";
-		
+</pre>	
 Now all of our operations will be performed on the "peoplecollection" collection.
 	
 CBMongoDB will inspect your model properties to create your default document schema.  All you need to do is add `schema=true` to your property and it will be included with the default document.  You can either use a dot notation in the property name field for nested documents (infinite recursion) or specify `parent="myParentProperty"` (single-level recursion).  For example a contact property might be:
+<pre>
 		/**Schema Properties**/
 		property name="first_name" schema=true validate="string";
 		property name="last_name" schema=true valiate="string";
@@ -67,12 +69,12 @@ CBMongoDB will inspect your model properties to create your default document sch
 		property name="home" schema=true parent="phone" validate="telephone";
 		property name="work" schema=true parent="phone" validate="telephone";
 		property name="mobile" schema=true parent="phone" validate="telephone";
-		
+</pre>		
 The major difference is that parent notation allows direct usage of the accessor (e.g. `this.getMobile()` ).  Dot notation, however, is more natural with the query syntax and is recommended.
 
 
 CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries.  Using inheritance, for example you could call
-
+<pre>
 		//Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties)
 		var person=this.properties({
 			'first_name'='John',
@@ -125,8 +127,7 @@ Here's where we diverge from RDBMS:  MongoDB has a think called a "cursor" on mu
 			var peep=people.next();
 			writeOutput('<h1>#peep.first_name# #peep.last_name# is in the house!</h1>';
 		}
-		
-		
+</pre>	
 		
 
 Issues
