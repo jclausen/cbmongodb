@@ -123,7 +123,7 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 			writeOutput("#peep.first_name# #peep.last_name# is in the house!");
 		}
 </pre>
-Here's where we diverge from RDBMS:  MongoDB has a think called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
+Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
 <pre>
 		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
 		
