@@ -74,7 +74,7 @@ The major difference is that parent notation allows direct usage of the accessor
 
 
 CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries.  Using inheritance, for example you could call
-`
+<pre>
 		//Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties)
 		var person=this.properties({
 			'first_name'='John',
@@ -122,16 +122,16 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 		for(var peep in people){
 			writeOutput("#peep.first_name# #peep.last_name# is in the house!");
 		}
-`
+</pre>
 Here's where we diverge from RDBMS:  MongoDB has a think called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
-
-`		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
+<pre>
+		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
 		
 		while(people.hasNext()){
 			var peep=people.next();
 			writeOutput('#peep.first_name# #peep.last_name# is in the house!');
 		}
-`	
+</pre>	
 		
 
 Issues
@@ -145,5 +145,4 @@ Getting Involved
 
 Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests are much more likely to be accepted.
 
-Code well.
 
