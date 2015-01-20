@@ -73,9 +73,10 @@ CBMongoDB will inspect your model properties to create your default document sch
 The major difference is that parent notation allows direct usage of the accessor (e.g. `this.getMobile()` ).  Dot notation, however, is more natural with the query syntax and is recommended.
 
 
-CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries.  Using inheritance, for example you could call
+CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries. The following examples assume model inheritance.
+
+Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties, which maintain case automatically)
 <pre>
-		//Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties)
 		var person=this.properties({
 			'first_name'='John',
 			'last_name'='Doe',
@@ -93,36 +94,52 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 				'mobile'='616-987-6543'
 			}
 			}).create();
+</pre>
 
-		//Once we've created the document, it will be returned as the active entity
+Once we've created the document, it will be returned as the active entity.
+<pre>
 		var is_loaded=person.loaded(); //will return true	
-		
-		//There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is super-duper fast):
+</pre>		
+
+There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is super-duper fast):
+<pre>
 		var pkey=person.get_id();
+</pre>
 		
-		//Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value')
+Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value')
+<pre>
 		person = person.reset().where('first_name','John').where('last_name','Doe').find();
-		
-		//Let's change our phone number
+</pre>		
+
+Let's change our phone number
+<pre>
 		person.set('phone.home','616-555-8789').update();
-		
-		//We can use our dot notation to find that record again
+</pre>		
+
+We can use our dot notation to find that record again
+<pre>
 		person = person.reset().where('phone.home','616-555-8789').find()
-		
-		//Now let's duplicate that document so we can play with multiple record sets
+</pre>		
+
+Now let's duplicate that document so we can play with multiple record sets
+<pre>
 		var newperson = structCopy(person.get_document());
-		
+
 		structDelete(newperson,'_id');
 		
 		newperson = this.reset().populate(newperson).set('first_name','Jane').set('last_name','Doe').create();
-		
-		//Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
+
+</pre>		
+
+Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
+<pre>
 		var people = this.reset().find_all();	
 		
 		for(var peep in people){
 			writeOutput("#peep.first_name# #peep.last_name# is in the house!");
 		}
 </pre>
+
 Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
 <pre>
 		var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
@@ -132,7 +149,26 @@ Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on mu
 			writeOutput('#peep.first_name# #peep.last_name# is in the house!');
 		}
 </pre>	
-		
+
+Lastly, let's clean up our test documents.  The `delete()` function allows a boolean of "truncate" which defaults to FALSE. If you set this argument to true, without a loaded record or existing criteria, it will delete all documents from the collection.  In this case, we're just going to delete our records one at a time, using our cursor:
+
+<pre>
+		var people = this.reset().find_all(true);
+				
+		while(people.hasNext()){
+			var peep=people.next();
+			//notice how we're using bracket notation for our _id value. This is necessary because calling peep._id on the cursor object will throw an error  
+			this.get(peep['_id']).delete();
+		}
+			
+</pre>
+
+Optionally, you could delete all records matching a given criteria using a where() clause:
+<pre>
+		var noDoes = this.reset().where('last_name','Doe').delete();
+</pre>
+
+That's basic CRUD functionality.  Read the API documentation for details on the individual functions and arguments.
 
 Issues
 --------------
@@ -143,6 +179,6 @@ For issues with CBMongoDB-specific functionality, post issues to the issue track
 Getting Involved
 ----------------
 
-Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests are much more likely to be accepted.
+Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/integration) would be peachy.
 
 
