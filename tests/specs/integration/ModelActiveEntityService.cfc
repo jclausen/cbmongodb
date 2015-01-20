@@ -3,13 +3,13 @@
 *******************************************************************************/
 component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 	property name="testMock";
-	
+
 	function beforeAll(){
 		//custom methods
 		application.wirebox = new coldbox.system.ioc.Injector('modules.cbmongodb.tests.config.Wirebox');
 		application.testMock= application.wirebox.getInstance("ActiveEntityMock@MongoDB");
 	}
-	
+
 	function afterAll(){
           coldbox = 0;
           application.testMock.getDB().dropDatabase();
@@ -17,25 +17,25 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
           structDelete( application, "wirebox" );
           structDelete( application, "testMock" );
 	}
-	
+
 	function run(testResults, testBox){
 
 		describe( "MongoDB Active Entity", function(){
 
 			beforeEach(function( currentSpec ){
-				
+
 			});
-			
+
 			it( "+checks our mock", function(){
 				expect(application.testMock).toBeComponent();
 				expect(application.testMock.getDefault_document()).toBeStruct();
 				expect(application.testMock.getTest_document()).toBeStruct();
 			});
-			
+
 			it('+checks connectivity', function(){
-				expect(application.testMock.getDBInstance()).toBeComponent();		
+				expect(application.testMock.getDBInstance()).toBeComponent();
 			});
-			
+
 			it('+checks basic CRUD', function(){
 				var model=application.testMock;
 				var person=application.testMock.getTest_document();
@@ -56,7 +56,7 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 				ae.set('address.city','Chicago').set('address.state','IL').set('address.postalcode','60622').update();
 				expect(ae.get_document()['address']['city']).toBe("Chicago");
 				expect(model.reset().where('address.city','Chicago').find().loaded()).toBeTrue();
-				//check that we updated the first record	
+				//check that we updated the first record
 				expect(model.reset().where('first_name',model.getTest_document().first_name).where('last_name',model.getTest_document().last_name).count()).toBe(1);
 				//test our multi record queries
 				//insert a duplicate record
@@ -71,13 +71,18 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 				expect(cursor.hasNext()).toBeTrue();
 				while(cursor.hasNext()){
 					var nr=cursor.next();
+					var doc_id=nr['_id'];
 					expect(nr).toBeStruct();
 					expect(nr).toHaveKey('first_name');
 					expect(nr).toHaveKey('address');
+					//now delete our records
+					expect(model.reset().get(doc_id).delete()).toBeTrue();
+					expect(model.reset().get(doc_id).loaded()).toBeFalse();
+					//expect(model.delete()).toThrow();
 				}
-				
+
 			});
 		});
 	}
-	
+
 }
