@@ -2,7 +2,7 @@
 	"name" 				: "CBMongoDB for Coldbox",
 	"version"			: "0.1.0",
 	"author" 			: "Silo <info@silowebworks.com>",
-	"slug"				: "cfmongodb",
+	"slug"				: "cbmongodb",
 	"type"				: "nosql",
 	"directory"			: "modules",
 	"keywords"			: "nosql,mongo,mongodb,sdk",
