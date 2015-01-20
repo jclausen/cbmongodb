@@ -89,7 +89,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		this.set_id(this.getDBInstance().save(this.get_document()));
 		if(arguments.returnInstance)
 			return this;
-		return this.get_id();
+		return this.get_id().toString();
 	}
 
 	/**
