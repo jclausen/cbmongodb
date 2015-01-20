@@ -77,7 +77,7 @@ CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make gett
 
 Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties, which maintain case automatically)
 <pre>
-		var person=this.properties({
+		var person=this.populate({
 			'first_name'='John',
 			'last_name'='Doe',
 			'testvar'='here',

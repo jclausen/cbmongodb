@@ -1,16 +1,16 @@
 {
-	"name" 				: "CFMongoDB Coldbox SDK",
-	"version"			: "1.0.0",
+	"name" 				: "CBMongoDB for Coldbox",
+	"version"			: "0.1.0",
 	"author" 			: "Silo <info@silowebworks.com>",
 	"slug"				: "cfmongodb",
 	"type"				: "nosql",
 	"directory"			: "modules",
 	"keywords"			: "nosql,mongo,mongodb,sdk",
-	"homepage"			: "https://github.com/jclausen/cfmongodb",
-	"documentation"		: "https://github.com/marcesher/cfmongodb/wiki",
-	"repository"		: { "type" : "git", "url" : "https://github.com/jclausen/cfmongodb" },
-	"bugs"				: "https://github.com/jclausen/cfmongodb/issues",
-	"shortDescription"	: "A CFML Library for interacting with MongoDB NoSQL Server",
+	"homepage"			: "https://github.com/jclausen/cbmongodb",
+	"documentation"		: "https://github.com/jclausen/cbmongodb/wiki",
+	"repository"		: { "type" : "git", "url" : "https://github.com/jclausen/cbmongodb.git" },
+	"bugs"				: "https://github.com/jclausen/cbmongodb/issues",
+	"shortDescription"	: "A Coldbox Module and Virtual Entity Service for MongoDB NoSQL Server",
 	"engines"			: [
 		{ "type" : "railo", "version" : ">4.1" },
 		{ "type" : "adobe", "version" : ">9.0.2" }
@@ -20,12 +20,17 @@
 	],
 	"contributors"		: [
 		"Bill Shelton <bill@if.io>",
-		"Marc Escher <marc.esher@gmail.com>"
+		"Marc Escher <marc.esher@gmail.com>",
+		"Jon Clausen <jon_clausen@silowebworks.com",
 	],
 	"ignore"			: [
 		"doc/*", "docs/*", "LICENSE", "README.md"
 	],
 	"testbox"			: {
-		"runner" : []
+		"runner" : ['tests/runner.cfm']
+	},
+	"dependencies" 	:{
+		"cfmongodb" : "dev-coldbox"
 	}
+	
 }
