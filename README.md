@@ -31,15 +31,13 @@ MongoDB = {
 
 4. Extend your models to use the Virtual entity service
 
-component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" accessors=true{
+```component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" accessors=true{
 
-}
+}```
 
 
 5. If you need to use cfmongodb client directly, you can also use:
-
-variables.wirebox.getInstance('MongoClient@cfMongoDB')
-
+```variables.wirebox.getInstance('MongoClient@cfMongoDB')```
 
 Usage
 ---------
