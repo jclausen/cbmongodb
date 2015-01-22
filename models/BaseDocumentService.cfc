@@ -47,7 +47,12 @@ component name="BaseDocumentService"  accessors="true"{
 		for(var prop in properties){
 			if(structKeyExists(prop,'schema') and prop.schema){
 				if(structKeyExists(prop,"parent")){
-					//TODO: add upstream introspection to handle infinit nesting
+					//Test for doubling up on our parent attribute and dot notation
+					var prop_name=listToArray(prop.name,'.');
+					if(prop_name[1] EQ prop.parent){
+						throw('IllegalAttributeException: The parent attribute &quot;'&prop.parent&'&quot; has been been duplicated in <strong>'&getMetaData(this).name&'</strong>. Use either dot notation for your property name or specify a parent attribute.')
+					}
+					//TODO: add upstream introspection to handle infinite nesting
 					this.set(prop.parent&'.'&prop.name,this.getPropertyDefault(prop));
 				} else {
 					this.set(prop.name,this.getPropertyDefault(prop));
