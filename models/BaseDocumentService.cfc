@@ -1,8 +1,15 @@
 component name="BaseDocumentService"  accessors="true"{
 	/**
+	 * Injected Properties
+	 **/
+	property name="wirebox" inject="wirebox";
+	property name="logbox" inject="logbox";
+
+	/**
 	 * The MongoDB client
 	 **/
-	property name="MongoClient";
+	property name="MongoClient" inject="MongoClient@cfMongoDB";
+
 	/**
 	 * The database client w/o a specified collection
 	 **/
@@ -33,8 +40,16 @@ component name="BaseDocumentService"  accessors="true"{
 
 
 	any function init(){
+		/**
+		*  Make sure our injected properties exist
+		**/
+		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
+			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
+		} else {
+			throw('Wirebox IOC Injection is required to user this service');
+		}
 		//Connect to Mongo
-		this.setDb(application.wirebox.getInstance('MongoClient@cfMongoDB'));
+		this.setDb(this.getMongoClient());
 		this.setDbInstance(this.getDb().getDBCollection(this.getCollection()));
 		//Default Document Creation
 		this.set_document(structNew());
