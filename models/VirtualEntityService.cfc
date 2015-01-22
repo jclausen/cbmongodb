@@ -18,7 +18,17 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	property name="_limit" default=0;
 	property name="_sort";
 	property name="_operators";
-
+	/**
+	 * A separate collection to be queried
+	 *
+	 * As MongoDB doesn't support joins in the RDBMS fashion,
+	 * we'll need to pass our active entity document objects rather than as comparisons
+	 **/
+	property name="xCollection";
+	/**
+	 * The map reduction
+	 **/
+	property name="xReduce";
 	/**
 	* Virtual Entity Constructor ( if you override it, make sure you call super.init() )
 	* */
@@ -50,6 +60,14 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		this.resetQuery();
 		return results;
 	}
+
+	/**
+	 * Map reduce query method
+	 **/
+	any function mr(){
+
+	}
+
 
 	/**
 	 * Save the current entity
@@ -168,7 +186,11 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 *
 	 **/
 	any function findAll(asCursor=false){
-		var results=this.query();
+		if(!isNull(this.getxCollection)){
+			var results=this.query();
+		} else {
+			var results=this.mr();
+		}
 		if(asCursor)
 			return results.asCursor();
 
@@ -219,6 +241,28 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 	 return this.where('_id',this.get_id()).find();
 	 }
 
+	/**************************** Cross Collection Queries ************************/
+
+	any function join(required collection){
+		this.setXCollection(arguments.collection);
+		return this;
+	}
+
+	any function on(required key,operator='=',required xKey){
+		if(isNull(this.getXCollection()))
+			throw('The collection to be joined does not exist.  Please use the <strong>join(required collection)</strong> function to specify this collection before calling <strong>on()</strong>.');
+		//FIXME: this methodology needs to be adjusted so we can use this for many-to-many through relationship
+		var mapkey=getMetaData(this).name&arguments.key&this.getXCollection()&operator&arguments.xKey;
+		if(this.loaded()){
+			mapkey=this.get_id()&mapkey
+		}
+		var mr={
+			'map'=hash(mapkey),
+		}
+	}
+
+
+
 	/**************************** Package Methods *********************************/
 
 	/**
@@ -252,6 +296,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		this.set_offset(0);
 		this.set_limit(0);
 		this.set_sort(structNew());
+		//clear our cross-collection params
+		structDelete(variables,'xCollection');
+		structDelete(variables,'xReduce');
 	}
 
 	boolean function criteriaExists(){
