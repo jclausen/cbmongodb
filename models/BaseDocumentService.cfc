@@ -4,6 +4,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	property name="wirebox" inject="wirebox";
 	property name="logbox" inject="logbox";
+	property name="appSettings";
 
 	/**
 	 * The MongoDB client
@@ -27,16 +28,23 @@ component name="BaseDocumentService"  accessors="true"{
 	 * The container for the default document
 	 * Override this in your models to create the schema of required fields
 	 **/
-	property name="default_document";
+	property name="_default_document";
 	/**
 	 * for the active document entity
 	 **/
 	property name="_document";
-
 	/**
 	 * the loaded document before modifications
 	 **/
 	property name="_existing";
+	/**
+	 * Validation structure
+	**/
+	property name="_validation";
+	/**
+	 * An array to contain our indexes
+	 **/
+	property name="_indexes";
 
 
 	any function init(){
@@ -48,15 +56,21 @@ component name="BaseDocumentService"  accessors="true"{
 		} else {
 			throw('Wirebox IOC Injection is required to user this service');
 		}
+		this.setAppSettings(getWirebox().getBinder().getProperties());
 		//Connect to Mongo
 		this.setDb(this.getMongoClient());
 		this.setDbInstance(this.getDb().getDBCollection(this.getCollection()));
 		//Default Document Creation
 		this.set_document(structNew());
-		this.setDefault_document(structNew());
+		this.set_default_document(structNew());
+		this.set_indexes(arrayNew(1));
 		this.detect();
 	}
 
+	/*********************** INSTANTIATION AND OPTIMIZATION **********************/
+	/**
+	 * Evaluate our properties for the default document
+	 **/
 	any function detect(){
 		var properties=getMetaData(this).properties;
 		for(var prop in properties){
@@ -72,10 +86,73 @@ component name="BaseDocumentService"  accessors="true"{
 				} else {
 					this.set(prop.name,this.getPropertyDefault(prop));
 				}
+
+				//test for index values
+				if(structKeyExists(prop,'index')){
+					//FIXME: Turning off for now
+					//this.applyIndex(prop,properties);
+				}
 			}
 		}
-		this.setDefault_document(this.get_document());
+		this.set_default_document(this.get_document());
 	}
+
+
+	/********************************* INDEXING **************************************/
+	/**
+	 * Create and apply our indexes
+	 *
+	 * @param struct prop - the component property structure
+	 * @param struct properties - the full properties structure (only required if prop contains and "indexwith" attribute
+	 *
+	 * @FIXME Javacasting issues with array
+	 **/
+	public function applyIndex(required prop,properties=[]){
+		var idx=arrayNew(1);
+		var is_unique=false;
+		if(structKeyExists(prop,'unique') and prop.unique){
+			is_unique=true;
+		}
+		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
+			arrayAppend(idx,{"#prop.name#"=this.indexOrder(prop)});
+			//Now test for a combined index
+			if(structKeyExists(prop,'indexwith')){
+				//re-find our relation since structFind() isn't reliable with nested structs
+				for(var rel in properties){
+					if(rel.name eq prop.indexwith){
+						break;
+					}
+				}
+				arrayAppend(idx,{'#rel.name#'=this.indexOrder(prop)});
+			}
+		} else {
+			arrayAppend(idx,arguments.prop.name);
+		}
+
+		if(structKeyExists(prop,'geo')){
+			try{
+				this.getDBInstance().ensureGeoIndex(idx,is_unique);
+			} catch(any e){
+				throw("Geo Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
+			}
+		} else {
+			try{
+				this.getDBInstance().ensureIndex(idx,is_unique);
+			} catch(any e){
+				writeDump(e);
+				abort;
+			}
+		}
+	}
+
+	public function indexOrder(required prop){
+		var order=1;
+		if(structKeyExists(prop,'indexorder')){
+			order=mapOrder(prop.indexorder);
+		}
+		return order;
+	}
+
 
 	/********************************** SETTERS ***********************************/
 
@@ -83,7 +160,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 * Populate the document object with a structure
 	 **/
 	any function populate(required struct document){
-		var dobj=structCopy(this.getDefault_document());
+		var dobj=structCopy(this.get_default_document());
 		this.reset();
 		structAppend(dobj,document,true);
 		this.set_document(dobj);
@@ -139,6 +216,7 @@ component name="BaseDocumentService"  accessors="true"{
 		return deleted;
 	}
 
+
 	/********************************* UTILS ****************************************/
 
 	any function getPropertyDefault(prop){
@@ -165,6 +243,21 @@ component name="BaseDocumentService"  accessors="true"{
 		return empty_string;
 
 	}
+
+	/**
+	 * The SQL to Mongo translated ordering statements
+	 **/
+	 numeric function mapOrder(required order){
+		var map={'asc'=1,'desc'=2};
+		if(isNumeric(arguments.order)){
+			return arguments.order;
+		} else if(structKeyExists(map,lcase(arguments.order))) {
+			//FIXME?
+			return javacast('int',map[lcase(arguments.order)]);
+		} else {
+			return map.asc;
+		}
+	 }
 
 
 }

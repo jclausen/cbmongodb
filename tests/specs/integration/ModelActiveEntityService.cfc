@@ -6,7 +6,7 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 
 	function beforeAll(){
 		//custom methods
-		application.wirebox = new coldbox.system.ioc.Injector('modules.cbmongodb.tests.config.Wirebox');
+		application.wirebox = new coldbox.system.ioc.Injector('cbmongodb.tests.config.Wirebox');
 		application.testMock= application.wirebox.getInstance("ActiveEntityMock@MongoDB");
 	}
 
@@ -28,7 +28,7 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 
 			it( "+checks our mock", function(){
 				expect(application.testMock).toBeComponent();
-				expect(application.testMock.getDefault_document()).toBeStruct();
+				expect(application.testMock.get_default_document()).toBeStruct();
 				expect(application.testMock.getTest_document()).toBeStruct();
 			});
 

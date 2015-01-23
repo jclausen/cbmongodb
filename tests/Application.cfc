@@ -5,7 +5,7 @@
 	<cfset this.sessionManagement = true>
 	<cfset this.sessionTimeout = createTimeSpan(0,0,0,0)>
 	<cfset this.setClientCookies = true>
-	
+
 	<cfscript>
 	COLDBOX_APP_ROOT_PATH = expandPath('/');
 	this.mappings['/testbox'] = COLDBOX_APP_ROOT_PATH & 'testbox';

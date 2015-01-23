@@ -250,15 +250,17 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 
 	any function on(required key,operator='=',required xKey){
 		if(isNull(this.getXCollection()))
-			throw('The collection to be joined does not exist.  Please use the <strong>join(required collection)</strong> function to specify this collection before calling <strong>on()</strong>.');
+			throw("The collection to be joined does not exist.  Please use the <strong>join(required collection)</strong> function to specify this collection before calling <strong>on()</strong>.");
 		//FIXME: this methodology needs to be adjusted so we can use this for many-to-many through relationship
 		var mapkey=getMetaData(this).name&arguments.key&this.getXCollection()&operator&arguments.xKey;
+
 		if(this.loaded()){
-			mapkey=this.get_id()&mapkey
+			mapkey=this.get_id()&mapkey;
 		}
+
 		var mr={
-			'map'=hash(mapkey),
-		}
+			'map'=hash(mapkey)
+		};
 	}
 
 
@@ -285,7 +287,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 **/
 	any function evict(){
 		structDelete(variables,'_id');
-		this.entity(this.getDefault_document());
+		this.entity(this.get_default_document());
 		this.resetQuery();
 	}
 
