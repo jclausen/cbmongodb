@@ -42,6 +42,9 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 				expect(model.populate(person)).toBeComponent();
 				var document_id=model.create();
 				expect(document_id).toBeString();
+				//test entity load
+				expect(model.reset().load(document_id).loaded()).toBeTrue();
+				expect(model.whereNotI().count()).toBe(0);
 				//test our single record queries
 				expect(model.reset().where('address.city','Timbuktu').find(false)).toBeNull();
 				expect(model.reset().where('address.city','Timbuktu').find()).toBeComponent();

@@ -1,7 +1,10 @@
 /**
 * Author      :	Jon Clausen <jon_clausen@silowebworks.com>
+* The Virtual Entity Service for the CFMongoDB Client
+*
 *
 * Description :  This is a Virtual Entity Service for the MongodbClient
+* @license Apache v2.0 <http://www.apache.org/licenses/>
 */
 component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	/**
@@ -18,7 +21,17 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	property name="_limit" default=0;
 	property name="_sort";
 	property name="_operators";
-
+	/**
+	 * A separate collection to be queried
+	 *
+	 * As MongoDB doesn't support joins in the RDBMS fashion,
+	 * we'll need to pass our active entity document objects rather than as comparisons
+	 **/
+	property name="xCollection";
+	/**
+	 * The map reduction
+	 **/
+	property name="xReduce";
 	/**
 	* Virtual Entity Constructor ( if you override it, make sure you call super.init() )
 	* */
@@ -33,6 +46,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 			'!=',
 			'>=',
 			'<=',
+			'<>',
 			'like'
 		]);
 
@@ -45,11 +59,18 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * The master query method
 	 **/
 	any function query(struct criteria=get_criteria(),keys=get_keys(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
-		var results=this.getDbInstance().query()
-		.find(criteria=arguments.criteria,keys=arguments.keys,skip=arguments.offset,limit=arguments.limit,sort=arguments.sort);
+		var results=this.getDbInstance().find(criteria=arguments.criteria,keys=arguments.keys,skip=arguments.offset,limit=arguments.limit,sort=arguments.sort);
 		this.resetQuery();
 		return results;
 	}
+
+	/**
+	 * Map reduce query method
+	 **/
+	any function mr(){
+
+	}
+
 
 	/**
 	 * Save the current entity
@@ -115,11 +136,43 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 			return this.where(key=key,value=operator);
 		} else {
 			var criteria=this.get_criteria();
-			variables._criteria[arguments.key]=arguments.value;
+			switch(arguments.operator){
+				case '!=':
+				case '<>':
+					variables._criteria[arguments.key]={"$ne"=arguments.value};
+					break;
+				case '>':
+					variables._criteria[arguments.key]={"$gt"=arguments.value};
+					break;
+				case '<':
+					variables._criteria[arguments.key]={"$lt"=arguments.value};
+					break;
+				case '>=':
+					variables._criteria[arguments.key]={"$gte"=arguments.value};
+					break;
+				case '<=':
+					variables._criteria[arguments.key]={"$lte"=arguments.value};
+					break;
+				default:
+					variables._criteria[arguments.key]=arguments.value;
+					break;
+			}
 			this.set_criteria(criteria);
 			return this;
 		}
 	}
+
+	/**
+	 * Convenience function to exclude the current active entity
+	 *
+	 * If the entity is not loaded, no query restrictions will be added
+	 **/
+	 any function whereNotI(){
+		if(this.loaded()){
+			this.where('_id','!=',this.get_id());
+		}
+		return this;
+	 }
 
 	/**
 	 * Set maxrows|limit for query
@@ -167,8 +220,16 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @param boolean asCursor - whether to return the array as a Mongo cursor object (e.g. cursor.next())
 	 *
 	 **/
-	any function findAll(asCursor=false){
-		var results=this.query();
+	any function findAll(asCursor=false,asResult=false){
+		if(!isNull(this.getxCollection)){
+			var results=this.query();
+		} else {
+			var results=this.mr();
+		}
+
+		if(arguments.asResult)
+			return results;
+
 		if(asCursor)
 			return results.asCursor();
 
@@ -219,6 +280,30 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 	 return this.where('_id',this.get_id()).find();
 	 }
 
+	/**************************** Cross Collection Queries ************************/
+
+	any function join(required collection){
+		this.setXCollection(arguments.collection);
+		return this;
+	}
+
+	any function on(required key,operator='=',required xKey){
+		if(isNull(this.getXCollection()))
+			throw("The collection to be joined does not exist.  Please use the <strong>join(required collection)</strong> function to specify this collection before calling <strong>on()</strong>.");
+		//FIXME: this methodology needs to be adjusted so we can use this for many-to-many through relationship
+		var mapkey=getMetaData(this).name&arguments.key&this.getXCollection()&operator&arguments.xKey;
+
+		if(this.loaded()){
+			mapkey=this.get_id()&mapkey;
+		}
+
+		var mr={
+			'map'=hash(mapkey)
+		};
+	}
+
+
+
 	/**************************** Package Methods *********************************/
 
 	/**
@@ -252,6 +337,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		this.set_offset(0);
 		this.set_limit(0);
 		this.set_sort(structNew());
+		//clear our cross-collection params
+		structDelete(variables,'xCollection');
+		structDelete(variables,'xReduce');
 	}
 
 	boolean function criteriaExists(){
