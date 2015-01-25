@@ -1,13 +1,30 @@
+/**
+*
+* Core MongoDB Document Service
+*
+* @package cbmongodb
+* @author Jon Clausen <jon_clausen@silowebworks.com>
+* @license Apache v2.0 <http://www.apache.org/licenses/>
+*/
 component name="BaseDocumentService"  accessors="true"{
 	/**
 	 * Injected Properties
 	 **/
+	/**
+	* The Application Wirebox IOC Instance
+	**/
 	property name="wirebox" inject="wirebox";
-	property name="logbox" inject="logbox";
+	/**
+	* The LogBox Logger for this Entity
+	**/
+	property name="logbox" inject="logbox:logger:{this}";
+	/**
+	 *  The Coldbox Application Setttings Structure
+	 **/
 	property name="appSettings";
 
 	/**
-	 * The MongoDB client
+	 * The MongoDB Client
 	 **/
 	property name="MongoClient" inject="MongoClient@cfMongoDB";
 
@@ -21,32 +38,41 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	property name="collection" default="default";
 	/**
-	 * The database instance to perform operations on
+	 * The instatiated database collection to perform operations on
 	 **/
 	property name="dbInstance";
 	/**
 	 * The container for the default document
-	 * Override this in your models to create the schema of required fields
 	 **/
 	property name="_default_document";
 	/**
-	 * for the active document entity
+	 * package container for the active document entity
 	 **/
 	property name="_document";
 	/**
-	 * the loaded document before modifications
+	 * package container for the loaded document before modifications
 	 **/
 	property name="_existing";
 	/**
 	 * Validation structure
+	 *
+	 * @example property name="myfield" schema=true validate="string";
 	**/
 	property name="_validation";
 	/**
-	 * An array to contain our indexes
+	 * The array which holds the ensured indexes.
+	 *
+	 * @example property name="myfield" schema=true index=true;
 	 **/
 	property name="_indexes";
+	/**
+	* The schema map which will be persisted for validation and typing
+	**/
+	property name="_map";
 
-
+	/**
+	 * Constructor
+	 **/
 	any function init(){
 		/**
 		*  Make sure our injected properties exist
@@ -64,7 +90,9 @@ component name="BaseDocumentService"  accessors="true"{
 		this.set_document(structNew());
 		this.set_default_document(structNew());
 		this.set_indexes(arrayNew(1));
+		this.set_map(structNew());
 		this.detect();
+
 	}
 
 	/*********************** INSTANTIATION AND OPTIMIZATION **********************/
@@ -75,6 +103,8 @@ component name="BaseDocumentService"  accessors="true"{
 		var properties=getMetaData(this).properties;
 		for(var prop in properties){
 			if(structKeyExists(prop,'schema') and prop.schema){
+				//add the property to your our map
+				structAppend(this.get_map(),{prop.name=prop},true);
 				if(structKeyExists(prop,"parent")){
 					//Test for doubling up on our parent attribute and dot notation
 					var prop_name=listToArray(prop.name,'.');
@@ -90,7 +120,7 @@ component name="BaseDocumentService"  accessors="true"{
 				//test for index values
 				if(structKeyExists(prop,'index')){
 					//FIXME: Turning off for now
-					//this.applyIndex(prop,properties);
+					this.applyIndex(prop,properties);
 				}
 			}
 		}
@@ -105,11 +135,12 @@ component name="BaseDocumentService"  accessors="true"{
 	 * @param struct prop - the component property structure
 	 * @param struct properties - the full properties structure (only required if prop contains and "indexwith" attribute
 	 *
-	 * @FIXME Javacasting issues with array
 	 **/
 	public function applyIndex(required prop,properties=[]){
 		var idx=arrayNew(1);
 		var is_unique=false;
+		var sparse=false;
+		var background=true;
 		if(structKeyExists(prop,'unique') and prop.unique){
 			is_unique=true;
 		}
@@ -129,22 +160,51 @@ component name="BaseDocumentService"  accessors="true"{
 			arrayAppend(idx,arguments.prop.name);
 		}
 
-		if(structKeyExists(prop,'geo')){
-			try{
-				this.getDBInstance().ensureGeoIndex(idx,is_unique);
-			} catch(any e){
-				throw("Geo Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
-			}
-		} else {
-			try{
-				this.getDBInstance().ensureIndex(idx,is_unique);
-			} catch(any e){
-				writeDump(e);
-				abort;
+		//Check whether we have records and make it sparse if we're currently empty
+		if(this.getDBInstance().count() EQ 0){
+			sparse=true;
+		}
+		//create implicit name so we can overwrite sparse settings
+		var index_name=hash(serializeJSON(idx));
+		//add our index key
+		var idx_entry={'#prop.name#'={'name'=index_name,'idx'=serializeJSON(idx),'sparse'=sparse,'background'=background,'unique'=is_unique}};
+		arrayAppend(this.get_indexes(),idx_entry);
+		if(!this.indexExists(index_name)){
+			if(structKeyExists(prop,'geo')){
+				try{
+					this.getDBInstance().ensureGeoIndex(field=arguments.prop.name);
+				} catch(any e){
+					throw("Geo Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
+				}
+			} else {
+				try{
+					this.getDBInstance().ensureIndex(fields=idx,unique=is_unique,sparse=sparse,background=background,name=index_name);
+				} catch(any e){
+					throw("Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
+				}
 			}
 		}
 	}
 
+	/**
+	 * Returns whether the index exists
+	 **/
+
+	 public function indexExists(required name){
+		var existing=this.getDBInstance().getIndexes();
+		for(idx in existing){
+			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name)
+					return true;
+		}
+		return false;
+	 }
+
+	/**
+	 * Returns the index sort option
+	 *
+	 * @param any prop (e.g. - ASC/DESC||1/-1)
+	 * @return numeric order
+	 **/
 	public function indexOrder(required prop){
 		var order=1;
 		if(structKeyExists(prop,'indexorder')){
@@ -218,7 +278,11 @@ component name="BaseDocumentService"  accessors="true"{
 
 
 	/********************************* UTILS ****************************************/
-
+	/**
+	 * Returns the default property value
+	 *
+	 * Used to populate the document defaults
+	 **/
 	any function getPropertyDefault(prop){
 		var empty_string='';
 		if(structKeyExists(prop,'default')){
@@ -242,6 +306,22 @@ component name="BaseDocumentService"  accessors="true"{
 		}
 		return empty_string;
 
+	}
+
+	/**
+	 * Handles correct formatting of geoJSON objects
+	 *
+	 * @param array coordinates - an array of coordinates (e.g.: [-85.570381,42.9130449])
+	 * @param array [type="Point"] - the geometry type < http://docs.mongodb.org/manual/core/2dsphere/#geojson-objects >
+	 **/
+	any function toGeoJSON(array coordinates,string type='Point'){
+		var geo={
+			"type"=arguments.type,
+			"coordinates"=arguments.coordinates};
+		/**
+		* serializing and deserializing ensures our quoted keys remain intact in transmission
+		**/
+		return(deserializeJSON(serializeJSON(geo)));
 	}
 
 	/**

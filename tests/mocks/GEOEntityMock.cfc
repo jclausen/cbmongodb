@@ -1,4 +1,4 @@
-component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" accessors=true{
+component name="ActiveEntityMock" extends="cbmongodb.models.GEOEntity" accessors=true{
 
 
 }

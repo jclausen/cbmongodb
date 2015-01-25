@@ -63,7 +63,9 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 				model.reset().populate(model.getTest_document());
 				model.set('first_name','Second').set('last_name','Record').create();
 				expect(model.loaded()).toBeTrue();
+				//test multiple records
 				expect(model.reset().findAll()).toBeArray();
+				expect(arrayLen(model.reset().get(document_id).whereNotI().findAll())).toBe(1);
 				//cursor tests
 				//TODO: write a custom expectation for the cursor object
 				var cursor=model.reset().findAll(true);

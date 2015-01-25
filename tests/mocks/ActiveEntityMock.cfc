@@ -11,7 +11,7 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" access
 	property name="address.state" schema=true validate="string" length=2;
 	property name="address.postalcode" schema=true validate="zipcode";
 	property name="country" schema=true parent="address" validate="string";
-	property name="address.location" schema=true index="true" validate="array" geo=true;
+	property name="address.location" schema=true index="true" validate="array" geo=true geotype="Point";
 	property name="phone" schema=true validate="struct";
 	property name="phone.home" schema=true validate="telephone";
 	property name="phone.work" schema=true validate="telephone";
@@ -49,7 +49,7 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" access
 			'state'='Michigan',
 			'postalcode'='49546',
 			'country'='USA',
-			'location'=[42.9130449,-85.570381]
+			'location'=this.toGeoJSON([-85.570381,42.9130449])
 		},
 		'phone'={
 			'home'='616-123-4567',

@@ -1,7 +1,10 @@
 /**
-* Author      :	Jon Clausen <jon_clausen@silowebworks.com>
 *
-* Description :  This is a Virtual Entity Service for the MongodbClient
+* The Virtual Entity Service for the CFMongoDB Client
+*
+*
+* @author Jon Clausen <jon_clausen@silowebworks.com>
+* @license Apache v2.0 <http://www.apache.org/licenses/>
 */
 component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	/**
@@ -133,11 +136,28 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 			return this.where(key=key,value=operator);
 		} else {
 			var criteria=this.get_criteria();
-			variables._criteria[arguments.key]=arguments.value;
+			switch(arguments.operator){
+				case '!=':
+					variables._criteria[$neq]=[arguments.key,arguments.value];
+				default:
+					variables._criteria[arguments.key]=arguments.value;
+			}
 			this.set_criteria(criteria);
 			return this;
 		}
 	}
+
+	/**
+	 * Convenience function to exclude the current active entity
+	 *
+	 * If the entity is not loaded, no query restrictions will be added
+	 **/
+	 any function whereNotI(){
+		if(this.loaded()){
+			this.where('_id','!=',this.get_id());
+		}
+		return this;
+	 }
 
 	/**
 	 * Set maxrows|limit for query
