@@ -46,6 +46,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 			'!=',
 			'>=',
 			'<=',
+			'<>',
 			'like'
 		]);
 
@@ -58,8 +59,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * The master query method
 	 **/
 	any function query(struct criteria=get_criteria(),keys=get_keys(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
-		var results=this.getDbInstance().query()
-		.find(criteria=arguments.criteria,keys=arguments.keys,skip=arguments.offset,limit=arguments.limit,sort=arguments.sort);
+		var results=this.getDbInstance().find(criteria=arguments.criteria,keys=arguments.keys,skip=arguments.offset,limit=arguments.limit,sort=arguments.sort);
 		this.resetQuery();
 		return results;
 	}
@@ -138,9 +138,24 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 			var criteria=this.get_criteria();
 			switch(arguments.operator){
 				case '!=':
-					variables._criteria[$neq]=[arguments.key,arguments.value];
+				case '<>':
+					variables._criteria[arguments.key]={"$ne"=arguments.value};
+					break;
+				case '>':
+					variables._criteria[arguments.key]={"$gt"=arguments.value};
+					break;
+				case '<':
+					variables._criteria[arguments.key]={"$lt"=arguments.value};
+					break;
+				case '>=':
+					variables._criteria[arguments.key]={"$gte"=arguments.value};
+					break;
+				case '<=':
+					variables._criteria[arguments.key]={"$lte"=arguments.value};
+					break;
 				default:
 					variables._criteria[arguments.key]=arguments.value;
+					break;
 			}
 			this.set_criteria(criteria);
 			return this;
@@ -205,12 +220,16 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @param boolean asCursor - whether to return the array as a Mongo cursor object (e.g. cursor.next())
 	 *
 	 **/
-	any function findAll(asCursor=false){
+	any function findAll(asCursor=false,asResult=false){
 		if(!isNull(this.getxCollection)){
 			var results=this.query();
 		} else {
 			var results=this.mr();
 		}
+
+		if(arguments.asResult)
+			return results;
+
 		if(asCursor)
 			return results.asCursor();
 
