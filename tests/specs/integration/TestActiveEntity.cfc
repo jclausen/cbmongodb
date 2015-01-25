@@ -1,21 +1,20 @@
 /*******************************************************************************
 *	Integration Test for /cfmongodb/models/ActiveEntity.cfc
 *******************************************************************************/
-component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
-	property name="testMock";
+component name="TestModelActiveEntity" extends="testbox.system.BaseSpec"{
+	property name="people";
 
 	function beforeAll(){
 		//custom methods
 		application.wirebox = new coldbox.system.ioc.Injector('cbmongodb.tests.config.Wirebox');
-		application.testMock= application.wirebox.getInstance("ActiveEntityMock@MongoDB");
+		variables.people= application.wirebox.getInstance("Person");
 	}
 
 	function afterAll(){
-          coldbox = 0;
-          application.testMock.getDB().dropDatabase();
-          application.testMock.getDB().close();
+          variables.people.getDB().dropDatabase();
+          variables.people.getDB().close();
           structDelete( application, "wirebox" );
-          structDelete( application, "testMock" );
+          structDelete( variables, "people" );
 	}
 
 	function run(testResults, testBox){
@@ -27,18 +26,18 @@ component name="TestModelActiveEntityService" extends="testbox.system.BaseSpec"{
 			});
 
 			it( "+checks our mock", function(){
-				expect(application.testMock).toBeComponent();
-				expect(application.testMock.get_default_document()).toBeStruct();
-				expect(application.testMock.getTest_document()).toBeStruct();
+				expect(variables.people).toBeComponent();
+				expect(variables.people.get_default_document()).toBeStruct();
+				expect(variables.people.getTest_document()).toBeStruct();
 			});
 
 			it('+checks connectivity', function(){
-				expect(application.testMock.getDBInstance()).toBeComponent();
+				expect(variables.people.getDBInstance()).toBeComponent();
 			});
 
 			it('+checks basic CRUD', function(){
-				var model=application.testMock;
-				var person=application.testMock.getTest_document();
+				var model=variables.people;
+				var person=variables.people.getTest_document();
 				expect(model.populate(person)).toBeComponent();
 				var document_id=model.create();
 				expect(document_id).toBeString();

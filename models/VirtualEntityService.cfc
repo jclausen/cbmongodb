@@ -120,17 +120,6 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		return this.update(upsert=true);
 	}
 
-
-	/**
-	 * reset the query params
-	 *
-	 * @chainable
-	 **/
-	any function reset(){
-		this.evict();
-		return this;
-	}
-
 	any function where(string key,string operator='=',any value){
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
@@ -322,12 +311,11 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	}
 
 	/**
-	 * Evicts the virtual entity and clears the query arguments
+	 * overload the upstream evict to clear query params
 	 **/
 	any function evict(){
-		structDelete(variables,'_id');
-		this.entity(this.get_default_document());
 		this.resetQuery();
+		return super.evict();
 	}
 
 

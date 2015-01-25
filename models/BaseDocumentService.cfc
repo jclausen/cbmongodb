@@ -221,9 +221,10 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function populate(required struct document){
 		var dobj=structCopy(this.get_default_document());
-		this.reset();
-		structAppend(dobj,document,true);
-		this.set_document(dobj);
+		for(var prop in document){
+			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop))
+				this.set(prop,document[prop]);
+		}
 		return this;
 	}
 
@@ -277,7 +278,47 @@ component name="BaseDocumentService"  accessors="true"{
 	}
 
 
+	/**
+	 * reset the document state
+	 *
+	 * @chainable
+	 **/
+	any function reset(){
+		this.evict();
+		return this;
+	}
+
+	/**
+	 * Evicts the document entity and clears the query arguments
+	 **/
+	any function evict(){
+		structDelete(variables,'_id');
+		this.entity(this.get_default_document());
+	}
+
+
 	/********************************* UTILS ****************************************/
+
+	/**
+	 * Helper function to locate deeply nested document items
+	 *
+	 * @param key the key to locate
+	 * @return any the value of the key or null if the key is not found
+	 * @usage locate('key.subkey.subsubkey.waydowndeepsubkey')
+	 **/
+	any function locate(string key){
+		var document=this.get_document();
+		if(structKeyExists(document,arguments.key)){
+			return document[arguments.key];
+		} else {
+			if(isDefined('document.#arguments.key#')){
+				//FIXME evaluate()??!?
+				return evaluate('document.#arguments.key#');
+			}
+		}
+		return;
+	}
+
 	/**
 	 * Returns the default property value
 	 *
@@ -317,7 +358,8 @@ component name="BaseDocumentService"  accessors="true"{
 	any function toGeoJSON(array coordinates,string type='Point'){
 		var geo={
 			"type"=arguments.type,
-			"coordinates"=arguments.coordinates};
+			"coordinates"=arguments.coordinates
+				};
 		/**
 		* serializing and deserializing ensures our quoted keys remain intact in transmission
 		**/
