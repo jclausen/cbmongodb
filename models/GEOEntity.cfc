@@ -135,7 +135,6 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		var xArg=this.locate(arguments.key);
 		if(isNull(xArg))
 			throw("The key <strong>#xProp#</strong> was not found in the #xName# entity.  ")
-
 		//merge our within query
 		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=xArg}};
 		xEntity.set_criteria(xCriteria);

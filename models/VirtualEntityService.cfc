@@ -7,10 +7,6 @@
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 */
 component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
-	/**
-	 * The id of the active entity
-	 **/
-	property name="_id";
 
 	/**
 	 * Default query arguments
@@ -305,8 +301,17 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	}
 
 	any function scopeEntity(doc){
-		for(record in doc){
+		for(var record in doc){
 			variables[record]=doc[record];
+		}
+	}
+
+	any function clearScope(){
+		//TODO: Clean up the encapsulation issues between the super scope and this
+		this.resetQuery();
+		this.set_id('');
+		for(var prop in get_map()){
+			this.set(prop,this.getPropertyDefault(variables._map[prop]));
 		}
 	}
 
@@ -314,8 +319,8 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * overload the upstream evict to clear query params
 	 **/
 	any function evict(){
-		this.resetQuery();
-		return super.evict();
+		super.evict();
+		this.clearScope();
 	}
 
 

@@ -50,6 +50,10 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	property name="_document";
 	/**
+	 * The id of the loaded document
+	 **/
+	property name="_id";
+	/**
 	 * package container for the loaded document before modifications
 	 **/
 	property name="_existing";
@@ -124,7 +128,7 @@ component name="BaseDocumentService"  accessors="true"{
 				}
 			}
 		}
-		this.set_default_document(this.get_document());
+		this.set_default_document(structCopy(this.get_document()));
 	}
 
 
@@ -293,7 +297,8 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function evict(){
 		structDelete(variables,'_id');
-		this.entity(this.get_default_document());
+		this.set_document(structCopy(this.get_default_document()));
+		this.set_existing(structCopy(this.get_document()));
 	}
 
 
@@ -329,7 +334,6 @@ component name="BaseDocumentService"  accessors="true"{
 		if(structKeyExists(prop,'default')){
 			return prop.default;
 		} else if(structKeyExists(prop,'validate')) {
-
 			switch(prop.validate){
 				case 'string':
 					return empty_string;
