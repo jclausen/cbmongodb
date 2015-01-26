@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>ActiveEntity</title>
+	<title>GEOEntity</title>
 	<meta name="keywords" content="cbmongodb.models.concurrent.Callable interface">
 	<!-- common assets -->
 	
@@ -85,7 +85,7 @@ $(document).ready(function() {
 	      	</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../../index.html?cbmongodb/models/ActiveEntity.html" target="_top">
+				<li><a href="../../index.html?cbmongodb/models/GEOEntity.html" target="_top">
 					<i class="glyphicon glyphicon-fullscreen"></i> Frames
 					</a>
 				</li>
@@ -109,7 +109,7 @@ $(document).ready(function() {
 <h2>
 
 Class
-ActiveEntity</h2>
+GEOEntity</h2>
 
 
 
@@ -117,7 +117,8 @@ ActiveEntity</h2>
 <pre>WEB-INF.cftags.component
         <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">cbmongodb.models.BaseDocumentService</a>
             <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">cbmongodb.models.VirtualEntityService</a>
-                <img src="../../resources/inherit.gif" alt="extended by ">cbmongodb.models.ActiveEntity
+                <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">cbmongodb.models.ActiveEntity</a>
+                    <img src="../../resources/inherit.gif" alt="extended by ">cbmongodb.models.GEOEntity
 </pre>
 
 <div class="panel panel-default">
@@ -146,21 +147,223 @@ ActiveEntity</h2>
 </div>
 
 
-<div class="panel panel-default">
-	<div class="panel-heading"><strong>Direct Known Subclasses:</strong></div>
-  	<div class="panel-body">
-	
-		<a href="../..//cbmongodb/models/GEOEntity.html" title="class in cbmongodb.models">GEOEntity</a>
-	
-	</div>
+<div id="class-hint">
+	<p>GEO Active Entity Service for MongoDB  Extends the core ActiveEntity to provide geospatial querying</p>
 </div>
 
-<div id="class-hint">
-	<p>Active Entity for CBMongoDB  allows you to enhance your MongoDB models with virtual service methods with an Active Record pattern</p>
-</div>
+<!-- ========== METHOD SUMMARY =========== -->
+
+<a name="method_summary"><!-- --></a>
+<table class="table table-bordered table-hover">
+	<tr class="info">
+		<th align="left" colspan="2">
+			<strong>Method Summary</strong>
+		</th>
+	</tr>
+
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#appropriate()">appropriate</A></strong>([any operation], [any geometry])
+			<br>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>package&nbsp;any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#comparison()">comparison</A></strong>(any operation, any key, [any xKey], [any reduce='false'])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The master comparison method.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>package&nbsp;any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#distanceNear()">distanceNear</A></strong>(any distance, [any operator='$maxDistance'])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The distance operation used in minDistance() and maxDistance().
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#ensureGEOValid()">ensureGEOValid</A></strong>(any geometry)
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Validates geo data types to ensure they meet the engine storage requirements for indexing.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#feet()">feet</A></strong>([any feet])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Converts a passed number of feet to meters.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#intersects()">intersects</A></strong>(any key, [any xKey], [any reduce='false'])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;That the geometry of a foreign field intersect a local one (or vice-versa).
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#isWithin()">isWithin</A></strong>(any key, [any xKey], [any reduce='false'])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;That a local geometry is contained with a foreign object.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#km()">km</A></strong>([any kilometers])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Converts a passed number of miles to meters.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#maxDistance()">maxDistance</A></strong>(any distance)
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;That a field is within a maximum distance of another.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#miles()">miles</A></strong>([any miles])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Converts a passed number of miles to meters.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#minDistance()">minDistance</A></strong>(any distance)
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Specifies a minimum distance for a $near or $nearSphere operation.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#near()">near</A></strong>(any key, [any xKey], [any reduce='false'])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns documents which are near to geometry object in ascending proximity.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#parseFeatureCollection()">parseFeatureCollection</A></strong>([any features])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pull the polygon information from a feature collection.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#polygonCenter()">polygonCenter</A></strong>(any polygon)
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finds the center point of a polygon.
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GEOEntity.html#within()">within</A></strong>(any key, [any xKey], [any reduce='false'])
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that a local entity is contains a foreign object.
+			
+		</td>
+	</tr>
+	
+</table>
+
 
 
 <a name="inherited_methods"><!-- --></a>
+
+
+	&nbsp;
+	<a name="methods_inherited_from_class_cbmongodb.models.ActiveEntity"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd><a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">cbmongodb.models.ActiveEntity</a></kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+					<span class="label label-warning"><em>None</em></span>
+				
+			</td>
+		</tr>
+	</table>
 
 
 	&nbsp;
@@ -219,6 +422,388 @@ ActiveEntity</h2>
 
 
 <!-- ============ PROPERTY DETAIL ========== -->
+
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<a name="method_detail"><!-- --></a>
+<table class="table table-bordered">
+	<tr class="info">
+		<th colspan="1" align="left">
+			<strong>Method Detail</strong>
+		</th>
+	</tr>
+</table>
+
+
+	<a name="appropriate()"><!-- --></a>
+	<h3>appropriate</h3>
+	
+	<kbd>public any <strong>appropriate</strong>([any operation], [any geometry])</kbd>
+	
+	<br><br>
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>operation</code></dd>
+		
+		<dd><code>geometry</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="comparison()"><!-- --></a>
+	<h3>comparison</h3>
+	
+	<kbd>package any <strong>comparison</strong>(any operation, any key, [any xKey], [any reduce='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>The master comparison method</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>operation</code></dd>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>xKey</code></dd>
+		
+		<dd><code>reduce</code></dd>
+		
+		</dl>
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>object returns the model being queried</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="distanceNear()"><!-- --></a>
+	<h3>distanceNear</h3>
+	
+	<kbd>package any <strong>distanceNear</strong>(any distance, [any operator='$maxDistance'])</kbd>
+	
+	<br><br>
+
+	
+		<p>The distance operation used in minDistance() and maxDistance()</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>distance</code></dd>
+		
+		<dd><code>operator</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="ensureGEOValid()"><!-- --></a>
+	<h3>ensureGEOValid</h3>
+	
+	<kbd>public any <strong>ensureGEOValid</strong>(any geometry)</kbd>
+	
+	<br><br>
+
+	
+		<p>Validates geo data types to ensure they meet the engine storage requirements for indexing</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>geometry</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="feet()"><!-- --></a>
+	<h3>feet</h3>
+	
+	<kbd>public any <strong>feet</strong>([any feet])</kbd>
+	
+	<br><br>
+
+	
+		<p>Converts a passed number of feet to meters</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>feet</code></dd>
+		
+		</dl>
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>numeric meters</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="intersects()"><!-- --></a>
+	<h3>intersects</h3>
+	
+	<kbd>public any <strong>intersects</strong>(any key, [any xKey], [any reduce='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>That the geometry of a foreign field intersect a local one (or vice-versa)</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>xKey</code></dd>
+		
+		<dd><code>reduce</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="isWithin()"><!-- --></a>
+	<h3>isWithin</h3>
+	
+	<kbd>public any <strong>isWithin</strong>(any key, [any xKey], [any reduce='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>That a local geometry is contained with a foreign object</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>xKey</code></dd>
+		
+		<dd><code>reduce</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="km()"><!-- --></a>
+	<h3>km</h3>
+	
+	<kbd>public any <strong>km</strong>([any kilometers])</kbd>
+	
+	<br><br>
+
+	
+		<p>Converts a passed number of miles to meters</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>kilometers</code></dd>
+		
+		</dl>
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>numeric meters</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="maxDistance()"><!-- --></a>
+	<h3>maxDistance</h3>
+	
+	<kbd>public any <strong>maxDistance</strong>(any distance)</kbd>
+	
+	<br><br>
+
+	
+		<p>That a field is within a maximum distance of another</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>distance</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="miles()"><!-- --></a>
+	<h3>miles</h3>
+	
+	<kbd>public any <strong>miles</strong>([any miles])</kbd>
+	
+	<br><br>
+
+	
+		<p>Converts a passed number of miles to meters</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>miles</code></dd>
+		
+		</dl>
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>numeric meters</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="minDistance()"><!-- --></a>
+	<h3>minDistance</h3>
+	
+	<kbd>public any <strong>minDistance</strong>(any distance)</kbd>
+	
+	<br><br>
+
+	
+		<p>Specifies a minimum distance for a $near or $nearSphere operation</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>distance</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="near()"><!-- --></a>
+	<h3>near</h3>
+	
+	<kbd>public any <strong>near</strong>(any key, [any xKey], [any reduce='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns documents which are near to geometry object in ascending proximity</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>xKey</code></dd>
+		
+		<dd><code>reduce</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="parseFeatureCollection()"><!-- --></a>
+	<h3>parseFeatureCollection</h3>
+	
+	<kbd>public any <strong>parseFeatureCollection</strong>([any features])</kbd>
+	
+	<br><br>
+
+	
+		<p>pull the polygon information from a feature collection</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>features</code></dd>
+		
+		</dl>
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>struct  GEOJSON struct if only one element in the collection or an array of GEOJSON structs if multiple elements</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="polygonCenter()"><!-- --></a>
+	<h3>polygonCenter</h3>
+	
+	<kbd>public any <strong>polygonCenter</strong>(any polygon)</kbd>
+	
+	<br><br>
+
+	
+		<p>Finds the center point of a polygon</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>polygon</code></dd>
+		
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="within()"><!-- --></a>
+	<h3>within</h3>
+	
+	<kbd>public any <strong>within</strong>(any key, [any xKey], [any reduce='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>that a local entity is contains a foreign object</p>
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>xKey</code></dd>
+		
+		<dd><code>reduce</code></dd>
+		
+		</dl>
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>object returns the model being queried</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
 
 
 

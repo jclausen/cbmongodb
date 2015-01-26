@@ -130,6 +130,12 @@ VirtualEntityService</h2>
 			&nbsp;
 			
 			<li class="label label-danger label-annotations">
+				author 
+				: Jon Clausen <jon_clausen@silowebworks.com> 
+			</li>
+			&nbsp;
+			
+			<li class="label label-danger label-annotations">
 				license 
 				: Apache v2.0 <http://www.apache.org/licenses/> 
 			</li>
@@ -149,7 +155,7 @@ VirtualEntityService</h2>
 </div>
 
 <div id="class-hint">
-	<p>Author      :	Jon Clausen <jon_clausen@silowebworks.com> The Virtual Entity Service for the CFMongoDB Client   Description :  This is a Virtual Entity Service for the MongodbClient</p>
+	<p>The Virtual Entity Service for the CFMongoDB Client</p>
 </div>
 
 <!-- ========== METHOD SUMMARY =========== -->
@@ -190,38 +196,6 @@ VirtualEntityService</h2>
 			
 			<!-- only grab the first sentence of the hint -->
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default query arguments.
-			
-			<br><br>
-			<ul>
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="VirtualEntityService.html#_id()">_id</A></strong> 
-			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The id of the active entity.
 			
 			<br><br>
 			<ul>
@@ -532,18 +506,6 @@ VirtualEntityService</h2>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="VirtualEntityService.html#GET_ID()">GET_ID</A></strong>()
-			<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The id of the active entity.
-			
-		</td>
-	</tr>
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
 			<strong><a href="VirtualEntityService.html#GET_KEYS()">GET_KEYS</A></strong>()
 			<br>
 			
@@ -635,18 +597,6 @@ VirtualEntityService</h2>
 			<code><a href="../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">VirtualEntityService</a></code>
 		</td>
 		<td>
-			<strong><a href="VirtualEntityService.html#SET_ID()">SET_ID</A></strong>(any _id)
-			<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The id of the active entity.
-			
-		</td>
-	</tr>
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code><a href="../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">VirtualEntityService</a></code>
-		</td>
-		<td>
 			<strong><a href="VirtualEntityService.html#SET_KEYS()">SET_KEYS</A></strong>(any _keys)
 			<br>
 			
@@ -692,6 +642,17 @@ VirtualEntityService</h2>
 		</td>
 		<td>
 			<strong><a href="VirtualEntityService.html#SET_SORT()">SET_SORT</A></strong>(any _sort)
+			<br>
+			
+		</td>
+	</tr>
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="VirtualEntityService.html#clearScope()">clearScope</A></strong>()
 			<br>
 			
 		</td>
@@ -763,7 +724,7 @@ VirtualEntityService</h2>
 		<td>
 			<strong><a href="VirtualEntityService.html#evict()">evict</A></strong>()
 			<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evicts the virtual entity and clears the query arguments.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overload the upstream evict to clear query params.
 			
 		</td>
 	</tr>
@@ -903,18 +864,6 @@ VirtualEntityService</h2>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="VirtualEntityService.html#reset()">reset</A></strong>()
-			<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reset the query params.
-			
-		</td>
-	</tr>
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
 			<strong><a href="VirtualEntityService.html#resetQuery()">resetQuery</A></strong>([any evict='true'])
 			<br>
 			
@@ -1008,7 +957,7 @@ VirtualEntityService</h2>
 		</tr>
 		<tr>
 			<td>
-				<a href="../..//cbmongodb/models/BaseDocumentService.html#GETCOLLECTION()">GETCOLLECTION</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETDB()">GETDB</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETDBINSTANCE()">GETDBINSTANCE</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETDEFAULT_DOCUMENT()">GETDEFAULT_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETLOGBOX()">GETLOGBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETMONGOCLIENT()">GETMONGOCLIENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETWIREBOX()">GETWIREBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_DOCUMENT()">GET_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_EXISTING()">GET_EXISTING</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETCOLLECTION()">SETCOLLECTION</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETDB()">SETDB</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETDBINSTANCE()">SETDBINSTANCE</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETDEFAULT_DOCUMENT()">SETDEFAULT_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETLOGBOX()">SETLOGBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETMONGOCLIENT()">SETMONGOCLIENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETWIREBOX()">SETWIREBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_DOCUMENT()">SET_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_EXISTING()">SET_EXISTING</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#detect()">detect</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get()">get</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getPropertyDefault()">getPropertyDefault</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#load()">load</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#populate()">populate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set()">set</a> 
+				<a href="../..//cbmongodb/models/BaseDocumentService.html#GETAPPSETTINGS()">GETAPPSETTINGS</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETCOLLECTION()">GETCOLLECTION</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETDB()">GETDB</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETDBINSTANCE()">GETDBINSTANCE</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETLOGBOX()">GETLOGBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETMONGOCLIENT()">GETMONGOCLIENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GETWIREBOX()">GETWIREBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_DEFAULT_DOCUMENT()">GET_DEFAULT_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_DOCUMENT()">GET_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_EXISTING()">GET_EXISTING</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_ID()">GET_ID</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_INDEXES()">GET_INDEXES</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_MAP()">GET_MAP</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#GET_VALIDATION()">GET_VALIDATION</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETAPPSETTINGS()">SETAPPSETTINGS</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETCOLLECTION()">SETCOLLECTION</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETDB()">SETDB</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETDBINSTANCE()">SETDBINSTANCE</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETLOGBOX()">SETLOGBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETMONGOCLIENT()">SETMONGOCLIENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SETWIREBOX()">SETWIREBOX</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_DEFAULT_DOCUMENT()">SET_DEFAULT_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_DOCUMENT()">SET_DOCUMENT</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_EXISTING()">SET_EXISTING</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_ID()">SET_ID</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_INDEXES()">SET_INDEXES</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_MAP()">SET_MAP</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#SET_VALIDATION()">SET_VALIDATION</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#applyIndex()">applyIndex</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#detect()">detect</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get()">get</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getPropertyDefault()">getPropertyDefault</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#indexExists()">indexExists</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#indexOrder()">indexOrder</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#load()">load</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#locate()">locate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#mapOrder()">mapOrder</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#populate()">populate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#reset()">reset</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set()">set</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toGeoJSON()">toGeoJSON</a> 
 			</td>
 		</tr>
 	</table>
@@ -1079,29 +1028,6 @@ VirtualEntityService</h2>
 		<br><br>
 		
 			<p>Default query arguments</p>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			<dd><code>required</code> - false</dd>
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		</dl>
-
-		<hr>
-	
-		<a name="_id()"><!-- --></a>
-		<h3>_id</h3>
-
-		<kbd>
-			property any <strong>_id</strong> 
-		</kbd>
-
-		<br><br>
-		
-			<p>The id of the active entity</p>
 		
 
 		<dl>
@@ -1325,20 +1251,6 @@ VirtualEntityService</h2>
 	</dl>
 	<hr>
 
-	<a name="GET_ID()"><!-- --></a>
-	<h3>GET_ID</h3>
-	
-	<kbd>public any <strong>GET_ID</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: The id of the active entity</p>
-	
-
-	</dl>
-	<hr>
-
 	<a name="GET_KEYS()"><!-- --></a>
 	<h3>GET_KEYS</h3>
 	
@@ -1462,27 +1374,6 @@ VirtualEntityService</h2>
 	</dl>
 	<hr>
 
-	<a name="SET_ID()"><!-- --></a>
-	<h3>SET_ID</h3>
-	
-	<kbd>public <a href="../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">VirtualEntityService</a> <strong>SET_ID</strong>(any _id)</kbd>
-	
-	<br><br>
-
-	
-		<p>set: The id of the active entity</p>
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>_id</code></dd>
-		
-		</dl>
-	
-
-	</dl>
-	<hr>
-
 	<a name="SET_KEYS()"><!-- --></a>
 	<h3>SET_KEYS</h3>
 	
@@ -1573,6 +1464,18 @@ VirtualEntityService</h2>
 		<dd><code>_sort</code></dd>
 		
 		</dl>
+	
+
+	</dl>
+	<hr>
+
+	<a name="clearScope()"><!-- --></a>
+	<h3>clearScope</h3>
+	
+	<kbd>public any <strong>clearScope</strong>()</kbd>
+	
+	<br><br>
+
 	
 
 	</dl>
@@ -1689,7 +1592,19 @@ VirtualEntityService</h2>
 	<br><br>
 
 	
-		<p>Evicts the virtual entity and clears the query arguments</p>
+		<p>overload the upstream evict to clear query params</p>
+	
+		<dl>
+			<dt><strong>Overrides:</strong></dt>
+			<dd>
+			<code>
+			<a href="../..//cbmongodb/models/BaseDocumentService.html#evict()">evict</a></code>
+			in class
+			<code>
+				<a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">BaseDocumentService</a>
+			</code>
+			</dd>
+		</dl>
 	
 
 	</dl>
@@ -1905,20 +1820,6 @@ VirtualEntityService</h2>
 	
 	<br><br>
 
-	
-
-	</dl>
-	<hr>
-
-	<a name="reset()"><!-- --></a>
-	<h3>reset</h3>
-	
-	<kbd>public any <strong>reset</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>reset the query params</p>
 	
 
 	</dl>
