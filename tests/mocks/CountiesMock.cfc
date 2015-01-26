@@ -3,8 +3,7 @@ component name="CountiesMock" extends="cbmongodb.models.GEOEntity" accessors=tru
 	property name="test_documents" default="";
 	/**Schema Properties**/
 	property name="name" schema=true index=true validate="string";
-	//FIXME: Index+Insert is failing with this
-	property name="geometry" schema=true validate="array" geo=true geotype="MultiPolygon";
+	property name="geometry" schema=true index=true validate="array" geo=true geotype="MultiPolygon";
 
 	any function init(){
 		super.init();

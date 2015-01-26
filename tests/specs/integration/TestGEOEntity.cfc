@@ -41,12 +41,17 @@ component name="TestModelGEOEntity" extends="testbox.system.BaseSpec" accessors=
 				//load our counties
 				var counties = application.wirebox.getInstance("County");
 				for(var county in counties.getTest_Documents()){
-					counties.reset().populate(county).create();
+					var county_id=counties.reset().populate(county).create();
+					expect(county_id).toBeString();
 				}
-				writeDump(state.reset().load(state_id).within('geometry','County.geometry').findAll());
-				abort;
-
-				expect(arrayLen(state.reset().load(state_id).within('geometry','County.geometry').findAll())).toBe(3);
+				expect(arrayLen(counties.reset().findAll())).toBe(4);
+				//FIXME: Geometry problem with State?  Is returning "2"
+				expect(arrayLen(state.reset().load(state_id).within('geometry','County.geometry').findAll())).toBe(4);
+				var kent=counties.reset().where('name','Kent').find();
+				expect(kent).toBeComponent();
+				//writeDump(kent.near('geometry','this.geometry').findAll());
+				//abort;
+				//expect(kent.whereNotI().near('geometry','this.geometry').findAll());
 
 
 			});

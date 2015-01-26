@@ -121,10 +121,8 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		var xProp=listDeleteAt(arguments.xKey,1,'.');
 		//if we are using the self entity
 		if(xName EQ 'this'){
-			this._keys=xProp;
-			this._criteria[xProp]={"#arguments.operation#"={"$geometry"=this.locate(arguments.key)}};
-			if(!isNull(arguments.distance))
-				this._criteria[xProp][operation];
+			variables._keys=xProp;
+			variables._criteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,this.locate(arguments.key))}};
 			return this;
 		}
 
@@ -136,14 +134,24 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		if(isNull(xArg))
 			throw("The key <strong>#xProp#</strong> was not found in the #xName# entity.  ")
 		//merge our within query
-		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=xArg}};
+		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,xArg)}};
 		xEntity.set_criteria(xCriteria);
 		return xEntity;
 	}
 
+	/**
+	 *
+	 **/
+	public function appropriate(operation,geometry){
+		var local_geometry=duplicate(geometry);
+		//convert polygons to a centroid if we are near
+		if(findNoCase('near',arguments.operation) and (local_geometry['type'] EQ "Polygon" OR local_geometry['type'] EQ "MultiPolygon")){
+				local_geometry=polygonCenter(local_geometry);
+		}
+		return local_geometry;
+	}
 
 	/***************************** UTILS ****************************/
-
 	/**
 	 * pull the polygon information from a feature collection
 	 *
@@ -160,12 +168,59 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			arguments.features=arguments.features.features;
 		for(geometry in arguments.features){
 			if(structKeyExists(geometry,'geometry') and arrayLen(arguments.features) EQ 1){
-				return geometry['geometry'];
+				return ensureGEOValid(geometry['geometry']);
 			} else {
-				arrayAppend(collection,geometry['geometry']);
+				arrayAppend(collection,ensureGEOValid(geometry['geometry']));
 			}
 		}
 		return collection;
+	}
+	/**
+	 * Finds the center point of a polygon
+	 *
+	 * @props http://stackoverflow.com/questions/3081021/how-to-get-the-center-of-a-polygon-in-google-maps-v3
+	 **/
+	public function polygonCenter(required polygon){
+		low=arguments.polygon['coordinates'][1][1][1];
+		high=arguments.polygon['coordinates'][1][1][1];
+		for(point in arguments.polygon['coordinates'][1][1]){
+			//x
+			if(point[1]<low[1])
+				low[1]=point[1];
+			if(point[1]>high[1])
+				high[1]=point[1];
+			//y
+			if(point[2]<low[2])
+				low[2]=point[2];
+			if(point[2]>high[2])
+				high[2]=point[2];
+		}
+
+		center=[(low[1] + ((high[1] - low[1]) / 2)),(low[2] + ((high[2] - low[2]) / 2))];
+		return this.toGEOJSON(center,'Point');
+	}
+
+	/**
+	 * Validates geo data types to ensure they meet the engine storage requirements for indexing
+	 **/
+	public function ensureGEOValid(required geometry){
+		var valid=arguments.geometry;
+		switch(valid['type']){
+			case "Polygon":
+			case "MultiPolygon":
+				//Close our polygons to make valid
+				i=1;
+				for(collection in valid['coordinates'][1]){
+					poly_open=duplicate(collection[1]);
+					if(arrayToList(collection[arrayLen(collection)]) NEQ arrayToList(poly_open)){
+						arrayAppend(valid['coordinates'][1][i],poly_open);
+					}
+					i=i+1;
+				}
+				break;
+		}
+
+		return valid;
 	}
 
 	/**
