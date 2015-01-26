@@ -206,7 +206,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 *
 	 **/
 	any function findAll(asCursor=false,asResult=false){
-		if(!isNull(this.getxCollection)){
+		if(isNull(this.getXCollection())){
 			var results=this.query();
 		} else {
 			var results=this.mr();
