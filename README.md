@@ -170,6 +170,68 @@ var noDoes = this.reset().where('last_name','Doe').delete();
 
 That's basic CRUD functionality.  Read the API documentation for details on the individual functions and arguments.
 
+Geospatial Functions
+--------------------
+To enable geospatial operations in your models, you will need to use `extends="cbmongodb.models.GEOEntity"` as your model inheritance.  MongoDB handles geospatial data in GEOJSON format, and there are a number of spatial libraries available on GitHub (e.g. - we use [this basic world map](https://github.com/johan/world.geo.json) in our unit tests).
+
+First you'll need to define the geospatial properties in your model. Let's add the following to our address property from above:
+```
+property name="address.location" schema=true index=true validate="array" geo=true geotype="Point";
+```
+
+With this, the object will be instantiated as a special type.  If `index=true` is specified a geospatial index will be created on that document field using the "geotype" attribute as the the spatial type.  Setting the index flag, however, will also prevent you from storing objects which don't meet the database specification for that type (e.g. - all polygons have to be closed, which means the starting coordinate and ending coordinate need to be the same).
+
+Now let's create a model (in this example, we'll use one of our test mocks):
+```
+component name="States" extends="cbmongodb.models.GEOEntity" accessors=true{
+	property name="collection" default="states";
+	/**Schema Properties**/
+	property name="name" schema=true index=true validate="string";
+	property name="abbr" schema=true index=true validate="string";
+	property name="geometry" schema=true index="true" validate="array" geo=true geotype="MultiPolygon";
+}
+```
+
+Just instantiating the component takes care of the indexing. Now we'll create a state:
+```
+states=getModel("States");
+michigan = states.populate({
+		name='Michigan',
+		abbr='MI',
+		geometry=states.parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI.geo.json'))
+		})
+		.create();
+```
+*Note: In the above, we loaded our data from a the remote repository. Loading remote datasets at runtime isn't a good idea (read "very bad idea"), but you can use them to populate your data collections. If your remote data is formatted in a feature collection, make sure to use the parseFeatureCollection() helper method.* 
+
+The create() returns our _id value, so let's load up our entity:
+```
+michigan = states.load(michigan);
+```
+First we'll find all of the people in michigan:
+```
+people=michigan.within('geometry','Person.address.location').findAll(); 
+```
+Note that "michigan" is still loaded, but once we call the near/far spatial operator, the instance returned is the "far" entity.  Any where() clauses before or after the spatial comparison method will be exectuted on the far entity. The above might return a large recordset so let's restrict that a bit.  (We'll use our spatial query to prevent loading folks from Grand Rapids, Minnesota):
+```
+gr_peeps=michigan.where('address.city','Grand Rapids').within('geometry','People.address.location').findAll();
+```
+
+Now let's looks at those some of those people returned.  In this case we'll take our first person and see all of the other people within a 10 mile radius.
+```
+some_person=gr_peeps[1];
+nearby_peeps=some_person
+	.whereNotI()
+	.near('address.location','this.address.location')
+	.maxDistance(gr_peeps.miles(10))
+	.findAll();
+```
+*Note: We used a helper method of `whereNotI()` which excludes the active entity from being returned in the results.  We also used a helper method `miles()` to convert miles to meters, which is the default unit measurement for [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) projected data.  There are equivalent helper methods of `feet()` and `km()`.*
+
+*Function note: `near()` operations can only be performed, at this time, if the "far" field being compared is a point.  If the "near" field is a polygon, a center point will be generated for comparison.*
+
+Currently all of the MongoDB supported core spatial functions are represented, including `intersects()` so feel free to browse the many free data sets on GitHub and play around.
+
 Issues
 --------------
 Post issues with the core libraries to the github issue tracker for the [cfmongodb project](https://github.com/marcesher/cfmongodb). 
