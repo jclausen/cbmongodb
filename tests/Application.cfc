@@ -12,8 +12,14 @@
 	</cfscript>
 
 	<!--- Create testing mapping --->
+	<cfscript>
+	if(directoryExists(expandPath('../modules/cfmongodb'))){
+		this.mappings[ "/cfmongodb" ] = expandPath('../modules/cfmongodb');
+	} else {
+		this.mappings[ "/cfmongodb" ] = expandPath('/modules/cfmongodb');
+	}
+	</cfscript>
 	<cfset this.mappings[ "/cbmongodb" ] = expandPath('../')>
-	<cfset this.mappings[ "/cfmongodb" ] = expandPath('../modules/cfmongodb')>
 	<cfset this.mappings[ "/tests" ] = getDirectoryFromPath( getCurrentTemplatePath() )>
 	<!--- Map back to its root --->
 	<cfset rootPath = REReplaceNoCase( this.mappings[ "/tests" ], "tests(\\|/)", "" )>
