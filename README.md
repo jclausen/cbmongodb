@@ -1,6 +1,7 @@
 
 MongoDB Module for Coldbox
 ==========================
+CBMongoDB provides Active Record(ish) functionality for managing MongoDB documents and schema using a familiar syntax for CRUD operations and recordset processing and retrieval. 
 
 This module uses Bill Shelton and Marc Escher's excellent [cfmongodb project](https://github.com/marcesher/cfmongodb), which is a partial wrapper for the MongoDB Java driver and a document-struct mapper for ColdFusion. Module functionality provides Active Record(ish) functionality for mananging MongoDB documents and schema.
 
