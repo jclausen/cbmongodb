@@ -1,5 +1,16 @@
+/**
+*
+* CBORM Compatible ActiveEntity Service
+*
+* Mimics the functionality of the CBORM Active Entity Services
+*
+* @author Jon Clausen <jon_clausen@silowebworks.com>
+* @license Apache v2.0 <http://www.apache.org/licenses/>
+*
+* DO NOT USE AT THIS TIME
+*/
 component extends="cbmongodb.models.VirtualEntityService"{
-	/************************************ CBORM Compat VES Methods********************************/ 
+	/************************************ CBORM Compat VES Methods********************************/
 	any function list(struct criteria=get_criteria(),keys=get_keys(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort(),boolean asQuery=getDefaultAsQuery()){
 		 results=this.query(argumentCollection=arguments);
 		 if(arguments.asQuery()){
@@ -7,7 +18,7 @@ component extends="cbmongodb.models.VirtualEntityService"{
 		 }
 		 return results;
 	}
-	
+
 
 	any function findWhere(required struct criteria){
 		this.set_criteria(arguments.criteria);
@@ -19,18 +30,18 @@ component extends="cbmongodb.models.VirtualEntityService"{
 		if(len(arguments.SortOrder)){
 			var sort=listToArray(arguments.sortOrder,' ');
 			var
-			this.setSort({sort[1]=sort[2]});	
+			this.setSort({sort[1]=sort[2]});
 		}
 		return this.query();
 	}
 
-	
+
 	//TODO: Figure
 	any function new(struct properties=structnew(), boolean composeRelationships=true, nullEmptyInclude="", nullEmptyExclude="", boolean ignoreEmpty=false, include="", exclude=""){
-		
+
 	}
 
-	
+
 	boolean function exists(required any id) {
 		arguments.entityName = this.getEntityName();
 		return super.exists(argumentCollection=arguments);
@@ -106,4 +117,6 @@ component extends="cbmongodb.models.VirtualEntityService"{
 	string function getCollectionName(){
 		return this.getCollection());
 	}
+
+}
 }

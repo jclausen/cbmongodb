@@ -1,16 +1,12 @@
 /**
-* Author      :	Jon Clausen <jon_clausen@silowebworks.com>
+*
 * The Virtual Entity Service for the CFMongoDB Client
 *
 *
-* Description :  This is a Virtual Entity Service for the MongodbClient
+* @author Jon Clausen <jon_clausen@silowebworks.com>
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 */
 component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
-	/**
-	 * The id of the active entity
-	 **/
-	property name="_id";
 
 	/**
 	 * Default query arguments
@@ -118,17 +114,6 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 **/
 	any function upsert(){
 		return this.update(upsert=true);
-	}
-
-
-	/**
-	 * reset the query params
-	 *
-	 * @chainable
-	 **/
-	any function reset(){
-		this.evict();
-		return this;
 	}
 
 	any function where(string key,string operator='=',any value){
@@ -316,18 +301,26 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	}
 
 	any function scopeEntity(doc){
-		for(record in doc){
+		for(var record in doc){
 			variables[record]=doc[record];
 		}
 	}
 
+	any function clearScope(){
+		//TODO: Clean up the encapsulation issues between the super scope and this
+		this.resetQuery();
+		this.set_id('');
+		for(var prop in get_map()){
+			this.set(prop,this.getPropertyDefault(variables._map[prop]));
+		}
+	}
+
 	/**
-	 * Evicts the virtual entity and clears the query arguments
+	 * overload the upstream evict to clear query params
 	 **/
 	any function evict(){
-		structDelete(variables,'_id');
-		this.entity(this.getDefault_document());
-		this.resetQuery();
+		super.evict();
+		this.clearScope();
 	}
 
 
