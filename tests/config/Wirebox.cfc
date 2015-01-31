@@ -57,7 +57,7 @@ component extends="coldbox.system.ioc.config.Binder"{
 			//mappings
 			map( "MongoClient@cfMongoDB" )
 			.to( "cfmongodb.core.MongoClient" )
-			.initWith(MongoConfig);
+			.initWith(MongoConfig).asSingleton();
 
 			map("Person")
 			.to("cbmongodb.tests.mocks.ActiveEntityMock");
