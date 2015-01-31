@@ -27,6 +27,10 @@ component name="BaseDocumentService"  accessors="true"{
 	 * The MongoDB Client
 	 **/
 	property name="MongoClient" inject="MongoClient@cfMongoDB";
+	/**
+	 * The Mongo Utilities Library
+	 **/
+	 property name="MongoUtil";
 
 	/**
 	 * The database client w/o a specified collection
@@ -86,6 +90,7 @@ component name="BaseDocumentService"  accessors="true"{
 		} else {
 			throw('Wirebox IOC Injection is required to user this service');
 		}
+		this.setMongoUtil(getMongoClient().getMongoUtil());
 		this.setAppSettings(getWirebox().getBinder().getProperties());
 		//Connect to Mongo
 		this.setDb(this.getMongoClient());
@@ -264,6 +269,8 @@ component name="BaseDocumentService"  accessors="true"{
 	 * @param boolean returnInstance - whether to return a loaded instance (true) or a result struct (false)
 	 **/
 	any function get(required _id,returnInstance=true){
+		_id=getMongoUtil().newObjectIDfromID(_id);
+
 		var results=this.getDBInstance().findById(arguments._id);
 		if(!isNull(results)){
 			this.entity(results);
@@ -303,6 +310,16 @@ component name="BaseDocumentService"  accessors="true"{
 
 
 	/********************************* UTILS ****************************************/
+
+	void function criteria(struct criteria){
+		if(structKeyExists(arguments.criteria,'_id') && len(arguments.criteria['_id'])){
+			//exclude our nested query obects
+			if(!isStruct(arguments.criteria['_id']))
+				arguments.criteria['_id']=getMongoUtil().newObjectIDfromID(arguments.criteria['_id']);
+		}
+
+		this.set_criteria(arguments.criteria);
+	}
 
 	/**
 	 * Helper function to locate deeply nested document items

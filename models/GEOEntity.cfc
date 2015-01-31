@@ -98,7 +98,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 				criteria[critter]["$nearSphere"][arguments.operator]=arguments.distance;
 			}
 		}
-		this.set_criteria(criteria);
+		this.criteria(criteria);
 		return this;
 	}
 
@@ -135,7 +135,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			throw("The key <strong>#xProp#</strong> was not found in the #xName# entity.  ")
 		//merge our within query
 		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,xArg)}};
-		xEntity.set_criteria(xCriteria);
+		xEntity.criteria(xCriteria);
 		return xEntity;
 	}
 

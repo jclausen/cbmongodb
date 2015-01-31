@@ -34,7 +34,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 
 	function init(){
 		super.init();
-		this.set_criteria({});
+		this.criteria({});
 		this.set_sort({});
 		//Valid operators for where() clauses
 		this.set_operators([
@@ -142,7 +142,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 					variables._criteria[arguments.key]=arguments.value;
 					break;
 			}
-			this.set_criteria(criteria);
+			this.criteria(criteria);
 			return this;
 		}
 	}
@@ -325,7 +325,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 
 
 	any function resetQuery(evict=true){
-		this.set_criteria(structNew());
+		this.criteria(structNew());
 		this.set_keys('');
 		this.set_offset(0);
 		this.set_limit(0);

@@ -21,12 +21,12 @@ component extends="cbmongodb.models.VirtualEntityService"{
 
 
 	any function findWhere(required struct criteria){
-		this.set_criteria(arguments.criteria);
+		this.criteria(arguments.criteria);
 		return this.query();
 	}
 
 	array function findAllWhere(required struct criteria, string sortOrder=""){
-		this.set_criteria(arguments.criteria);
+		this.criteria(arguments.criteria);
 		if(len(arguments.SortOrder)){
 			var sort=listToArray(arguments.sortOrder,' ');
 			var
