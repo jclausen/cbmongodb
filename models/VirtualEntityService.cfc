@@ -242,11 +242,13 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 **/
 	 boolean function delete(truncate=false){
 		var deleted=false;
-		if(!truncate and (!this.loaded() or !this.criteriaExists())){
+		if(!truncate and !this.loaded() and !this.criteriaExists()){
 			throw(type="InvalidData",message='No loaded record or criteria specified. If you wish to truncate this collection, pass the truncate=true flag to this method');
-		} else if(!this.loaded() and this.criteriaExists){
+		} else if(!this.loaded() and this.criteriaExists()){
 			deleted=(this.getDBinstance().remove(this.get_criteria()).getN() eq 1);
 			this.reset();
+		} else if(!this.loaded() and !this.criteriaExists() and truncate){
+			this.getDBInstance().remove({});
 		} else {
 			deleted=super.delete(this.get_id());
 			this.reset();
@@ -336,6 +338,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	}
 
 	boolean function criteriaExists(){
-		return structIsEmpty(this.get_criteria());
+		if(structIsEmpty(this.get_criteria()))
+			return false;
+
+		return true;
 	}
 }
