@@ -235,6 +235,9 @@ Currently all of the MongoDB supported core spatial functions are represented, i
 
 Issues
 --------------
+
+***NULL* support:** This library does not currently work with Railo and Lucee's full *NULL* support enabled, due to the the Java implementations in the upstream library.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. 
+
 Post issues with the core libraries to the github issue tracker for the [cfmongodb project](https://github.com/marcesher/cfmongodb). 
 For issues with CBMongoDB-specific functionality, post issues to the issue tracker(https://github.com/jclausen/cbmongodb).
 
