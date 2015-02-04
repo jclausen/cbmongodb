@@ -270,7 +270,6 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function get(required _id,returnInstance=true){
 		_id=getMongoUtil().newObjectIDfromID(_id);
-
 		var results=this.getDBInstance().findById(arguments._id);
 		if(!isNull(results)){
 			this.entity(results);
@@ -312,9 +311,9 @@ component name="BaseDocumentService"  accessors="true"{
 	/********************************* UTILS ****************************************/
 
 	void function criteria(struct criteria){
-		if(structKeyExists(arguments.criteria,'_id') && len(arguments.criteria['_id'])){
+		if(structKeyExists(arguments.criteria,'_id')){
 			//exclude our nested query obects
-			if(!isStruct(arguments.criteria['_id']))
+			if(!isStruct(arguments.criteria['_id']) && isSimpleValue(arguments.criteria['_id']))
 				arguments.criteria['_id']=getMongoUtil().newObjectIDfromID(arguments.criteria['_id']);
 		}
 
