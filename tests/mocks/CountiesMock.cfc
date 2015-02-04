@@ -10,9 +10,9 @@ component name="CountiesMock" extends="cbmongodb.models.GEOEntity" accessors=tru
 
 		this.setTest_documents([
 			{'name'='Kent','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/Kent.geo.json'))},
-			{'name'='Allegan','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/Allegan.geo.json'))},
+			{'name'='Newaygo','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/Newaygo.geo.json'))},
 			{'name'='Ionia','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/Ionia.geo.json'))},
-			{'name'='St.Clair','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/St.%20Clair.geo.json'))}
+			{'name'='Kalamazoo','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/Kalamazoo.geo.json'))}
 		  ]);
 
 	}
