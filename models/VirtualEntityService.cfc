@@ -165,7 +165,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @chainable
 	 **/
 	any function limit(numeric max){
-		this.set_limit(arguments.limit);
+		this.set_limit(arguments.max);
 		return this;
 	}
 
@@ -187,11 +187,11 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @chainable
 	 **/
 	any function find(returnInstance=true){
-		var results=this.getDbInstance().findOne(this.get_criteria());
-		if(!isNull(results)){
-			this.entity(results);
+		var results=this.limit(1).findAll();
+		if(arrayLen(results)){
+			this.entity(results[1]);
 			if(!returnInstance)
-				return results;
+				return results[1];
 		} else if(!returnInstance){
 			return;
 		}
