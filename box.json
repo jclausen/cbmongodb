@@ -1,6 +1,6 @@
 {
 	"name" 				: "CBMongoDB for Coldbox",
-	"version"			: "0.2.0",
+	"version"			: "0.2.2",
 	"author" 			: "Silo <info@silowebworks.com>",
 	"slug"				: "cbmongodb",
 	"type"				: "modules",
