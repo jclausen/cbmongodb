@@ -251,6 +251,8 @@ Getting Involved
 
 Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/integration) would be peachy.
 
+------------------------------------------------------------
+
 <a id="fn1"></a>
-<small><sup>1</sup> Valid operators currently include "=","!=","<",">",">=","<=","IN" and "Exists"</small>
+<sup>1</sup> <small>Valid operators currently include "=","!=","<",">",">=","<=","IN" and "Exists"</small>
 
