@@ -110,7 +110,7 @@ or you can add human readable unique values (tags/slugs) and index them:
 property name="tag" schema=true index=true;
 ```
 
-Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') [^1]
+Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') <sup>[1](#fn1)</sup>
 ```
 person = person.reset().where('first_name','John').where('last_name','Doe').find();
 ```
@@ -251,5 +251,6 @@ Getting Involved
 
 Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/integration) would be peachy.
 
-[^1]: Valid operators currently include "=","!=","<",">",">=","<=","IN" and "Exists"
+<a id="fn1"></a>
+<small><sup>1</sup> Valid operators currently include "=","!=","<",">",">=","<=","IN" and "Exists"</small>
 
