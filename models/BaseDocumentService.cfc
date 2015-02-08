@@ -30,7 +30,7 @@ component name="BaseDocumentService"  accessors="true"{
 	/**
 	 * The Mongo Utilities Library
 	 **/
-	 property name="MongoUtil";
+	 property name="MongoUtil" inject="MongoUtil@cbmongodb";
 
 	/**
 	 * The database client w/o a specified collection
@@ -181,13 +181,14 @@ component name="BaseDocumentService"  accessors="true"{
 		if(!this.indexExists(index_name)){
 			if(structKeyExists(prop,'geo')){
 				try{
-					this.getDBInstance().ensureGeoIndex(field=arguments.prop.name);
+					var doc = { "#prop.name#" = '2dsphere' };
+					this.getDBInstance().ensureIndex(toMongo(doc));
 				} catch(any e){
 					throw("Geo Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
 				}
 			} else {
 				try{
-					this.getDBInstance().ensureIndex(fields=idx,unique=is_unique,sparse=sparse,background=background,name=index_name);
+					this.getDBInstance().createIndex(prop.name,toMongo(idx_entry[prop.name]));
 				} catch(any e){
 					throw("Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
 				}
@@ -200,7 +201,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 
 	 public function indexExists(required name){
-		var existing=this.getDBInstance().getIndexes();
+	 	var existing=this.getDBInstance().getIndexInfo();
 		for(idx in existing){
 			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name)
 					return true;
@@ -401,5 +402,8 @@ component name="BaseDocumentService"  accessors="true"{
 		}
 	 }
 
+	any function toMongo(arg){
+		return getMongoUtil().toMongo(arg);
+	}
 
 }

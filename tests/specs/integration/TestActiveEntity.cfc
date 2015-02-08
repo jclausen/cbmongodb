@@ -7,9 +7,6 @@ component name="TestModelActiveEntity" extends="testbox.system.BaseSpec"{
 	function beforeAll(){
 		//custom methods
 		application.wirebox = new coldbox.system.ioc.Injector('cbmongodb.tests.config.Wirebox');
-		writeDump(application.wirebox.getInstance("MongoClient@cfMongoDB"));
-abort;
-
 		variables.people= application.wirebox.getInstance("Person");
 	}
 

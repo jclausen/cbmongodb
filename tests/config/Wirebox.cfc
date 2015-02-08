@@ -59,17 +59,17 @@ component extends="coldbox.system.ioc.config.Binder"{
 			.asSingleton();
 			//core java client
 			map("JClient@cbmongodb").toValue(
-				createObject('java','com.mongodb.MongoClient').init(MongoConfig.getMongoClientOptions())
+				createObject('java','com.mongodb.MongoClient').init(MongoConfig.getServers(),MongoConfig.getMongoClientOptions())
 			).asSingleton();
+
 			//client wrapper
 			map("MongoUtil@cbmongodb")
-				.to("cbmongodb.Mongo.Util")
+				.to("cbmongodb.models.Mongo.Util")
 				.initWith().asSingleton();
 
-			map( "MongoClient@cfMongoDB" )
-			.to( "cbmongodb.Mongo.Client" )
+			map( "MongoClient@cbmongodb" )
+			.to( "cbmongodb.models.Mongo.Client" )
 			.initWith(MongoConfig).asSingleton();
-
 
 			map("Person")
 			.to("cbmongodb.tests.mocks.ActiveEntityMock");

@@ -1,4 +1,9 @@
 component name="MongoClient" accessors=true singleton{
+	/**
+	 * Init Properties
+	 **/
+	property name="db";
+	property name="dbCollection";
 	property name="MongoConfig";
 	property name="collections";
 	//injected properties
@@ -15,8 +20,14 @@ component name="MongoClient" accessors=true singleton{
 	 **/
 	property name="mongo" inject="JClient@cbmongodb";
 
-	public function init(MongoConfig="#createObject('MongoConfig')#"){
+	public function init(MongoConfig){
 		this.setMongoConfig(arguments.MongoConfig);
+		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
+			application.wirebox.autowire(target=this,targetID="MongoClient@cbmongodb");
+		} else {
+			throw('Wirebox IOC Injection is required to user this service');
+		}
+		this.setDB(getMongo().getDB(getMongoConfig().getDBName()));
 		initCollections();
 		return this;
 
@@ -25,7 +36,7 @@ component name="MongoClient" accessors=true singleton{
 
 	private function initCollections(){
 		var dbName = getMongoConfig().getDBName();
-		variables.collections = { dbName = {} };
+		variables.collections = { '#dbName#' = {} };
 	}
 
 	/**
@@ -66,7 +77,7 @@ component name="MongoClient" accessors=true singleton{
 	*/
 	function getDBCollection( collectionName, dbName=getMongoConfig().getDBName() ){
 		if( not structkeyexists(variables.collections, dbName) or not structKeyExists( variables.collections[dbName], collectionName ) ){
-			variables.collections[ dbName ][ collectionName ] = createObject("component", "DBCollection" ).init( collectionName, this, dbName );
+			variables.collections[ dbName ][ collectionName ] = this.getDB().getCollection(collectionName);
 		}
 		return variables.collections[ dbName ][ collectionName ];
 	}

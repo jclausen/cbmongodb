@@ -4,11 +4,7 @@ component name="MongoUtil" accessors=true singleton{
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
 	function toMongo(any data){
-		//for now, assume it's a struct to DBO conversion
-		if( isCFBasicDBObject(data) ) return data;
-		var dbo = newDBObject();
-		dbo.putAll( data );
-		return dbo;
+		return deserializeJSON(serializeJSON(data));
 	}
 
 	/**
