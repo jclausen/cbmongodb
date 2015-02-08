@@ -9,6 +9,7 @@
 	<cfscript>
 	COLDBOX_APP_ROOT_PATH = expandPath('/');
 	this.mappings['/testbox'] = COLDBOX_APP_ROOT_PATH & 'testbox';
+	this.javaSettings = { loadPaths = [ expandPath("../lib") ], reloadOnChange = true };
 	</cfscript>
 
 	<!--- Create testing mapping --->

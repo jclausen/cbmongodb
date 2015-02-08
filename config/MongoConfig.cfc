@@ -1,7 +1,6 @@
 <cfcomponent accessors="true" output="false" hint="Main configuration information for MongoDb connections. Defaults are provided, but should be overridden as needed in subclasses. ">
 
 	<cfproperty name="environment" default="local">
-	<cfproperty name="mongoFactory">
 
 	<cfscript>
 
@@ -13,16 +12,15 @@
 	 * Constructor
 	 * @hosts Defaults to [{serverName='localhost',serverPort='27017'}]
 	 */
-	 public function init(Array hosts, dbName='default_db', MongoFactory="#createObject('DefaultFactory')#", MongoClientOptions="#{}#"){
+	 public function init(Array hosts, dbName='default_db', MongoClientOptions="#{}#"){
 
 	 	if (!structKeyExists(arguments, 'hosts') || arrayIsEmpty(arguments.hosts)) {
 			arguments.hosts = [{serverName='localhost',serverPort='27017'}];
 		}
 
-		variables.mongoFactory = arguments.mongoFactory;
 	 	establishHostInfo();
 
-		variables.conf = { dbname = dbName, servers = mongoFactory.getObject('java.util.ArrayList').init(), auth={username="",password=""} };
+		variables.conf = { dbname = dbName, servers = createObject('java','java.util.ArrayList').init(), auth={username="",password=""} };
 
 		var item = "";
 	 	for(item in arguments.hosts){
@@ -38,7 +36,7 @@
 	 }
 
 	 public function addServer(serverName, serverPort){
-	 	var sa = mongoFactory.getObject("com.mongodb.ServerAddress").init( serverName, serverPort );
+	 	var sa = createObject('java','com.mongodb.ServerAddress').init( serverName, serverPort );
 	 	variables.conf.servers.add( sa );
 		return this;
 	 }
@@ -57,7 +55,7 @@
 	}
 
 	function buildMongoClientOptions( struct mongoClientOptions ){
-		var builder = mongoFactory.getObject("com.mongodb.MongoClientOptions$Builder");
+		var builder = createObject("java","com.mongodb.MongoClientOptions$Builder");
 
 		for( var key in mongoClientOptions ){
 			var arg = mongoClientOptions[key];

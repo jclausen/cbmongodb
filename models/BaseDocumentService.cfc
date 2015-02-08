@@ -26,7 +26,7 @@ component name="BaseDocumentService"  accessors="true"{
 	/**
 	 * The MongoDB Client
 	 **/
-	property name="MongoClient" inject="MongoClient@cfMongoDB";
+	property name="MongoClient" inject="MongoClient@cbmongodb";
 	/**
 	 * The Mongo Utilities Library
 	 **/

@@ -40,8 +40,8 @@ component extends="coldbox.system.ioc.config.Binder"{
 			]
 		};
 
+
 			//defaults
-			var javaloaderFactory = createObject('component','cfmongodb.core.JavaloaderFactory').init();
 			var configStruct.MongoDB = {
 				hosts		= [
 								{
@@ -52,12 +52,24 @@ component extends="coldbox.system.ioc.config.Binder"{
 				db 	= "unit_tests",
 				viewTimeout	= "1000"
 			};
-			var MongoConfig = createObject('component','cbmongodb.config.MongoConfig').init(hosts=configStruct.MongoDB.hosts,dbName=configStruct.MongoDB.db, mongoFactory=javaloaderFactory);
-
+			var MongoConfig = createObject('component','cbmongodb.config.MongoConfig').init(hosts=configStruct.MongoDB.hosts,dbName=configStruct.MongoDB.db);
 			//mappings
+			//configuration
+			map("MongoConfig@cbmongodb").toValue(MongoConfig)
+			.asSingleton();
+			//core java client
+			map("JClient@cbmongodb").toValue(
+				createObject('java','com.mongodb.MongoClient').init(MongoConfig.getMongoClientOptions())
+			).asSingleton();
+			//client wrapper
+			map("MongoUtil@cbmongodb")
+				.to("cbmongodb.Mongo.Util")
+				.initWith().asSingleton();
+
 			map( "MongoClient@cfMongoDB" )
-			.to( "cfmongodb.core.MongoClient" )
+			.to( "cbmongodb.Mongo.Client" )
 			.initWith(MongoConfig).asSingleton();
+
 
 			map("Person")
 			.to("cbmongodb.tests.mocks.ActiveEntityMock");
