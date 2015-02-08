@@ -188,7 +188,7 @@ component name="BaseDocumentService"  accessors="true"{
 				}
 			} else {
 				try{
-					this.getDBInstance().createIndex(prop.name,toMongo(idx_entry[prop.name]));
+					this.getDBInstance().createIndex(toMongo(idx_entry[prop.name]));
 				} catch(any e){
 					throw("Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
 				}

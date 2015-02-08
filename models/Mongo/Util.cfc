@@ -3,8 +3,55 @@ component name="MongoUtil" accessors=true singleton{
 	/**
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
-	function toMongo(any data){
-		return deserializeJSON(serializeJSON(data));
+	function toMongo(any obj){
+		if (isStruct(obj))
+		{
+			var dbObject = createObject("java", "com.mongodb.BasicDBObject").init();
+
+			for (local.key in obj)
+			{
+				// convert '_id' and Modifier Operations into the correct case
+				if (compareNoCase(key,"_ID")==0)
+					key = "_id";
+				else if (key.startsWith("$"))
+					key = replaceList(lcase(key), "$addtoset,$pushall,$putall,$maxdistance", "$addToSet,$pushAll,$putAll,$maxDistance");
+
+				if (!structKeyExists(obj, key))
+					dbObject[key] = javacast("null","");
+				else
+				{
+					var value =  obj[key];
+
+					if (isStruct(value) || (isArray(value) && !isBinary(value)))
+						value = dbObjectNew(value);
+
+					dbObject[key] = value;
+				}
+			}
+
+			return dbObject;
+		}
+		else if (isArray(obj))
+		{
+			var dbObject = createObject("java", "com.mongodb.BasicDBList").init();
+
+			for (local.item in obj)
+			{
+				if (isNull(item))
+					arrayAppend(dbObject, javacast("null",""));
+				else
+				{
+					if (isStruct(item) || (isArray(item) && !isBinary(item)))
+						item = dbObjectNew(item);
+
+					arrayAppend(dbObject, isNull(item) ? javacast("null","") : item);
+				}
+			}
+
+			return dbObject;
+		}
+
+		return obj;
 	}
 
 	/**
