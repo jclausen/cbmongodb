@@ -5,15 +5,15 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 
 This module uses Bill Shelton and Marc Escher's excellent [cfmongodb project](https://github.com/marcesher/cfmongodb), which is a partial wrapper for the MongoDB Java driver and a document-struct mapper for ColdFusion.
 
-Compatibility: ColdFusion 9.0.1+ and Railo 3.2+, Coldbox 4+
+Compatibility: ColdFusion 9.0.1+/Railo 4.0+/Lucee 4.2+  Coldbox 4+
 
 Installation &amp; Configuration
 --------------------------------
 
 1. [Install MongoDB](http://docs.mongodb.org/manual/installation/) and start up an instance of `mongod`
-2. Perform a recursive clone `git clone --recursive git@github.com:jclausen/cbmongodb.git modules/cbmongodb` or, once it's added to Forgebox:
-2. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
-3. Add the following (with your own config) to config/Coldbox.cfc*
+2. Create a Coldbox application `box install coldbox && box coldbox create app`
+3. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
+4. Add the following (with your own config) to config/Coldbox.cfc*
 	
 ```
 MongoDB = {
@@ -38,9 +38,9 @@ component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" accesso
 ```
 
 
-5. If you need to use cfmongodb client directly, you can also use:
+5. If you need to use cfmongodb client directly, you can call it from your model with:
 ```
-variables.wirebox.getInstance('MongoClient@cfMongoDB')
+getMongoClient()
 ```
 
 Usage
@@ -49,7 +49,7 @@ In your model, you will need to specify the collection to be used.  For those co
 ```
 property name="collection" default="peoplecollection";
 ```	
-Now all of our operations will be performed on the "peoplecollection" collection.
+Now all of our operations will be performed on the "peoplecollection" collection (which will created if it doesn't exist).
 	
 CBMongoDB will inspect your model properties to create your default document schema.  All you need to do is add `schema=true` to your property and it will be included with the default document.  You can either use a dot notation in the property name field for nested documents (infinite recursion) or specify `parent="myParentProperty"` (single-level recursion).  For example a contact property might be:
 ```
@@ -95,18 +95,22 @@ var person=this.populate({
 	}
 	}).create();
 ```
-
-Once we've created the document, it will be returned as the active entity.
+Once we've created the document, it becomes the Active Entity.
 ```
 var is_loaded=person.loaded(); //will return true	
 ```
 
-There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is super-duper fast):
+There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is really, really fast):
 ```
 var pkey=person.get_id();
 ```
 
-Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value')
+or you can add human readable unique values (tags/slugs) and index them:
+```
+property name="tag" schema=true index=true;
+```
+
+Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') <sup>[1](#fn1)</sup>
 ```
 person = person.reset().where('first_name','John').where('last_name','Doe').find();
 ```
@@ -140,7 +144,7 @@ for(var peep in people){
 }
 ```
 
-Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
+Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also extremely fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
 
 ```
 var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
@@ -207,7 +211,7 @@ michigan = states.populate({
 
 The create() returns our _id value, so let's load up our entity:
 ```
-michigan = states.load(michigan);
+michigan = states.get(michigan);
 ```
 First we'll find all of the people in michigan:
 ```
@@ -247,4 +251,8 @@ Getting Involved
 
 Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/integration) would be peachy.
 
+------------------------------------------------------------
+
+<a id="fn1"></a>
+<sup>1</sup> <small>Valid operators currently include "=","!=","<",">",">=","<=","IN" and "Exists"</small>
 
