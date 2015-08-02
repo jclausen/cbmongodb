@@ -5,15 +5,15 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 
 This module uses Bill Shelton and Marc Escher's excellent [cfmongodb project](https://github.com/marcesher/cfmongodb), which is a partial wrapper for the MongoDB Java driver and a document-struct mapper for ColdFusion.
 
-Compatibility: ColdFusion 9.0.1+ and Railo 3.2+, Coldbox 4+
+Compatibility: ColdFusion 9.0.1+/Railo 4.0+/Lucee 4.2+  Coldbox 4+
 
 Installation &amp; Configuration
 --------------------------------
 
 1. [Install MongoDB](http://docs.mongodb.org/manual/installation/) and start up an instance of `mongod`
-2. Perform a recursive clone `git clone --recursive git@github.com:jclausen/cbmongodb.git modules/cbmongodb` or, once it's added to Forgebox:
-2. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
-3. Add the following (with your own config) to config/Coldbox.cfc*
+2. Create a Coldbox application `box install coldbox && box coldbox create app`
+3. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
+4. Add the following (with your own config) to config/Coldbox.cfc*
 	
 ```
 MongoDB = {
@@ -100,7 +100,7 @@ Once we've created the document, it becomes the Active Entity.
 var is_loaded=person.loaded(); //will return true	
 ```
 
-There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is super-duper fast):
+There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is really, really fast):
 ```
 var pkey=person.get_id();
 ```
@@ -144,7 +144,7 @@ for(var peep in people){
 }
 ```
 
-Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also super-duper fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
+Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also extremely fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
 
 ```
 var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
@@ -211,7 +211,7 @@ michigan = states.populate({
 
 The create() returns our _id value, so let's load up our entity:
 ```
-michigan = states.load(michigan);
+michigan = states.get(michigan);
 ```
 First we'll find all of the people in michigan:
 ```
