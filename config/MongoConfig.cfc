@@ -21,8 +21,14 @@
 
 		variables.mongoFactory = arguments.mongoFactory;
 	 	establishHostInfo();
+	 	
+	 	var auth = {
+	 		username:structKeyExists(arguments.hosts[1],'username')?arguments.hosts[1].username:"",
+	 		password:structKeyExists(arguments.hosts[1],'password')?arguments.hosts[1].password:""
+	 	}
+	 	if(structKeyExists(arguments.hosts[1],'authenticationDB')) auth['db']=arguments.hosts[1].authenticationDB;
 
-		variables.conf = { dbname = dbName, servers = mongoFactory.getObject('java.util.ArrayList').init(), auth={username="",password=""} };
+		variables.conf = { dbname = dbName, servers = mongoFactory.getObject('java.util.ArrayList').init(), auth=auth};
 
 		var item = "";
 	 	for(item in arguments.hosts){

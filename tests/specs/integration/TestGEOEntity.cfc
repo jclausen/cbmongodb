@@ -14,7 +14,7 @@ component name="TestModelGEOEntity" extends="testbox.system.BaseSpec" accessors=
 	}
 
 	function afterAll(){
-          variables.people.getDB().dropDatabase();
+          //variables.people.getDB().dropDatabase();
           variables.people.getDB().close();
           structDelete( application, "wirebox" );
           structDelete( variables, "people" );
@@ -28,7 +28,7 @@ component name="TestModelGEOEntity" extends="testbox.system.BaseSpec" accessors=
 
 			});
 
-			it('+checks geospatial query functions',function(){
+			xit('+checks geospatial query functions',function(){
 				var person=variables.people;
 				expect(person.populate(person.getTest_document())).toBeComponent();
 				var document_id=person.create();

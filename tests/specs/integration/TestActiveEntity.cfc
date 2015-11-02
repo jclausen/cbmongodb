@@ -11,7 +11,7 @@ component name="TestModelActiveEntity" extends="testbox.system.BaseSpec"{
 	}
 
 	function afterAll(){
-          variables.people.getDB().dropDatabase();
+          //variables.people.getDB().dropDatabase();
           variables.people.getDB().close();
           structDelete( application, "wirebox" );
           structDelete( variables, "people" );
