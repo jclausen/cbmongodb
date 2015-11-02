@@ -42,17 +42,29 @@ component extends="coldbox.system.ioc.config.Binder"{
 
 
 			//defaults
+			var javaloaderFactory = createObject('component','cfmongodb.core.JavaloaderFactory').init();
 			var configStruct.MongoDB = {
 				hosts		= [
 								{
 									serverName='127.0.0.1',
-									serverPort='27017'
+									serverPort='27017',
+									username="unitTestUser",
+									password="testing",
+									authenticationDB="admin"
 								}
+								// {
+								// 	serverName='ds012345.mongolab.com',
+								// 	serverPort='12345',
+								// 	username="unitTestUser",
+								// 	password="testing",
+								// 	authenticationDB="cbmongo_unit_tests"
+								// }
 							  ],
-				db 	= "unit_tests",
+				db 	= "cbmongo_unit_tests",
 				viewTimeout	= "1000"
 			};
-			var MongoConfig = createObject('component','cbmongodb.config.MongoConfig').init(hosts=configStruct.MongoDB.hosts,dbName=configStruct.MongoDB.db);
+
+			var MongoConfig = createObject('component','cbmongodb.config.MongoConfig').init(hosts=configStruct.MongoDB.hosts,dbName=configStruct.MongoDB.db, mongoFactory=javaloaderFactory);
 			//mappings
 			//configuration
 			map("MongoConfig@cbmongodb").toValue(MongoConfig)
@@ -67,8 +79,8 @@ component extends="coldbox.system.ioc.config.Binder"{
 				.to("cbmongodb.models.Mongo.Util")
 				.initWith().asSingleton();
 
-			map( "MongoClient@cbmongodb" )
-			.to( "cbmongodb.models.Mongo.Client" )
+			map( "MongoClient@cfMongoDB" )
+			.to( "cfmongodb.core.MongoClient" )
 			.initWith(MongoConfig).asSingleton();
 
 			map("Person")

@@ -2,10 +2,8 @@
 *
 * <strong>CFMongoDB Module Configuration</strong>
 *
-* <p>A modification of the cfmongodb library for use as a Coldbox Module</p>
+* <p>An Active Entity Module for MongoDB</p>
 *
-* @author Bill Shelton <bill@if.io>
-* @author Marc Escher <marc.esher@gmail.com>
 * @author Jon Clausen <jon_clausen@silowebworks.com>
 *
 * @link https://github.com/jclausen/cfmongodb [coldbox/master]
