@@ -14,7 +14,7 @@ component name="TestModelGEOEntity" extends="testbox.system.BaseSpec" accessors=
 	}
 
 	function afterAll(){
-          //variables.people.getDB().dropDatabase();
+          variables.people.getDB().dropDatabase();
           variables.people.getDB().close();
           structDelete( application, "wirebox" );
           structDelete( variables, "people" );

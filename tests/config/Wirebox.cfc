@@ -52,10 +52,10 @@ component extends="coldbox.system.ioc.config.Binder"{
 									authenticationDB="admin"
 								}
 								// {
-								// 	serverName='ds01234.mongolab.com',
-								// 	serverPort='1234',
+								// 	serverName='ds012345.mongolab.com',
+								// 	serverPort='12345',
 								// 	username="unitTestUser",
-								// 	password="SecurePa55w0rD",
+								// 	password="testing",
 								// 	authenticationDB="cbmongo_unit_tests"
 								// }
 							  ],
