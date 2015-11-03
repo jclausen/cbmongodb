@@ -1,11 +1,8 @@
-<cfcomponent accessors="true" output="false" hint="Main configuration information for MongoDb connections. Defaults are provided, but should be overridden as needed in subclasses. ">
-
-	<cfproperty name="environment" default="local">
-	<cfproperty name="mongoFactory">
-
-	<cfscript>
-
-	variables.environment = "local";
+component accessors="true" output="false" hint="Main configuration for MongoDB Connections"{
+	/**
+	* CBJavaloader
+	**/
+	property name="jLoader" inject="jl@cbjavaloader";
 	variables.conf = {};
 
 
@@ -13,29 +10,31 @@
 	 * Constructor
 	 * @hosts Defaults to [{serverName='localhost',serverPort='27017'}]
 	 */
-	 public function init(Array hosts, dbName='default_db', MongoClientOptions="#{}#"){
+	 public function init(configStruct){
+	 	if(isNull(jLoader)){
+	 		application.wirebox.autowire(this);
+	 	}
+	 	var hosts = structKeyExists(configStruct,'hosts')?configStruct.hosts: [{serverName='localhost',serverPort='27017'}]
+	 	var dbName= configStruct.db 
+	 	var MongoClientOptions=structKeyExists(configStruct,'clientOptions')?configStruct.clientOptions:{};
 
-	 	if (!structKeyExists(arguments, 'hosts') || arrayIsEmpty(arguments.hosts)) {
-			arguments.hosts = [{serverName='localhost',serverPort='27017'}];
-		}
 
-		variables.mongoFactory = arguments.mongoFactory;
 	 	establishHostInfo();
 	 	
 	 	var auth = {
-	 		username:structKeyExists(arguments.hosts[1],'username')?arguments.hosts[1].username:"",
-	 		password:structKeyExists(arguments.hosts[1],'password')?arguments.hosts[1].password:""
+	 		username:structKeyExists(hosts[1],'username')?hosts[1].username:"",
+	 		password:structKeyExists(hosts[1],'password')?hosts[1].password:""
 	 	}
-	 	if(structKeyExists(arguments.hosts[1],'authenticationDB')) auth['db']=arguments.hosts[1].authenticationDB;
+	 	if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
 
-		variables.conf = { dbname = dbName, servers = mongoFactory.getObject('java.util.ArrayList').init(), auth=auth};
+		variables.conf = { dbname = dbName, servers = createObject("java",'java.util.ArrayList').init(), auth=auth};
 
 		var item = "";
-	 	for(item in arguments.hosts){
+	 	for(item in hosts){
 	 		addServer( item.serverName, item.serverPort );
 	 	}
 		//turn the struct of MongoClientOptions into a proper object
-		buildMongoClientOptions( arguments.mongoClientOptions );
+		buildMongoClientOptions( mongoClientOptions );
 
 		//main entry point for environment-aware configuration; subclasses should do their work in here
 		environment = configureEnvironment();
@@ -44,7 +43,7 @@
 	 }
 
 	 public function addServer(serverName, serverPort){
-	 	var sa = mongoFactory.getObject("com.mongodb.ServerAddress").init( serverName, serverPort );
+	 	var sa = createObject("java","com.mongodb.ServerAddress").init( serverName, serverPort );
 	 	variables.conf.servers.add( sa );
 		return this;
 	 }
@@ -63,7 +62,7 @@
 	}
 
 	function buildMongoClientOptions( struct mongoClientOptions ){
-		var builder = mongoFactory.getObject("com.mongodb.MongoClientOptions$Builder");
+		var builder = createObject("java","com.mongodb.MongoClientOptions$Builder");
 
 		for( var key in mongoClientOptions ){
 			var arg = mongoClientOptions[key];
@@ -98,6 +97,4 @@
 	 public struct function getDefaults(){ return conf; }
 
 
-
-	</cfscript>
-</cfcomponent>
+}

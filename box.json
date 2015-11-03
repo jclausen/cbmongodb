@@ -29,7 +29,7 @@
 		"runner" : ['tests/runner.cfm']
 	},
 	"dependencies" 	:{
-		"cfmongodb" : "dev-coldbox"
+		"cfjavaloader" : "1.0.0"
 	},
 	"devdependencies" : {
 		"testbox" : ">2.0"		

@@ -12,13 +12,14 @@ component name="MongoClient" accessors=true singleton{
 	 **/
 	property name="wirebox" inject="wirebox";
 	/**
+	* CBJavaloader
+	**/
+	property name="jLoader" inject="jl@cbjavaloader";
+	/**
 	 * Utility Class
 	 **/
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
-	/**
-	 * Java Mongo Client
-	 **/
-	property name="mongo" inject="JClient@cbmongodb";
+	
 
 	public function init(MongoConfig){
 		this.setMongoConfig(arguments.MongoConfig);
@@ -27,32 +28,37 @@ component name="MongoClient" accessors=true singleton{
 		} else {
 			throw('Wirebox IOC Injection is required to user this service');
 		}
-		this.setDB(getMongo().getDB(getMongoConfig().getDBName()));
+
+		
+		variables.mongo = createObject('java','com.mongodb.MongoClient');
+
+		if(structKeyExists(MongoConfig,'auth') and len(MongoConfig.auth.username) and len(MongoConfig.auth.password)){
+			var MongoCredentials = createObject('java','java.util.ArrayList');
+			var MongoServers = createObject('java','java.util.ArrayList');
+			 for (var mongoServer in MongoConfig.servers){
+			 	MongoServers.add(mongoServer);
+			 	MongoCredentials.add(createCredential(MongoConfig.auth.username,structKeyExists(MongoConfig.auth,'db')?javacast('string',MongoConfig.auth.db):javacast('string','admin'),MongoConfig.auth.password.toCharArray()));
+			 }
+			 variables.mongo.init(MongoServers ,MongoCredentials, getMongoConfig().getMongoClientOptions() );
+		} else {
+			variables.mongo.init( variables.mongoConfig.getServers(), getMongoConfig().getMongoClientOptions() );
+		}
+
 		initCollections();
 		return this;
 
+	}
+
+	private function createCredential(required string username,required string password, required authDB='admin'){
+		var MongoCredential = jLoader.create('com.mongodb.MongoCredential');
+		var credential = MongoCredential.createCredential(javacast('string',username),javacast('string',arguments.authDB),arguments.password.toCharArray());
+		return credential;
 	}
 
 
 	private function initCollections(){
 		var dbName = getMongoConfig().getDBName();
 		variables.collections = { '#dbName#' = {} };
-	}
-
-	/**
-	* Authenticates connection/db with given name and password
-
-		Typical usage:
-		mongoConfig.init(...);
-		mongo = new Mongo( mongoConfig );
-		mongo.authenticate( username, password );
-
-		If authentication fails, an error will be thrown
-	*
-	*/
-	void function authenticate( string username, string password ){
-		var result = {authenticated = false, error={}};
-		result.authenticated = getMongoDB( variables.mongoConfig ).authenticateCommand( arguments.username, arguments.password.toCharArray() );
 	}
 
 

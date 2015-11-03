@@ -13,6 +13,11 @@
 	</cfscript>
 
 	<!--- Create testing mapping --->
+	<cfif directoryExists(expandPath('../modules/cbjavaloader'))>
+		<cfset this.mappings["/cbjavaloader"] = expandPath('../modules/cbjavaloader')>
+	<cfelse>
+		<cfset this.mappings["/cbjavaloader"] = expandPath('../../cbjavaloader')>
+	</cfif>
 	<cfset this.mappings[ "/cbmongodb" ] = expandPath('../')>
 	<cfset this.mappings[ "/tests" ] = getDirectoryFromPath( getCurrentTemplatePath() )>
 	<!--- Map back to its root --->

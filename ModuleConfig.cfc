@@ -27,7 +27,7 @@ component{
 	// CF Mapping to register
 	this.cfmapping			= "cbmongodb";
 	// Module Dependencies to be loaded in order
-	this.dependencies 		= ['cfmongodb'];
+	this.dependencies 		= ['cbjavaloader'];
 
 	/**
 	* Fired on Module Registration

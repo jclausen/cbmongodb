@@ -40,55 +40,55 @@ component extends="coldbox.system.ioc.config.Binder"{
 			]
 		};
 
+			
+		var configStruct.MongoDB = {
+			hosts		= [
+							{
+								serverName='127.0.0.1',
+								serverPort='27017',
+								username="unitTestUser",
+								password="testing",
+								authenticationDB="admin"
+							}
+							// {
+							// 	serverName='ds012345.mongolab.com',
+							// 	serverPort='12345',
+							// 	username="unitTestUser",
+							// 	password="testing",
+							// 	authenticationDB="cbmongo_unit_tests"
+							// }
+						  ],
+			db 	= "cbmongo_unit_tests",
+			viewTimeout	= "1000"
+		};
 
-			//defaults
-			var javaloaderFactory = createObject('component','cfmongodb.core.JavaloaderFactory').init();
-			var configStruct.MongoDB = {
-				hosts		= [
-								{
-									serverName='127.0.0.1',
-									serverPort='27017',
-									username="unitTestUser",
-									password="testing",
-									authenticationDB="admin"
-								}
-								// {
-								// 	serverName='ds012345.mongolab.com',
-								// 	serverPort='12345',
-								// 	username="unitTestUser",
-								// 	password="testing",
-								// 	authenticationDB="cbmongo_unit_tests"
-								// }
-							  ],
-				db 	= "cbmongo_unit_tests",
-				viewTimeout	= "1000"
-			};
-
-			var MongoConfig = createObject('component','cbmongodb.config.MongoConfig').init(hosts=configStruct.MongoDB.hosts,dbName=configStruct.MongoDB.db, mongoFactory=javaloaderFactory);
-			//mappings
-			//configuration
-			map("MongoConfig@cbmongodb").toValue(MongoConfig)
+		//mappings
+		map( "jl@cbjavaloader" )
+			.to( "cbjavaloader.models.javaloader.JavaLoader" )
+			.initArg( name="loadPaths",value=[expandPath('../lib')]);
+			
+		//configuration
+		map("MongoConfig@cbmongodb")
+			.to('cbmongodb.models.Mongo.Config')
+			.initWith(configStruct.MongoDB)
 			.asSingleton();
-			//core java client
-			map("JClient@cbmongodb").toValue(
-				createObject('java','com.mongodb.MongoClient').init(MongoConfig.getServers(),MongoConfig.getMongoClientOptions())
-			).asSingleton();
 
-			//client wrapper
-			map("MongoUtil@cbmongodb")
-				.to("cbmongodb.models.Mongo.Util")
-				.initWith().asSingleton();
+		//client wrapper
+		map("MongoUtil@cbmongodb")
+			.to("cbmongodb.models.Mongo.Util")
+			.initWith().asSingleton();
 
-			map( "MongoClient@cfMongoDB" )
-			.to( "cfmongodb.core.MongoClient" )
-			.initWith(MongoConfig).asSingleton();
+		map( "MongoClient@cbmongodb" )
+		.to( "cbmongodb.models.Mongo.Client" )
+		.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
+		.asSingleton();
 
-			map("Person")
-			.to("cbmongodb.tests.mocks.ActiveEntityMock");
-			map("State")
-			.to("cbmongodb.tests.mocks.StatesMock");
-			map("County")
-			.to("cbmongodb.tests.mocks.CountiesMock");
+		map("Person")
+		.to("cbmongodb.tests.mocks.ActiveEntityMock");
+		map("State")
+		.to("cbmongodb.tests.mocks.StatesMock");
+		map("County")
+		.to("cbmongodb.tests.mocks.CountiesMock");
 	}
 
 }

@@ -3,11 +3,14 @@
 *******************************************************************************/
 component name="TestModelActiveEntity" extends="testbox.system.BaseSpec"{
 	property name="people";
+	property name="MongoClient" inject="MongoClient@cbmongodb";
 
 	function beforeAll(){
 		//custom methods
 		application.wirebox = new coldbox.system.ioc.Injector('cbmongodb.tests.config.Wirebox');
+		application.wirebox.autowire(this);
 		variables.people= application.wirebox.getInstance("Person");
+
 	}
 
 	function afterAll(){
