@@ -94,7 +94,9 @@ component name="BaseDocumentService"  accessors="true"{
 		this.setAppSettings(getWirebox().getBinder().getProperties());
 		//Connect to Mongo
 		this.setDb(this.getMongoClient());
+
 		this.setDbInstance(this.getDb().getDBCollection(this.getCollection()));
+		
 		//Default Document Creation
 		this.set_document(structNew());
 		this.set_default_document(structNew());
@@ -146,7 +148,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 *
 	 **/
 	public function applyIndex(required prop,properties=[]){
-		var idx=arrayNew(1);
+		var idx=structNew();
 		var is_unique=false;
 		var sparse=false;
 		var background=true;
@@ -154,7 +156,7 @@ component name="BaseDocumentService"  accessors="true"{
 			is_unique=true;
 		}
 		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
-			arrayAppend(idx,{"#prop.name#"=this.indexOrder(prop)});
+			idx[prop.name]=this.indexOrder(prop);
 			//Now test for a combined index
 			if(structKeyExists(prop,'indexwith')){
 				//re-find our relation since structFind() isn't reliable with nested structs
@@ -163,10 +165,10 @@ component name="BaseDocumentService"  accessors="true"{
 						break;
 					}
 				}
-				arrayAppend(idx,{'#rel.name#'=this.indexOrder(prop)});
+				idx[rel.name]=this.indexOrder(prop);
 			}
 		} else {
-			arrayAppend(idx,arguments.prop.name);
+			idx[arguments.prop.name]=this.indexOrder(prop);
 		}
 
 		//Check whether we have records and make it sparse if we're currently empty
@@ -175,20 +177,25 @@ component name="BaseDocumentService"  accessors="true"{
 		}
 		//create implicit name so we can overwrite sparse settings
 		var index_name=hash(serializeJSON(idx));
-		//add our index key
-		var idx_entry={'#prop.name#'={'name'=index_name,'idx'=serializeJSON(idx),'sparse'=sparse,'background'=background,'unique'=is_unique}};
-		arrayAppend(this.get_indexes(),idx_entry);
+		//add our index options
+		var idxOptions = createObject("java","com.mongodb.client.model.IndexOptions");
+		idxOptions.name(index_name);
+		idxOptions.sparse(sparse);
+		idxOptions.background(background);
+		idxOptions.unique(is_unique);
+
+		arrayAppend(this.get_indexes(),idxOptions);
 		if(!this.indexExists(index_name)){
 			if(structKeyExists(prop,'geo')){
 				try{
 					var doc = { "#prop.name#" = '2dsphere' };
-					this.getDBInstance().ensureIndex(toMongo(doc));
+					this.getDBInstance().createIndex(toMongo(doc,false),idxOptions);
 				} catch(any e){
 					throw("Geo Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
 				}
 			} else {
 				try{
-					this.getDBInstance().createIndex(toMongo(idx_entry[prop.name]));
+					this.getDBInstance().createIndex(toMongo(idx),idxOptions);
 				} catch(any e){
 					throw("Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
 				}
@@ -201,7 +208,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 
 	 public function indexExists(required name){
-	 	var existing=this.getDBInstance().getIndexInfo();
+	 	var existing=this.getIndexInfo();
 		for(idx in existing){
 			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name)
 					return true;
@@ -221,6 +228,16 @@ component name="BaseDocumentService"  accessors="true"{
 			order=mapOrder(prop.indexorder);
 		}
 		return order;
+	}
+
+	public function getIndexInfo(){
+		var indexList = getDbInstance().listIndexes().iterator();
+		var indexes=[];
+		while(indexList.hasNext()){
+			arrayAppend(indexes,indexList.next());
+		}
+		return indexes;
+
 	}
 
 
@@ -270,22 +287,27 @@ component name="BaseDocumentService"  accessors="true"{
 	 * @param boolean returnInstance - whether to return a loaded instance (true) or a result struct (false)
 	 **/
 	any function get(required _id,returnInstance=true){
-		_id=getMongoUtil().newObjectIDfromID(_id);
-		var results=this.getDBInstance().findById(arguments._id);
-		if(!isNull(results)){
-			this.entity(results);
+		var qObj = getMongoUtil().newIDCriteriaObject(_id);
+		var results=this.getDBInstance().find(qObj).limit(1).iterator();
+		if(!isNull(results.hasNext()) and results.hasNext()){
+			
+			this.entity(results.next());
+			
 			if(!returnInstance){
-				return results;
+				return results.next();
+			} else {
+				return this;
 			}
 		}
 		return this;
 	}
+
 	/**
 	 * Deletes a document by ID
 	 **/
 	any function delete(required _id){
-		var deleted=(this.getDBInstance().removeById(arguments['_id']).getN() eq 1);
-		return deleted;
+		var deleted=this.getDBInstance().findOneAndDelete(getMongoUtil().newIDCriteriaObject(arguments['_id']));
+		return true;
 	}
 
 
@@ -403,7 +425,13 @@ component name="BaseDocumentService"  accessors="true"{
 	 }
 
 	any function toMongo(arg){
+
 		return getMongoUtil().toMongo(arg);
+
+	}
+
+	any function toMongoDocument(arg){
+		return getMongoUtil().toMongoDocument(arg);
 	}
 
 }

@@ -28,7 +28,7 @@ component name="TestModelGEOEntity" extends="testbox.system.BaseSpec" accessors=
 
 			});
 
-			xit('+checks geospatial query functions',function(){
+			it('+checks geospatial query functions',function(){
 				var person=variables.people;
 				expect(person.populate(person.getTest_document())).toBeComponent();
 				var document_id=person.create();

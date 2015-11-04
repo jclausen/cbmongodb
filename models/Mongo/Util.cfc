@@ -1,57 +1,71 @@
 component name="MongoUtil" accessors=true singleton{
 	property name="MongoConfig" inject="MongoConfig@cbmongodb";
+
 	/**
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
-	function toMongo(any obj){
-		if (isStruct(obj))
-		{
-			var dbObject = createObject("java", "com.mongodb.BasicDBObject").init();
+	function toMongo(any obj,basic=false){
 
-			for (local.key in obj)
-			{
-				// convert '_id' and Modifier Operations into the correct case
-				if (compareNoCase(key,"_ID")==0)
-					key = "_id";
-				else if (key.startsWith("$"))
-					key = replaceList(lcase(key), "$addtoset,$pushall,$putall,$maxdistance", "$addToSet,$pushAll,$putAll,$maxDistance");
+		// if (isStruct(obj))
+		// {
+		// 	var dbObject = createObject("java", "com.mongodb.BasicDBObject").init();
 
-				if (!structKeyExists(obj, key))
-					dbObject[key] = javacast("null","");
-				else
-				{
-					var value =  obj[key];
+		// 	for (local.key in obj)
+		// 	{
+		// 		// convert '_id' and Modifier Operations into the correct case
+		// 		if (compareNoCase(key,"_ID")==0)
+		// 			key = "_id";
+		// 		else if (key.startsWith("$"))
+		// 			key = replaceList(lcase(key), "$addtoset,$pushall,$putall,$maxdistance", "$addToSet,$pushAll,$putAll,$maxDistance");
 
-					if (isStruct(value) || (isArray(value) && !isBinary(value)))
-						value = dbObjectNew(value);
+		// 		if (!structKeyExists(obj, key))
+		// 			dbObject[key] = javacast("null","");
+		// 		else
+		// 		{
+		// 			var value =  obj[key];
 
-					dbObject[key] = value;
-				}
-			}
+		// 			if (isStruct(value) || (isArray(value) && !isBinary(value)))
+		// 				value = dbObjectNew(value);
 
-			return dbObject;
-		}
-		else if (isArray(obj))
-		{
-			var dbObject = createObject("java", "com.mongodb.BasicDBList").init();
+		// 			dbObject[key] = value;
+		// 		}
+		// 	}
 
-			for (local.item in obj)
-			{
-				if (isNull(item))
-					arrayAppend(dbObject, javacast("null",""));
-				else
-				{
-					if (isStruct(item) || (isArray(item) && !isBinary(item)))
-						item = dbObjectNew(item);
+		// 	return dbObject;
+		// }
+		// else if (isArray(obj))
+		// {
+		// 	var dbObject = createObject("java", "com.mongodb.BasicDBList").init();
 
-					arrayAppend(dbObject, isNull(item) ? javacast("null","") : item);
-				}
-			}
+		// 	for (local.item in obj)
+		// 	{
+		// 		if (isNull(item))
+		// 			arrayAppend(dbObject, javacast("null",""));
+		// 		else
+		// 		{
+		// 			if (isStruct(item) || (isArray(item) && !isBinary(item)))
+		// 				item = dbObjectNew(item);
 
-			return dbObject;
-		}
+		// 			arrayAppend(dbObject, isNull(item) ? javacast("null","") : item);
+		// 		}
+		// 	}
 
-		return obj;
+		// 	return dbObject;
+		// }
+
+		return dbObjectnew(obj,basic);
+	}
+
+	function toMongoDocument(data){
+		var doc = createObject('java','org.bson.Document');
+		doc.putAll(data);
+		return doc;
+	}
+
+	function toMongoConversion(data){
+		// var conversion = createObject('java','org.bson.conversions.Bson');
+		// conversion.toBsonDocument(toMongoDocument(data))
+		return toMongoDocument(data);
 	}
 
 	/**
@@ -78,14 +92,16 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function newObjectIDFromID(String id){
 		if( not isSimpleValue( id ) ) return id;
-		return mongoFactory.getObject("org.bson.types.ObjectId").init(id);
+		return createObject("java","org.bson.types.ObjectId").init(id);
 	}
 
 	/**
 	* Convenience for creating a new criteria object based on a string _id
 	*/
 	function newIDCriteriaObject(String id){
-		return newDBObject().put("_id",newObjectIDFromID(id));
+		var dbo = newDBObject();
+		dbo.put("_id",newObjectIDFromID(id));
+		return dbo;
 	}
 
 	/**
@@ -144,4 +160,56 @@ component name="MongoUtil" accessors=true singleton{
 	function isCFBasicDBObject( doc ){
 		return NOT isSimpleValue( doc ) AND getMetadata( doc ).getCanonicalName() eq "com.mongodb.CFBasicDBObject";
 	}
+
+	/**
+	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
+	*/
+	function newDBObject(){
+		var dbo = createObject('java','com.mongodb.BasicDBObject');	
+		return dbo;
+	}
+
+	function dbObjectNew(contents,basic=true){
+		var dbo = newDBObject();
+		dbo.putAll(toMongoDocument(contents));
+		//if(basic){
+			return dbo;
+		// } else {
+		// 	try{
+		// 		var map = createObject('java','java.util.HashMap');
+		// 		map.putAll(contents);
+		// 		return dbo.putAll(map);
+		// 	} catch (any e){
+		// 		writeDump(var=e,top=1);
+		// 		abort;
+		// 	}
+		// }
+		
+	}
+
+	function encapsulateCursor(dbResult){
+		var enc = {};
+		enc['asCursor']=function(){return dbResult.iterator()};
+		enc['asArray']=function(){return this.asArray(dbResult)};
+		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
+		enc['asJSON']=function(required fn){return serializeJSON(this.asArray(dbResult,true))};
+		return enc;
+	}
+
+	/**
+	* Returns the results of a dbResult object as an array of documents
+	**/
+	function asArray(dbResult,stringify=false){
+		var aResults = [];
+		var cursor = dbResult.iterator();
+		while(cursor.hasNext()){
+			var nextResult = cursor.next();
+			//TODO:  Add conversion function to recurse the document and convert all BSON ID's
+			if(stringify) nextResult['_id']=nextResult['_id'].toString();
+
+			arrayAppend(aResults,nextResult);
+		}
+		return aResults;
+	}
+
 }

@@ -34,9 +34,9 @@ component name="TestModelActiveEntity" extends="testbox.system.BaseSpec"{
 				expect(variables.people.getTest_document()).toBeStruct();
 			});
 
-			it('+checks connectivity', function(){
-				expect(variables.people.getDBInstance()).toBeComponent();
-			});
+			// it('+checks connectivity', function(){
+			// 	expect(variables.people.getDBInstance()).toBeComponent();
+			// });
 
 			it('+checks basic CRUD', function(){
 				var model=variables.people;

@@ -43,7 +43,8 @@ component name="MongoClient" accessors=true singleton{
 		} else {
 			variables.mongo.init( variables.mongoConfig.getServers(), getMongoConfig().getMongoClientOptions() );
 		}
-
+		variables.db = variables.mongo.getDatabase(variables.mongoConfig.getDbName());
+		
 		initCollections();
 		return this;
 
@@ -85,6 +86,7 @@ component name="MongoClient" accessors=true singleton{
 		if( not structkeyexists(variables.collections, dbName) or not structKeyExists( variables.collections[dbName], collectionName ) ){
 			variables.collections[ dbName ][ collectionName ] = this.getDB().getCollection(collectionName);
 		}
+		
 		return variables.collections[ dbName ][ collectionName ];
 	}
 

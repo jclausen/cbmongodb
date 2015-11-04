@@ -54,17 +54,20 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	/**
 	 * The master query method
 	 **/
-	any function query(struct criteria=get_criteria(),keys=get_keys(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
-		var results=this.getDbInstance().find(criteria=arguments.criteria,keys=arguments.keys,skip=arguments.offset,limit=arguments.limit,sort=arguments.sort);
+	any function query(struct criteria=get_criteria(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
+		var results= this.getDBInstance().find(toMongo(arguments.criteria)).skip(arguments.offset).sort(toMongoDocument(arguments.sort));
+		if(arguments.limit > 0)
+			results.limit(arguments.limit);
+			
 		this.resetQuery();
-		return results;
+		return getMongoUtil().encapsulateCursor(results);
 	}
 
 	/**
 	 * Map reduce query method
 	 **/
 	any function mr(){
-
+		//TODO: Implement
 	}
 
 
@@ -75,7 +78,13 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @param struct document - optionally pass a raw document to be saved
 	 **/
 	any function save(upsert=false,returnInstance=false,document){
-		var doc=this.getDBInstance().update(doc=this.get_document(),upsert=arguments.upsert);
+		var utils = getMongoUtil();
+		var updateOptions = createObject('java','com.mongodb.client.model.UpdateOptions');
+		updateOptions.upsert(arguments.upsert);
+		var query = utils.newIDCriteriaObject(this.get_id());
+		var update = utils.toMongoDocument(this.get_document());
+		
+		var doc=this.getDBInstance().findOneAndReplace(query,update);
 		if(arguments.upsert){
 			this.load(doc);
 		}
@@ -103,7 +112,11 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		if(!isNull(arguments.document)){
 			this.set_document(arguments.document);
 		}
-		this.set_id(this.getDBInstance().save(this.get_document()));
+		var doc = getMongoUtil().toMongoDocument(this.get_document()) ;
+		this.getDBInstance().insertOne( doc );
+		this.set_document(doc);
+		this.set_id(doc['_id']);
+		
 		if(arguments.returnInstance)
 			return this;
 		return this.get_id().toString();
@@ -117,6 +130,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	}
 
 	any function where(string key,string operator='=',any value){
+		if(key == '_id'){
+			arguments.value = getMongoUtil().newObjectIdFromId(arguments.value);
+		}
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
@@ -232,7 +248,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	  * Count the records in the current query
 	  **/
 	 numeric function count(){
-	 	return this.getDbInstance().count(this.get_criteria());
+	 	return this.getDbInstance().count(toMongo(this.get_criteria()));
 	 }
 
 	/**
@@ -343,4 +359,5 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 
 		return true;
 	}
+
 }
