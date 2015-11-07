@@ -1,10 +1,11 @@
 /**
- * GEO Active Entity Service for MongoDB
- *
- * Extends the core ActiveEntity to provide geospatial querying
- *
- * @author Jon Clausen <jon_clausen@silowebworks.com>
- * @license Apache v2.0 <http://www.apache.org/licenses/>
+* GEO Active Entity Service for MongoDB
+*
+* Extends the core ActiveEntity to provide geospatial querying
+*
+* @package cbmongodb.models
+* @author Jon Clausen <jon_clausen@silowebworks.com>
+* @license Apache v2.0 <http://www.apache.org/licenses/>
 */
 component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" accessors=true {
 

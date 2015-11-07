@@ -3,6 +3,7 @@
 * The Virtual Entity Service for the CFMongoDB Client
 *
 *
+* @package cbmongodb.models
 * @author Jon Clausen <jon_clausen@silowebworks.com>
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 */

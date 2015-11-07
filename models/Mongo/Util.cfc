@@ -1,3 +1,15 @@
+/**
+*
+* Mongo Util
+*
+* The utility methods used to assist in correct typing of objects passed to the MongoDB driver
+*
+* @singleton
+* @package cbmongodb.models.Mongo
+* @author Jon Clausen <jon_clausen@silowebworks.com>
+* @license Apache v2.0 <http://www.apache.org/licenses/>
+* 
+*/
 component name="MongoUtil" accessors=true singleton{
 	property name="MongoConfig" inject="MongoConfig@cbmongodb";
 
@@ -119,7 +131,7 @@ component name="MongoUtil" accessors=true singleton{
 		
 	}
 
-	function encapsulateCursor(dbResult){
+	function encapsulateDBResult(dbResult){
 		var enc = {};
 		enc['asCursor']=function(){return dbResult.iterator()};
 		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify)};

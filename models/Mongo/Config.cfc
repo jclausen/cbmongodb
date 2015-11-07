@@ -1,3 +1,15 @@
+/**
+*
+* Mongo Config
+*
+* The configuration object passed to MongoDB
+*
+* @singleton
+* @package cbmongodb.models.Mongo
+* @author Jon Clausen <jon_clausen@silowebworks.com>
+* @license Apache v2.0 <http://www.apache.org/licenses/>
+* 
+*/
 component accessors="true" output="false" hint="Main configuration for MongoDB Connections"{
 	/**
 	* CBJavaloader

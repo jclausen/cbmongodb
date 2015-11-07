@@ -61,9 +61,9 @@ component name="TestMongoUtil" extends="testbox.system.BaseSpec"{
 				}
 				expect(variables.activeCollection.count()).toBe(5);
 				describe("Tests dbResult manipulation methods",function(){
-					it("tests the encapsulateCursor() method",function(){
+					it("tests the encapsulateDBResult() method",function(){
 						var dbResult = variables.activeCollection.find();
-						var encapsulation = MongoUtil.encapsulateCursor(dbResult);
+						var encapsulation = MongoUtil.encapsulateDBResult(dbResult);
 						expect(encapsulation.asArray()).toBeArray();
 						expect(getMetadata(encapsulation.asArray()[1]['_id']).getCanonicalName()).toBe('org.bson.types.ObjectId')
 						expect(arrayLen(encapsulation.asArray())).toBe(5);

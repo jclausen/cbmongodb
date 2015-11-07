@@ -32,7 +32,7 @@ component{
 	this.dependencies 		= ['cbjavaloader'];
 
 	/**
-	* Fired on Module Registration
+	* CBMongoDB Module Registration
 	*/
 	function configure(){
 		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
@@ -72,17 +72,17 @@ component{
 	}
 
 	/**
-	* Fired when the module is activated.
+	* CBMongoDB Module Activation - Fires when the module is loaded
 	*/
 	function onLoad(){}
 
 	/**
-	* Fired when the module is unloaded
+	* CBMongoDB Module Deactivation - Fired when the module is unloaded
 	*/
 	function onUnload(){}
 
 	/**
-	* Prepare settings and returns true if using i18n else false.
+	* Prepare settings for MongoDB Connections.
 	*/
 	private function parseParentSettings(){
 		//default config struct
