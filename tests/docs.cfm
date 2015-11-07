@@ -13,10 +13,16 @@
 		<h1 id="title">ColdDoc Generator</h1>
 		<div id="main">
 		<cfscript>
+			boxJSON = fileRead(expandPath('../box.json'));
+			packageSpecs = deserializeJSON(boxJSON);
 			// Config - The default will generate documentation for ColdDoc
-			source = "/cbmongodb/"; // The source code folder we are generating documentation for
+			//sourcePaths = "/cbmongodb/"; // The source code folder we are generating documentation for
+			
+			sourcePaths = [
+			          { inputDir = expandPath("/cbmongodb"),inputMapping = "cbmongodb"}
+			];
 			mapping = "cbmongodb"; // The folder name used for mapping
-			docPath = "/cbmongodb/apidocs"; // The location of where we are putting the documentation
+			docPath = "/cbmongodb/apidocs/" & 'v' & listFirst(packageSpecs.version,'.'); // The location of where we are putting the documentation
 
 			colddoc = createObject("component", "colddoc.ColdDoc").init();
 			strategy = createObject("component", "colddoc.strategy.api.HTMLAPIStrategy").init(expandPath(docPath), "CBMongoDB");
@@ -24,12 +30,12 @@
 
 			WriteOutput("<h3>Creating ColdDoc</h3><br />");
 			WriteOutput("<table>");
-			WriteOutput("<tr><td>------ Source: </td><td>'<strong>" & source & "</strong>'</td></tr>");
+			WriteOutput("<tr><td>------ Source: </td><td>'<strong>" & packageSpecs.name & "</strong>'</td></tr>");
 			WriteOutput("<tr><td>------ Mapping: </td><td>'<strong>" & mapping & "</strong>'</td></tr>");
 			WriteOutput("<tr><td>------ Doc Path: </td><td>'<strong>" & docPath & "</strong>'</td></tr>");
 			WriteOutput("</table>");
 
-			colddoc.generate(expandPath(source), mapping);
+			colddoc.generate(sourcePaths);
 		</cfscript>
 		<cfoutput>
 			<br />

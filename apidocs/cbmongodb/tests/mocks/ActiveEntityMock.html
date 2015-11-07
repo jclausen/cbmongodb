@@ -1,0 +1,4046 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>ActiveEntityMock</title>
+	<meta name="keywords" content="cbmongodb.tests.mocks.concurrent.Callable interface">
+	<!-- common assets -->
+	
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel ="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css">
+<link rel ="stylesheet" type="text/css" href="../../../stylesheet.css">
+	
+<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,700,700italic|Ubuntu+Mono' rel='stylesheet' type='text/css' />
+	
+<script src="../../../bootstrap/js/jquery-2.1.0.min.js" type="text/javascript"></script>
+<script src="../../../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+<script>
+$(document).ready(function() {
+	// Global Tool Tip Settings
+	$( '[title]' ).tooltip({
+		 animation: 'slide',
+		 delay: { show: 250, hide: 250 }
+	});
+});
+</script>
+	<!-- syntax highlighter -->
+	<link type="text/css" rel="stylesheet" href="../../../highlighter/styles/shCoreDefault.css">
+	<script src="../../../highlighter/scripts/shCore.js"></script>
+	<script src="../../../highlighter/scripts/shBrushColdFusion.js"></script>
+	<script src="../../../highlighter/scripts/shBrushXml.js"></script>
+	<script src="../../../highlighter/scripts/shBrushSql.js"></script>
+	<script src="../../../highlighter/scripts/shBrushJScript.js"></script>
+	<script src="../../../highlighter/scripts/shBrushJava.js"></script>
+	<script src="../../../highlighter/scripts/shBrushCss.js"></script>
+	<script type="text/javascript">SyntaxHighlighter.all();</script>
+</head>
+
+<body class="withNavbar">
+
+
+
+
+
+
+<!-- ========= START OF NAVBAR ======= -->
+<a name="navbar_top"></a>
+<a href="#skip-navbar_top" title="skip navigation links"></a>	
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+    
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#class-navigation">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><strong>CBMongoDB</strong></a>
+		</div>
+
+	    <div class="collapse navbar-collapse" id="class-navigation">
+	    	<ul class="nav navbar-nav">
+				
+					
+					<li><a href="../../../overview-summary.html"><i class="glyphicon glyphicon-plane"></i> overview</a></li>
+					
+				
+
+				
+					<li><a href="package-summary.html"><i class="glyphicon glyphicon-folder-open"></i> &nbsp;package</a></li>
+				
+
+			  	
+					<li class="dropdown active">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-file"></i> class <b class="caret"></b></a>
+
+						<ul class="dropdown-menu">
+							<li><a href="#class">Class Definition</a></li>
+							<li><a href="#constructor_summary">Constructor Summary</a></li>
+							<li><a href="#constructor_detail">Constructor Detail</a></li>
+							<li><a href="#inherited_methods">Inherited Methods</a></li>
+							<li><a href="#method_summary">Method Summary</a></li>
+							<li><a href="#method_detail">Method Detail</a></li>
+							<li><a href="#property_summary">Property Summary</a></li>
+							<li><a href="#property_detail">Property Detail</a></li>
+							
+						</ul>
+					</li>
+				
+	      	</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="../../../index.html?cbmongodb/tests/mocks/ActiveEntityMock.html" target="_top">
+					<i class="glyphicon glyphicon-fullscreen"></i> Frames
+					</a>
+				</li>
+			</ul>
+	    </div>
+
+	</div>
+</nav>	
+
+<a name="skip-navbar_top"></a>
+<!-- ========= END OF NAVBAR ========= -->
+
+<!-- ======== start of class data ======== -->
+<a name="class"><!-- --></a>
+
+<!-- Package -->
+<div class="pull-right">
+	<a href="package-summary.html" title="Package: cbmongodb.tests.mocks"><span class="label label-success">cbmongodb.tests.mocks</span></a>
+</div>
+
+<h2>
+
+Class
+
+ ActiveEntityMock</h2>
+
+
+
+
+
+
+
+
+	
+		
+	
+	
+
+	
+		
+		
+			
+		
+	
+	
+
+	
+		
+		
+			
+		
+	
+	
+
+	
+		
+		
+			
+		
+	
+	
+
+	
+		
+		
+			
+		
+	
+	
+
+
+<!-- Inheritance Tree-->
+<pre>lucee.Component
+        <img src="../../../resources/inherit.gif" alt="extended by "><a href="../../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">cbmongodb.models.BaseDocumentService</a>
+            <img src="../../../resources/inherit.gif" alt="extended by "><a href="../../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">cbmongodb.models.VirtualEntityService</a>
+                <img src="../../../resources/inherit.gif" alt="extended by "><a href="../../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">cbmongodb.models.ActiveEntity</a>
+                    <img src="../../../resources/inherit.gif" alt="extended by ">cbmongodb.tests.mocks.ActiveEntityMock
+</pre>
+
+<div class="panel panel-default">
+	<div class="panel-heading"><strong>Class Attributes:</strong></div>
+		<div class="panel-body">
+		
+		
+			
+		
+			
+		
+			
+			
+			<li class="label label-danger label-annotations">
+				synchronized 
+				
+				: false		
+				
+			</li>
+			&nbsp;
+			
+		
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			
+			<li class="label label-danger label-annotations">
+				accessors 
+				
+				: true		
+				
+			</li>
+			&nbsp;
+			
+		
+			
+		
+			
+			
+			<li class="label label-danger label-annotations">
+				persistent 
+				
+				: false		
+				
+			</li>
+			&nbsp;
+			
+		
+			
+		
+			
+		
+		
+	</div>
+</div>
+
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<a name="property_summary"><!-- --></a>
+<table class="table table-bordered table-hover">
+	<tr class="info">
+		<th align="left" colspan="5">
+			<strong>Property Summary</strong>
+		</th>
+	</tr>
+	<tr class="info">
+		<th align="left">
+			<strong>type</strong>
+		</th>
+		<th align="left">
+			<strong>property</strong>
+		</th>
+		<th align="left">
+			<strong>default</strong>
+		</th>
+		<th align="left">
+			<strong>serializable</strong>
+		</th>
+		<th align="left">
+			<strong>required</strong>
+		</th>
+	</tr>
+
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#address()">address</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = struct</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#address.city()">address.city</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = string</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#address.location()">address.location</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">geotype = Point</li>
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">geo = true</li>
+				
+			
+				
+				<li class="label label-default label-annotations">index = true</li>
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = array</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#address.postalcode()">address.postalcode</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = zipcode</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#address.state()">address.state</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">length = 2</li>
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = string</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#address.street()">address.street</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents*.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = string</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#collection()">collection</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+				<code>cbmongodbtestrunner</code>
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#country()">country</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">parent = address</li>
+				
+			
+				
+				<li class="label label-default label-annotations">validate = string</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#first_name()">first_name</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Schema Properties*.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">indexwith = last_name</li>
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">indexorder = ASC</li>
+				
+			
+				
+				<li class="label label-default label-annotations">index = true</li>
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = string</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#last_name()">last_name</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">valiate = string</li>
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">indexsort = DESC</li>
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#phone()">phone</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = struct</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#phone.home()">phone.home</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = telephone</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#phone.mobile()">phone.mobile</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = telephone</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#phone.work()">phone.work</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">schema = true</li>
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">validate = telephone</li>
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#test_document()">test_document</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	</tr>
+</table>
+
+
+
+	
+	
+	<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+	<a name="constructor_summary"><!-- --></a>
+	<table class="table table-bordered table-hover">
+		<tr class="info">
+			<th align="left" colspan="2">
+				<strong>Constructor Summary</strong>
+			</th>
+		</tr>
+		<tr>
+			
+			<td>
+				<strong><a href="ActiveEntityMock.html#init()">init</A></strong>()
+				<br>
+				
+			</td>
+		</tr>
+	</table>
+
+
+
+
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<a name="method_summary"><!-- --></a>
+<table class="table table-bordered table-hover">
+	<tr class="info">
+		<th align="left" colspan="2">
+			<strong>Method Summary</strong>
+		</th>
+	</tr>
+
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getAddress()">getAddress</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getAddress.city()">getAddress.city</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getAddress.location()">getAddress.location</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getAddress.postalcode()">getAddress.postalcode</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getAddress.state()">getAddress.state</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getAddress.street()">getAddress.street</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents*.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getCountry()">getCountry</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getFirst_name()">getFirst_name</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Schema Properties*.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getLast_name()">getLast_name</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getPhone()">getPhone</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getPhone.home()">getPhone.home</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getPhone.mobile()">getPhone.mobile</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getPhone.work()">getPhone.work</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#getTest_document()">getTest_document</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setAddress()">setAddress</A></strong>(any address)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setAddress.city()">setAddress.city</A></strong>(any address.city)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setAddress.location()">setAddress.location</A></strong>(any address.location)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setAddress.postalcode()">setAddress.postalcode</A></strong>(any address.postalcode)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setAddress.state()">setAddress.state</A></strong>(any address.state)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setAddress.street()">setAddress.street</A></strong>(any address.street)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents*.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setCountry()">setCountry</A></strong>(any country)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setFirst_name()">setFirst_name</A></strong>(any first_name)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Schema Properties*.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setLast_name()">setLast_name</A></strong>(any last_name)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setPhone()">setPhone</A></strong>(any phone)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setPhone.home()">setPhone.home</A></strong>(any phone.home)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setPhone.mobile()">setPhone.mobile</A></strong>(any phone.mobile)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setPhone.work()">setPhone.work</A></strong>(any phone.work)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntityMock.html#setTest_document()">setTest_document</A></strong>(any test_document)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+</table>
+
+
+
+<a name="inherited_methods"><!-- --></a>
+
+
+	
+
+	
+
+	&nbsp;
+	<a name="methods_inherited_from_class_cbmongodb.models.ActiveEntity"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd><a href="../../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">cbmongodb.models.ActiveEntity</a></kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+				
+				
+				
+				
+					<span class="label label-warning"><em>None</em></span>
+				
+			</td>
+		</tr>
+	</table>
+
+	
+
+	
+
+	&nbsp;
+	<a name="methods_inherited_from_class_cbmongodb.models.VirtualEntityService"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd><a href="../../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">cbmongodb.models.VirtualEntityService</a></kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+				
+				
+					
+					
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+				
+				
+					<a href="../../..//cbmongodb/models/VirtualEntityService.html#clearScope()">clearScope</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#count()">count</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#create()">create</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#criteriaExists()">criteriaExists</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#delete()">delete</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#entity()">entity</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#evict()">evict</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#exists()">exists</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#find()">find</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#findAll()">findAll</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#get_criteria()">get_criteria</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#get_keys()">get_keys</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#get_limit()">get_limit</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#get_offset()">get_offset</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#get_operators()">get_operators</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#get_sort()">get_sort</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#getXCollection()">getXCollection</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#getXReduce()">getXReduce</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#join()">join</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#limit()">limit</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#loaded()">loaded</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#mr()">mr</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#on()">on</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#order()">order</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#query()">query</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#reload()">reload</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#resetQuery()">resetQuery</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#save()">save</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#scopeEntity()">scopeEntity</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#set_criteria()">set_criteria</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#set_keys()">set_keys</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#set_limit()">set_limit</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#set_offset()">set_offset</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#set_operators()">set_operators</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#set_sort()">set_sort</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#setXCollection()">setXCollection</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#setXReduce()">setXReduce</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#update()">update</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#upsert()">upsert</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#where()">where</a>, <a href="../../..//cbmongodb/models/VirtualEntityService.html#whereNotI()">whereNotI</a>
+				
+			</td>
+		</tr>
+	</table>
+
+	
+
+	
+
+	&nbsp;
+	<a name="methods_inherited_from_class_cbmongodb.models.BaseDocumentService"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd><a href="../../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">cbmongodb.models.BaseDocumentService</a></kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+				
+				
+					
+					
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+				
+				
+					<a href="../../..//cbmongodb/models/BaseDocumentService.html#applyIndex()">applyIndex</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#criteria()">criteria</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#detect()">detect</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get()">get</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_default_document()">get_default_document</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_document()">get_document</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_existing()">get_existing</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_id()">get_id</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_indexes()">get_indexes</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_map()">get_map</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#get_validation()">get_validation</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getAppSettings()">getAppSettings</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getCollection()">getCollection</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getDb()">getDb</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getDbInstance()">getDbInstance</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getIndexInfo()">getIndexInfo</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getLogbox()">getLogbox</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getMongoClient()">getMongoClient</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getMongoUtil()">getMongoUtil</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getPropertyDefault()">getPropertyDefault</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#getWirebox()">getWirebox</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#indexExists()">indexExists</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#indexOrder()">indexOrder</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#load()">load</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#locate()">locate</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#mapOrder()">mapOrder</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#populate()">populate</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#reset()">reset</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set()">set</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_default_document()">set_default_document</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_document()">set_document</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_existing()">set_existing</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_id()">set_id</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_indexes()">set_indexes</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_map()">set_map</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#set_validation()">set_validation</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setAppSettings()">setAppSettings</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setCollection()">setCollection</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setDb()">setDb</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setDbInstance()">setDbInstance</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setLogbox()">setLogbox</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setMongoClient()">setMongoClient</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setMongoUtil()">setMongoUtil</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#setWirebox()">setWirebox</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#toGeoJSON()">toGeoJSON</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#toMongo()">toMongo</a>, <a href="../../..//cbmongodb/models/BaseDocumentService.html#toMongoDocument()">toMongoDocument</a>
+				
+			</td>
+		</tr>
+	</table>
+
+	
+
+	
+
+	&nbsp;
+	<a name="methods_inherited_from_class_lucee.Component"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd>lucee.Component</kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+				
+				
+				
+				
+					<span class="label label-warning"><em>None</em></span>
+				
+			</td>
+		</tr>
+	</table>
+
+
+<hr>
+
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+
+	<a name="constructor_detail"><!-- --></a>
+	<table class="table table-bordered">
+		<tr class="info">
+			<th colspan="1" align="left">
+				<strong>Constructor Detail</strong>
+			</th>
+		</tr>
+	</table>
+
+	<a name="init()"><!-- --></a><h3>
+	init</h3>
+	<kbd>public <strong>init</strong>()</kbd>
+
+	<br><br>
+
+	
+
+	
+	<hr>
+
+
+<!-- ============ PROPERTY DETAIL ========== -->
+
+	<a name="property_detail"><!-- --></a>
+	<table class="table table-bordered">
+		<tr class="info">
+			<th colspan="1" align="left">
+				<strong>Property Detail</strong>
+			</th>
+		</tr>
+	</table>
+
+	
+		
+		<a name="address()"><!-- --></a>
+		<h3>address</h3>
+
+		<kbd>
+			property any 
+			<strong>address</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - struct</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="address.city()"><!-- --></a>
+		<h3>address.city</h3>
+
+		<kbd>
+			property any 
+			<strong>address.city</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - string</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="address.location()"><!-- --></a>
+		<h3>address.location</h3>
+
+		<kbd>
+			property any 
+			<strong>address.location</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+			<dd><code>geotype</code> - Point</dd>
+			
+		
+			
+		
+			
+			<dd><code>geo</code> - true</dd>
+			
+		
+			
+			<dd><code>index</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - array</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="address.postalcode()"><!-- --></a>
+		<h3>address.postalcode</h3>
+
+		<kbd>
+			property any 
+			<strong>address.postalcode</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - zipcode</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="address.state()"><!-- --></a>
+		<h3>address.state</h3>
+
+		<kbd>
+			property any 
+			<strong>address.state</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+			<dd><code>length</code> - 2</dd>
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - string</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="address.street()"><!-- --></a>
+		<h3>address.street</h3>
+
+		<kbd>
+			property any 
+			<strong>address.street</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents*</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - string</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="collection()"><!-- --></a>
+		<h3>collection</h3>
+
+		<kbd>
+			property any 
+			<strong>collection</strong>
+			
+			= [cbmongodbtestrunner]
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="country()"><!-- --></a>
+		<h3>country</h3>
+
+		<kbd>
+			property any 
+			<strong>country</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>parent</code> - address</dd>
+			
+		
+			
+			<dd><code>validate</code> - string</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="first_name()"><!-- --></a>
+		<h3>first_name</h3>
+
+		<kbd>
+			property any 
+			<strong>first_name</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>Schema Properties*</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+			<dd><code>indexwith</code> - last_name</dd>
+			
+		
+			
+		
+			
+			<dd><code>indexorder</code> - ASC</dd>
+			
+		
+			
+			<dd><code>index</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - string</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="last_name()"><!-- --></a>
+		<h3>last_name</h3>
+
+		<kbd>
+			property any 
+			<strong>last_name</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>valiate</code> - string</dd>
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>indexsort</code> - DESC</dd>
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="phone()"><!-- --></a>
+		<h3>phone</h3>
+
+		<kbd>
+			property any 
+			<strong>phone</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - struct</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="phone.home()"><!-- --></a>
+		<h3>phone.home</h3>
+
+		<kbd>
+			property any 
+			<strong>phone.home</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - telephone</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="phone.mobile()"><!-- --></a>
+		<h3>phone.mobile</h3>
+
+		<kbd>
+			property any 
+			<strong>phone.mobile</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - telephone</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="phone.work()"><!-- --></a>
+		<h3>phone.work</h3>
+
+		<kbd>
+			property any 
+			<strong>phone.work</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+			
+			<dd><code>validate</code> - telephone</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="test_document()"><!-- --></a>
+		<h3>test_document</h3>
+
+		<kbd>
+			property any 
+			<strong>test_document</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+
+
+
+
+
+
+
+
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<a name="method_detail"><!-- --></a>
+<table class="table table-bordered">
+	<tr class="info">
+		<th colspan="1" align="left">
+			<strong>Method Detail</strong>
+		</th>
+	</tr>
+</table>
+
+
+	
+	<a name="getAddress()"><!-- --></a>
+	<h3>getAddress</h3>
+	
+	<kbd>public string <strong>getAddress</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getAddress.city()"><!-- --></a>
+	<h3>getAddress.city</h3>
+	
+	<kbd>public string <strong>getAddress.city</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getAddress.location()"><!-- --></a>
+	<h3>getAddress.location</h3>
+	
+	<kbd>public string <strong>getAddress.location</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getAddress.postalcode()"><!-- --></a>
+	<h3>getAddress.postalcode</h3>
+	
+	<kbd>public string <strong>getAddress.postalcode</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getAddress.state()"><!-- --></a>
+	<h3>getAddress.state</h3>
+	
+	<kbd>public string <strong>getAddress.state</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getAddress.street()"><!-- --></a>
+	<h3>getAddress.street</h3>
+	
+	<kbd>public string <strong>getAddress.street</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents*</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getCountry()"><!-- --></a>
+	<h3>getCountry</h3>
+	
+	<kbd>public string <strong>getCountry</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFirst_name()"><!-- --></a>
+	<h3>getFirst_name</h3>
+	
+	<kbd>public string <strong>getFirst_name</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: Schema Properties*</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getLast_name()"><!-- --></a>
+	<h3>getLast_name</h3>
+	
+	<kbd>public string <strong>getLast_name</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getPhone()"><!-- --></a>
+	<h3>getPhone</h3>
+	
+	<kbd>public string <strong>getPhone</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getPhone.home()"><!-- --></a>
+	<h3>getPhone.home</h3>
+	
+	<kbd>public string <strong>getPhone.home</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getPhone.mobile()"><!-- --></a>
+	<h3>getPhone.mobile</h3>
+	
+	<kbd>public string <strong>getPhone.mobile</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getPhone.work()"><!-- --></a>
+	<h3>getPhone.work</h3>
+	
+	<kbd>public string <strong>getPhone.work</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getTest_document()"><!-- --></a>
+	<h3>getTest_document</h3>
+	
+	<kbd>public string <strong>getTest_document</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setAddress()"><!-- --></a>
+	<h3>setAddress</h3>
+	
+	<kbd>public any <strong>setAddress</strong>(any address)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>address</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setAddress.city()"><!-- --></a>
+	<h3>setAddress.city</h3>
+	
+	<kbd>public any <strong>setAddress.city</strong>(any address.city)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>address.city</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setAddress.location()"><!-- --></a>
+	<h3>setAddress.location</h3>
+	
+	<kbd>public any <strong>setAddress.location</strong>(any address.location)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>address.location</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setAddress.postalcode()"><!-- --></a>
+	<h3>setAddress.postalcode</h3>
+	
+	<kbd>public any <strong>setAddress.postalcode</strong>(any address.postalcode)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>address.postalcode</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setAddress.state()"><!-- --></a>
+	<h3>setAddress.state</h3>
+	
+	<kbd>public any <strong>setAddress.state</strong>(any address.state)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>address.state</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setAddress.street()"><!-- --></a>
+	<h3>setAddress.street</h3>
+	
+	<kbd>public any <strong>setAddress.street</strong>(any address.street)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: Use either dot notation in the name or specify a 'parent' attribute as ways of creating nested documents*</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>address.street</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setCountry()"><!-- --></a>
+	<h3>setCountry</h3>
+	
+	<kbd>public any <strong>setCountry</strong>(any country)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>country</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setFirst_name()"><!-- --></a>
+	<h3>setFirst_name</h3>
+	
+	<kbd>public any <strong>setFirst_name</strong>(any first_name)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: Schema Properties*</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>first_name</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setLast_name()"><!-- --></a>
+	<h3>setLast_name</h3>
+	
+	<kbd>public any <strong>setLast_name</strong>(any last_name)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>last_name</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setPhone()"><!-- --></a>
+	<h3>setPhone</h3>
+	
+	<kbd>public any <strong>setPhone</strong>(any phone)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>phone</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setPhone.home()"><!-- --></a>
+	<h3>setPhone.home</h3>
+	
+	<kbd>public any <strong>setPhone.home</strong>(any phone.home)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>phone.home</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setPhone.mobile()"><!-- --></a>
+	<h3>setPhone.mobile</h3>
+	
+	<kbd>public any <strong>setPhone.mobile</strong>(any phone.mobile)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>phone.mobile</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setPhone.work()"><!-- --></a>
+	<h3>setPhone.work</h3>
+	
+	<kbd>public any <strong>setPhone.work</strong>(any phone.work)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>phone.work</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setTest_document()"><!-- --></a>
+	<h3>setTest_document</h3>
+	
+	<kbd>public any <strong>setTest_document</strong>(any test_document)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>test_document</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+
+
+
+</body>
+</html>
+
