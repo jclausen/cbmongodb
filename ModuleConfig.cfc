@@ -6,7 +6,7 @@
 *
 * @author Jon Clausen <jon_clausen@silowebworks.com>
 *
-* @link https://github.com/jclausen/cfmongodb [coldbox/master]
+* @link https://github.com/jclausen/cbmongodb
 */
 component{
 	property name="MongoDBConfig";
@@ -16,7 +16,8 @@ component{
 	this.author 			= "Jon Clausen";
 	this.webURL 			= "http://https://github.com/jclausen/cbmongodb";
 	this.description 		= "Coldbox SDK and Virtual Entity Service for MongoDB";
-	this.version			= "0.1";
+	// Our version changes with the driver version used, only the patch is updated without a full driver updated
+	this.version			= "3.1.0.01";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= false;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -91,14 +92,7 @@ component{
 								serverName='127.0.0.1',
 								serverPort='27017',
 							}
-							// Authentication-based Example:
-							// {
-							// 	serverName='127.0.0.1',
-							// 	serverPort='27017',
-							// 	username="unitTestUser",
-							// 	password="testing",
-							// 	authenticationDB="admin"
-							// }
+							
 						  ],
 			db 	= "test",
 			viewTimeout	= "1000"
