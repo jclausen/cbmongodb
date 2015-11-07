@@ -50,8 +50,11 @@ component name="TestMongoUtil" extends="testbox.system.BaseSpec"{
 		describe( "Tests DB Results", function(){
 
 			it("creates records for our tests",function(){
+
 				MongoClient.getDBCollection("MongoUtilTestCollection").drop();
-				variables.activeCollection = MongoClient.getDBCollection("MongoUtilTestCollection");
+				
+				//we need to use the actual collection object to bypass our Collection facade
+				variables.activeCollection = MongoClient.getDBCollection("MongoUtilTestCollection").getDBCollection();
 				for(var i = 1;i <= 5;i=i+1){
 					var doc = MongoUtil.toMongoDocument({"one":1,"two":2,"three":3});
 					variables.activeCollection.insertOne(doc);

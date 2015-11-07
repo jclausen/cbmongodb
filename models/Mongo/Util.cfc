@@ -145,6 +145,20 @@ component name="MongoUtil" accessors=true singleton{
 	}
 
 	/**
+	* Indexing Utilities
+	**/
+	function createIndexOptions(options){
+		var idxOptions = createObject("java","com.mongodb.client.model.IndexOptions");
+
+		if(structKeyExists(options,'name')) idxOptions.name(options.name);
+		if(structKeyExists(options,'name')) idxOptions.sparse(options.sparse);
+		if(structKeyExists(options,'background')) idxOptions.background(options.background);
+		if(structKeyExists(options,'unique')) idxOptions.unique(options.unique);
+		
+		return idxOptions;
+	}
+
+	/**
 	* Utility Methods Not Currently In Use
 	**/
 

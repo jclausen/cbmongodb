@@ -3,7 +3,6 @@ component name="MongoClient" accessors=true singleton{
 	 * Init Properties
 	 **/
 	property name="db";
-	property name="dbCollection";
 	property name="MongoConfig";
 	property name="collections";
 	//injected properties
@@ -19,6 +18,10 @@ component name="MongoClient" accessors=true singleton{
 	 * Utility Class
 	 **/
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
+	/**
+	* Collection Class
+	**/
+	property name="MongoCollection" inject="MongoCollection@cbmongodb";
 	
 
 	public function init(MongoConfig){
@@ -83,8 +86,9 @@ component name="MongoClient" accessors=true singleton{
 	* Gets a CFMongoDB DBCollection object, which wraps the java DBCollection
 	*/
 	function getDBCollection( collectionName, dbName=getMongoConfig().getDBName() ){
+
 		if( not structkeyexists(variables.collections, dbName) or not structKeyExists( variables.collections[dbName], collectionName ) ){
-			variables.collections[ dbName ][ collectionName ] = this.getDB().getCollection(collectionName);
+			variables.collections[ dbName ][ collectionName ] = getMongoCollection().init(this.getDB().getCollection(collectionName));
 		}
 		
 		return variables.collections[ dbName ][ collectionName ];

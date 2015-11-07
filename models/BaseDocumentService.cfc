@@ -90,8 +90,10 @@ component name="BaseDocumentService"  accessors="true"{
 		} else {
 			throw('Wirebox IOC Injection is required to user this service');
 		}
+		
 		this.setMongoUtil(getMongoClient().getMongoUtil());
 		this.setAppSettings(getWirebox().getBinder().getProperties());
+		
 		//Connect to Mongo
 		this.setDb(this.getMongoClient());
 
@@ -111,12 +113,17 @@ component name="BaseDocumentService"  accessors="true"{
 	 * Evaluate our properties for the default document
 	 **/
 	any function detect(){
+
 		var properties=getMetaData(this).properties;
+		
 		for(var prop in properties){
+			
 			if(structKeyExists(prop,'schema') and prop.schema){
 				//add the property to your our map
 				structAppend(this.get_map(),{prop.name=prop},true);
+				
 				if(structKeyExists(prop,"parent")){
+					
 					//Test for doubling up on our parent attribute and dot notation
 					var prop_name=listToArray(prop.name,'.');
 					if(prop_name[1] EQ prop.parent){
@@ -124,8 +131,11 @@ component name="BaseDocumentService"  accessors="true"{
 					}
 					//TODO: add upstream introspection to handle infinite nesting
 					this.set(prop.parent&'.'&prop.name,this.getPropertyDefault(prop));
+				
 				} else {
+					
 					this.set(prop.name,this.getPropertyDefault(prop));
+
 				}
 
 				//test for index values
@@ -133,7 +143,9 @@ component name="BaseDocumentService"  accessors="true"{
 					//FIXME: Turning off for now
 					this.applyIndex(prop,properties);
 				}
+
 			}
+
 		}
 		this.set_default_document(structCopy(this.get_document()));
 	}
@@ -144,7 +156,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 * Create and apply our indexes
 	 *
 	 * @param struct prop - the component property structure
-	 * @param struct properties - the full properties structure (only required if prop contains and "indexwith" attribute
+	 * @param struct properties - the full properties structure (required if prop contains and "indexwith" attribute)
 	 *
 	 **/
 	public function applyIndex(required prop,properties=[]){
@@ -178,27 +190,20 @@ component name="BaseDocumentService"  accessors="true"{
 		//create implicit name so we can overwrite sparse settings
 		var index_name=hash(serializeJSON(idx));
 		//add our index options
-		var idxOptions = createObject("java","com.mongodb.client.model.IndexOptions");
-		idxOptions.name(index_name);
-		idxOptions.sparse(sparse);
-		idxOptions.background(background);
-		idxOptions.unique(is_unique);
 
-		arrayAppend(this.get_indexes(),idxOptions);
+		var options = {
+			"name":index_name,
+			"sparse":sparse,
+			"background":background,
+			"unique":is_unique
+		}
+
+		arrayAppend(this.get_indexes(),options);
 		if(!this.indexExists(index_name)){
 			if(structKeyExists(prop,'geo')){
-				try{
-					var doc = { "#prop.name#" = '2dsphere' };
-					this.getDBInstance().createIndex(toMongo(doc,false),idxOptions);
-				} catch(any e){
-					throw("Geo Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
-				}
+				this.getDBInstance().createGeoIndex(prop.name,options);
 			} else {
-				try{
-					this.getDBInstance().createIndex(toMongo(idx),idxOptions);
-				} catch(any e){
-					throw("Index on #arguments.prop.name# could not be created.  The error returned was: <strong>#e.message#</strong>");
-				}
+				this.getDBInstance().createIndex(idx,options);
 			}
 		}
 	}
@@ -210,8 +215,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 public function indexExists(required name){
 	 	var existing=this.getIndexInfo();
 		for(idx in existing){
-			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name)
-					return true;
+			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name) return true;
 		}
 		return false;
 	 }
@@ -231,12 +235,8 @@ component name="BaseDocumentService"  accessors="true"{
 	}
 
 	public function getIndexInfo(){
-		var indexList = getDbInstance().listIndexes().iterator();
-		var indexes=[];
-		while(indexList.hasNext()){
-			arrayAppend(indexes,indexList.next());
-		}
-		return indexes;
+
+		return getDbInstance().listIndexes();
 
 	}
 
@@ -287,26 +287,25 @@ component name="BaseDocumentService"  accessors="true"{
 	 * @param boolean returnInstance - whether to return a loaded instance (true) or a result struct (false)
 	 **/
 	any function get(required _id,returnInstance=true){
-		var qObj = getMongoUtil().newIDCriteriaObject(_id);
-		var results=this.getDBInstance().find(qObj).limit(1).iterator();
-		if(!isNull(results.hasNext()) and results.hasNext()){
-			
-			this.entity(results.next());
-			
-			if(!returnInstance){
-				return results.next();
-			} else {
-				return this;
-			}
+		
+		var results = this.getDBInstance().findById(_id);
+		
+		if(!isNull(results)) this.entity(results);
+		
+		if(!isNull(results) && !returnInstance){
+			return results;
+		} else {
+			return this;
 		}
-		return this;
 	}
 
 	/**
 	 * Deletes a document by ID
 	 **/
 	any function delete(required _id){
+
 		var deleted=this.getDBInstance().findOneAndDelete(getMongoUtil().newIDCriteriaObject(arguments['_id']));
+		
 		return true;
 	}
 
@@ -325,7 +324,9 @@ component name="BaseDocumentService"  accessors="true"{
 	 * Evicts the document entity and clears the query arguments
 	 **/
 	any function evict(){
+
 		structDelete(variables,'_id');
+		
 		this.set_document(structCopy(this.get_default_document()));
 		this.set_existing(structCopy(this.get_document()));
 	}
@@ -334,6 +335,7 @@ component name="BaseDocumentService"  accessors="true"{
 	/********************************* UTILS ****************************************/
 
 	void function criteria(struct criteria){
+		
 		if(structKeyExists(arguments.criteria,'_id')){
 			//exclude our nested query obects
 			if(!isStruct(arguments.criteria['_id']) && isSimpleValue(arguments.criteria['_id']))
@@ -352,6 +354,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function locate(string key){
 		var document=this.get_document();
+
 		if(structKeyExists(document,arguments.key)){
 			return document[arguments.key];
 		} else {
@@ -360,6 +363,7 @@ component name="BaseDocumentService"  accessors="true"{
 				return evaluate('document.#arguments.key#');
 			}
 		}
+		
 		return;
 	}
 
@@ -400,9 +404,9 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function toGeoJSON(array coordinates,string type='Point'){
 		var geo={
-			"type"=arguments.type,
-			"coordinates"=arguments.coordinates
-				};
+				"type"=arguments.type,
+				"coordinates"=arguments.coordinates
+			};
 		/**
 		* serializing and deserializing ensures our quoted keys remain intact in transmission
 		**/
@@ -431,7 +435,9 @@ component name="BaseDocumentService"  accessors="true"{
 	}
 
 	any function toMongoDocument(arg){
+
 		return getMongoUtil().toMongoDocument(arg);
+
 	}
 
 }

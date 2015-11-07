@@ -78,6 +78,9 @@ component extends="coldbox.system.ioc.config.Binder"{
 			.to("cbmongodb.models.Mongo.Util")
 			.initWith().asSingleton();
 
+		map("MongoCollection@cbmongodb")
+			.to('cbmongodb.models.Mongo.Collection').noInit();
+
 		map( "MongoClient@cbmongodb" )
 		.to( "cbmongodb.models.Mongo.Client" )
 		.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")

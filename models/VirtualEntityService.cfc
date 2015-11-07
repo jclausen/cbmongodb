@@ -55,12 +55,15 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * The master query method
 	 **/
 	any function query(struct criteria=get_criteria(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
-		var results= this.getDBInstance().find(toMongo(arguments.criteria)).skip(arguments.offset).sort(toMongoDocument(arguments.sort));
-		if(arguments.limit > 0)
-			results.limit(arguments.limit);
+		
+		var results = this.getDBInstance().find(
+			criteria,
+			{"offset":arguments.offset,"limit":arguments.limit,"sort":arguments.sort}
+		);
 			
 		this.resetQuery();
-		return getMongoUtil().encapsulateCursor(results);
+
+		return results;
 	}
 
 	/**
@@ -77,20 +80,18 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @param boolean returnInstance - if passed as true, the loaded instance will be returned.  If false, the _id value will be returned.
 	 * @param struct document - optionally pass a raw document to be saved
 	 **/
-	any function save(upsert=false,returnInstance=false,document){
-		var utils = getMongoUtil();
-		var updateOptions = createObject('java','com.mongodb.client.model.UpdateOptions');
-		updateOptions.upsert(arguments.upsert);
-		var query = utils.newIDCriteriaObject(this.get_id());
-		var update = utils.toMongoDocument(this.get_document());
+	any function save(required document,upsert=false,returnInstance=false){
 		
-		var doc=this.getDBInstance().findOneAndReplace(query,update);
+		var doc = getDbInstance().save(arguments.document,arguments.upsert);
+		
 		if(arguments.upsert){
-			this.load(doc);
+			this.evict().load(doc);
 		}
+		
 		if(arguments.returnInstance){
 			return this;
 		}
+
 		return this.get_id();
 	}
 
@@ -101,24 +102,24 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @param returnInstance whether to return the loaded instance
 	 **/
 	any function update(returnInstance=false){
-		return this.save(returnInstance=false);
+
+		return this.save(this.get_document());
 	}
 
 	/**
 	 * Creates
 	 * @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
 	 **/
-	any function create(returnInstance=false,document){
-		if(!isNull(arguments.document)){
-			this.set_document(arguments.document);
-		}
-		var doc = getMongoUtil().toMongoDocument(this.get_document()) ;
-		this.getDBInstance().insertOne( doc );
+	any function create(returnInstance=false,required document=get_document()){
+
+		var doc = getDbInstance().insertOne(arguments.document);
+		
 		this.set_document(doc);
+		
 		this.set_id(doc['_id']);
 		
-		if(arguments.returnInstance)
-			return this;
+		if(arguments.returnInstance) return this;
+
 		return this.get_id().toString();
 	}
 
@@ -126,7 +127,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * Aliase for update() with an explicit upsert argument
 	 **/
 	any function upsert(){
+
 		return this.update(upsert=true);
+
 	}
 
 	any function where(string key,string operator='=',any value){
@@ -170,7 +173,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 **/
 	 any function whereNotI(){
 		if(this.loaded()){
+
 			this.where('_id','!=',this.get_id());
+
 		}
 		return this;
 	 }
@@ -181,7 +186,9 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 * @chainable
 	 **/
 	any function limit(numeric max){
+
 		this.set_limit(arguments.max);
+
 		return this;
 	}
 
@@ -237,6 +244,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 		return results.asArray();
 	}
 
+
 	/**
 	 * Test whether a record matching the current criteria exists
 	 **/
@@ -248,7 +256,7 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	  * Count the records in the current query
 	  **/
 	 numeric function count(){
-	 	return this.getDbInstance().count(toMongo(this.get_criteria()));
+	 	return this.getDbInstance().count(this.get_criteria());
 	 }
 
 	/**
@@ -258,17 +266,26 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	 **/
 	 boolean function delete(truncate=false){
 		var deleted=false;
+
 		if(!truncate and !this.loaded() and !this.criteriaExists()){
+			//protect from an accidental truncation
 			throw(type="InvalidData",message='No loaded record or criteria specified. If you wish to truncate this collection, pass the truncate=true flag to this method');
+		
 		} else if(!this.loaded() and this.criteriaExists()){
-			deleted=(this.getDBinstance().remove(this.get_criteria()).getN() eq 1);
+			//delete by criteria
+			deleted=getDBInstance().remove(this.get_criteria());	
 			this.reset();
+		
 		} else if(!this.loaded() and !this.criteriaExists() and truncate){
-			this.getDBInstance().remove({});
-		} else {
+			//authorized truncation
+			this.getDBInstance().remove();
+		
+		} else if(this.loaded()) {
+			//defaults to delete by the loaded id
 			deleted=super.delete(this.get_id());
 			this.reset();
 		}
+		
 		return deleted;
 	 }
 
@@ -293,7 +310,8 @@ component extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	any function on(required key,operator='=',required xKey){
 		if(isNull(this.getXCollection()))
 			throw("The collection to be joined does not exist.  Please use the <strong>join(required collection)</strong> function to specify this collection before calling <strong>on()</strong>.");
-		//FIXME: this methodology needs to be adjusted so we can use this for many-to-many through relationship
+		
+		//TODO: this methodology needs to be adjusted so we can use this for many-to-many through relationship
 		var mapkey=getMetaData(this).name&arguments.key&this.getXCollection()&operator&arguments.xKey;
 
 		if(this.loaded()){

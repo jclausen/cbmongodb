@@ -32,7 +32,39 @@ component{
 	/**
 	* Fired on Module Registration
 	*/
-	function configure(){}
+	function configure(){
+		//mappings
+		binder.map( "jl@cbjavaloader" )
+			.to( "cbjavaloader.models.javaloader.JavaLoader" )
+			.initArg( name="loadPaths",value=[expandPath('../lib')]);
+		/**	
+		* Utility Classes
+		**/
+		//utility class
+		binder.map("MongoUtil@cbmongodb")
+			.to("cbmongodb.models.Mongo.Util")
+			.initWith().asSingleton();
+
+		//collection wrapper
+		binder.map("MongoCollection@cbmongodb")
+			.to('cbmongodb.models.Mongo.Collection');
+
+		/**
+		* Singletons
+		**/
+		//configuration object
+		binder.map("MongoConfig@cbmongodb")
+			.to('cbmongodb.models.Mongo.Config')
+			.initWith(configStruct.MongoDB)
+			.asSingleton();
+
+		//core client
+		binder.map( "MongoClient@cbmongodb" )
+		.to( "cbmongodb.models.Mongo.Client" )
+		.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
+		.asSingleton();
+
+	}
 
 	/**
 	* Fired when the module is activated.
