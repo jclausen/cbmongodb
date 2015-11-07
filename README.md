@@ -3,17 +3,17 @@ MongoDB Module for Coldbox
 ==========================
 CBMongoDB provides Active Record(ish) functionality for managing MongoDB documents and schema using a familiar syntax for CRUD operations and recordset processing and retrieval. 
 
-This module uses Bill Shelton and Marc Escher's excellent [cfmongodb project](https://github.com/marcesher/cfmongodb), which is a partial wrapper for the MongoDB Java driver and a document-struct mapper for ColdFusion.
-
-Compatibility: ColdFusion 9.0.1+/Railo 4.0+/Lucee 4.2+  Coldbox 4+
+Compatibility: ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
 
 Installation &amp; Configuration
 --------------------------------
 
-1. [Install MongoDB](http://docs.mongodb.org/manual/installation/) and start up an instance of `mongod`
-2. Create a Coldbox application `box install coldbox && box coldbox create app`
+1. [Install MongoDB](http://docs.mongodb.org/manual/installation/) and start up an instance of `mongod` or sign up for a free account with a third party DB service like [MongoLab](https://mongolab.com/plans/)
+2. Create a Coldbox application ( `box install coldbox && box coldbox create app` ) or use an existing one
 3. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
-4. Add the following (with your own config) to config/Coldbox.cfc*
+4. Add your settings (with your own config) within the settings struct config/Coldbox.cfc*
+
+**Localhost Example Without Authentication**
 	
 ```
 MongoDB = {
@@ -28,19 +28,37 @@ MongoDB = {
 };
 ```
 
-<small>*MongoDB will create your if it doesn't exist automatically, so you can use any name you choose for your database (or collections) from the get-go.</small>
 
-4. Extend your models to use the Virtual entity service
+
+**Connection with Authentication Example**
+
+<small>*Note that some third-party providers (e.g. [MongoLab](https://mongolab.com/plans/)) use the connnection database as the authentication database.  Nine times out of ten, however, the `authenticationDB` value will be &quot;admin&quot;. If you omit that host key, the connection will default to &quot;admin&quot;.*</small>
+	
+```
+MongoDB = {
+	hosts= [
+
+	{
+		serverName='ds012345.mongolab.com',
+		serverPort='12345',
+		username="myUsername",
+		password="my53cUr3P455",
+		authenticationDB="myremotedb"
+	}
+	
+  ],
+	db 	= "mydbname",
+	viewTimeout	= "1000"
+};
+```
+
+<small>*If using a connection which authenticates against an admin database, MongoDB will create your database if it doesn't exist automatically, so you can use any name you choose for your database (or collections) from the get-go.</small>
+
+4. Extend your models to use the Active Entity service
 ```
 component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" accessors=true{
 
 }
-```
-
-
-5. If you need to use cfmongodb client directly, you can call it from your model with:
-```
-getMongoClient()
 ```
 
 Usage
@@ -242,14 +260,13 @@ Issues
 
 ***NULL* support:** This library does not currently work with Railo and Lucee's full *NULL* support enabled, due to the the Java implementations in the upstream library.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. 
 
-Post issues with the core libraries to the github issue tracker for the [cfmongodb project](https://github.com/marcesher/cfmongodb). 
-For issues with CBMongoDB-specific functionality, post issues to the issue tracker(https://github.com/jclausen/cbmongodb).
+Issues with the module may be [posted here](https://github.com/jclausen/cbmongodb).
 
 
 Getting Involved
 ----------------
 
-Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/integration) would be peachy.
+Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/) would be peachy.
 
 ------------------------------------------------------------
 
