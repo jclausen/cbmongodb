@@ -258,7 +258,7 @@ Currently all of the MongoDB supported core spatial functions are represented, i
 Issues
 --------------
 
-***NULL* support:** This library does not currently work with Railo and Lucee's full *NULL* support enabled, due to the the Java implementations in the upstream library.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. 
+***NULL* support:** At the present time, in order to maintain compatibility for ACF, the conventions of this module assume a lack of full null support.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. 
 
 Issues with the module may be [posted here](https://github.com/jclausen/cbmongodb).
 
