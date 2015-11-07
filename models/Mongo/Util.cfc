@@ -4,7 +4,7 @@ component name="MongoUtil" accessors=true singleton{
 	/**
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
-	function toMongo(any obj,basic=false){
+	function toMongo(any obj){
 
 		// if (isStruct(obj))
 		// {
@@ -53,29 +53,13 @@ component name="MongoUtil" accessors=true singleton{
 		// 	return dbObject;
 		// }
 
-		return dbObjectnew(obj,basic);
+		return dbObjectnew(obj);
 	}
 
 	function toMongoDocument(data){
 		var doc = createObject('java','org.bson.Document');
 		doc.putAll(data);
 		return doc;
-	}
-
-	function toMongoConversion(data){
-		// var conversion = createObject('java','org.bson.conversions.Bson');
-		// conversion.toBsonDocument(toMongoDocument(data))
-		return toMongoDocument(data);
-	}
-
-	/**
-	* Converts a ColdFusion structure to a CFBasicDBobject which ensures 1 and -1 remain ints
-	*/
-	function toMongoOperation( struct data ){
-		if( isCFBasicDBObject(data) ) return data;
-		var dbo = newOperationalDBObject();
-		dbo.putAll( data );
-		return dbo;
 	}
 
 	/**
@@ -101,6 +85,76 @@ component name="MongoUtil" accessors=true singleton{
 	function newIDCriteriaObject(String id){
 		var dbo = newDBObject();
 		dbo.put("_id",newObjectIDFromID(id));
+		return dbo;
+	}
+
+	/**
+	* Extracts the timestamp from the Doc's ObjectId. This represents the time the document was added to MongoDB
+	*/
+	function getDateFromDoc( doc ){
+		var ts = doc["_id"].getTime();
+		return createObject("java", "java.util.Date").init(ts);
+	}
+
+	/**
+	* Whether this doc is an instance of a CFMongoDB CFBasicDBObject
+	*/
+	function isCFBasicDBObject( doc ){
+		return NOT isSimpleValue( doc ) AND getMetadata( doc ).getCanonicalName() eq "com.mongodb.CFBasicDBObject";
+	}
+
+	/**
+	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
+	*/
+	function newDBObject(){
+		var dbo = createObject('java','com.mongodb.BasicDBObject');	
+		return dbo;
+	}
+
+	function dbObjectNew(contents){
+		var dbo = newDBObject();
+		dbo.putAll(toMongoDocument(contents));
+		return dbo;
+		
+		
+	}
+
+	function encapsulateCursor(dbResult){
+		var enc = {};
+		enc['asCursor']=function(){return dbResult.iterator()};
+		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify)};
+		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
+		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult,true))};
+		return enc;
+	}
+
+	/**
+	* Returns the results of a dbResult object as an array of documents
+	**/
+	function asArray(dbResult,stringify=false){
+		var aResults = [];
+		var cursor = dbResult.iterator();
+		while(cursor.hasNext()){
+			var nextResult = cursor.next();
+			//TODO:  Add conversion function to recurse the document and convert all BSON ID's
+			if(stringify) nextResult['_id']=nextResult['_id'].toString();
+
+			arrayAppend(aResults,nextResult);
+		}
+		return aResults;
+	}
+
+	/**
+	* Utility Methods Not Currently In Use
+	**/
+
+	/**
+	* Converts a ColdFusion structure to a CFBasicDBobject which ensures 1 and -1 remain ints
+	*/
+	function toMongoOperation( struct data ){
+		if( isCFBasicDBObject(data) ) return data;
+		var dbo = newOperationalDBObject();
+		dbo.putAll( data );
 		return dbo;
 	}
 
@@ -146,70 +200,6 @@ component name="MongoUtil" accessors=true singleton{
 		return s;
 	}
 
-	/**
-	* Extracts the timestamp from the Doc's ObjectId. This represents the time the document was added to MongoDB
-	*/
-	function getDateFromDoc( doc ){
-		var ts = doc["_id"].getTime();
-		return createObject("java", "java.util.Date").init(ts);
-	}
 
-	/**
-	* Whether this doc is an instance of a CFMongoDB CFBasicDBObject
-	*/
-	function isCFBasicDBObject( doc ){
-		return NOT isSimpleValue( doc ) AND getMetadata( doc ).getCanonicalName() eq "com.mongodb.CFBasicDBObject";
-	}
-
-	/**
-	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
-	*/
-	function newDBObject(){
-		var dbo = createObject('java','com.mongodb.BasicDBObject');	
-		return dbo;
-	}
-
-	function dbObjectNew(contents,basic=true){
-		var dbo = newDBObject();
-		dbo.putAll(toMongoDocument(contents));
-		//if(basic){
-			return dbo;
-		// } else {
-		// 	try{
-		// 		var map = createObject('java','java.util.HashMap');
-		// 		map.putAll(contents);
-		// 		return dbo.putAll(map);
-		// 	} catch (any e){
-		// 		writeDump(var=e,top=1);
-		// 		abort;
-		// 	}
-		// }
-		
-	}
-
-	function encapsulateCursor(dbResult){
-		var enc = {};
-		enc['asCursor']=function(){return dbResult.iterator()};
-		enc['asArray']=function(){return this.asArray(dbResult)};
-		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
-		enc['asJSON']=function(required fn){return serializeJSON(this.asArray(dbResult,true))};
-		return enc;
-	}
-
-	/**
-	* Returns the results of a dbResult object as an array of documents
-	**/
-	function asArray(dbResult,stringify=false){
-		var aResults = [];
-		var cursor = dbResult.iterator();
-		while(cursor.hasNext()){
-			var nextResult = cursor.next();
-			//TODO:  Add conversion function to recurse the document and convert all BSON ID's
-			if(stringify) nextResult['_id']=nextResult['_id'].toString();
-
-			arrayAppend(aResults,nextResult);
-		}
-		return aResults;
-	}
 
 }
