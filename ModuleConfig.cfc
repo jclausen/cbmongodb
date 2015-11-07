@@ -9,6 +9,7 @@
 * @link https://github.com/jclausen/cfmongodb [coldbox/master]
 */
 component{
+	property name="MongoDBConfig";
 
 	// Module Properties
 	this.title 				= "CBMongoDB";
@@ -33,10 +34,13 @@ component{
 	* Fired on Module Registration
 	*/
 	function configure(){
+		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
+
+		parseParentSettings();
 		//mappings
 		binder.map( "jl@cbjavaloader" )
 			.to( "cbjavaloader.models.javaloader.JavaLoader" )
-			.initArg( name="loadPaths",value=[expandPath('../lib')]);
+			.initArg( name="loadPaths",value=[modulePath & 'lib']);
 		/**	
 		* Utility Classes
 		**/
@@ -55,7 +59,7 @@ component{
 		//configuration object
 		binder.map("MongoConfig@cbmongodb")
 			.to('cbmongodb.models.Mongo.Config')
-			.initWith(configStruct.MongoDB)
+			.initWith(MongoDBConfig)
 			.asSingleton();
 
 		//core client
@@ -75,5 +79,36 @@ component{
 	* Fired when the module is unloaded
 	*/
 	function onUnload(){}
+
+	/**
+	* Prepare settings and returns true if using i18n else false.
+	*/
+	private function parseParentSettings(){
+		//default config struct
+		configStruct.MongoDB = {
+			hosts		= [
+							{
+								serverName='127.0.0.1',
+								serverPort='27017',
+							}
+							// Authentication-based Example:
+							// {
+							// 	serverName='127.0.0.1',
+							// 	serverPort='27017',
+							// 	username="unitTestUser",
+							// 	password="testing",
+							// 	authenticationDB="admin"
+							// }
+						  ],
+			db 	= "test",
+			viewTimeout	= "1000"
+		};
+		var oConfig 			= controller.getSetting( "MongoDb" );
+		
+		// Incorporate settings
+		structAppend( configStruct.MongoDB, oConfig, true );
+
+		VARIABLES.MongoDBConfig = configStruct.MongoDB;
+	}
 
 }
