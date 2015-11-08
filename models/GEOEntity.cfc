@@ -136,6 +136,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			throw("The key <strong>#xProp#</strong> was not found in the #xName# entity.  ")
 		//merge our within query
 		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,xArg)}};
+		
 		xEntity.criteria(xCriteria);
 		return xEntity;
 	}
@@ -230,7 +231,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @param numeric miles
 	* @return numeric meters
 	**/
-	public function miles(miles){
+	public function meters(miles){
 		return (arguments.miles*1609.344);
 	}
 

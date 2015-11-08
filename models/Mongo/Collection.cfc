@@ -85,11 +85,11 @@ component name="MongoCollection" accessors=true {
 	* @return mixed result|null 	Returns the result if found or returns null if the document was not found
 	**/
 	public function findById(required id){
-		var qObj = getMongoUtil().newIDCriteriaObject(arguments.id);
+		var qId = getMongoUtil().newIDCriteriaObject(arguments.id);
 
-		var results=this.getDBCollection().find(qObj).limit(1).iterator();
-		
-		if(!isNull(results.hasNext()) and results.hasNext()){
+		results = this.find(qId).asCursor();
+
+		if(results.hasNext()){
 	
 			return results.next();
 	
@@ -388,7 +388,7 @@ component name="MongoCollection" accessors=true {
 	/**
 	* Returns an array of object maps for all of the indexes in the collection
 	**/
-	public function listIndexes(){
+	public function getIndexInfo(){
 		var indexList = getDBCollection().listIndexes().iterator();
 		var indexes=[];
 		while(indexList.hasNext()){

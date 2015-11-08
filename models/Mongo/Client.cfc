@@ -58,6 +58,7 @@ component name="MongoClient" accessors=true singleton{
 		} else {
 			variables.mongo.init( variables.mongoConfig.getServers(), getMongoConfig().getMongoClientOptions() );
 		}
+
 		variables.db = variables.mongo.getDatabase(variables.mongoConfig.getDbName());
 		
 		initCollections();
@@ -99,11 +100,13 @@ component name="MongoClient" accessors=true singleton{
 	*/
 	function getDBCollection( collectionName, dbName=getMongoConfig().getDBName() ){
 
-		if( not structkeyexists(variables.collections, dbName) or not structKeyExists( variables.collections[dbName], collectionName ) ){
-			variables.collections[ dbName ][ collectionName ] = getMongoCollection().init(this.getDB().getCollection(collectionName));
+		if(!structkeyexists(variables.collections, dbName)) variables.collections[dbName]={};
+
+		if(!structKeyExists( variables.collections[dbName], collectionName ) ){
+			variables.collections[ dbName ][ collectionName ] = this.getDB().getCollection(collectionName);
 		}
 		
-		return variables.collections[ dbName ][ collectionName ];
+		return getMongoCollection().init(variables.collections[ dbName ][ collectionName ]);
 	}
 
 

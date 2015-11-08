@@ -88,7 +88,7 @@ component name="BaseDocumentService"  accessors="true"{
 		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
 			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
 		} else {
-			throw('Wirebox IOC Injection is required to user this service');
+			throw('Wirebox IOC Injection is required to use this service');
 		}
 		
 		this.setMongoUtil(getMongoClient().getMongoUtil());
@@ -236,7 +236,7 @@ component name="BaseDocumentService"  accessors="true"{
 
 	public function getIndexInfo(){
 
-		return getDbInstance().listIndexes();
+		return getDbInstance().getIndexInfo();
 
 	}
 
@@ -277,6 +277,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 * Alias for get()
 	 **/
 	any function load(required _id,returnInstance=true){
+
 		return this.get(arguments._id,arguments.returnInstance);
 	}
 
@@ -428,13 +429,30 @@ component name="BaseDocumentService"  accessors="true"{
 		}
 	 }
 
-	any function toMongo(arg){
+	/**
+	* Returns the Mongo.Collection object for advanced operations
+	* facade for getDBInstance()
+	**/
+	any function getCollectionObject(){
+		return this.getDBInstance();
+	}
+
+	/**
+	* facade for Mongo.Util.toMongo
+	* @param mixed arg 		The struct or array to convert to a Mongo DBObject
+	**/
+	any function toMongo(required arg){
 
 		return getMongoUtil().toMongo(arg);
 
 	}
 
-	any function toMongoDocument(arg){
+	/**
+	* facade for Mongo.Util.toMongoDocument
+	* 
+	* @param struct arg 	The struct to convert to a MongoDB Document Object
+	**/
+	any function toMongoDocument(required struct arg){
 
 		return getMongoUtil().toMongoDocument(arg);
 
