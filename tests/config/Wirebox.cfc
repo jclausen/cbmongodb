@@ -81,7 +81,7 @@ component extends="coldbox.system.ioc.config.Binder"{
 
 		map("MongoCollection@cbmongodb")
 			.to('cbmongodb.models.Mongo.Collection')
-			.noInit().threadSafe();
+			.noInit();
 
 		map( "MongoClient@cbmongodb" )
 			.to( "cbmongodb.models.Mongo.Client" )

@@ -33,10 +33,6 @@ component name="MongoClient" accessors=true singleton{
 	 * Utility Class
 	 **/
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
-	/**
-	* Collection Class
-	**/
-	property name="MongoCollection" inject="MongoCollection@cbmongodb";
 	
 
 	public function init(MongoConfig){
@@ -92,7 +88,7 @@ component name="MongoClient" accessors=true singleton{
 		if(!structKeyExists( variables.collections[dbName], collectionName ) ){
 
 			//each collection receives their own connection
-			variables.collections[ dbName ][ collectionName ] = createObject("component","cbmongodb.models.Mongo.Collection").init(getDb().getCollection(collectionName));
+			variables.collections[ dbName ][ collectionName ] = Wirebox.getInstance("MongoCollection@cbmongodb").init(getDb().getCollection(collectionName));
 			
 		}
 

@@ -24,6 +24,7 @@ component name="MongoCollection" accessors=true {
 	* @param java:com.mongodb.MongoCollectionImpl dbCollection 	The MongoDB Collection Object
 	**/
 	public function init(dbCollectionInstance){
+		//if, for some reason, we need to instantiate manually
 		if(isNull(MongoUtil)) application.wirebox.autowire(this);
 		
 		variables.dbCollection = arguments.dbCollectionInstance;
