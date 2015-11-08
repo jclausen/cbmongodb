@@ -41,18 +41,21 @@ component{
 		//mappings
 		binder.map( "jl@cbjavaloader" )
 			.to( "cbjavaloader.models.javaloader.JavaLoader" )
-			.initArg( name="loadPaths",value=[modulePath & 'lib']);
+			.initArg( name="loadPaths",value=[modulePath & 'lib'])
+			.asSingleton();
 		/**	
 		* Utility Classes
 		**/
-		//utility class
+		//models.Mongo.Util
 		binder.map("MongoUtil@cbmongodb")
 			.to("cbmongodb.models.Mongo.Util")
-			.initWith().asSingleton();
+			.initWith()
+			.asSingleton();
 
-		//collection wrapper
+		//models.Mongo.Collection
 		binder.map("MongoCollection@cbmongodb")
-			.to('cbmongodb.models.Mongo.Collection');
+			.to('cbmongodb.models.Mongo.Collection')
+			.noInit();
 
 		/**
 		* Singletons
@@ -65,9 +68,9 @@ component{
 
 		//core client
 		binder.map( "MongoClient@cbmongodb" )
-		.to( "cbmongodb.models.Mongo.Client" )
-		.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
-		.asSingleton();
+			.to( "cbmongodb.models.Mongo.Client" )
+			.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
+			.asSingleton();
 
 	}
 
