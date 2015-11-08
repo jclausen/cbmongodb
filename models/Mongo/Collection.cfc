@@ -44,16 +44,6 @@ component name="MongoCollection" accessors=true {
 
 	}
 
-	/**
-	* Renames the collection
-	* 
-	* @param required string name 		The new name for the collection
-	**/
-	public function renameCollection(required string name){
-
-		return getDBCollection().renameCollection(javacast('string',arguments.name));
-	}
-
 	/** 
 	* ====================================
 	* Collection Count/Find Methods
@@ -292,9 +282,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function updateMany(required criteria,required operation){
 
-		var ops = getMongoUtil().toMongoOperation(arguments.operation);
-
-		return getDBCollection.updateMany(toMongo(arguments.criteria),ops);
+		return getDBCollection().updateMany(toMongo(arguments.criteria),toMongo(operation));
 	}
 
 	/**
@@ -305,9 +293,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function findOneAndUpdate(required criteria,required operation){
 
-		var ops = getMongoUtil().toMongoOperation(arguments.operation);
-
-		return getDBCollection().findOneAndUpdate(toMongo(arguments.criteria),ops);
+		return getDBCollection().findOneAndUpdate(toMongo(arguments.criteria),toMongo(operation));
 
 	}
 	
@@ -364,11 +350,10 @@ component name="MongoCollection" accessors=true {
 	public function remove(required criteria,multiple=true){
 
 		if(arguments.multiple){
-			var removed = deleteMany(arguments.criteria).getN();
+			var removed = deleteMany(arguments.criteria);
 		} else {
-			var removed = deleteOne(arguments.criteria).getN();
+			var removed = deleteOne(arguments.criteria);
 		}
-
 		return removed;
 	}
 
