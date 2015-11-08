@@ -13,18 +13,23 @@
 * 
 */
 component name="MongoCollection" accessors=true {
-	property name="DBCollection";
+	
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
-
+	property name="dbCollection";
+	property name="collectionName";
+	
 	/**
 	* Constructor - Must be manually instantiated with the Mongo Collection Object
 	* 
 	* @param java:com.mongodb.MongoCollectionImpl dbCollection 	The MongoDB Collection Object
 	**/
-	public function init(required dbCollection){
+	public function init(dbCollectionInstance){
+		if(isNull(MongoUtil)) application.wirebox.autowire(this);
 		
-		setDBCollection(arguments.dbCollection);
-
+		variables.dbCollection = arguments.dbCollectionInstance;
+		//add an immutability testing property
+		variables.collectionName = getDbCollection().getNamespace().getCollectionName();
+		
 		return this;
 
 	}
@@ -421,6 +426,7 @@ component name="MongoCollection" accessors=true {
 	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
 	**/
 	public function createIndex(required operation, required options={}){
+
 		var idxOptions = getMongoUtil().createIndexOptions(options);
 		
 		try{
