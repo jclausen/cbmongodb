@@ -53,7 +53,7 @@ component name="MongoUtil" accessors=true singleton{
 	* Convenience for turning a string _id into a Mongo ObjectId object
 	*/
 	function newObjectIDFromID(String id){
-		if( not isSimpleValue( id ) ) return id;
+		if( !isSimpleValue( id ) ) return id;
 		return createObject("java","org.bson.types.ObjectId").init(id);
 	}
 
@@ -168,16 +168,6 @@ component name="MongoUtil" accessors=true singleton{
 	/**
 	* Utility Methods Not Currently In Use
 	**/
-
-	/**
-	* Converts a ColdFusion structure to a CFBasicDBobject which ensures 1 and -1 remain ints
-	*/
-	function toMongoOperation( struct data ){
-		if( isCFBasicDBObject(data) ) return data;
-		var dbo = newOperationalDBObject();
-		dbo.putAll( data );
-		return dbo;
-	}
 
 	/**
 	* Creates a Mongo CFBasicDBObject whose order matches the order of the keyValues argument
