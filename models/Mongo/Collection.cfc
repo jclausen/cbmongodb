@@ -8,6 +8,7 @@
 * @constructor init(java:com.mongodb.MongoCollectionImpl)
 * @package cbmongodb.models.Mongo
 * @author Jon Clausen <jon_clausen@silowebworks.com>
+* 
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 * 
 */
@@ -27,6 +28,37 @@ component name="MongoCollection" accessors=true {
 		return this;
 
 	}
+	
+	/** 
+	* ====================================
+	* Basic Collection Operational Methods
+	* ====================================
+	**/
+
+	/**
+	* Drops the collection
+	**/
+	public function drop(){
+
+		return getDBCollection().drop();
+
+	}
+
+	/**
+	* Renames the collection
+	* 
+	* @param required string name 		The new name for the collection
+	**/
+	public function renameCollection(required string name){
+
+		return getDBCollection().renameCollection(javacast('string',arguments.name));
+	}
+
+	/** 
+	* ====================================
+	* Collection Count/Find Methods
+	* ====================================
+	**/
 
 	/**
 	* Counts the number of records, by restriction or in total
@@ -47,8 +79,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function find(required criteria={},required struct options={}){
 
-		var results = getDBCollection().find(getMongoUtil().toMongo(arguments.criteria));
-		
+		var results = getDBCollection().find(getMongoUtil().toMongoDocument(arguments.criteria));
 		if(structKeyExists(options,'offset')) results.skip(options.offset);
 		if(structKeyExists(options,'sort')) results.sort(getMongoUtil().toMongoDocument(options.sort));
 		if(structKeyExists(options,'limit') and options.limit > 0) results.limit(options.limit);
@@ -80,72 +111,130 @@ component name="MongoCollection" accessors=true {
 	}
 
 	/**
-	* Drops the collection
-	**/
-	public function drop(){
-
-		return getDBCollection().drop();
-
-	}
-
-	/**
-	* Creates a standard index
+	* Performs an aggregation operation on the collection using match or projection
+	* <br><br>See <a href="https://docs.mongodb.org/manual/aggregation/">https://docs.mongodb.org/manual/aggregation/</a> for more information and commands
 	* 
-	* @param struct operation 		The index operation, containing the keys to be indexed (e.g. {"lastname":-1,"firstname":1})
-	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
+	* @param struct [criteria]		The criteria to match the aggregation results against 
+	* @param struct group 			The group by operational command (e.g. {"_id":"$orderId","$sum":"amount"} where $orderId references the orderId key in the document)
+	* @param struct [projection] 	A projection to be used on items in the collection (e.g. {"name":{$toUpper:"$firstName"}})
+	* @param mixed sort 			A string or struct used to sort the results (e.g. "name" or {"name":-1}).  Must be included within the projection key name
 	**/
-	public function createIndex(required operation, required options={}){
-		var idxOptions = getMongoUtil().createIndexOptions(options);
+	public function aggregate(struct criteria, required struct group, struct projection,sort){
 		
-		try{
+		if(isNull(arguments.criteria) and isNull(arguments.projection)) 
+			throw(type="MissingArgumentException",message="Neither a critera or projection argument were provided. For custom aggregations, please see the aggregation() method.");
 		
-			this.getDBCollection().createIndex(toMongo(operation),idxOptions);
-		
-		} catch(any e){
-			
-			throw("Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>");
-		
-		}					
+		var proj = [];
 
-
-	}
-
-	/**
-	* Creates a geospatial index
-	* 
-	* @param string field 			The field to index
-	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
-	* @param string	geoType 		The GEOJSON spatial type to apply for the index.  Defaults to '2dsphere'.
-	**/
-	public function createGeoIndex(required string field,required options={},required string geoType='2dsphere'){
-
-		var idxOptions = getMongoUtil().createIndexOptions(options);
-		var doc = { "#arguments.field#" = arguments.geoType };
-
-		try{
-
-			this.getDBCollection().createIndex(toMongo(doc),idxOptions);
-
-		} catch(any e){
-
-			throw("Geo Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>");
-		
+		if(!isNull(arguments.criteria)){
+			arrayAppend(proj,{"$match":arguments.criteria});
+		}
+		if(!isNull(arguments.projection)){
+			arrayAppend(proj,{"$project":arguments.projection});
 		}
 
+		arrayAppend(proj,{"$group":arguments.group});
+
+		if(!isNull(arguments.sort)){
+			if(isStruct(arguments.sort)){
+				arrayAppend(proj,{"$sort":arguments.sort});
+			} else {
+				arrayAppend(proj,{"$sort":{"#arguments.sort#":1}});
+			}
+		}
+		var agResult = getDbCollection().aggregate(toMongo(proj));
+
+		return getMongoUtil().encapsulateDBResult(agResult);
+
+	}
+
+	public function aggregation(required array command){
+		var aggregate = getDbCollection().aggregate(toMongo(arguments.command));
+		return getMongoUtil().encapsulateDBResult(aggregate);
 	}
 
 	/**
-	* Returns an array of object maps for all of the indexes in the collection
+	* Returns the list of distinct values for a specified field name
+	* 
 	**/
-	public function listIndexes(){
-		var indexList = getDBCollection().listIndexes().iterator();
-		var indexes=[];
-		while(indexList.hasNext()){
-			arrayAppend(indexes,indexList.next());
-		}
-		return indexes;
+	public function distinct(required string fieldName, struct criteria={}){
+		//FIXME: Not currently operational - casting issue?
+		//var distinct = getDBCollection().distinct(arguments.fieldName,toMongo(arguments.criteria));
+		
+		return getDbCollection().distinct(argumentCollection=arguments);
 	}
 
+	
+	/**
+	* Performs a Map-Reduce operation on the collection
+	* <br><br><a href="https://docs.mongodb.org/manual/core/map-reduce/">See Mongo Documentation for more information on Map-Reduce functionality</a>
+	* 
+	* @param string map 		 The javascript map command <a href="https://docs.mongodb.org/manual/core/map-reduce/">Docs</a>
+	* @param string reduce 		 The javascript reduction command <a href="https://docs.mongodb.org/manual/core/map-reduce/">Docs</a>
+	**/
+	public function mapReduce(required string map, required string reduce){
+		
+		var mr = getDbCollection().mapReduce(arguments.map,arguments.reduce);
+
+		return getMongoUtil().encapsulateDBResult(mr);
+
+	}
+
+	/** 
+	* ====================================
+	* Collection Document Creation Methods
+	* ====================================
+	**/
+
+	/**
+	* Inserts a single document
+	* 
+	* @param required struct document 	The document to be inserted
+	**/
+	public function insertOne(required document){
+
+		var doc = getMongoUtil().toMongoDocument(document);
+		
+		//our doc is updated by reference
+		getDBCollection().insertOne( doc );
+		
+		return doc;
+
+	}
+
+	/**
+	* Inserts an array of document
+	* 
+	* @param array docs 	An array of structs which are the documents to be inserted
+	**/
+	public function insertMany(required array docs){
+
+		var mongoDocs = createObject("java","java.util.ArrayList");
+
+		for(var doc in docs){
+
+			mongoDocs.add(toMongoDocument(doc));
+
+		}
+
+		getDbCollection().insertMany(mongoDocs);
+
+		return mongoDocs;
+	}
+
+	/**
+	* Facade for the driver's bulkWrite() method
+	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
+	**/
+	public function bulkWrite(){
+		return getDbCollection().mapReduce(argumentCollection=arguments);
+	}
+
+	/** 
+	* ====================================
+	* Collection Document Update Methods
+	* ====================================
+	**/
 
 	/**
 	* Generic Save Function - Uses findOneAndReplace()
@@ -172,102 +261,6 @@ component name="MongoCollection" accessors=true {
 
 	}
 
-	/**
-	* Finds one document and deletes it
-	* 
-	* @param struct criteria 		The criteria for the deletion (e.g. {"_id":"123456789012456bx"})
-	* @param struct [options] 		Any options which should be applied to the deletion
-	**/
-	public function findOneAndDelete(required struct criteria,options){
-
-		if(isNull(options)){
-			return getDBCollection().findOneAndDelete(getMongoUtil().toMongo(arguments.criteria))
-		} else {
-			return getDBCollection().findOneAndDelete(
-				getMongoUtil().toMongo(arguments.criteria),
-				getMongoUtil().toMongo(options)
-			);
-		}
-	}
-
-	/**
-	* Facade for the driver's aggregate() method
-	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
-	**/
-	public function aggregate(){
-		return getDbCollection().aggregate(argumentCollection=arguments);
-	}
-
-	/**
-	* Facade for the driver's distinct() method
-	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
-	**/
-	public function distinct(){
-		return getDbCollection().distinct(argumentCollection=arguments);
-	}
-
-	/**
-	* Facade for the driver's mapReduce() method
-	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
-	**/
-	public function mapReduce(){
-		return getDbCollection().mapReduce(argumentCollection=arguments);
-	}
-
-	/**
-	* Facade for the driver's bulkWrite() method
-	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
-	**/
-	public function bulkWrite(){
-		return getDbCollection().mapReduce(argumentCollection=arguments);
-	}
-
-	/**
-	* Facade for the driver's insertMany() method
-	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
-	**/
-	public function insertMany(){
-		return getDbCollection().insertMany(argumentCollection=arguments);
-	}
-
-	/**
-	* Utility method which emulates the remove() method available in the v2 Mongo java drivers
-	* 
-	* @param struct criteria 		The criteria for the document deletion
-	* @param boolean multiple 		Whether to delete multiple records. Defaults to true
-	**/
-	public function remove(required criteria,multiple=true){
-
-		if(arguments.multiple){
-			var removed = deleteMany(arguments.criteria).getN();
-		} else {
-			var removed = deleteOne(arguments.criteria).getN();
-		}
-
-		return removed;
-	}
-
-	/**
-	* Deletes a single document by criteria
-	* 
-	* @param struct criteria 		The critera for deletion (e.g. {"_id":"123456789012456bx"})
-	**/
-	public function deleteOne(required criteria){
-
-		return getDBCollection().deleteOne(getMongoUtil().toMongo(arguments.criteria));
-
-	}
-
-	/**
-	* Deletes many documents by criteria
-	* 
-	* @param struct criteria 		The critera for deletion (e.g. {"created":{"$lt":now()}})
-	**/
-	public function deleteMany(required criteria={}){
-		
-		return getDBCollection().deleteMany(getMongoUtil().toMongo(arguments.criteria));
-
-	}
 	/**
 	* Replaces one document found by a designated criteria 
 	* <br><br><strong>NOTE:</strong> facade for findOneAndReplace()
@@ -317,47 +310,7 @@ component name="MongoCollection" accessors=true {
 		return getDBCollection().findOneAndUpdate(toMongo(arguments.criteria),ops);
 
 	}
-
-	/**
-	* Creates multiple indexes
-	* 
-	* @param array indexes  	The array of index structs.  Each array item should contain the key "operation", with an optional "options" key.  
-	**/
-	public function createIndexes(required array indexes){
-
-		for(var index in arguments.index){
-			createIndex(argumentCollection=index);
-		}
-
-	}
-
-	/**
-	* Drops an index 			Either a name or a criteria to search the existing indexes should be specified
-	* 
-	* @param string indexName
-	* 
-	**/
-	public function dropIndex(string indexName,criteria){
-		return getDbCollection.dropIndex(!isNull(indexName)?indexName:toMongo(criteria));
-	}
-
-	/**
-	* Drops all indexes in a collection
-	**/
-	public function dropIndexes(){
-
-		return getDBCollection().dropIndexes();
-	}
-
-	/**
-	* Renames the collection
-	* 
-	* @param required string name 		The new name for the collection
-	**/
-	public function renameCollection(required string name){
-
-		return getDBCollection().renameCollection(javacast('string',arguments.name));
-	}
+	
 
 	/**
 	* Finds a single document and replaces it
@@ -377,24 +330,169 @@ component name="MongoCollection" accessors=true {
 
 	}
 
-	/**
-	* Inserts a single document
-	* 
-	* @param required struct document 	The document to be inserted
+	/** 
+	* ====================================
+	* Collection Document Deletion Methods
+	* ====================================
 	**/
-	public function insertOne(required document){
 
-		var doc = getMongoUtil().toMongoDocument(document);
-		
-		//our doc is updated by reference
-		getDBCollection().insertOne( doc );
-		
-		return doc;
+	/**
+	* Finds one document and deletes it
+	* 
+	* @param struct criteria 		The criteria for the deletion (e.g. {"_id":"123456789012456bx"})
+	* @param struct [options] 		Any options which should be applied to the deletion
+	**/
+	public function findOneAndDelete(required struct criteria,options){
+
+		if(isNull(options)){
+			return getDBCollection().findOneAndDelete(getMongoUtil().toMongo(arguments.criteria))
+		} else {
+			return getDBCollection().findOneAndDelete(
+				getMongoUtil().toMongo(arguments.criteria),
+				getMongoUtil().toMongo(options)
+			);
+		}
+	}
+
+
+	/**
+	* Utility method which emulates the remove() method available in the v2 Mongo java drivers
+	* 
+	* @param struct criteria 		The criteria for the document deletion
+	* @param boolean multiple 		Whether to delete multiple records. Defaults to true
+	**/
+	public function remove(required criteria,multiple=true){
+
+		if(arguments.multiple){
+			var removed = deleteMany(arguments.criteria).getN();
+		} else {
+			var removed = deleteOne(arguments.criteria).getN();
+		}
+
+		return removed;
+	}
+
+	/**
+	* Deletes a single document by criteria
+	* 
+	* @param struct criteria 		The critera for deletion (e.g. {"_id":"123456789012456bx"})
+	**/
+	public function deleteOne(required criteria){
+
+		return getDBCollection().deleteOne(getMongoUtil().toMongo(arguments.criteria));
 
 	}
 
 	/**
+	* Deletes many documents by criteria
+	* 
+	* @param struct criteria 		The critera for deletion (e.g. {"created":{"$lt":now()}})
+	**/
+	public function deleteMany(required criteria={}){
+		
+		return getDBCollection().deleteMany(getMongoUtil().toMongo(arguments.criteria));
+
+	}
+	
+	/** 
+	* ====================================
+	* Collection Indexing Methods
+	* ====================================
+	**/
+
+	/**
+	* Returns an array of object maps for all of the indexes in the collection
+	**/
+	public function listIndexes(){
+		var indexList = getDBCollection().listIndexes().iterator();
+		var indexes=[];
+		while(indexList.hasNext()){
+			arrayAppend(indexes,indexList.next());
+		}
+		return indexes;
+	}
+
+	/**
+	* Drops all indexes in a collection
+	**/
+	public function dropIndexes(){
+
+		return getDBCollection().dropIndexes();
+	}
+
+	/**
+	* Drops an index 		Either a name or a criteria to search the existing indexes may be specified
+	* 
+	* @param string indexName 
+	**/
+	public function dropIndex(string indexName,criteria){
+		return getDbCollection.dropIndex(!isNull(indexName)?indexName:toMongo(criteria));
+	}
+
+	/**
+	* Creates a standard index
+	* 
+	* @param struct operation 		The index operation, containing the keys to be indexed (e.g. {"lastname":-1,"firstname":1})
+	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
+	**/
+	public function createIndex(required operation, required options={}){
+		var idxOptions = getMongoUtil().createIndexOptions(options);
+		
+		try{
+		
+			this.getDBCollection().createIndex(toMongo(operation),idxOptions);
+		
+		} catch(any e){
+			
+			throw("Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>");
+		
+		}					
+
+
+	}
+
+	/**
+	* Creates a geospatial index
+	* 
+	* @param string field 			The field to index
+	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
+	* @param string	geoType 		The GEOJSON spatial type to apply for the index.  Defaults to '2dsphere'.
+	**/
+	public function createGeoIndex(required string field,required options={},required string geoType='2dsphere'){
+
+		var idxOptions = getMongoUtil().createIndexOptions(options);
+		var doc = { "#arguments.field#" = arguments.geoType };
+
+		try{
+
+			this.getDBCollection().createIndex(toMongo(doc),idxOptions);
+
+		} catch(any e){
+
+			throw("Geo Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>");
+		
+		}
+
+	}
+
+	/**
+	* Creates multiple indexes
+	* 
+	* @param array indexes  	The array of index structs.  Each array item should contain the key "operation", with an optional "options" key.  
+	**/
+	public function createIndexes(required array indexes){
+
+		for(var index in arguments.index){
+			createIndex(argumentCollection=index);
+		}
+
+	}
+
+	
+	/** 
+	* ====================================
 	* Private Methods
+	* ====================================
 	**/
 
 	/**
