@@ -20,7 +20,7 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" access
 	function getTestDocument(){
 		return {
 		'first_name'='firstname_'&toString(createUUID()),
-		'last_name'='firstname_'&toString(createUUID()),
+		'last_name'='lastname_'&toString(createUUID()),
 		'testvar'='here',
 		'address'={
 			'street'='123 Anywhere Lane',
