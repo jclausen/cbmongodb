@@ -122,7 +122,7 @@ component name="TestMongoUtil" extends="testbox.system.BaseSpec"{
 					});
 
 					it("tests map reduction",function(){
-						
+
 						var map="function(){if(this.iteration <= 2) emit(this._id,this.iteration)}";
 						var reduce = "function(key,iterations){return Array.sum(iterations)}";
 						var reduction = variables.Collection.mapReduce(map,reduce);
@@ -135,18 +135,88 @@ component name="TestMongoUtil" extends="testbox.system.BaseSpec"{
 				});
 
 				describe("Tests Collection Update Methods",function(){
+					it("tests replaceOne()",function(){
+
+						var doc1 = variables.bulkInsert[1];
+						doc1['newkey']="Yay!  New Key!";
+						var updated = variables.Collection.replaceOne({"_id":doc1['_id']},doc1);
+						expect(variables.collection.findById(doc1['_id'])).toHaveKey("newkey");
+
+					});
 					
+					it("tests updateOne()",function(){
+
+						var doc2 = variables.bulkInsert[2];
+						var update = {"$set":{"newkey":"Yay!  Another New Key!"}};
+
+						var updated = variables.Collection.updateOne({"_id":doc2['_id']},update);
+						expect(variables.collection.findById(doc2['_id'])).toHaveKey("newkey");
+						//we should have two documents with the "newkey"
+						expect(arrayLen(variables.collection.find({"newkey":{"$exists":true}}).asArray())).toBe(2);
+
+					});
+
+					it("tests updateMany()",function(){
+
+						var criteria = {"iteration":{"$gt":500}};
+						var update = {"$set":{"newkey":"Yay! More new keys"}};
+						var updated = variables.collection.updateMany(criteria,update);
+						expect(updated.getModifiedCount()).toBe(500);
+						expect(variables.collection.count({"newkey":{"$exists":true}})).toBe(502);
+
+
+					});
+
+					it("tests findOneAndUpdate",function(){
+						//pases automatically since updateOne() is a facade
+					});
+
+					it("tests findOneAndReplace",function(){
+						//pases automatically since updateOne() is a facade
+					})
+
 				});
 
 				describe("Tests Collection Deletion Methods",function(){
+					it("tests findOneAndDelete",function(){
+						
+						var doc1 = variables.bulkInsert[1];
+						var deleted = variables.Collection.findOneAndDelete({"_id":doc1['_id']});
+						expect(variables.collection.count()).toBe(1001);
+						expect(variables.collection.findById(doc1['_id'])).toBeNull();
+
+					});
+
+					it("tests remove",function(){
+
+						var doc2 = variables.bulkInsert[2];
+						var deleted = variables.Collection.remove({"_id":doc2['_id']});
+						expect(variables.collection.count()).toBe(1000);
+						expect(variables.collection.findById(doc2['_id'])).toBeNull();
+
+					});
+
+
+					it("tests deleteOne",function(){
+
+						var doc3 = variables.bulkInsert[3];
+						var deleted = variables.Collection.deleteOne({"_id":doc3['_id']});
+						expect(variables.collection.count()).toBe(999);
+						expect(variables.collection.findById(doc3['_id'])).toBeNull();
+
+					});
+
+					it("tests deleteMany",function(){
+						//delete them all
+						var deleted = variables.collection.deleteMany();
+						expect(variables.collection.count()).toBe(0);
+
+					});
 					
 				});
 
 				describe( "Tests Collection General Operation Methods", function(){
 					
-					it("tests renameCollection()",function(){
-						
-					});
 					
 				});
 			});
