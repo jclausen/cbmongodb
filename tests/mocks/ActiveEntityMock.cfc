@@ -1,5 +1,5 @@
 component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" accessors=true{
-	property name="collection" default="cbmongodbtestrunner";
+	property name="collection" default="people";
 	property name="test_document" default="";
 	/**Schema Properties**/
 	property name="first_name" schema=true index=true indexwith="last_name" indexorder="ASC" validate="string";
@@ -17,29 +17,8 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" access
 	property name="phone.work" schema=true validate="telephone";
 	property name="phone.mobile" schema=true validate="telephone";
 
-	any function init(){
-		super.init();
-		/**OPTIONAL: Explicit Default Document Setter**/
-		/*this.set_default_document({
-			'first_name'='',
-			'last_name'='',
-			'address'={
-				'street'='',
-				'city'='',
-				'state'='',
-				'postalcode'='',
-				'country'=''
-			},
-			'phone'={
-				'home'='',
-				'work'='',
-				'mobile'=''
-			}
-		});
-		this.set_document(this.get_default_document());
-		 */
-
-		this.setTest_document({
+	function getTestDocument(){
+		return {
 		'first_name'='firstname_'&toString(createUUID()),
 		'last_name'='firstname_'&toString(createUUID()),
 		'testvar'='here',
@@ -56,7 +35,7 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" access
 			'work'='616-321-7654',
 			'mobile'='616-987-6543'
 		}
-		});
+		};
 	}
 
 }

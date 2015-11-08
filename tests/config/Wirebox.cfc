@@ -76,15 +76,17 @@ component extends="coldbox.system.ioc.config.Binder"{
 		//client wrapper
 		map("MongoUtil@cbmongodb")
 			.to("cbmongodb.models.Mongo.Util")
-			.initWith().asSingleton();
+			.initWith()
+			.asSingleton();
 
 		map("MongoCollection@cbmongodb")
-			.to('cbmongodb.models.Mongo.Collection').noInit();
+			.to('cbmongodb.models.Mongo.Collection')
+			.noInit().threadSafe();
 
 		map( "MongoClient@cbmongodb" )
-		.to( "cbmongodb.models.Mongo.Client" )
-		.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
-		.asSingleton();
+			.to( "cbmongodb.models.Mongo.Client" )
+			.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
+			.asSingleton();
 
 		map("Person")
 		.to("cbmongodb.tests.mocks.ActiveEntityMock");
