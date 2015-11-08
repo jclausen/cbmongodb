@@ -12,65 +12,31 @@
 */
 component name="MongoUtil" accessors=true singleton{
 	property name="MongoConfig" inject="MongoConfig@cbmongodb";
+	property name="NullSupport" default=false;
 
 	/**
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
 	function toMongo(any obj){
-
-		// if (isStruct(obj))
-		// {
-		// 	var dbObject = createObject("java", "com.mongodb.BasicDBObject").init();
-
-		// 	for (local.key in obj)
-		// 	{
-		// 		// convert '_id' and Modifier Operations into the correct case
-		// 		if (compareNoCase(key,"_ID")==0)
-		// 			key = "_id";
-		// 		else if (key.startsWith("$"))
-		// 			key = replaceList(lcase(key), "$addtoset,$pushall,$putall,$maxdistance", "$addToSet,$pushAll,$putAll,$maxDistance");
-
-		// 		if (!structKeyExists(obj, key))
-		// 			dbObject[key] = javacast("null","");
-		// 		else
-		// 		{
-		// 			var value =  obj[key];
-
-		// 			if (isStruct(value) || (isArray(value) && !isBinary(value)))
-		// 				value = dbObjectNew(value);
-
-		// 			dbObject[key] = value;
-		// 		}
-		// 	}
-
-		// 	return dbObject;
-		// }
-		// else if (isArray(obj))
-		// {
-		// 	var dbObject = createObject("java", "com.mongodb.BasicDBList").init();
-
-		// 	for (local.item in obj)
-		// 	{
-		// 		if (isNull(item))
-		// 			arrayAppend(dbObject, javacast("null",""));
-		// 		else
-		// 		{
-		// 			if (isStruct(item) || (isArray(item) && !isBinary(item)))
-		// 				item = dbObjectNew(item);
-
-		// 			arrayAppend(dbObject, isNull(item) ? javacast("null","") : item);
-		// 		}
-		// 	}
-
-		// 	return dbObject;
-		// }
-
-		return dbObjectnew(obj);
+		if(isArray(obj)){
+			var list = createObject("java","java.util.ArrayList");
+			for(var member in obj){
+				list.add(toMongo(member));
+			}
+			return list;
+		} else {
+			return dbObjectnew(obj);
+		}
 	}
 
 	function toMongoDocument(data){
 		var doc = createObject('java','org.bson.Document');
 		doc.putAll(data);
+
+		if(!structIsEmpty(data)){
+			ensureTyping(doc);
+		}
+
 		return doc;
 	}
 
@@ -126,13 +92,42 @@ component name="MongoUtil" accessors=true singleton{
 	function dbObjectNew(contents){
 		var dbo = newDBObject();
 		dbo.putAll(toMongoDocument(contents));
+		if(!structIsEmpty(dbo)){
+			ensureTyping(dbo);
+		}
 		return dbo;
 		
 		
 	}
 
+	function ensureTyping(required dbo){
+
+		for(var i in dbo){
+			if(isArray(dbo[i])){
+				ensureTypesInArray(dbo[i]);
+			} else if(isStruct(dbo[i])){
+				ensureTyping(dbo[i]);
+			} else if(!isNumeric(dbo[i]) and isBoolean(dbo[i])) {
+				dbo[i]=javacast('boolean',dbo[i]);
+			} else if(isDate(dbo[i])){
+				var castDate = createObject('java','java.util.Date').init(dbo[i].getTime());
+				dbo[i] = castDate;
+			} else if(NullSupport and len(dbo[i]) == 0){
+				dbo[i] = javacast('null',0);
+			}
+		}
+	}
+
+	function ensureTypesInArray(required dboArray){
+
+		for(var dbo in dboArray){
+			if(isStruct(dbo)) ensureTyping(dbo);
+		}
+	}
+
 	function encapsulateDBResult(dbResult){
 		var enc = {};
+		enc['getResult']=function(){return dbResult};
 		enc['asCursor']=function(){return dbResult.iterator()};
 		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify)};
 		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
