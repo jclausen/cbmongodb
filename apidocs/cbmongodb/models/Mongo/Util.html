@@ -347,6 +347,51 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		</td>
 	</tr>
 	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Util.html#NullSupport()">NullSupport</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+				<code>false</code>
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
 	</tr>
 </table>
 
@@ -445,6 +490,32 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="Util.html#ensureTypesInArray()">ensureTypesInArray</A></strong>(any dboArray)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Util.html#ensureTyping()">ensureTyping</A></strong>(any dbo)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="Util.html#getDateFromDoc()">getDateFromDoc</A></strong>([any doc])
 			<br>
 			
@@ -461,6 +532,19 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		</td>
 		<td>
 			<strong><a href="Util.html#getMongoConfig()">getMongoConfig</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="Util.html#getNullSupport()">getNullSupport</A></strong>()
 			<br>
 			
 		</td>
@@ -559,6 +643,19 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="Util.html#setNullSupport()">setNullSupport</A></strong>(any NullSupport)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="Util.html#toCF()">toCF</A></strong>([any BasicDBObject])
 			<br>
 			
@@ -591,21 +688,6 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		<td>
 			<strong><a href="Util.html#toMongoDocument()">toMongoDocument</A></strong>([any data])
 			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Util.html#toMongoOperation()">toMongoOperation</A></strong>([struct data])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Converts a ColdFusion structure to a CFBasicDBobject which ensures 1 and -1 remain ints.
 			
 		</td>
 	</tr>
@@ -686,6 +768,44 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		
 			
 			<dd><code>inject</code> - MongoConfig@cbmongodb</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="NullSupport()"><!-- --></a>
+		<h3>NullSupport</h3>
+
+		<kbd>
+			property any 
+			<strong>NullSupport</strong>
+			
+			= [false]
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
 			
 		
 			
@@ -898,6 +1018,70 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	<hr>
 
 	
+	<a name="ensureTypesInArray()"><!-- --></a>
+	<h3>ensureTypesInArray</h3>
+	
+	<kbd>public any <strong>ensureTypesInArray</strong>(any dboArray)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>dboArray</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="ensureTyping()"><!-- --></a>
+	<h3>ensureTyping</h3>
+	
+	<kbd>public any <strong>ensureTyping</strong>(any dbo)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>dbo</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getDateFromDoc()"><!-- --></a>
 	<h3>getDateFromDoc</h3>
 	
@@ -936,6 +1120,31 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	<h3>getMongoConfig</h3>
 	
 	<kbd>public string <strong>getMongoConfig</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getNullSupport()"><!-- --></a>
+	<h3>getNullSupport</h3>
+	
+	<kbd>public string <strong>getNullSupport</strong>()</kbd>
 	
 	<br><br>
 
@@ -1150,6 +1359,38 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	<hr>
 
 	
+	<a name="setNullSupport()"><!-- --></a>
+	<h3>setNullSupport</h3>
+	
+	<kbd>public any <strong>setNullSupport</strong>(any NullSupport)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>NullSupport</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="toCF()"><!-- --></a>
 	<h3>toCF</h3>
 	
@@ -1225,40 +1466,6 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	
 	<br><br>
 
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>data</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="toMongoOperation()"><!-- --></a>
-	<h3>toMongoOperation</h3>
-	
-	<kbd>public any <strong>toMongoOperation</strong>([struct data])</kbd>
-	
-	<br><br>
-
-	
-		<p>Converts a ColdFusion structure to a CFBasicDBobject which ensures 1 and -1 remain ints</p>
 	
 
 	

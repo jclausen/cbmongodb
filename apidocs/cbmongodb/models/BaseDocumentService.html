@@ -1288,6 +1288,21 @@ Class
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#getCollectionObject()">getCollectionObject</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Mongo.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
 			<code>string</code>
 		</td>
 		<td>
@@ -1769,8 +1784,10 @@ Class
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="BaseDocumentService.html#toMongo()">toMongo</A></strong>([any arg])
+			<strong><a href="BaseDocumentService.html#toMongo()">toMongo</A></strong>(any arg)
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;facade for Mongo.
 			
 		</td>
 	</tr>
@@ -1782,8 +1799,10 @@ Class
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="BaseDocumentService.html#toMongoDocument()">toMongoDocument</A></strong>([any arg])
+			<strong><a href="BaseDocumentService.html#toMongoDocument()">toMongoDocument</A></strong>(struct arg)
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;facade for Mongo.
 			
 		</td>
 	</tr>
@@ -2917,6 +2936,34 @@ Override this in your model by specifying the collection to use</p>
 	<hr>
 
 	
+	<a name="getCollectionObject()"><!-- --></a>
+	<h3>getCollectionObject</h3>
+	
+	<kbd>public any <strong>getCollectionObject</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the Mongo.Collection object for advanced operations
+facade for getDBInstance()</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getDb()"><!-- --></a>
 	<h3>getDb</h3>
 	
@@ -3968,10 +4015,12 @@ Override this in your model by specifying the collection to use</p>
 	<a name="toMongo()"><!-- --></a>
 	<h3>toMongo</h3>
 	
-	<kbd>public any <strong>toMongo</strong>([any arg])</kbd>
+	<kbd>public any <strong>toMongo</strong>(any arg)</kbd>
 	
 	<br><br>
 
+	
+		<p>facade for Mongo.Util.toMongo</p>
 	
 
 	
@@ -4000,10 +4049,12 @@ Override this in your model by specifying the collection to use</p>
 	<a name="toMongoDocument()"><!-- --></a>
 	<h3>toMongoDocument</h3>
 	
-	<kbd>public any <strong>toMongoDocument</strong>([any arg])</kbd>
+	<kbd>public any <strong>toMongoDocument</strong>(struct arg)</kbd>
 	
 	<br><br>
 
+	
+		<p>facade for Mongo.Util.toMongoDocument</p>
 	
 
 	

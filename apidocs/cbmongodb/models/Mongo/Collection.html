@@ -442,10 +442,23 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#aggregate()">aggregate</A></strong>()
+			<strong><a href="Collection.html#aggregate()">aggregate</A></strong>([struct criteria], struct group, [struct projection], [any sort])
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facade for the driver's aggregate() method.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs an aggregation operation on the collection using match or projection.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#aggregation()">aggregation</A></strong>(array command)
+			<br>
 			
 		</td>
 	</tr>
@@ -562,10 +575,10 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#distinct()">distinct</A></strong>()
+			<strong><a href="Collection.html#distinct()">distinct</A></strong>(string fieldName, [struct criteria='[runtime expression]'])
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facade for the driver's distinct() method.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the list of distinct values for a specified field name.
 			
 		</td>
 	</tr>
@@ -595,7 +608,7 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<strong><a href="Collection.html#dropIndex()">dropIndex</A></strong>([string indexName], [any criteria])
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drops an index 			Either a name or a criteria to search the existing indexes should be specified.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drops an index 		Either a name or a criteria to search the existing indexes may be specified.
 			
 		</td>
 	</tr>
@@ -723,10 +736,10 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#insertMany()">insertMany</A></strong>()
+			<strong><a href="Collection.html#insertMany()">insertMany</A></strong>(array docs)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facade for the driver's insertMany() method.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inserts an array of document.
 			
 		</td>
 	</tr>
@@ -768,10 +781,10 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#mapReduce()">mapReduce</A></strong>()
+			<strong><a href="Collection.html#mapReduce()">mapReduce</A></strong>(string map, string reduce)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Facade for the driver's mapReduce() method.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs a Map-Reduce operation on the collection.
 			
 		</td>
 	</tr>
@@ -787,21 +800,6 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utility method which emulates the remove() method available in the v2 Mongo java drivers.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Collection.html#renameCollection()">renameCollection</A></strong>(string name)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Renames the collection.
 			
 		</td>
 	</tr>
@@ -1102,13 +1100,13 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<a name="aggregate()"><!-- --></a>
 	<h3>aggregate</h3>
 	
-	<kbd>public any <strong>aggregate</strong>()</kbd>
+	<kbd>public any <strong>aggregate</strong>([struct criteria], struct group, [struct projection], [any sort])</kbd>
 	
 	<br><br>
 
 	
-		<p>Facade for the driver's aggregate() method
-<br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a></p>
+		<p>Performs an aggregation operation on the collection using match or projection
+<br><br>See <a href="https://docs.mongodb.org/manual/aggregation/">https://docs.mongodb.org/manual/aggregation/</a> for more information and commands</p>
 	
 
 	
@@ -1119,6 +1117,51 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	
 	
 
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>criteria</code></dd>
+		
+		<dd><code>group</code></dd>
+		
+		<dd><code>projection</code></dd>
+		
+		<dd><code>sort</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="aggregation()"><!-- --></a>
+	<h3>aggregation</h3>
+	
+	<kbd>public any <strong>aggregation</strong>(array command)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>command</code></dd>
+		
+		</dl>
 	
 
 	
@@ -1368,13 +1411,12 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<a name="distinct()"><!-- --></a>
 	<h3>distinct</h3>
 	
-	<kbd>public any <strong>distinct</strong>()</kbd>
+	<kbd>public any <strong>distinct</strong>(string fieldName, [struct criteria='[runtime expression]'])</kbd>
 	
 	<br><br>
 
 	
-		<p>Facade for the driver's distinct() method
-<br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a></p>
+		<p>Returns the list of distinct values for a specified field name</p>
 	
 
 	
@@ -1385,6 +1427,15 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	
 	
 
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>fieldName</code></dd>
+		
+		<dd><code>criteria</code></dd>
+		
+		</dl>
 	
 
 	
@@ -1428,7 +1479,7 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<br><br>
 
 	
-		<p>Drops an index 			Either a name or a criteria to search the existing indexes should be specified</p>
+		<p>Drops an index 		Either a name or a criteria to search the existing indexes may be specified</p>
 	
 
 	
@@ -1719,13 +1770,12 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<a name="insertMany()"><!-- --></a>
 	<h3>insertMany</h3>
 	
-	<kbd>public any <strong>insertMany</strong>()</kbd>
+	<kbd>public any <strong>insertMany</strong>(array docs)</kbd>
 	
 	<br><br>
 
 	
-		<p>Facade for the driver's insertMany() method
-<br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a></p>
+		<p>Inserts an array of document</p>
 	
 
 	
@@ -1736,6 +1786,13 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	
 	
 
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>docs</code></dd>
+		
+		</dl>
 	
 
 	
@@ -1808,13 +1865,13 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<a name="mapReduce()"><!-- --></a>
 	<h3>mapReduce</h3>
 	
-	<kbd>public any <strong>mapReduce</strong>()</kbd>
+	<kbd>public any <strong>mapReduce</strong>(string map, string reduce)</kbd>
 	
 	<br><br>
 
 	
-		<p>Facade for the driver's mapReduce() method
-<br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a></p>
+		<p>Performs a Map-Reduce operation on the collection
+<br><br><a href="https://docs.mongodb.org/manual/core/map-reduce/">See Mongo Documentation for more information on Map-Reduce functionality</a></p>
 	
 
 	
@@ -1825,6 +1882,15 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	
 	
 
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>map</code></dd>
+		
+		<dd><code>reduce</code></dd>
+		
+		</dl>
 	
 
 	
@@ -1859,40 +1925,6 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<dd><code>criteria</code></dd>
 		
 		<dd><code>multiple</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="renameCollection()"><!-- --></a>
-	<h3>renameCollection</h3>
-	
-	<kbd>public any <strong>renameCollection</strong>(string name)</kbd>
-	
-	<br><br>
-
-	
-		<p>Renames the collection</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>name</code></dd>
 		
 		</dl>
 	

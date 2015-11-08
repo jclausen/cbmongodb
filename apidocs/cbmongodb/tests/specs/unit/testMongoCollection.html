@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>JavaLoaderDSL</title>
-	<meta name="keywords" content="cbmongodb.modules.cbjavaloader.models.concurrent.Callable interface">
+	<title>testMongoCollection</title>
+	<meta name="keywords" content="cbmongodb.tests.specs.unit.concurrent.Callable interface">
 	<!-- common assets -->
 	
 
@@ -96,7 +96,7 @@ $(document).ready(function() {
 	      	</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../../../../index.html?cbmongodb/modules/cbjavaloader/models/JavaLoaderDSL.html" target="_top">
+				<li><a href="../../../../index.html?cbmongodb/tests/specs/unit/testMongoCollection.html" target="_top">
 					<i class="glyphicon glyphicon-fullscreen"></i> Frames
 					</a>
 				</li>
@@ -114,14 +114,14 @@ $(document).ready(function() {
 
 <!-- Package -->
 <div class="pull-right">
-	<a href="package-summary.html" title="Package: cbmongodb.modules.cbjavaloader.models"><span class="label label-success">cbmongodb.modules.cbjavaloader.models</span></a>
+	<a href="package-summary.html" title="Package: cbmongodb.tests.specs.unit"><span class="label label-success">cbmongodb.tests.specs.unit</span></a>
 </div>
 
 <h2>
 
 Class
 
- JavaLoaderDSL</h2>
+ testMongoCollection</h2>
 
 
 
@@ -143,10 +143,19 @@ Class
 	
 	
 
+	
+		
+		
+			
+		
+	
+	
+
 
 <!-- Inheritance Tree-->
 <pre>lucee.Component
-        <img src="../../../../resources/inherit.gif" alt="extended by ">cbmongodb.modules.cbjavaloader.models.JavaLoaderDSL
+        <img src="../../../../resources/inherit.gif" alt="extended by ">testbox.system.BaseSpec
+            <img src="../../../../resources/inherit.gif" alt="extended by ">cbmongodb.tests.specs.unit.testMongoCollection
 </pre>
 
 <div class="panel panel-default">
@@ -180,13 +189,11 @@ Class
 			
 		
 			
-		
-			
 			
 			<li class="label label-danger label-annotations">
 				accessors 
 				
-				: true		
+				: false		
 				
 			</li>
 			&nbsp;
@@ -216,18 +223,6 @@ Class
 
 	
 	
-		<div class="panel panel-default">
-			<div class="panel-heading"><strong>All Implemented Interfaces:</strong></div>
-  			<div class="panel-body">
-			
-			
-				
-				
-				coldbox.system.ioc.dsl.IDSLBuilder
-			
-			</div>
-		</div>
-	
 
 
 
@@ -236,9 +231,7 @@ Class
 
 
 <div id="class-hint">
-	<p>Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
-The JavaLoader WireBox DSL</p>
+	<p>Integration Test for /cfmongodb/models/ActiveEntity.cfc</p>
 </div>
 
 
@@ -280,7 +273,7 @@ The JavaLoader WireBox DSL</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="JavaLoaderDSL.html#injector()">injector</A></strong> 
+			<strong><a href="testMongoCollection.html#MongoClient()">MongoClient</A></strong> 
 			<br>
 			
 			<br><br>
@@ -290,6 +283,10 @@ The JavaLoader WireBox DSL</p>
 			
 				
 			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = MongoClient@cbmongodb</li>
 				
 			
 				
@@ -323,7 +320,7 @@ The JavaLoader WireBox DSL</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="JavaLoaderDSL.html#log()">log</A></strong> 
+			<strong><a href="testMongoCollection.html#MongoUtil()">MongoUtil</A></strong> 
 			<br>
 			
 			<br><br>
@@ -333,6 +330,10 @@ The JavaLoader WireBox DSL</p>
 			
 				
 			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = MongoUtil@cbmongodb</li>
 				
 			
 				
@@ -363,29 +364,6 @@ The JavaLoader WireBox DSL</p>
 </table>
 
 
-
-	
-	
-	<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-
-	<a name="constructor_summary"><!-- --></a>
-	<table class="table table-bordered table-hover">
-		<tr class="info">
-			<th align="left" colspan="2">
-				<strong>Constructor Summary</strong>
-			</th>
-		</tr>
-		<tr>
-			
-			<td>
-				<strong><a href="JavaLoaderDSL.html#init()">init</A></strong>(any injector)
-				<br>
-				
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Constructor as per interface.
-				
-			</td>
-		</tr>
-	</table>
 
 
 
@@ -406,10 +384,10 @@ The JavaLoader WireBox DSL</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>string</code>
+			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="JavaLoaderDSL.html#getInjector()">getInjector</A></strong>()
+			<strong><a href="testMongoCollection.html#afterAll()">afterAll</A></strong>()
 			<br>
 			
 		</td>
@@ -422,22 +400,7 @@ The JavaLoader WireBox DSL</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="JavaLoaderDSL.html#getJavaLoaderDSL()">getJavaLoaderDSL</A></strong>(any definition, [any targetObject])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get a JavaLoader Dependency.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="JavaLoaderDSL.html#getLog()">getLog</A></strong>()
+			<strong><a href="testMongoCollection.html#beforeAll()">beforeAll</A></strong>()
 			<br>
 			
 		</td>
@@ -450,35 +413,7 @@ The JavaLoader WireBox DSL</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="JavaLoaderDSL.html#process()">process</A></strong>(any definition, [any targetObject])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Process an incoming DSL definition and produce an object with it.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="JavaLoaderDSL.html#setInjector()">setInjector</A></strong>(any injector)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="JavaLoaderDSL.html#setLog()">setLog</A></strong>(any log)
+			<strong><a href="testMongoCollection.html#run()">run</A></strong>([any testResults], [any testBox])
 			<br>
 			
 		</td>
@@ -490,6 +425,362 @@ The JavaLoader WireBox DSL</p>
 
 <a name="inherited_methods"><!-- --></a>
 
+
+	
+
+	
+
+	&nbsp;
+	<a name="methods_inherited_from_class_testbox.system.BaseSpec"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd>testbox.system.BaseSpec</kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+				
+				
+					
+					
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+				
+				
+					<a href="../../../..//testbox/system/BaseSpec.html#addAssertions()">addAssertions</a>, <a href="../../../..//testbox/system/BaseSpec.html#addMatchers()">addMatchers</a>, <a href="../../../..//testbox/system/BaseSpec.html#afterEach()">afterEach</a>, <a href="../../../..//testbox/system/BaseSpec.html#aroundEach()">aroundEach</a>, <a href="../../../..//testbox/system/BaseSpec.html#assert()">assert</a>, <a href="../../../..//testbox/system/BaseSpec.html#beforeEach()">beforeEach</a>, <a href="../../../..//testbox/system/BaseSpec.html#clearDebugBuffer()">clearDebugBuffer</a>, <a href="../../../..//testbox/system/BaseSpec.html#closureStub()">closureStub</a>, <a href="../../../..//testbox/system/BaseSpec.html#console()">console</a>, <a href="../../../..//testbox/system/BaseSpec.html#createEmptyMock()">createEmptyMock</a>, <a href="../../../..//testbox/system/BaseSpec.html#createMock()">createMock</a>, <a href="../../../..//testbox/system/BaseSpec.html#createStub()">createStub</a>, <a href="../../../..//testbox/system/BaseSpec.html#debug()">debug</a>, <a href="../../../..//testbox/system/BaseSpec.html#describe()">describe</a>, <a href="../../../..//testbox/system/BaseSpec.html#expect()">expect</a>, <a href="../../../..//testbox/system/BaseSpec.html#expectedException()">expectedException</a>, <a href="../../../..//testbox/system/BaseSpec.html#fail()">fail</a>, <a href="../../../..//testbox/system/BaseSpec.html#getDebugBuffer()">getDebugBuffer</a>, <a href="../../../..//testbox/system/BaseSpec.html#getMockBox()">getMockBox</a>, <a href="../../../..//testbox/system/BaseSpec.html#getProperty()">getProperty</a>, <a href="../../../..//testbox/system/BaseSpec.html#hasExpectedException()">hasExpectedException</a>, <a href="../../../..//testbox/system/BaseSpec.html#init()">init</a>, <a href="../../../..//testbox/system/BaseSpec.html#isExpectedException()">isExpectedException</a>, <a href="../../../..//testbox/system/BaseSpec.html#it()">it</a>, <a href="../../../..//testbox/system/BaseSpec.html#makePublic()">makePublic</a>, <a href="../../../..//testbox/system/BaseSpec.html#prepareMock()">prepareMock</a>, <a href="../../../..//testbox/system/BaseSpec.html#print()">print</a>, <a href="../../../..//testbox/system/BaseSpec.html#println()">println</a>, <a href="../../../..//testbox/system/BaseSpec.html#querySim()">querySim</a>, <a href="../../../..//testbox/system/BaseSpec.html#runAfterEachClosures()">runAfterEachClosures</a>, <a href="../../../..//testbox/system/BaseSpec.html#runAroundEachClosures()">runAroundEachClosures</a>, <a href="../../../..//testbox/system/BaseSpec.html#runBeforeEachClosures()">runBeforeEachClosures</a>, <a href="../../../..//testbox/system/BaseSpec.html#runRemote()">runRemote</a>, <a href="../../../..//testbox/system/BaseSpec.html#runSpec()">runSpec</a>, <a href="../../../..//testbox/system/BaseSpec.html#runTestMethod()">runTestMethod</a>, <a href="../../../..//testbox/system/BaseSpec.html#xdescribe()">xdescribe</a>, <a href="../../../..//testbox/system/BaseSpec.html#xit()">xit</a>
+				
+			</td>
+		</tr>
+	</table>
 
 	
 
@@ -521,35 +812,6 @@ The JavaLoader WireBox DSL</p>
 
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 
-	<a name="constructor_detail"><!-- --></a>
-	<table class="table table-bordered">
-		<tr class="info">
-			<th colspan="1" align="left">
-				<strong>Constructor Detail</strong>
-			</th>
-		</tr>
-	</table>
-
-	<a name="init()"><!-- --></a><h3>
-	init</h3>
-	<kbd>public <strong>init</strong>(any injector)</kbd>
-
-	<br><br>
-
-	
-	<p>Constructor as per interface</p>
-	
-
-	
-	<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-			<dd><code>injector</code></dd>
-		
-	</dl>
-	
-	<hr>
-
 
 <!-- ============ PROPERTY DETAIL ========== -->
 
@@ -564,12 +826,12 @@ The JavaLoader WireBox DSL</p>
 
 	
 		
-		<a name="injector()"><!-- --></a>
-		<h3>injector</h3>
+		<a name="MongoClient()"><!-- --></a>
+		<h3>MongoClient</h3>
 
 		<kbd>
 			property any 
-			<strong>injector</strong>
+			<strong>MongoClient</strong>
 			
 		</kbd>
 
@@ -585,6 +847,10 @@ The JavaLoader WireBox DSL</p>
 			<dd><code>required</code> - false</dd>
 			
 		
+			
+		
+			
+			<dd><code>inject</code> - MongoClient@cbmongodb</dd>
 			
 		
 			
@@ -600,12 +866,12 @@ The JavaLoader WireBox DSL</p>
 		<hr>
 	
 		
-		<a name="log()"><!-- --></a>
-		<h3>log</h3>
+		<a name="MongoUtil()"><!-- --></a>
+		<h3>MongoUtil</h3>
 
 		<kbd>
 			property any 
-			<strong>log</strong>
+			<strong>MongoUtil</strong>
 			
 		</kbd>
 
@@ -621,6 +887,10 @@ The JavaLoader WireBox DSL</p>
 			<dd><code>required</code> - false</dd>
 			
 		
+			
+		
+			
+			<dd><code>inject</code> - MongoUtil@cbmongodb</dd>
 			
 		
 			
@@ -657,71 +927,10 @@ The JavaLoader WireBox DSL</p>
 
 
 	
-	<a name="getInjector()"><!-- --></a>
-	<h3>getInjector</h3>
+	<a name="afterAll()"><!-- --></a>
+	<h3>afterAll</h3>
 	
-	<kbd>public string <strong>getInjector</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getJavaLoaderDSL()"><!-- --></a>
-	<h3>getJavaLoaderDSL</h3>
-	
-	<kbd>public any <strong>getJavaLoaderDSL</strong>(any definition, [any targetObject])</kbd>
-	
-	<br><br>
-
-	
-		<p>Get a JavaLoader Dependency</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>definition</code></dd>
-		
-		<dd><code>targetObject</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getLog()"><!-- --></a>
-	<h3>getLog</h3>
-	
-	<kbd>public string <strong>getLog</strong>()</kbd>
+	<kbd>public any <strong>afterAll</strong>()</kbd>
 	
 	<br><br>
 
@@ -743,46 +952,23 @@ The JavaLoader WireBox DSL</p>
 	<hr>
 
 	
-	<a name="process()"><!-- --></a>
-	<h3>process</h3>
+	<a name="beforeAll()"><!-- --></a>
+	<h3>beforeAll</h3>
 	
-	<kbd>public any <strong>process</strong>(any definition, [any targetObject])</kbd>
+	<kbd>public any <strong>beforeAll</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>Process an incoming DSL definition and produce an object with it.</p>
-	
 
 	
 		
-		
-			<dl>
-				<dt><strong>Specified by:</strong></dt>
-				<dd>
-				<code>
-				<a href="../../../..//coldbox/system/ioc/dsl/IDSLBuilder.html#process()">process</a></code>
-				in interface
-				<code>
-					coldbox.system.ioc.dsl.IDSLBuilder
-				</code>
-				</dd>
-			</dl>
 		
 	
 
 	
 	
 
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>definition</code></dd>
-		
-		<dd><code>targetObject</code></dd>
-		
-		</dl>
 	
 
 	
@@ -791,10 +977,10 @@ The JavaLoader WireBox DSL</p>
 	<hr>
 
 	
-	<a name="setInjector()"><!-- --></a>
-	<h3>setInjector</h3>
+	<a name="run()"><!-- --></a>
+	<h3>run</h3>
 	
-	<kbd>public any <strong>setInjector</strong>(any injector)</kbd>
+	<kbd>public any <strong>run</strong>([any testResults], [any testBox])</kbd>
 	
 	<br><br>
 
@@ -812,39 +998,9 @@ The JavaLoader WireBox DSL</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>injector</code></dd>
+		<dd><code>testResults</code></dd>
 		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setLog()"><!-- --></a>
-	<h3>setLog</h3>
-	
-	<kbd>public any <strong>setLog</strong>(any log)</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>log</code></dd>
+		<dd><code>testBox</code></dd>
 		
 		</dl>
 	
