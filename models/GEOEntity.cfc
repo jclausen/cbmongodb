@@ -136,8 +136,9 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			throw("The key <strong>#xProp#</strong> was not found in the #xName# entity.  ")
 		//merge our within query
 		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,xArg)}};
-		
+
 		xEntity.criteria(xCriteria);
+
 		return xEntity;
 	}
 
@@ -150,7 +151,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		if(findNoCase('near',arguments.operation) and (local_geometry['type'] EQ "Polygon" OR local_geometry['type'] EQ "MultiPolygon")){
 				local_geometry=polygonCenter(local_geometry);
 		}
-		return local_geometry;
+		return geometry;
 	}
 
 	/***************************** UTILS ****************************/
@@ -163,7 +164,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @usage parseFeatureColection(fileOpen('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA.geo.json'))
 	 **/
 	public function parseFeatureCollection(any features){
-		var collection=[];
+		var featureCollection=[];
 		if(isJSON(features))
 			arguments.features=deSerializeJSON(arguments.features);
 		if(structKeyExists(arguments.features,'features'))
@@ -172,10 +173,10 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			if(structKeyExists(geometry,'geometry') and arrayLen(arguments.features) EQ 1){
 				return ensureGEOValid(geometry['geometry']);
 			} else {
-				arrayAppend(collection,ensureGEOValid(geometry['geometry']));
+				arrayAppend(featureCollection,ensureGEOValid(geometry['geometry']));
 			}
 		}
-		return collection;
+		return featureCollection;
 	}
 	/**
 	 * Finds the center point of a polygon
@@ -212,9 +213,9 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			case "MultiPolygon":
 				//Close our polygons to make valid
 				i=1;
-				for(collection in valid['coordinates'][1]){
-					poly_open=duplicate(collection[1]);
-					if(arrayToList(collection[arrayLen(collection)]) NEQ arrayToList(poly_open)){
+				for(var featureCollection in valid['coordinates'][1]){
+					poly_open=duplicate(featureCollection[1]);
+					if(arrayToList(featureCollection[arrayLen(featureCollection)]) NEQ arrayToList(poly_open)){
 						arrayAppend(valid['coordinates'][1][i],poly_open);
 					}
 					i=i+1;
