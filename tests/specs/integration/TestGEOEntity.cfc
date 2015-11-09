@@ -53,7 +53,7 @@ component name="TestModelGEOEntity" extends="testbox.system.BaseSpec" accessors=
 				
 				expect(reload.loaded()).toBeTrue("State could not be reloaded");
 
-				expect(arrayLen(reload.reset().within('geometry','County.geometry').findAll())).toBe(4);
+				expect(arrayLen(reload.within('geometry','County.geometry').findAll())).toBe(4);
 
 				var kent=counties.reset().where('name','Kent').find();
 
