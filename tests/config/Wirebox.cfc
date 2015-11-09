@@ -26,7 +26,7 @@ component extends="coldbox.system.ioc.config.Binder"{
 			},
 
 			// Package scan locations
-			scanLocations = ['modules.cbmongodb','models'],
+			scanLocations = ['modules.cbmongodb','models','modules.cbjavaloader.models'],
 
 			// Stop Recursions
 			stopRecursions = [],
@@ -65,11 +65,11 @@ component extends="coldbox.system.ioc.config.Binder"{
 		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
 
 		//mappings
-		map( "loader@cbjavaloader" )
+		map( "jl@cbjavaloader" )
 			.to( "cbjavaloader.models.javaloader.JavaLoader" )
 			.initArg( name="loadPaths",value=[modulePath & '/../../lib/mongo-java-driver-3.1.0.jar'])
 			.initArg( name="loadColdFusionClassPath ",value=true);
-			
+		
 		//configuration
 		map("MongoConfig@cbmongodb")
 			.to('cbmongodb.models.Mongo.Config')

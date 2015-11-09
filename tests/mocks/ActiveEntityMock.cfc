@@ -1,5 +1,4 @@
-component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" accessors=true{
-	property name="collection" default="people";
+component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" collection="people" database="cbmongodb_unit_tests" accessors=true{
 	property name="test_document" default="";
 	/**Schema Properties**/
 	property name="first_name" schema=true index=true indexwith="last_name" indexorder="ASC" validate="string";

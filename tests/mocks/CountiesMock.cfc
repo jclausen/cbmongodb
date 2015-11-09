@@ -1,4 +1,8 @@
-component name="CountiesMock" extends="cbmongodb.models.GEOEntity" accessors=true{
+component name="CountiesMock" extends="cbmongodb.models.GEOEntity" database="cbmongodb_unit_tests" accessors=true{
+	/**
+	* Leave our collection property in place to ensure backward compatibility
+	* @deprecated
+	**/
 	property name="collection" default="counties";
 	property name="test_documents" default="";
 	/**Schema Properties**/

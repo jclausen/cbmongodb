@@ -1,22 +1,7 @@
 /*******************************************************************************
 *	Integration Test for /cfmongodb/models/ActiveEntity.cfc
 *******************************************************************************/
-component name="TestMongoUtil" extends="testbox.system.BaseSpec"{
-	property name="MongoUtil" inject="MongoUtil@cbmongodb";
-	property name="MongoClient" inject="MongoClient@cbmongodb";
-
-	function beforeAll(){
-		//custom methods
-		application.wirebox = new coldbox.system.ioc.Injector('cbmongodb.tests.config.Wirebox');
-		application.wirebox.autowire(this);
-		expect(isNull(MongoUtil)).toBeFalse("Autowiring Failed!");
-
-	}
-
-	function afterAll(){
-		  MongoClient.close();
-          structDelete( application, "wirebox" );
-	}
+component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
 
 	function run(testResults, testBox){
 
