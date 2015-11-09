@@ -8,20 +8,20 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
 
--- 1.  Removes Requirement For CFMongoDB Module
--- 2.  Adds Requirement for CBJavaloader Module
--- 3.  Implements MongoDB 3.0 Driver
--- 4.  Implements the ability to use multiple databases
--- 5.  Implements the ability to configure databases at the entity level
--- 6.  Implements Native Collection Methods for the 3.0 MongoCollection
--- 7.  Implements CFML [Aggregation](https://docs.mongodb.org/manual/aggregation/) methods while allowing direct access to native driver methods 
--- 8.  Implements CFML [Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) methods
--- 9.  Demonstrates 52% reduction in query execution and database operational functions from the previous version
--- 10. Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)
--- 11. Fixes issue with near() GEOSpatial operations on Polygon objects
--- 12. Re-factors Test Suite to Require the Framework Context
--- 13. Adds an asJSON argument to find() and findAll() entity queries
--- 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
+1.  Removes Requirement For CFMongoDB Module
+2.  Adds Requirement for CBJavaloader Module
+3.  Implements MongoDB 3.0 Driver
+4.  Implements the ability to use multiple databases
+5.  Implements the ability to configure databases at the entity level
+6.  Implements Native Collection Methods for the 3.0 MongoCollection
+7.  Implements CFML [Aggregation](https://docs.mongodb.org/manual/aggregation/) methods while allowing direct access to native driver methods 
+8.  Implements CFML [Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) methods
+9.  Demonstrates 52% reduction in query execution and database operational functions from the previous version
+10. Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)
+11. Fixes issue with near() GEOSpatial operations on Polygon objects
+12. Re-factors Test Suite to Require the Framework Context
+13. Adds an asJSON argument to find() and findAll() entity queries
+14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
 
 
 Installation &amp; Configuration
