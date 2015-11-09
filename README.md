@@ -134,9 +134,9 @@ var person=this.populate({
 	}
 	}).create();
 ```
-Once we've created the document, it becomes the Active Entity.
+Once we've created the document, it automatically becomes the Active Entity.
 ```
-var is_loaded=person.loaded(); //will return true	
+var isLoaded=person.loaded(); //will return true	
 ```
 
 There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is really, really fast):
@@ -219,7 +219,7 @@ Aggregation
 
 [Aggregation](https://docs.mongodb.org/manual/aggregation/) of your results allows you to filter, calculate new values and group them in a result set.
 
-CBMongoDB has suppoort for the aggregation methods of $group, $match, $projection (along with $sort) in its Collection object.
+CBMongoDB has suppoort for the aggregation methods of $group, $match, $projection and $sort in the Collection object's `aggregate([criteria],group,projection,sort)` method.
 
 Here's an example, using our people collection.  In this case we want to return a query that returns the number of people, by Zip Code, in Grand Rapids, Michigan.  Our aggregation query would be assembled like so:
 
