@@ -35,14 +35,11 @@ component{
 	* CBMongoDB Module Registration
 	*/
 	function configure(){
-		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
-
+		variables.MongoDrivers = [modulePath & '/lib/mongo-java-driver-3.1.0.jar',modulePath & '/lib/mongodb-driver-core-3.0.4.jar',modulePath & '/lib/mongodb-driver-async-3.0.4.jar'];
+		
 		parseParentSettings();
-		//mappings
-		binder.map( "jl@cbjavaloader" )
-			.to( "cbjavaloader.models.javaloader.JavaLoader" )
-			.initArg( name="loadPaths",value=[modulePath & 'lib'])
-			.asSingleton();
+
+
 		/**	
 		* Utility Classes
 		**/
@@ -63,7 +60,7 @@ component{
 		//configuration object
 		binder.map("MongoConfig@cbmongodb")
 			.to('cbmongodb.models.Mongo.Config')
-			.initWith(MongoDBConfig)
+			.initWith(VARIABLES.MongoDBConfig)
 			.asSingleton();
 
 		//core client
@@ -77,7 +74,11 @@ component{
 	/**
 	* CBMongoDB Module Activation - Fires when the module is loaded
 	*/
-	function onLoad(){}
+	function onLoad(){
+		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
+		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
+		jLoader.appendPaths(modulePath & '/lib/');
+	}
 
 	/**
 	* CBMongoDB Module Deactivation - Fired when the module is unloaded
@@ -106,6 +107,7 @@ component{
 		structAppend( configStruct.MongoDB, oConfig, true );
 
 		VARIABLES.MongoDBConfig = configStruct.MongoDB;
+
 	}
 
 }

@@ -223,7 +223,7 @@ component name="MongoCollection" accessors=true {
 	* <br><br><strong>NOTE:</strong> Not implemented as CF native at the present time. Operations will need to be performed using the java arguments: <a href="http://api.mongodb.org/java/current/com/mongodb/DBCollection.html">http://api.mongodb.org/java/current/com/mongodb/DBCollection.html</a>
 	**/
 	public function bulkWrite(){
-		return getDbCollection().mapReduce(argumentCollection=arguments);
+		return getDbCollection().bulkWrite(argumentCollection=arguments);
 	}
 
 	/** 

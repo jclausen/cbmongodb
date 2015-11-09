@@ -12,12 +12,19 @@
 */
 component name="MongoUtil" accessors=true singleton{
 	property name="MongoConfig" inject="MongoConfig@cbmongodb";
-	property name="NullSupport" default=false;
+	property name="NullSupport" default=false;/**
+	* 
+	* CBJavaloader
+	**/
+	property name="jLoader" inject="loader@cbjavaloader";
 
 	/**
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
 	function toMongo(any obj){
+
+		if(getMetadata( obj ).getCanonicalName() == "com.mongodb.CFBasicDBObject") return obj;
+		
 		if(isArray(obj)){
 			var list = createObject("java","java.util.ArrayList");
 			for(var member in obj){
@@ -30,7 +37,8 @@ component name="MongoUtil" accessors=true singleton{
 	}
 
 	function toMongoDocument(data){
-		var doc = createObject('java','org.bson.Document');
+		
+		var doc = createObject("java",'org.bson.Document');
 		doc.putAll(data);
 
 		if(!structIsEmpty(data)){
@@ -44,9 +52,18 @@ component name="MongoUtil" accessors=true singleton{
 	* Converts a Mongo DBObject to a ColdFusion structure
 	*/
 	function toCF(BasicDBObject){
-		var s = {};
-		s.putAll(BasicDBObject);
-		return s;
+		if(isArray(BasicDBObject)){
+			var cfObj = []
+			for(var obj in BasicDBObjectj){
+				arrayAppend(cfObj,toCF(obj))
+			}
+		} else {
+
+			var cfObj = {};
+			cfObj.putAll(BasicDBObject);
+		
+		}
+		return cfObj;
 	}
 
 	/**
@@ -81,11 +98,12 @@ component name="MongoUtil" accessors=true singleton{
 		return NOT isSimpleValue( doc ) AND getMetadata( doc ).getCanonicalName() eq "com.mongodb.CFBasicDBObject";
 	}
 
+
 	/**
 	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
 	*/
 	function newDBObject(){
-		var dbo = createObject('java','com.mongodb.BasicDBObject');	
+		var dbo = createObject("java",'com.mongodb.BasicDBObject');	
 		return dbo;
 	}
 
@@ -112,7 +130,7 @@ component name="MongoUtil" accessors=true singleton{
 			} else if(isDate(dbo[i])){
 				var castDate = createObject('java','java.util.Date').init(dbo[i].getTime());
 				dbo[i] = castDate;
-			} else if(NullSupport and len(dbo[i]) == 0){
+			} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
 				dbo[i] = javacast('null',0);
 			}
 		}

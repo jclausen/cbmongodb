@@ -28,7 +28,7 @@ component name="MongoClient" accessors=true singleton{
 	/**
 	* CBJavaloader
 	**/
-	property name="jLoader" inject="jl@cbjavaloader";
+	property name="jLoader" inject="loader@cbjavaloader";
 	/**
 	 * Utility Class
 	 **/
@@ -97,7 +97,7 @@ component name="MongoClient" accessors=true singleton{
 
 
 	private function createCredential(required string username,required string password, required authDB='admin'){
-		var MongoCredential = jLoader.create('com.mongodb.MongoCredential');
+		var MongoCredential = createObject("java",'com.mongodb.MongoCredential');
 		var credential = MongoCredential.createCredential(javacast('string',username),javacast('string',arguments.authDB),arguments.password.toCharArray());
 		return credential;
 	}

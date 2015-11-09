@@ -14,7 +14,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	/**
 	* CBJavaloader
 	**/
-	property name="jLoader" inject="jl@cbjavaloader";
+	property name="jLoader" inject="loader@cbjavaloader";
 	variables.conf = {};
 
 
@@ -26,6 +26,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	 	if(isNull(jLoader)){
 	 		application.wirebox.autowire(this);
 	 	}
+	 	
 	 	var hosts = structKeyExists(configStruct,'hosts')?configStruct.hosts: [{serverName='localhost',serverPort='27017'}]
 	 	var dbName= configStruct.db 
 	 	var MongoClientOptions=structKeyExists(configStruct,'clientOptions')?configStruct.clientOptions:{};
