@@ -375,7 +375,7 @@ Currently all of the MongoDB supported core spatial functions are represented, i
 Advanced Usage
 -------------
 
-1. Explore the API Documentation by navigating, from the webroot of your Coldbox App, to [index.cfm - which you may need if you're not using SES]/cbmongodb/docs
+1. Explore the API Documentation by navigating, from the webroot of your Coldbox App, to [index.cfm - if you're not using SES]/cbmongodb/docs
 2. All of the driver native methods are available through the collection object, as well as is direct access to the driver collection object.  For more information, [check out the Mongo Driver Documentation](http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/).
 
 
