@@ -7,6 +7,7 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 - <strong>Module Version:</strong> 3.1.0.1 <em>(Release Date: 11/09/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
+
 >> 1.  Removes Requirement For CFMongoDB Module
 >> 2.  Adds Requirement for CBJavaloader Module
 >> 3.  Implements MongoDB 3.0 Driver
