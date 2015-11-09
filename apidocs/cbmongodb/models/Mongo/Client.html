@@ -350,11 +350,8 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#db()">db</A></strong> 
+			<strong><a href="Client.html#databases()">databases</A></strong> 
 			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Init Properties.
 			
 			<br><br>
 			<ul>
@@ -413,6 +410,95 @@ Maintains the Database Connection via the Native Driver</p>
 			
 				
 				<li class="label label-default label-annotations">inject = loader@cbjavaloader</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#Mongo()">Mongo</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Properties created on init().
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#MongoAsync()">MongoAsync</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
 				
 			
 				
@@ -540,49 +626,6 @@ Maintains the Database Connection via the Native Driver</p>
 		</td>
 		<td>
 			<strong><a href="Client.html#ReadPreference()">ReadPreference</A></strong> 
-			<br>
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#WCConfig()">WCConfig</A></strong> 
 			<br>
 			
 			<br><br>
@@ -835,6 +878,8 @@ Maintains the Database Connection via the Native Driver</p>
 			<strong><a href="Client.html#getCollections()">getCollections</A></strong>()
 			<br>
 			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
 		</td>
 	</tr>
 	
@@ -845,10 +890,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getDb()">getDb</A></strong>()
+			<strong><a href="Client.html#getDatabases()">getDatabases</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Init Properties.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
 			
 		</td>
 	</tr>
@@ -917,6 +962,21 @@ Maintains the Database Connection via the Native Driver</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#getMongoAsync()">getMongoAsync</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
 			<code>any</code>
 		</td>
 		<td>
@@ -968,18 +1028,7 @@ Maintains the Database Connection via the Native Driver</p>
 			<strong><a href="Client.html#getReadPreference()">getReadPreference</A></strong>()
 			<br>
 			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getWCConfig()">getWCConfig</A></strong>()
-			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
 			
 		</td>
 	</tr>
@@ -1009,6 +1058,8 @@ Maintains the Database Connection via the Native Driver</p>
 			<strong><a href="Client.html#getWriteConcern()">getWriteConcern</A></strong>()
 			<br>
 			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
+			
 		</td>
 	</tr>
 	
@@ -1029,10 +1080,10 @@ Maintains the Database Connection via the Native Driver</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>private&nbsp;any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setCollections()">setCollections</A></strong>(any collections)
+			<strong><a href="Client.html#initDatabases()">initDatabases</A></strong>()
 			<br>
 			
 		</td>
@@ -1045,10 +1096,25 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setDb()">setDb</A></strong>(any db)
+			<strong><a href="Client.html#setCollections()">setCollections</A></strong>(any collections)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Init Properties.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#setDatabases()">setDatabases</A></strong>(any databases)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -1075,8 +1141,40 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="Client.html#setMongo()">setMongo</A></strong>(any Mongo)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Properties created on init().
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#setMongoAsync()">setMongoAsync</A></strong>(any MongoAsync)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="Client.html#setMongoConfig()">setMongoConfig</A></strong>(any MongoConfig)
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -1106,18 +1204,7 @@ Maintains the Database Connection via the Native Driver</p>
 			<strong><a href="Client.html#setReadPreference()">setReadPreference</A></strong>(any ReadPreference)
 			<br>
 			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#setWCConfig()">setWCConfig</A></strong>(any WCConfig)
-			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -1146,6 +1233,8 @@ Maintains the Database Connection via the Native Driver</p>
 		<td>
 			<strong><a href="Client.html#setWriteConcern()">setWriteConcern</A></strong>(any WriteConcern)
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -1264,18 +1353,16 @@ Maintains the Database Connection via the Native Driver</p>
 		<hr>
 	
 		
-		<a name="db()"><!-- --></a>
-		<h3>db</h3>
+		<a name="databases()"><!-- --></a>
+		<h3>databases</h3>
 
 		<kbd>
 			property any 
-			<strong>db</strong>
+			<strong>databases</strong>
 			
 		</kbd>
 
 		<br><br>
-		
-			<p>Init Properties</p>
 		
 
 		<dl>
@@ -1329,6 +1416,80 @@ Maintains the Database Connection via the Native Driver</p>
 		
 			
 			<dd><code>inject</code> - loader@cbjavaloader</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="Mongo()"><!-- --></a>
+		<h3>Mongo</h3>
+
+		<kbd>
+			property any 
+			<strong>Mongo</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>Properties created on init()</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="MongoAsync()"><!-- --></a>
+		<h3>MongoAsync</h3>
+
+		<kbd>
+			property any 
+			<strong>MongoAsync</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
 			
 		
 			
@@ -1428,42 +1589,6 @@ Maintains the Database Connection via the Native Driver</p>
 		<kbd>
 			property any 
 			<strong>ReadPreference</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="WCConfig()"><!-- --></a>
-		<h3>WCConfig</h3>
-
-		<kbd>
-			property any 
-			<strong>WCConfig</strong>
 			
 		</kbd>
 
@@ -1767,6 +1892,8 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<br><br>
 
 	
+		<p>get: </p>
+	
 
 	
 		
@@ -1784,15 +1911,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getDb()"><!-- --></a>
-	<h3>getDb</h3>
+	<a name="getDatabases()"><!-- --></a>
+	<h3>getDatabases</h3>
 	
-	<kbd>public string <strong>getDb</strong>()</kbd>
+	<kbd>public string <strong>getDatabases</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>get: Init Properties</p>
+		<p>get: </p>
 	
 
 	
@@ -1928,6 +2055,33 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
+	<a name="getMongoAsync()"><!-- --></a>
+	<h3>getMongoAsync</h3>
+	
+	<kbd>public string <strong>getMongoAsync</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getMongoConfig()"><!-- --></a>
 	<h3>getMongoConfig</h3>
 	
@@ -2031,30 +2185,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<br><br>
 
 	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getWCConfig()"><!-- --></a>
-	<h3>getWCConfig</h3>
-	
-	<kbd>public string <strong>getWCConfig</strong>()</kbd>
-	
-	<br><br>
-
+		<p>get: </p>
 	
 
 	
@@ -2108,6 +2239,8 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<br><br>
 
 	
+		<p>get: </p>
+	
 
 	
 		
@@ -2150,6 +2283,31 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
+	<a name="initDatabases()"><!-- --></a>
+	<h3>initDatabases</h3>
+	
+	<kbd>private any <strong>initDatabases</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="setCollections()"><!-- --></a>
 	<h3>setCollections</h3>
 	
@@ -2157,6 +2315,8 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	
 	<br><br>
 
+	
+		<p>set: </p>
 	
 
 	
@@ -2182,15 +2342,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="setDb()"><!-- --></a>
-	<h3>setDb</h3>
+	<a name="setDatabases()"><!-- --></a>
+	<h3>setDatabases</h3>
 	
-	<kbd>public any <strong>setDb</strong>(any db)</kbd>
+	<kbd>public any <strong>setDatabases</strong>(any databases)</kbd>
 	
 	<br><br>
 
 	
-		<p>set: Init Properties</p>
+		<p>set: </p>
 	
 
 	
@@ -2205,7 +2365,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>db</code></dd>
+		<dd><code>databases</code></dd>
 		
 		</dl>
 	
@@ -2250,6 +2410,74 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
+	<a name="setMongo()"><!-- --></a>
+	<h3>setMongo</h3>
+	
+	<kbd>public any <strong>setMongo</strong>(any Mongo)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: Properties created on init()</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>Mongo</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setMongoAsync()"><!-- --></a>
+	<h3>setMongoAsync</h3>
+	
+	<kbd>public any <strong>setMongoAsync</strong>(any MongoAsync)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: </p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>MongoAsync</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="setMongoConfig()"><!-- --></a>
 	<h3>setMongoConfig</h3>
 	
@@ -2257,6 +2485,8 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	
 	<br><br>
 
+	
+		<p>set: </p>
 	
 
 	
@@ -2324,6 +2554,8 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<br><br>
 
 	
+		<p>set: </p>
+	
 
 	
 		
@@ -2338,38 +2570,6 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>ReadPreference</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setWCConfig()"><!-- --></a>
-	<h3>setWCConfig</h3>
-	
-	<kbd>public any <strong>setWCConfig</strong>(any WCConfig)</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>WCConfig</code></dd>
 		
 		</dl>
 	
@@ -2421,6 +2621,8 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	
 	<br><br>
 
+	
+		<p>set: </p>
 	
 
 	
