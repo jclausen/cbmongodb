@@ -62,10 +62,13 @@ component extends="coldbox.system.ioc.config.Binder"{
 			viewTimeout	= "1000"
 		};
 
+		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
+
 		//mappings
-		map( "jl@cbjavaloader" )
+		map( "cbmongo@cbjavaloader" )
 			.to( "cbjavaloader.models.javaloader.JavaLoader" )
-			.initArg( name="loadPaths",value=[expandPath('../lib')]);
+			.initArg( name="loadPaths",value=[modulePath & '/../../lib/mongo-java-driver-3.1.0.jar'])
+			.initArg( name="loadColdFusionClassPath ",value=true);
 			
 		//configuration
 		map("MongoConfig@cbmongodb")
