@@ -5,8 +5,11 @@
 * @package cbmongodb.models
 * @author Jon Clausen <jon_clausen@silowebworks.com>
 * @license Apache v2.0 <http://www.apache.org/licenses/>
+* 
+* @attribute string database 		The database to connect to.  If omitted, the database specified in the hosts config will be used. NOTE:Authentication credentials must match the server-level auth config.
+* @attribute string collection 		The name of the collection that the entity should map to
 */
-component name="BaseDocumentService"  accessors="true"{
+component name="BaseDocumentService"  accessors="true" database="test" collection="default"{
 	/**
 	 * Injected Properties
 	 **/
@@ -37,8 +40,9 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	property name="db";
 	/**
-	 * The collection to use for this instance.
-	 * Override this in your model by specifying the collection to use
+	 * This key is maintained for backward compatibility but is marked as deprecated.  
+	 * You should use the component attribute method to declare your collection name.
+	 * @deprecated
 	 **/
 	property name="collection" default="default";
 	/**
@@ -82,22 +86,45 @@ component name="BaseDocumentService"  accessors="true"{
 	 * Constructor
 	 **/
 	any function init(){
+		var meta = getMetaData(this);
+		
+		if(structKeyExists(meta,'collection')){
+			this.collectionName = trim(meta.collection);
+		} else if(structKeyExists(VARIABLES,'collection')) {
+			this.collectionName = getCollection();
+		} else {
+			throw('Could not connect to MongoDB.  No Collection property or component attribute exists.');
+		}
+
 		/**
+		* Backward compatibility
+		* @deprecated
+		**/
+		setCollection(this.collectionName);
+		/**
+		* 
 		*  Make sure our injected properties exist
 		**/
 		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
 			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
+		} else if(isNull(getWirebox) and structKeyExists(application,'cbController')){
+			appplication.cbController.getWirebox().autowire(this);
 		} else {
 			throw('Wirebox IOC Injection is required to use this service');
 		}
 		
 		this.setMongoUtil(getMongoClient().getMongoUtil());
 		this.setAppSettings(getWirebox().getBinder().getProperties());
-		
+
 		//Connect to Mongo
 		this.setDb(this.getMongoClient());
-
-		this.setDbInstance(this.getDb().getDBCollection(this.getCollection()));
+		
+		//If we have a database attribute
+		if(structKeyExists(meta,'database')){
+			this.setDbInstance(this.getDb().getDBCollection( this.collectionName, trim(meta.database) ));
+		} else {
+			this.setDbInstance(this.getDb().getDBCollection( this.collectionName ));
+		}
 
 		//Default Document Creation
 		this.set_document(structNew());
