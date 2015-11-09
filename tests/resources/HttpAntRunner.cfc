@@ -1,1 +1,0 @@
-component output="false" extends="mxunit.runner.HttpAntRunner" {}
