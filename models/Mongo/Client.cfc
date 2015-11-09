@@ -11,17 +11,9 @@
 * 
 */
 component name="MongoClient" accessors=true singleton{
-	/**
-	 * Init Properties
-	 **/
-	property name="db";
-	property name="MongoConfig";
-	property name="WCConfig";
-	property name="WriteConcern";
-	property name="ReadPreference";
-	property name="collections";
 	//injected properties
 	/**
+	* 
 	 * Wirebox
 	 **/
 	property name="wirebox" inject="wirebox";
@@ -33,6 +25,18 @@ component name="MongoClient" accessors=true singleton{
 	 * Utility Class
 	 **/
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
+
+	/**
+	 * Properties created on init()
+	 **/
+	property name="Mongo";
+	property name="MongoAsync";
+	property name="MongoConfig";
+	property name="WriteConcern";
+	property name="ReadPreference";
+	property name="collections";
+	property name="databases";
+	
 	
 
 	public function init(MongoConfig){
@@ -43,17 +47,26 @@ component name="MongoClient" accessors=true singleton{
 			throw('Wirebox IOC Injection is required to user this service');
 		}
 
-		//The core mongo client connection
-		VARIABLES.mongo = jLoader.create('com.mongodb.MongoClient');
-		//VARIABLES.mongo = jLoader.create('com.mongodb.async.client.MongoClient');
+		//The Mongo driver client
+		VARIABLES.Mongo = jLoader.create('com.mongodb.MongoClient');
+		
+		//@TODO: The async client 
+		//VARIABLES.MongoAsync = jLoader.create('com.mongodb.async.client.MongoClient');
+	
 		//WriteConcern Config
 		VARIABLES.WriteConcern = jLoader.create("com.mongodb.WriteConcern");
+	
 		//Read Preference Configuration
 		VARIABLES.ReadPreference = jLoader.create("com.mongodb.ReadPreference");
 
-		VARIABLES.db = connect(VARIABLES.mongoConfig.getDbName());
-		
+
+
+		//Prepare our default database connection
+		initDatabases();
+
+		//Prepare our collection structure
 		initCollections();
+
 		return this;
 
 	}
@@ -63,6 +76,11 @@ component name="MongoClient" accessors=true singleton{
 	**/
 	private function connect(required dbName=getMongoConfig().getDBName()){
 
+		//Ensure only a single connection to each database
+		if(structKeyExists(VARIABLES.databases,arguments.dbName)) return VARIABLES.databases[arguments.dbName];
+
+
+		//New database connections
 		var MongoDb = VARIABLES.mongo;
 		
 		if(structKeyExists(MongoConfig,'auth') and len(MongoConfig.auth.username) and len(MongoConfig.auth.password)){
@@ -97,7 +115,7 @@ component name="MongoClient" accessors=true singleton{
 		if(!structKeyExists( VARIABLES.collections[dbName], collectionName ) ){
 
 			//each collection receives their own connection
-			VARIABLES.collections[ dbName ][ collectionName ] = Wirebox.getInstance("MongoCollection@cbmongodb").init(getDb().getCollection(collectionName));
+			VARIABLES.collections[ dbName ][ collectionName ] = Wirebox.getInstance("MongoCollection@cbmongodb").init(connect(arguments.dbName).getCollection(arguments.collectionName));
 			
 		}
 
@@ -111,6 +129,13 @@ component name="MongoClient" accessors=true singleton{
 		return credential;
 	}
 
+
+	private function initDatabases(){
+		var dbName = getMongoConfig().getDbName();
+		VARIABLES.databases = {};
+		//initialize our default connection;
+		connect(dbName)
+	}
 
 	private function initCollections(){
 		var dbName = getMongoConfig().getDBName();
@@ -147,11 +172,9 @@ component name="MongoClient" accessors=true singleton{
 	  NOTE: If you do not close your mongo object, you WILL leak connections!
 	*/
 	function close(){
-		try{
-			VARIABLES.mongo.close();
-		}catch(any e){
-			//the error that this throws *appears* to be harmless.
-			writeLog("Error closing Mongo: " & e.message);
+
+		for (var db in getDatabases()){
+			VARIABLES.databases[db].close();
 		}
 		return this;
 	}
