@@ -245,7 +245,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @param numeric miles
 	* @return numeric meters
 	**/
-	public function meters(miles){
+	public function miles(miles){
 		return (ARGUMENTS.miles*1609.344);
 	}
 
