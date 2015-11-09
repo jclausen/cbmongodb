@@ -35,6 +35,16 @@ component{
 	* CBMongoDB Module Registration
 	*/
 	function configure(){
+		// Layout Settings
+		layoutSettings = {noLayout:true};
+		// SES Routes
+		routes = [
+			// Module Entry Point
+			{ pattern="/", handler="home", action="index" },
+			// Convention Route
+			{ pattern="/:handler/:action?" }
+		];
+
 		variables.MongoDrivers = [modulePath & '/lib/mongo-java-driver-3.1.0.jar',modulePath & '/lib/mongodb-driver-core-3.0.4.jar',modulePath & '/lib/mongodb-driver-async-3.0.4.jar'];
 		
 		parseParentSettings();
@@ -68,6 +78,13 @@ component{
 			.to( "cbmongodb.models.Mongo.Client" )
 			.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
 			.asSingleton();
+
+		/**
+		* DSL Mappings for Our Test Mocks
+		**/
+		binder.map("People@CBMongoTestMocks").to("cbmongodb.tests.mocks.ActiveEntityMock");
+		binder.map("Counties@CBMongoTestMocks").to("cbmongodb.tests.mocks.CountiesMock");
+		binder.map("States@CBMongoTestMocks").to("cbmongodb.tests.mocks.StatesMock");
 
 	}
 
