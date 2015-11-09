@@ -98,13 +98,14 @@ component name="BaseDocumentService"  accessors="true"{
 		this.setDb(this.getMongoClient());
 
 		this.setDbInstance(this.getDb().getDBCollection(this.getCollection()));
-		
+
 		//Default Document Creation
 		this.set_document(structNew());
 		this.set_default_document(structNew());
 		this.set_indexes(arrayNew(1));
 		this.set_map(structNew());
 		this.detect();
+		return this;
 
 	}
 
