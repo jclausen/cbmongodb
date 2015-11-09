@@ -17,7 +17,7 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 6.  Implements Native Collection Methods for the 3.0 MongoCollection
 7.  Implements CFML [Aggregation](https://docs.mongodb.org/manual/aggregation/) methods while allowing direct access to native driver methods 
 8.  Implements CFML [Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) methods
-9.  Demonstrates 52% reduction in query execution and database operational functions from the previous version
+9.  Demonstrates 52% reduction in query execution times and database operations from the previous version
 10. Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)
 11. Fixes issue with near() GEOSpatial operations on Polygon objects
 12. Re-factors Test Suite to Require the Framework Context
