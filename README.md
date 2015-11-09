@@ -9,6 +9,7 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 - <strong>Release Notes:</strong>
 
 <small>
+
 1.  Removes Requirement For CFMongoDB Module
 2.  Adds Requirement for CBJavaloader Module
 3.  Implements MongoDB 3.0 Driver
@@ -23,6 +24,7 @@ CBMongoDB provides Active Record(ish) functionality for managing MongoDB documen
 12. Re-factors Test Suite to Require the Framework Context
 13. Adds an asJSON argument to find() and findAll() entity queries
 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
+
 </small>
 
 Installation &amp; Configuration
