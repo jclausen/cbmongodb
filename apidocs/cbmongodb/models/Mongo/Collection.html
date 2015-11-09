@@ -309,8 +309,11 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#DBCollection()">DBCollection</A></strong> 
+			<strong><a href="Collection.html#collectionName()">collectionName</A></strong> 
 			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The name of our collection.
 			
 			<br><br>
 			<ul>
@@ -352,8 +355,107 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="Collection.html#dbCollection()">dbCollection</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The native java Collection Object.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#jLoader()">jLoader</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CBJavaloader.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = loader@cbjavaloader</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="Collection.html#MongoUtil()">MongoUtil</A></strong> 
 			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mongo Utils.
 			
 			<br><br>
 			<ul>
@@ -411,7 +513,7 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<tr>
 			
 			<td>
-				<strong><a href="Collection.html#init()">init</A></strong>(any dbCollection)
+				<strong><a href="Collection.html#init()">init</A></strong>([any dbCollectionInstance])
 				<br>
 				
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Constructor - Must be manually instantiated with the Mongo Collection Object.
@@ -710,8 +812,55 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#getDBCollection()">getDBCollection</A></strong>()
+			<strong><a href="Collection.html#getCollectionName()">getCollectionName</A></strong>()
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The name of our collection.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#getDbCollection()">getDbCollection</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The native java Collection Object.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#getIndexInfo()">getIndexInfo</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of object maps for all of the indexes in the collection.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#getJLoader()">getJLoader</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: CBJavaloader.
 			
 		</td>
 	</tr>
@@ -725,6 +874,8 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<td>
 			<strong><a href="Collection.html#getMongoUtil()">getMongoUtil</A></strong>()
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Mongo Utils.
 			
 		</td>
 	</tr>
@@ -755,21 +906,6 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inserts a single document.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Collection.html#listIndexes()">listIndexes</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns an array of object maps for all of the indexes in the collection.
 			
 		</td>
 	</tr>
@@ -841,8 +977,40 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Collection.html#setDBCollection()">setDBCollection</A></strong>(any DBCollection)
+			<strong><a href="Collection.html#setCollectionName()">setCollectionName</A></strong>(any collectionName)
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The name of our collection.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#setDbCollection()">setDbCollection</A></strong>(any dbCollection)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The native java Collection Object.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Collection.html#setJLoader()">setJLoader</A></strong>(any jLoader)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: CBJavaloader.
 			
 		</td>
 	</tr>
@@ -856,6 +1024,8 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<td>
 			<strong><a href="Collection.html#setMongoUtil()">setMongoUtil</A></strong>(any MongoUtil)
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Mongo Utils.
 			
 		</td>
 	</tr>
@@ -968,7 +1138,7 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 
 	<a name="init()"><!-- --></a><h3>
 	init</h3>
-	<kbd>public <strong>init</strong>(any dbCollection)</kbd>
+	<kbd>public <strong>init</strong>([any dbCollectionInstance])</kbd>
 
 	<br><br>
 
@@ -980,7 +1150,7 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-			<dd><code>dbCollection</code></dd>
+			<dd><code>dbCollectionInstance</code></dd>
 		
 	</dl>
 	
@@ -1000,16 +1170,18 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 
 	
 		
-		<a name="DBCollection()"><!-- --></a>
-		<h3>DBCollection</h3>
+		<a name="collectionName()"><!-- --></a>
+		<h3>collectionName</h3>
 
 		<kbd>
 			property any 
-			<strong>DBCollection</strong>
+			<strong>collectionName</strong>
 			
 		</kbd>
 
 		<br><br>
+		
+			<p>The name of our collection</p>
 		
 
 		<dl>
@@ -1036,6 +1208,86 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<hr>
 	
 		
+		<a name="dbCollection()"><!-- --></a>
+		<h3>dbCollection</h3>
+
+		<kbd>
+			property any 
+			<strong>dbCollection</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>The native java Collection Object</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="jLoader()"><!-- --></a>
+		<h3>jLoader</h3>
+
+		<kbd>
+			property any 
+			<strong>jLoader</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>CBJavaloader</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+			<dd><code>inject</code> - loader@cbjavaloader</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
 		<a name="MongoUtil()"><!-- --></a>
 		<h3>MongoUtil</h3>
 
@@ -1046,6 +1298,8 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		</kbd>
 
 		<br><br>
+		
+			<p>Mongo Utils</p>
 		
 
 		<dl>
@@ -1717,13 +1971,96 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<hr>
 
 	
-	<a name="getDBCollection()"><!-- --></a>
-	<h3>getDBCollection</h3>
+	<a name="getCollectionName()"><!-- --></a>
+	<h3>getCollectionName</h3>
 	
-	<kbd>public string <strong>getDBCollection</strong>()</kbd>
+	<kbd>public string <strong>getCollectionName</strong>()</kbd>
 	
 	<br><br>
 
+	
+		<p>get: The name of our collection</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getDbCollection()"><!-- --></a>
+	<h3>getDbCollection</h3>
+	
+	<kbd>public string <strong>getDbCollection</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: The native java Collection Object</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getIndexInfo()"><!-- --></a>
+	<h3>getIndexInfo</h3>
+	
+	<kbd>public any <strong>getIndexInfo</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns an array of object maps for all of the indexes in the collection</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getJLoader()"><!-- --></a>
+	<h3>getJLoader</h3>
+	
+	<kbd>public string <strong>getJLoader</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: CBJavaloader</p>
 	
 
 	
@@ -1749,6 +2086,8 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	
 	<br><br>
 
+	
+		<p>get: Mongo Utils</p>
 	
 
 	
@@ -1827,33 +2166,6 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<dd><code>document</code></dd>
 		
 		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="listIndexes()"><!-- --></a>
-	<h3>listIndexes</h3>
-	
-	<kbd>public any <strong>listIndexes</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Returns an array of object maps for all of the indexes in the collection</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
 	
 
 	
@@ -2008,13 +2320,15 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	<hr>
 
 	
-	<a name="setDBCollection()"><!-- --></a>
-	<h3>setDBCollection</h3>
+	<a name="setCollectionName()"><!-- --></a>
+	<h3>setCollectionName</h3>
 	
-	<kbd>public any <strong>setDBCollection</strong>(any DBCollection)</kbd>
+	<kbd>public any <strong>setCollectionName</strong>(any collectionName)</kbd>
 	
 	<br><br>
 
+	
+		<p>set: The name of our collection</p>
 	
 
 	
@@ -2029,7 +2343,75 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>DBCollection</code></dd>
+		<dd><code>collectionName</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setDbCollection()"><!-- --></a>
+	<h3>setDbCollection</h3>
+	
+	<kbd>public any <strong>setDbCollection</strong>(any dbCollection)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: The native java Collection Object</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>dbCollection</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setJLoader()"><!-- --></a>
+	<h3>setJLoader</h3>
+	
+	<kbd>public any <strong>setJLoader</strong>(any jLoader)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: CBJavaloader</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>jLoader</code></dd>
 		
 		</dl>
 	
@@ -2047,6 +2429,8 @@ The collection interface used for client operations by CBMongodb. Handles the tr
 	
 	<br><br>
 
+	
+		<p>set: Mongo Utils</p>
 	
 
 	

@@ -412,57 +412,7 @@ Maintains the Database Connection via the Native Driver</p>
 				
 			
 				
-				<li class="label label-default label-annotations">inject = jl@cbjavaloader</li>
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#MongoCollection()">MongoCollection</A></strong> 
-			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Collection Class.
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-				<li class="label label-default label-annotations">inject = MongoCollection@cbmongodb</li>
+				<li class="label label-default label-annotations">inject = loader@cbjavaloader</li>
 				
 			
 				
@@ -589,6 +539,92 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="Client.html#ReadPreference()">ReadPreference</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#WCConfig()">WCConfig</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="Client.html#wirebox()">wirebox</A></strong> 
 			<br>
 			
@@ -606,6 +642,49 @@ Maintains the Database Connection via the Native Driver</p>
 			
 				
 				<li class="label label-default label-annotations">inject = wirebox</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#WriteConcern()">WriteConcern</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
 				
 			
 				
@@ -699,6 +778,21 @@ Maintains the Database Connection via the Native Driver</p>
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closes the underlying mongodb object.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>private&nbsp;any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#connect()">connect</A></strong>(any dbName='[runtime expression]')
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our connection to the Mongo Server.
 			
 		</td>
 	</tr>
@@ -823,21 +917,6 @@ Maintains the Database Connection via the Native Driver</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getMongoCollection()">getMongoCollection</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Collection Class.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
 			<code>any</code>
 		</td>
 		<td>
@@ -886,10 +965,49 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>string</code>
 		</td>
 		<td>
+			<strong><a href="Client.html#getReadPreference()">getReadPreference</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#getWCConfig()">getWCConfig</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
 			<strong><a href="Client.html#getWirebox()">getWirebox</A></strong>()
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Wirebox.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#getWriteConcern()">getWriteConcern</A></strong>()
+			<br>
 			
 		</td>
 	</tr>
@@ -957,21 +1075,6 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setMongoCollection()">setMongoCollection</A></strong>(any MongoCollection)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Collection Class.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
 			<strong><a href="Client.html#setMongoConfig()">setMongoConfig</A></strong>(any MongoConfig)
 			<br>
 			
@@ -1000,10 +1103,49 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="Client.html#setReadPreference()">setReadPreference</A></strong>(any ReadPreference)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#setWCConfig()">setWCConfig</A></strong>(any WCConfig)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="Client.html#setWirebox()">setWirebox</A></strong>(any wirebox)
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Wirebox.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Client.html#setWriteConcern()">setWriteConcern</A></strong>(any WriteConcern)
+			<br>
 			
 		</td>
 	</tr>
@@ -1186,49 +1328,7 @@ Maintains the Database Connection via the Native Driver</p>
 			
 		
 			
-			<dd><code>inject</code> - jl@cbjavaloader</dd>
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="MongoCollection()"><!-- --></a>
-		<h3>MongoCollection</h3>
-
-		<kbd>
-			property any 
-			<strong>MongoCollection</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-			<p>Collection Class</p>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-			<dd><code>inject</code> - MongoCollection@cbmongodb</dd>
+			<dd><code>inject</code> - loader@cbjavaloader</dd>
 			
 		
 			
@@ -1322,6 +1422,78 @@ Maintains the Database Connection via the Native Driver</p>
 		<hr>
 	
 		
+		<a name="ReadPreference()"><!-- --></a>
+		<h3>ReadPreference</h3>
+
+		<kbd>
+			property any 
+			<strong>ReadPreference</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="WCConfig()"><!-- --></a>
+		<h3>WCConfig</h3>
+
+		<kbd>
+			property any 
+			<strong>WCConfig</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
 		<a name="wirebox()"><!-- --></a>
 		<h3>wirebox</h3>
 
@@ -1349,6 +1521,42 @@ Maintains the Database Connection via the Native Driver</p>
 		
 			
 			<dd><code>inject</code> - wirebox</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="WriteConcern()"><!-- --></a>
+		<h3>WriteConcern</h3>
+
+		<kbd>
+			property any 
+			<strong>WriteConcern</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
 			
 		
 			
@@ -1446,6 +1654,40 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	
 	
 
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="connect()"><!-- --></a>
+	<h3>connect</h3>
+	
+	<kbd>private any <strong>connect</strong>(any dbName='[runtime expression]')</kbd>
+	
+	<br><br>
+
+	
+		<p>Our connection to the Mongo Server</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>dbName</code></dd>
+		
+		</dl>
 	
 
 	
@@ -1686,33 +1928,6 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getMongoCollection()"><!-- --></a>
-	<h3>getMongoCollection</h3>
-	
-	<kbd>public string <strong>getMongoCollection</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: Collection Class</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
 	<a name="getMongoConfig()"><!-- --></a>
 	<h3>getMongoConfig</h3>
 	
@@ -1808,6 +2023,56 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
+	<a name="getReadPreference()"><!-- --></a>
+	<h3>getReadPreference</h3>
+	
+	<kbd>public string <strong>getReadPreference</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getWCConfig()"><!-- --></a>
+	<h3>getWCConfig</h3>
+	
+	<kbd>public string <strong>getWCConfig</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getWirebox()"><!-- --></a>
 	<h3>getWirebox</h3>
 	
@@ -1817,6 +2082,31 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 
 	
 		<p>get: Wirebox</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getWriteConcern()"><!-- --></a>
+	<h3>getWriteConcern</h3>
+	
+	<kbd>public string <strong>getWriteConcern</strong>()</kbd>
+	
+	<br><br>
+
 	
 
 	
@@ -1960,40 +2250,6 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="setMongoCollection()"><!-- --></a>
-	<h3>setMongoCollection</h3>
-	
-	<kbd>public any <strong>setMongoCollection</strong>(any MongoCollection)</kbd>
-	
-	<br><br>
-
-	
-		<p>set: Collection Class</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>MongoCollection</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
 	<a name="setMongoConfig()"><!-- --></a>
 	<h3>setMongoConfig</h3>
 	
@@ -2060,6 +2316,70 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
+	<a name="setReadPreference()"><!-- --></a>
+	<h3>setReadPreference</h3>
+	
+	<kbd>public any <strong>setReadPreference</strong>(any ReadPreference)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>ReadPreference</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setWCConfig()"><!-- --></a>
+	<h3>setWCConfig</h3>
+	
+	<kbd>public any <strong>setWCConfig</strong>(any WCConfig)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>WCConfig</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="setWirebox()"><!-- --></a>
 	<h3>setWirebox</h3>
 	
@@ -2084,6 +2404,38 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>wirebox</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setWriteConcern()"><!-- --></a>
+	<h3>setWriteConcern</h3>
+	
+	<kbd>public any <strong>setWriteConcern</strong>(any WriteConcern)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>WriteConcern</code></dd>
 		
 		</dl>
 	

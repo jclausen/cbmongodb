@@ -151,20 +151,11 @@ Class
 	
 	
 
-	
-		
-		
-			
-		
-	
-	
-
 
 <!-- Inheritance Tree-->
 <pre>lucee.Component
         <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">cbmongodb.models.BaseDocumentService</a>
-            <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">cbmongodb.models.VirtualEntityService</a>
-                <img src="../../resources/inherit.gif" alt="extended by ">cbmongodb.models.ActiveEntity
+            <img src="../../resources/inherit.gif" alt="extended by ">cbmongodb.models.ActiveEntity
 </pre>
 
 <div class="panel panel-default">
@@ -256,6 +247,8 @@ Class
 		
 			
 		
+			
+		
 		
 	</div>
 </div>
@@ -292,416 +285,1021 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 
 
 
+<!-- ========== METHOD SUMMARY =========== -->
+
+<a name="property_summary"><!-- --></a>
+<table class="table table-bordered table-hover">
+	<tr class="info">
+		<th align="left" colspan="5">
+			<strong>Property Summary</strong>
+		</th>
+	</tr>
+	<tr class="info">
+		<th align="left">
+			<strong>type</strong>
+		</th>
+		<th align="left">
+			<strong>property</strong>
+		</th>
+		<th align="left">
+			<strong>default</strong>
+		</th>
+		<th align="left">
+			<strong>serializable</strong>
+		</th>
+		<th align="left">
+			<strong>required</strong>
+		</th>
+	</tr>
+
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#_criteria()">_criteria</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default query arguments.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#_keys()">_keys</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#_limit()">_limit</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+				<code>0</code>
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#_offset()">_offset</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+				<code>0</code>
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#_operators()">_operators</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#_sort()">_sort</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#xCollection()">xCollection</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A separate collection to be queried.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#xReduce()">xReduce</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The map reduction.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	</tr>
+</table>
+
+
+
+	
+	
+	<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+
+	<a name="constructor_summary"><!-- --></a>
+	<table class="table table-bordered table-hover">
+		<tr class="info">
+			<th align="left" colspan="2">
+				<strong>Constructor Summary</strong>
+			</th>
+		</tr>
+		<tr>
+			
+			<td>
+				<strong><a href="ActiveEntity.html#init()">init</A></strong>()
+				<br>
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Virtual Entity Constructor ( if you override it, make sure you call super.
+				
+			</td>
+		</tr>
+	</table>
 
 
 
 
+
+<!-- ========== METHOD SUMMARY =========== -->
+
+<a name="method_summary"><!-- --></a>
+<table class="table table-bordered table-hover">
+	<tr class="info">
+		<th align="left" colspan="2">
+			<strong>Method Summary</strong>
+		</th>
+	</tr>
+
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#clearScope()">clearScope</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>numeric</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#count()">count</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Count the records in the current query.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#create()">create</A></strong>([any returnInstance='false'], any document='[runtime expression]')
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>boolean</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#criteriaExists()">criteriaExists</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>boolean</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#delete()">delete</A></strong>([any truncate='false'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete a document, with optional truncate flag.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#entity()">entity</A></strong>([struct record])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scopes the active entity.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#evict()">evict</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overload the upstream evict to clear query params.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>boolean</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#exists()">exists</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test whether a record matching the current criteria exists.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#find()">find</A></strong>([any returnInstance='true'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find one record and return the query.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#findAll()">findAll</A></strong>([any asCursor='false'], [any asResult='false'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find all records matching the current query params.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#get_criteria()">get_criteria</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Default query arguments.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#get_keys()">get_keys</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#get_limit()">get_limit</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#get_offset()">get_offset</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#get_operators()">get_operators</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#get_sort()">get_sort</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#getXCollection()">getXCollection</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: A separate collection to be queried.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#getXReduce()">getXReduce</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The map reduction.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#join()">join</A></strong>(any collection)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cross Collection Queries ***********************.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#limit()">limit</A></strong>([numeric max])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set maxrows|limit for query.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>boolean</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#loaded()">loaded</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status Methods ******************************.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#mr()">mr</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map reduce query method.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#on()">on</A></strong>(any key, [any operator='='], any xKey)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#order()">order</A></strong>([any key], [any direction])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the order|sort for the upcoming query.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#query()">query</A></strong>([struct criteria='[runtime expression]'], [numeric offset='[runtime expression]'], [numeric limit='[runtime expression]'], [any sort='[runtime expression]'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The master query method.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#reload()">reload</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#resetQuery()">resetQuery</A></strong>([any evict='true'])
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#save()">save</A></strong>(any document, [any upsert='false'], [any returnInstance='false'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save the current entity.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#scopeEntity()">scopeEntity</A></strong>([any doc])
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#set_criteria()">set_criteria</A></strong>(any _criteria)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Default query arguments.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#set_keys()">set_keys</A></strong>(any _keys)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#set_limit()">set_limit</A></strong>(any _limit)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#set_offset()">set_offset</A></strong>(any _offset)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#set_operators()">set_operators</A></strong>(any _operators)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#set_sort()">set_sort</A></strong>(any _sort)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#setXCollection()">setXCollection</A></strong>(any xCollection)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: A separate collection to be queried.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#setXReduce()">setXReduce</A></strong>(any xReduce)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The map reduction.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#update()">update</A></strong>([any returnInstance='false'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates the loaded record.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#upsert()">upsert</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aliase for update() with an explicit upsert argument.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#where()">where</A></strong>([string key], [string operator='='], [any value])
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#whereNotI()">whereNotI</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Convenience function to exclude the current active entity.
+			
+		</td>
+	</tr>
+	
+</table>
 
 
 
 <a name="inherited_methods"><!-- --></a>
 
-
-	
-
-	
-
-	&nbsp;
-	<a name="methods_inherited_from_class_cbmongodb.models.VirtualEntityService"><!-- --></a>
-	<table class="table table-hover table-bordered">
-		<tr class="info">
-			<th align="left">
-				<strong>Methods inherited from class <kbd><a href="../../cbmongodb/models/VirtualEntityService.html" title="class in cbmongodb.models">cbmongodb.models.VirtualEntityService</a></kbd></strong>
-			</th>
-		</tr>
-		<tr>
-			<td>
-				
-				
-				
-					
-					
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-					
-					
-					
-						
-					
-					
-					
-					
-				
-				
-				
-					<a href="../..//cbmongodb/models/VirtualEntityService.html#clearScope()">clearScope</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#count()">count</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#create()">create</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#criteriaExists()">criteriaExists</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#delete()">delete</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#entity()">entity</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#evict()">evict</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#exists()">exists</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#find()">find</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#findAll()">findAll</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#get_criteria()">get_criteria</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#get_keys()">get_keys</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#get_limit()">get_limit</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#get_offset()">get_offset</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#get_operators()">get_operators</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#get_sort()">get_sort</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#getXCollection()">getXCollection</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#getXReduce()">getXReduce</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#init()">init</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#join()">join</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#limit()">limit</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#loaded()">loaded</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#mr()">mr</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#on()">on</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#order()">order</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#query()">query</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#reload()">reload</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#resetQuery()">resetQuery</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#save()">save</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#scopeEntity()">scopeEntity</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#set_criteria()">set_criteria</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#set_keys()">set_keys</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#set_limit()">set_limit</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#set_offset()">set_offset</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#set_operators()">set_operators</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#set_sort()">set_sort</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#setXCollection()">setXCollection</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#setXReduce()">setXReduce</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#update()">update</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#upsert()">upsert</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#where()">where</a>, <a href="../..//cbmongodb/models/VirtualEntityService.html#whereNotI()">whereNotI</a>
-				
-			</td>
-		</tr>
-	</table>
 
 	
 
@@ -1197,14 +1795,1649 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 
+	<a name="constructor_detail"><!-- --></a>
+	<table class="table table-bordered">
+		<tr class="info">
+			<th colspan="1" align="left">
+				<strong>Constructor Detail</strong>
+			</th>
+		</tr>
+	</table>
+
+	<a name="init()"><!-- --></a><h3>
+	init</h3>
+	<kbd>public <strong>init</strong>()</kbd>
+
+	<br><br>
+
+	
+	<p>Virtual Entity Constructor ( if you override it, make sure you call super.init() )</p>
+	
+
+	
+	<hr>
+
 
 <!-- ============ PROPERTY DETAIL ========== -->
 
+	<a name="property_detail"><!-- --></a>
+	<table class="table table-bordered">
+		<tr class="info">
+			<th colspan="1" align="left">
+				<strong>Property Detail</strong>
+			</th>
+		</tr>
+	</table>
+
+	
+		
+		<a name="_criteria()"><!-- --></a>
+		<h3>_criteria</h3>
+
+		<kbd>
+			property any 
+			<strong>_criteria</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>Default query arguments</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="_keys()"><!-- --></a>
+		<h3>_keys</h3>
+
+		<kbd>
+			property any 
+			<strong>_keys</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="_limit()"><!-- --></a>
+		<h3>_limit</h3>
+
+		<kbd>
+			property any 
+			<strong>_limit</strong>
+			
+			= [0]
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="_offset()"><!-- --></a>
+		<h3>_offset</h3>
+
+		<kbd>
+			property any 
+			<strong>_offset</strong>
+			
+			= [0]
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="_operators()"><!-- --></a>
+		<h3>_operators</h3>
+
+		<kbd>
+			property any 
+			<strong>_operators</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="_sort()"><!-- --></a>
+		<h3>_sort</h3>
+
+		<kbd>
+			property any 
+			<strong>_sort</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="xCollection()"><!-- --></a>
+		<h3>xCollection</h3>
+
+		<kbd>
+			property any 
+			<strong>xCollection</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>A separate collection to be queried
+As MongoDB doesn't support joins in the RDBMS fashion,
+we'll need to pass our active entity document objects rather than as comparisons</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="xReduce()"><!-- --></a>
+		<h3>xReduce</h3>
+
+		<kbd>
+			property any 
+			<strong>xReduce</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>The map reduction</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
 
 
 
 
 
+
+
+
+
+<!-- ============ METHOD DETAIL ========== -->
+
+<a name="method_detail"><!-- --></a>
+<table class="table table-bordered">
+	<tr class="info">
+		<th colspan="1" align="left">
+			<strong>Method Detail</strong>
+		</th>
+	</tr>
+</table>
+
+
+	
+	<a name="clearScope()"><!-- --></a>
+	<h3>clearScope</h3>
+	
+	<kbd>public any <strong>clearScope</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="count()"><!-- --></a>
+	<h3>count</h3>
+	
+	<kbd>public numeric <strong>count</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Count the records in the current query</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="create()"><!-- --></a>
+	<h3>create</h3>
+	
+	<kbd>public any <strong>create</strong>([any returnInstance='false'], any document='[runtime expression]')</kbd>
+	
+	<br><br>
+
+	
+		<p>Creates</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>returnInstance</code></dd>
+		
+		<dd><code>document</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="criteriaExists()"><!-- --></a>
+	<h3>criteriaExists</h3>
+	
+	<kbd>public boolean <strong>criteriaExists</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="delete()"><!-- --></a>
+	<h3>delete</h3>
+	
+	<kbd>public boolean <strong>delete</strong>([any truncate='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Delete a document, with optional truncate flag</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+		<dl>
+			<dt><strong>Overrides:</strong></dt>
+			<dd>
+			<code>
+			<a href="../..//cbmongodb/models/BaseDocumentService.html#delete()">delete</a></code>
+			in class
+			<code>
+				<a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">BaseDocumentService</a>
+			</code>
+			</dd>
+		</dl>
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>truncate</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="entity()"><!-- --></a>
+	<h3>entity</h3>
+	
+	<kbd>public any <strong>entity</strong>([struct record])</kbd>
+	
+	<br><br>
+
+	
+		<p>Scopes the active entity</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>record</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="evict()"><!-- --></a>
+	<h3>evict</h3>
+	
+	<kbd>public any <strong>evict</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>overload the upstream evict to clear query params</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+		<dl>
+			<dt><strong>Overrides:</strong></dt>
+			<dd>
+			<code>
+			<a href="../..//cbmongodb/models/BaseDocumentService.html#evict()">evict</a></code>
+			in class
+			<code>
+				<a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">BaseDocumentService</a>
+			</code>
+			</dd>
+		</dl>
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="exists()"><!-- --></a>
+	<h3>exists</h3>
+	
+	<kbd>public boolean <strong>exists</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Test whether a record matching the current criteria exists</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="find()"><!-- --></a>
+	<h3>find</h3>
+	
+	<kbd>public any <strong>find</strong>([any returnInstance='true'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Find one record and return the query</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>returnInstance</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="findAll()"><!-- --></a>
+	<h3>findAll</h3>
+	
+	<kbd>public any <strong>findAll</strong>([any asCursor='false'], [any asResult='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Find all records matching the current query params</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>asCursor</code></dd>
+		
+		<dd><code>asResult</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="get_criteria()"><!-- --></a>
+	<h3>get_criteria</h3>
+	
+	<kbd>public string <strong>get_criteria</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: Default query arguments</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="get_keys()"><!-- --></a>
+	<h3>get_keys</h3>
+	
+	<kbd>public string <strong>get_keys</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="get_limit()"><!-- --></a>
+	<h3>get_limit</h3>
+	
+	<kbd>public string <strong>get_limit</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="get_offset()"><!-- --></a>
+	<h3>get_offset</h3>
+	
+	<kbd>public string <strong>get_offset</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="get_operators()"><!-- --></a>
+	<h3>get_operators</h3>
+	
+	<kbd>public string <strong>get_operators</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="get_sort()"><!-- --></a>
+	<h3>get_sort</h3>
+	
+	<kbd>public string <strong>get_sort</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getXCollection()"><!-- --></a>
+	<h3>getXCollection</h3>
+	
+	<kbd>public string <strong>getXCollection</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: A separate collection to be queried
+As MongoDB doesn't support joins in the RDBMS fashion,
+we'll need to pass our active entity document objects rather than as comparisons</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getXReduce()"><!-- --></a>
+	<h3>getXReduce</h3>
+	
+	<kbd>public string <strong>getXReduce</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: The map reduction</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="join()"><!-- --></a>
+	<h3>join</h3>
+	
+	<kbd>public any <strong>join</strong>(any collection)</kbd>
+	
+	<br><br>
+
+	
+		<p>Cross Collection Queries ***********************</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>collection</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="limit()"><!-- --></a>
+	<h3>limit</h3>
+	
+	<kbd>public any <strong>limit</strong>([numeric max])</kbd>
+	
+	<br><br>
+
+	
+		<p>Set maxrows|limit for query</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>max</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="loaded()"><!-- --></a>
+	<h3>loaded</h3>
+	
+	<kbd>public boolean <strong>loaded</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Status Methods ******************************</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="mr()"><!-- --></a>
+	<h3>mr</h3>
+	
+	<kbd>public any <strong>mr</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Map reduce query method</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="on()"><!-- --></a>
+	<h3>on</h3>
+	
+	<kbd>public any <strong>on</strong>(any key, [any operator='='], any xKey)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>operator</code></dd>
+		
+		<dd><code>xKey</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="order()"><!-- --></a>
+	<h3>order</h3>
+	
+	<kbd>public any <strong>order</strong>([any key], [any direction])</kbd>
+	
+	<br><br>
+
+	
+		<p>Set the order|sort for the upcoming query</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>direction</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="query()"><!-- --></a>
+	<h3>query</h3>
+	
+	<kbd>public any <strong>query</strong>([struct criteria='[runtime expression]'], [numeric offset='[runtime expression]'], [numeric limit='[runtime expression]'], [any sort='[runtime expression]'])</kbd>
+	
+	<br><br>
+
+	
+		<p>The master query method</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>criteria</code></dd>
+		
+		<dd><code>offset</code></dd>
+		
+		<dd><code>limit</code></dd>
+		
+		<dd><code>sort</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="reload()"><!-- --></a>
+	<h3>reload</h3>
+	
+	<kbd>public any <strong>reload</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="resetQuery()"><!-- --></a>
+	<h3>resetQuery</h3>
+	
+	<kbd>public any <strong>resetQuery</strong>([any evict='true'])</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>evict</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="save()"><!-- --></a>
+	<h3>save</h3>
+	
+	<kbd>public any <strong>save</strong>(any document, [any upsert='false'], [any returnInstance='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Save the current entity</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>document</code></dd>
+		
+		<dd><code>upsert</code></dd>
+		
+		<dd><code>returnInstance</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="scopeEntity()"><!-- --></a>
+	<h3>scopeEntity</h3>
+	
+	<kbd>public any <strong>scopeEntity</strong>([any doc])</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>doc</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="set_criteria()"><!-- --></a>
+	<h3>set_criteria</h3>
+	
+	<kbd>public any <strong>set_criteria</strong>(any _criteria)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: Default query arguments</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>_criteria</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="set_keys()"><!-- --></a>
+	<h3>set_keys</h3>
+	
+	<kbd>public any <strong>set_keys</strong>(any _keys)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>_keys</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="set_limit()"><!-- --></a>
+	<h3>set_limit</h3>
+	
+	<kbd>public any <strong>set_limit</strong>(any _limit)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>_limit</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="set_offset()"><!-- --></a>
+	<h3>set_offset</h3>
+	
+	<kbd>public any <strong>set_offset</strong>(any _offset)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>_offset</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="set_operators()"><!-- --></a>
+	<h3>set_operators</h3>
+	
+	<kbd>public any <strong>set_operators</strong>(any _operators)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>_operators</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="set_sort()"><!-- --></a>
+	<h3>set_sort</h3>
+	
+	<kbd>public any <strong>set_sort</strong>(any _sort)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>_sort</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setXCollection()"><!-- --></a>
+	<h3>setXCollection</h3>
+	
+	<kbd>public any <strong>setXCollection</strong>(any xCollection)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: A separate collection to be queried
+As MongoDB doesn't support joins in the RDBMS fashion,
+we'll need to pass our active entity document objects rather than as comparisons</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>xCollection</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setXReduce()"><!-- --></a>
+	<h3>setXReduce</h3>
+	
+	<kbd>public any <strong>setXReduce</strong>(any xReduce)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: The map reduction</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>xReduce</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="update()"><!-- --></a>
+	<h3>update</h3>
+	
+	<kbd>public any <strong>update</strong>([any returnInstance='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Updates the loaded record
+Alias for save() with an explicit</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>returnInstance</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="upsert()"><!-- --></a>
+	<h3>upsert</h3>
+	
+	<kbd>public any <strong>upsert</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Aliase for update() with an explicit upsert argument</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="where()"><!-- --></a>
+	<h3>where</h3>
+	
+	<kbd>public any <strong>where</strong>([string key], [string operator='='], [any value])</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>operator</code></dd>
+		
+		<dd><code>value</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="whereNotI()"><!-- --></a>
+	<h3>whereNotI</h3>
+	
+	<kbd>public any <strong>whereNotI</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Convenience function to exclude the current active entity
+If the entity is not loaded, no query restrictions will be added</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
 
 
 
