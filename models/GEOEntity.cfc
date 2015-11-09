@@ -144,7 +144,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			throw(message="Invalid GEO Comparison",extendedInfo="The #ARGUMENTS.key# key for this entity did not contain valid coordinates. Are you sure you're working with a loaded object?");
 		}
 		xCriteria[xProp]={"#ARGUMENTS.operation#"={"$geometry"=searchGeometry}};
-
+		
 		xEntity.criteria(xCriteria);
 
 		return xEntity;
@@ -163,7 +163,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 				local_geometry=polygonCenter(local_geometry);
 		}
 
-		return geometry;
+		return local_geometry;
 	}
 
 	/***************************** UTILS ****************************/
@@ -212,6 +212,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		}
 
 		center=[(low[1] + ((high[1] - low[1]) / 2)),(low[2] + ((high[2] - low[2]) / 2))];
+
 		return this.toGEOJSON(center,'Point');
 	}
 
