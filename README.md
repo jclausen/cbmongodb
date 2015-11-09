@@ -1,7 +1,7 @@
 
 MongoDB Module for Coldbox
 ==========================
-CBMongoDB provides Active Record(ish) functionality for managing MongoDB documents and schema using a familiar syntax for CRUD operations and recordset processing and retrieval. 
+CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo 3.0 Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
 - <strong>Module Version:</strong> 3.1.0.1 <em>(Release Date: 11/09/2015)</em>
@@ -112,7 +112,6 @@ property name="mobile" schema=true parent="phone" validate="telephone";
 ```
 The major difference is that parent notation allows direct usage of the accessor (e.g. `this.getMobile()` ).  Dot notation, however, is more natural with the query syntax and is recommended.
 
-
 CBMongoDB emulates many of the functions of the cborm ActiveEntity, to make getting started simple.  There is also a chainable querying syntax which makes it easy to incorporate conditionals in to your search queries. The following examples assume model inheritance.
 
 Create a new document and then query for (we're maintaining case in this example, but it's not necessary if you've already mapped your schema properties, which maintain case automatically)
@@ -147,15 +146,15 @@ var pkey=person.get_id();
 
 or you can add human readable unique values (tags/slugs) and index them:
 ```
-property name="tag" schema=true index=true;
+property name="tag" schema=true index=true unique=true;
 ```
 
-Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') <sup>[1](#fn1)</sup>
+Now let's reset our entity and re-find it.  The where() method accepts either where('name','value') arguments or where('name','operator','value') <sup>[1](#fn1)</sup>:
 ```
 person = person.reset().where('first_name','John').where('last_name','Doe').find();
 ```
 
-Let's change our phone number
+Let's change our phone number:
 ```
 person.set('phone.home','616-555-8789').update();
 ```
@@ -177,17 +176,17 @@ newperson = this.reset().populate(newperson).set('first_name','Jane').set('last_
 Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
 
 ```
-var people = this.reset().find_all();	
+var people = this.reset().findAll();	
 
 for(var peep in people){
 	writeOutput("#peep.first_name# #peep.last_name# is in the house!");
 }
 ```
 
-Here's where we diverge from RDBMS:  MongoDB uses a "cursor" on multiple record sets.  It is extremely fast (with some limitations) and, if you're going be looping through a large number of documents, is the way to go. Because of the way the cursor is designed, it doesn't actually start executing queries on the database until the first time a record is requested.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
+Here's where we diverge from RDBMS:  MongoDB uses a "cursor" on multiple record sets.  It is extremely fast (with some limitations) and, if you're going be looping through a large number of documents, is the way to go. Because of the way the cursor is designed, it doesn't actually start executing queries on the database until the first time a record is requested.  If we use the "asCursor" argument in `findAll(boolean asCursor=false,boolean asJSON=false)`, we recevie the cursor back:
 
 ```
-var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
+var people = this.reset().findAll(true);  //or findAll(asCursor=true), if you're feeling verbose	
 
 while(people.hasNext()){
 	var peep=people.next();
@@ -198,7 +197,7 @@ while(people.hasNext()){
 Lastly, let's clean up our test documents.  The `delete()` function allows a boolean of "truncate" which defaults to FALSE. If you set this argument to true, without a loaded record or existing criteria, it will delete all documents from the collection.  In this case, we're just going to delete our records one at a time, using our cursor:
 
 ```
-var people = this.reset().find_all(true);
+var people = this.reset().findAll(true);
 
 while(people.hasNext()){
 	var peep=people.next();
@@ -354,16 +353,16 @@ people=michigan.within('geometry','Person.address.location').findAll();
 ```
 Note that "michigan" is still loaded, but once we call the near/far spatial operator, the instance returned is the "far" entity.  Any where() clauses before or after the spatial comparison method will be exectuted on the far entity. The above might return a large recordset so let's restrict that a bit.  (We'll use our spatial query to prevent loading folks from Grand Rapids, Minnesota):
 ```
-gr_peeps=michigan.where('address.city','Grand Rapids').within('geometry','People.address.location').findAll();
+GRPeeps=michigan.where('address.city','Grand Rapids').within('geometry','People.address.location').findAll();
 ```
 
 Now let's looks at those some of those people returned.  In this case we'll take our first person and see all of the other people within a 10 mile radius.
 ```
-some_person=gr_peeps[1];
-nearby_peeps=some_person
+somePerson=GRPeeps[1];
+nearbyPeeps=somePerson
 	.whereNotI()
 	.near('address.location','this.address.location')
-	.maxDistance(gr_peeps.miles(10))
+	.maxDistance(grPeeps.miles(10))
 	.findAll();
 ```
 *Note: We used a helper method of `whereNotI()` which excludes the active entity from being returned in the results.  We also used a helper method `miles()` to convert miles to meters, which is the default unit measurement for [WGS84](http://en.wikipedia.org/wiki/World_Geodetic_System) projected data.  There are equivalent helper methods of `feet()` and `km()`.*
