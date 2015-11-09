@@ -132,10 +132,18 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 
 		//it's faster to pull our local object and pass it to the remote
 		var xArg=this.locate(arguments.key);
+
 		if(isNull(xArg))
-			throw("The key <strong>#xProp#</strong> was not found in the #xName# entity.  ")
+			throw(message="Invalid GEO Comparison",extendedInfo="The key <strong>#xProp#</strong> key was not found in the #xName# entity.");
+
 		//merge our within query
-		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,xArg)}};
+		var searchGeometry = appropriate(arguments.operation,xArg);
+
+		//throw an error if we don't have valid coordinates, to prevent a database error
+		if((isArray(searchGeometry) and arrayLen(searchGeometry) == 0) || (isStruct(searchGeometry) and structIsEmpty(searchGeometry))){
+			throw(message="Invalid GEO Comparison",extendedInfo="The #arguments.key# key for this entity did not contain valid coordinates. Are you sure you're working with a loaded object?");
+		}
+		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=searchGeometry}};
 
 		xEntity.criteria(xCriteria);
 
@@ -146,11 +154,15 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 *
 	 **/
 	public function appropriate(operation,geometry){
+		
 		var local_geometry=duplicate(geometry);
+
 		//convert polygons to a centroid if we are near
+
 		if(findNoCase('near',arguments.operation) and (local_geometry['type'] EQ "Polygon" OR local_geometry['type'] EQ "MultiPolygon")){
 				local_geometry=polygonCenter(local_geometry);
 		}
+
 		return geometry;
 	}
 
@@ -255,5 +267,6 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	public function km(kilometers){
 		return (arguments.kilometers/1000);
 	}
+
 
 }
