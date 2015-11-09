@@ -181,7 +181,7 @@ component name="BaseDocumentService"  accessors="true"{
 				idx[rel.name]=this.indexOrder(prop);
 			}
 		} else {
-			idx[arguments.prop.name]=this.indexOrder(prop);
+			idx[ARGUMENTS.prop.name]=this.indexOrder(prop);
 		}
 
 		//Check whether we have records and make it sparse if we're currently empty
@@ -216,7 +216,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 public function indexExists(required name){
 	 	var existing=this.getIndexInfo();
 		for(idx in existing){
-			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name) return true;
+			if(structKeyExists(idx,'name') and idx['name'] EQ ARGUMENTS.name) return true;
 		}
 		return false;
 	 }
@@ -279,7 +279,7 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function load(required _id,returnInstance=true){
 
-		return this.get(arguments._id,arguments.returnInstance);
+		return this.get(ARGUMENTS._id,ARGUMENTS.returnInstance);
 	}
 
 	/**
@@ -338,13 +338,13 @@ component name="BaseDocumentService"  accessors="true"{
 
 	void function criteria(struct criteria){
 		
-		if(structKeyExists(arguments.criteria,'_id')){
+		if(structKeyExists(ARGUMENTS.criteria,'_id')){
 			//exclude our nested query obects
-			if(!isStruct(arguments.criteria['_id']) && isSimpleValue(arguments.criteria['_id']))
-				arguments.criteria['_id']=getMongoUtil().newObjectIDfromID(arguments.criteria['_id']);
+			if(!isStruct(ARGUMENTS.criteria['_id']) && isSimpleValue(ARGUMENTS.criteria['_id']))
+				ARGUMENTS.criteria['_id']=getMongoUtil().newObjectIDfromID(ARGUMENTS.criteria['_id']);
 		}
 
-		this.set_criteria(arguments.criteria);
+		this.set_criteria(ARGUMENTS.criteria);
 	}
 
 	/**
@@ -357,12 +357,12 @@ component name="BaseDocumentService"  accessors="true"{
 	any function locate(string key){
 		var document=this.get_document();
 
-		if(structKeyExists(document,arguments.key)){
-			return document[arguments.key];
+		if(structKeyExists(document,ARGUMENTS.key)){
+			return document[ARGUMENTS.key];
 		} else {
-			if(isDefined('document.#arguments.key#')){
+			if(isDefined('document.#ARGUMENTS.key#')){
 				//FIXME evaluate()??!?
-				return evaluate('document.#arguments.key#');
+				return evaluate('document.#ARGUMENTS.key#');
 			}
 		}
 		
@@ -406,8 +406,8 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	any function toGeoJSON(array coordinates,string type='Point'){
 		var geo={
-				"type"=arguments.type,
-				"coordinates"=arguments.coordinates
+				"type"=ARGUMENTS.type,
+				"coordinates"=ARGUMENTS.coordinates
 			};
 		/**
 		* serializing and deserializing ensures our quoted keys remain intact in transmission
@@ -420,11 +420,11 @@ component name="BaseDocumentService"  accessors="true"{
 	 **/
 	 numeric function mapOrder(required order){
 		var map={'asc'=1,'desc'=2};
-		if(isNumeric(arguments.order)){
-			return arguments.order;
-		} else if(structKeyExists(map,lcase(arguments.order))) {
+		if(isNumeric(ARGUMENTS.order)){
+			return ARGUMENTS.order;
+		} else if(structKeyExists(map,lcase(ARGUMENTS.order))) {
 			//FIXME?
-			return javacast('int',map[lcase(arguments.order)]);
+			return javacast('int',map[lcase(ARGUMENTS.order)]);
 		} else {
 			return map.asc;
 		}

@@ -14,8 +14,21 @@
 */
 component name="MongoCollection" accessors=true {
 	
+	/**
+	* Mongo Utils
+	**/
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
+	/**
+	* CBJavaloader
+	**/
+	property name="jLoader" inject="loader@cbjavaloader";
+	/**
+	* The native java Collection Object
+	**/
 	property name="dbCollection";
+	/**
+	* The name of our collection
+	**/
 	property name="collectionName";
 	
 	/**
@@ -27,9 +40,9 @@ component name="MongoCollection" accessors=true {
 		//if, for some reason, we need to instantiate manually
 		if(isNull(MongoUtil)) application.wirebox.autowire(this);
 		
-		variables.dbCollection = arguments.dbCollectionInstance;
+		VARIABLES.dbCollection = ARGUMENTS.dbCollectionInstance;
 		//add an immutability testing property
-		variables.collectionName = getDbCollection().getNamespace().getCollectionName();
+		VARIABLES.collectionName = getDbCollection().getNamespace().getCollectionName();
 		
 		return this;
 
@@ -63,7 +76,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function count(criteria={}){
 
-		return getDBCollection().count(getMongoUtil().toMongo(arguments.criteria));
+		return getDBCollection().count(getMongoUtil().toMongo(ARGUMENTS.criteria));
 
 	}
 
@@ -75,7 +88,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function find(required criteria={},required struct options={}){
 
-		var results = getDBCollection().find(getMongoUtil().toMongoDocument(arguments.criteria));
+		var results = getDBCollection().find(getMongoUtil().toMongoDocument(ARGUMENTS.criteria));
 		if(structKeyExists(options,'offset')) results.skip(options.offset);
 		if(structKeyExists(options,'sort')) results.sort(getMongoUtil().toMongoDocument(options.sort));
 		if(structKeyExists(options,'limit') and options.limit > 0) results.limit(options.limit);
@@ -91,7 +104,7 @@ component name="MongoCollection" accessors=true {
 	* @return mixed result|null 	Returns the result if found or returns null if the document was not found
 	**/
 	public function findById(required id){
-		var qId = getMongoUtil().newIDCriteriaObject(arguments.id);
+		var qId = getMongoUtil().newIDCriteriaObject(ARGUMENTS.id);
 
 		results = this.find(qId).asCursor();
 
@@ -117,25 +130,25 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function aggregate(struct criteria, required struct group, struct projection,sort){
 		
-		if(isNull(arguments.criteria) and isNull(arguments.projection)) 
+		if(isNull(ARGUMENTS.criteria) and isNull(ARGUMENTS.projection)) 
 			throw(type="MissingArgumentException",message="Neither a critera or projection argument were provided. For custom aggregations, please see the aggregation() method.");
 		
 		var proj = [];
 
-		if(!isNull(arguments.criteria)){
-			arrayAppend(proj,{"$match":arguments.criteria});
+		if(!isNull(ARGUMENTS.criteria)){
+			arrayAppend(proj,{"$match":ARGUMENTS.criteria});
 		}
-		if(!isNull(arguments.projection)){
-			arrayAppend(proj,{"$project":arguments.projection});
+		if(!isNull(ARGUMENTS.projection)){
+			arrayAppend(proj,{"$project":ARGUMENTS.projection});
 		}
 
-		arrayAppend(proj,{"$group":arguments.group});
+		arrayAppend(proj,{"$group":ARGUMENTS.group});
 
-		if(!isNull(arguments.sort)){
-			if(isStruct(arguments.sort)){
-				arrayAppend(proj,{"$sort":arguments.sort});
+		if(!isNull(ARGUMENTS.sort)){
+			if(isStruct(ARGUMENTS.sort)){
+				arrayAppend(proj,{"$sort":ARGUMENTS.sort});
 			} else {
-				arrayAppend(proj,{"$sort":{"#arguments.sort#":1}});
+				arrayAppend(proj,{"$sort":{"#ARGUMENTS.sort#":1}});
 			}
 		}
 		var agResult = getDbCollection().aggregate(toMongo(proj));
@@ -145,7 +158,7 @@ component name="MongoCollection" accessors=true {
 	}
 
 	public function aggregation(required array command){
-		var aggregate = getDbCollection().aggregate(toMongo(arguments.command));
+		var aggregate = getDbCollection().aggregate(toMongo(ARGUMENTS.command));
 		return getMongoUtil().encapsulateDBResult(aggregate);
 	}
 
@@ -155,7 +168,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function distinct(required string fieldName, struct criteria={}){
 		//FIXME: Not currently operational - casting issue?
-		//var distinct = getDBCollection().distinct(arguments.fieldName,toMongo(arguments.criteria));
+		//var distinct = getDBCollection().distinct(ARGUMENTS.fieldName,toMongo(ARGUMENTS.criteria));
 		
 		return getDbCollection().distinct(argumentCollection=arguments);
 	}
@@ -170,7 +183,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function mapReduce(required string map, required string reduce){
 		
-		var mr = getDbCollection().mapReduce(arguments.map,arguments.reduce);
+		var mr = getDbCollection().mapReduce(ARGUMENTS.map,ARGUMENTS.reduce);
 
 		return getMongoUtil().encapsulateDBResult(mr);
 
@@ -205,7 +218,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function insertMany(required array docs){
 
-		var mongoDocs = createObject("java","java.util.ArrayList");
+		var mongoDocs = jLoader.create("java.util.ArrayList");
 
 		for(var doc in docs){
 
@@ -242,15 +255,15 @@ component name="MongoCollection" accessors=true {
 
 		var utils = getMongoUtil();
 
-		if(arguments.upsert and !structKeyExists(document,'_id')){
+		if(ARGUMENTS.upsert and !structKeyExists(document,'_id')){
 			
-			var doc = insertOne(arguments.document);
+			var doc = insertOne(ARGUMENTS.document);
 
 		} else {
 
-			var criteria = utils.newIDCriteriaObject(arguments.document['_id']);
+			var criteria = utils.newIDCriteriaObject(ARGUMENTS.document['_id']);
 			
-			var doc=findOneAndReplace(criteria,arguments.document);	
+			var doc=findOneAndReplace(criteria,ARGUMENTS.document);	
 		}
 
 		return doc;
@@ -288,7 +301,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function updateMany(required criteria,required operation){
 
-		return getDBCollection().updateMany(toMongo(arguments.criteria),toMongo(operation));
+		return getDBCollection().updateMany(toMongo(ARGUMENTS.criteria),toMongo(operation));
 	}
 
 	/**
@@ -299,7 +312,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function findOneAndUpdate(required criteria,required operation){
 
-		return getDBCollection().findOneAndUpdate(toMongo(arguments.criteria),toMongo(operation));
+		return getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation));
 
 	}
 	
@@ -314,9 +327,9 @@ component name="MongoCollection" accessors=true {
 
 		var utils = getMongoUtil();
 		
-		var search = utils.toMongo(arguments.criteria);
+		var search = utils.toMongo(ARGUMENTS.criteria);
 
-		var update = utils.toMongoDocument(arguments.document);
+		var update = utils.toMongoDocument(ARGUMENTS.document);
 		
 		return this.getDBCollection().findOneAndReplace(search,update);
 
@@ -337,10 +350,10 @@ component name="MongoCollection" accessors=true {
 	public function findOneAndDelete(required struct criteria,options){
 
 		if(isNull(options)){
-			return getDBCollection().findOneAndDelete(getMongoUtil().toMongo(arguments.criteria))
+			return getDBCollection().findOneAndDelete(getMongoUtil().toMongo(ARGUMENTS.criteria))
 		} else {
 			return getDBCollection().findOneAndDelete(
-				getMongoUtil().toMongo(arguments.criteria),
+				getMongoUtil().toMongo(ARGUMENTS.criteria),
 				getMongoUtil().toMongo(options)
 			);
 		}
@@ -355,10 +368,10 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function remove(required criteria,multiple=true){
 
-		if(arguments.multiple){
-			var removed = deleteMany(arguments.criteria);
+		if(ARGUMENTS.multiple){
+			var removed = deleteMany(ARGUMENTS.criteria);
 		} else {
-			var removed = deleteOne(arguments.criteria);
+			var removed = deleteOne(ARGUMENTS.criteria);
 		}
 		return removed;
 	}
@@ -370,7 +383,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function deleteOne(required criteria){
 
-		return getDBCollection().deleteOne(getMongoUtil().toMongo(arguments.criteria));
+		return getDBCollection().deleteOne(getMongoUtil().toMongo(ARGUMENTS.criteria));
 
 	}
 
@@ -381,7 +394,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function deleteMany(required criteria={}){
 		
-		return getDBCollection().deleteMany(getMongoUtil().toMongo(arguments.criteria));
+		return getDBCollection().deleteMany(getMongoUtil().toMongo(ARGUMENTS.criteria));
 
 	}
 	
@@ -453,7 +466,7 @@ component name="MongoCollection" accessors=true {
 	public function createGeoIndex(required string field,required options={},required string geoType='2dsphere'){
 
 		var idxOptions = getMongoUtil().createIndexOptions(options);
-		var doc = { "#arguments.field#" = arguments.geoType };
+		var doc = { "#ARGUMENTS.field#" = ARGUMENTS.geoType };
 
 		try{
 
@@ -474,7 +487,7 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function createIndexes(required array indexes){
 
-		for(var index in arguments.index){
+		for(var index in ARGUMENTS.index){
 			createIndex(argumentCollection=index);
 		}
 
@@ -491,13 +504,13 @@ component name="MongoCollection" accessors=true {
 	* Utility facade for Mongo.Util.toMongo
 	**/
 	private function toMongo(required obj){
-		return getMongoUtil().toMongo(arguments.obj);
+		return getMongoUtil().toMongo(ARGUMENTS.obj);
 	}
 
 	/**
 	* Utility facade for Mongo.Util.toMongoDocument
 	**/
 	private function toMongoDocument(required doc){
-		return getMongoUtil().toMongoDocument(arguments.doc);
+		return getMongoUtil().toMongoDocument(ARGUMENTS.doc);
 	}
 }

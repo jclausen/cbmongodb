@@ -20,7 +20,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @usage   city.where('status','At Home').within('geometry','Person.address.location').findAll();
 	 **/
 	public function within(required key, xKey, reduce=false){
-		return this.comparison('$geoWithin',arguments.key,arguments.xKey,arguments.reduce);
+		return this.comparison('$geoWithin',ARGUMENTS.key,ARGUMENTS.xKey,ARGUMENTS.reduce);
 	}
 
 	/**
@@ -35,7 +35,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @usage   this.where('road.construction',FALSE).intersects('road.geometry','commuters.route').findAll()
 	 **/
 	public function intersects(required key, xKey, reduce=false){
-		return this.comparison('$geoIntersects',arguments.key,arguments.xKey,arguments.reduce);
+		return this.comparison('$geoIntersects',ARGUMENTS.key,ARGUMENTS.xKey,ARGUMENTS.reduce);
 	}
 
 	/**
@@ -48,7 +48,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @usage   this.where('person.awake',true).whereNotI().near('person.location','person.location').findAll()
 	**/
 	public function near(required key, xKey, reduce=false){
-		return this.comparison('$near',arguments.key,arguments.xKey,arguments.reduce);
+		return this.comparison('$near',ARGUMENTS.key,ARGUMENTS.xKey,ARGUMENTS.reduce);
 	}
 
 	/**
@@ -61,7 +61,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @usage	this.where('city','Grand Rapids').where('state','Michigan').within('city.geometry','restaurants.location').findAll()
 	 **/
 	public function isWithin(required key, xKey, reduce=false){
-		return this.comparison('$geoWithin',arguments.key,arguments.xKey,arguments.reduce);
+		return this.comparison('$geoWithin',ARGUMENTS.key,ARGUMENTS.xKey,ARGUMENTS.reduce);
 	}
 
 	/**
@@ -94,9 +94,9 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		var criteria=this.get_criteria();
 		for(critter in criteria){
 			if( isStruct(criteria[critter]) and structKeyExists(criteria[critter],'$near') ){
-				criteria[critter]["$near"][arguments.operator]=arguments.distance;
+				criteria[critter]["$near"][ARGUMENTS.operator]=ARGUMENTS.distance;
 			} else if (isStruct(criteria[critter]) and structKeyExists(criteria[critter],'$nearSphere')){
-				criteria[critter]["$nearSphere"][arguments.operator]=arguments.distance;
+				criteria[critter]["$nearSphere"][ARGUMENTS.operator]=ARGUMENTS.distance;
 			}
 		}
 		this.criteria(criteria);
@@ -116,14 +116,14 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 **/
 
 	package function comparison(required operation,required key, xKey, reduce=false){
-		if(arguments.reduce)
-			return this.geoReduce(arguments.key,argument.xKey);
-		var xName=listGetAt(arguments.xKey,1,'.');
-		var xProp=listDeleteAt(arguments.xKey,1,'.');
+		if(ARGUMENTS.reduce)
+			return this.geoReduce(ARGUMENTS.key,argument.xKey);
+		var xName=listGetAt(ARGUMENTS.xKey,1,'.');
+		var xProp=listDeleteAt(ARGUMENTS.xKey,1,'.');
 		//if we are using the self entity
 		if(xName EQ 'this'){
-			variables._keys=xProp;
-			variables._criteria[xProp]={"#arguments.operation#"={"$geometry"=appropriate(arguments.operation,this.locate(arguments.key))}};
+			VARIABLES._keys=xProp;
+			VARIABLES._criteria[xProp]={"#ARGUMENTS.operation#"={"$geometry"=appropriate(ARGUMENTS.operation,this.locate(ARGUMENTS.key))}};
 			return this;
 		}
 
@@ -131,19 +131,19 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		var xCriteria=this.get_criteria();
 
 		//it's faster to pull our local object and pass it to the remote
-		var xArg=this.locate(arguments.key);
+		var xArg=this.locate(ARGUMENTS.key);
 
 		if(isNull(xArg))
 			throw(message="Invalid GEO Comparison",extendedInfo="The key <strong>#xProp#</strong> key was not found in the #xName# entity.");
 
 		//merge our within query
-		var searchGeometry = appropriate(arguments.operation,xArg);
+		var searchGeometry = appropriate(ARGUMENTS.operation,xArg);
 
 		//throw an error if we don't have valid coordinates, to prevent a database error
 		if((isArray(searchGeometry) and arrayLen(searchGeometry) == 0) || (isStruct(searchGeometry) and structIsEmpty(searchGeometry))){
-			throw(message="Invalid GEO Comparison",extendedInfo="The #arguments.key# key for this entity did not contain valid coordinates. Are you sure you're working with a loaded object?");
+			throw(message="Invalid GEO Comparison",extendedInfo="The #ARGUMENTS.key# key for this entity did not contain valid coordinates. Are you sure you're working with a loaded object?");
 		}
-		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=searchGeometry}};
+		xCriteria[xProp]={"#ARGUMENTS.operation#"={"$geometry"=searchGeometry}};
 
 		xEntity.criteria(xCriteria);
 
@@ -159,7 +159,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 
 		//convert polygons to a centroid if we are near
 
-		if(findNoCase('near',arguments.operation) and (local_geometry['type'] EQ "Polygon" OR local_geometry['type'] EQ "MultiPolygon")){
+		if(findNoCase('near',ARGUMENTS.operation) and (local_geometry['type'] EQ "Polygon" OR local_geometry['type'] EQ "MultiPolygon")){
 				local_geometry=polygonCenter(local_geometry);
 		}
 
@@ -178,11 +178,11 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	public function parseFeatureCollection(any features){
 		var featureCollection=[];
 		if(isJSON(features))
-			arguments.features=deSerializeJSON(arguments.features);
-		if(structKeyExists(arguments.features,'features'))
-			arguments.features=arguments.features.features;
-		for(geometry in arguments.features){
-			if(structKeyExists(geometry,'geometry') and arrayLen(arguments.features) EQ 1){
+			ARGUMENTS.features=deSerializeJSON(ARGUMENTS.features);
+		if(structKeyExists(ARGUMENTS.features,'features'))
+			ARGUMENTS.features=ARGUMENTS.features.features;
+		for(geometry in ARGUMENTS.features){
+			if(structKeyExists(geometry,'geometry') and arrayLen(ARGUMENTS.features) EQ 1){
 				return ensureGEOValid(geometry['geometry']);
 			} else {
 				arrayAppend(featureCollection,ensureGEOValid(geometry['geometry']));
@@ -196,9 +196,9 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @props http://stackoverflow.com/questions/3081021/how-to-get-the-center-of-a-polygon-in-google-maps-v3
 	 **/
 	public function polygonCenter(required polygon){
-		low=arguments.polygon['coordinates'][1][1][1];
-		high=arguments.polygon['coordinates'][1][1][1];
-		for(point in arguments.polygon['coordinates'][1][1]){
+		low=ARGUMENTS.polygon['coordinates'][1][1][1];
+		high=ARGUMENTS.polygon['coordinates'][1][1][1];
+		for(point in ARGUMENTS.polygon['coordinates'][1][1]){
 			//x
 			if(point[1]<low[1])
 				low[1]=point[1];
@@ -219,7 +219,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * Validates geo data types to ensure they meet the engine storage requirements for indexing
 	 **/
 	public function ensureGEOValid(required geometry){
-		var valid=arguments.geometry;
+		var valid=ARGUMENTS.geometry;
 		switch(valid['type']){
 			case "Polygon":
 			case "MultiPolygon":
@@ -245,7 +245,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @return numeric meters
 	**/
 	public function meters(miles){
-		return (arguments.miles*1609.344);
+		return (ARGUMENTS.miles*1609.344);
 	}
 
 	/**
@@ -255,7 +255,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @return numeric meters
 	**/
 	public function feet(feet){
-		return (arguments.feet/0.3048);
+		return (ARGUMENTS.feet/0.3048);
 	}
 
 	/**
@@ -265,7 +265,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @return numeric meters
 	**/
 	public function km(kilometers){
-		return (arguments.kilometers/1000);
+		return (ARGUMENTS.kilometers/1000);
 	}
 
 

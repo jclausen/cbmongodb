@@ -36,7 +36,7 @@ component name="MongoClient" accessors=true singleton{
 	
 
 	public function init(MongoConfig){
-		this.setMongoConfig(arguments.MongoConfig);
+		this.setMongoConfig(ARGUMENTS.MongoConfig);
 		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
 			application.wirebox.autowire(target=this,targetID="MongoClient@cbmongodb");
 		} else {
@@ -44,68 +44,77 @@ component name="MongoClient" accessors=true singleton{
 		}
 
 		//The core mongo client connection
-		variables.mongo = createObject('java','com.mongodb.MongoClient');
-		//variables.mongo = createObject('java','com.mongodb.async.client.MongoClient');
+		VARIABLES.mongo = jLoader.create('com.mongodb.MongoClient');
+		//VARIABLES.mongo = jLoader.create('com.mongodb.async.client.MongoClient');
 		//WriteConcern Config
-		variables.WriteConcern = createObject("java","com.mongodb.WriteConcern");
+		VARIABLES.WriteConcern = jLoader.create("com.mongodb.WriteConcern");
 		//Read Preference Configuration
-		variables.ReadPreference = createObject("java","com.mongodb.ReadPreference");
+		VARIABLES.ReadPreference = jLoader.create("com.mongodb.ReadPreference");
 
-		variables.db = connect(variables.mongoConfig.getDbName());
+		VARIABLES.db = connect(VARIABLES.mongoConfig.getDbName());
 		
 		initCollections();
 		return this;
 
 	}
 
+	/**
+	* Our connection to the Mongo Server
+	**/
 	private function connect(required dbName=getMongoConfig().getDBName()){
 
-		var MongoDb = variables.mongo;
+		var MongoDb = VARIABLES.mongo;
 		
 		if(structKeyExists(MongoConfig,'auth') and len(MongoConfig.auth.username) and len(MongoConfig.auth.password)){
-			var MongoCredentials = createObject('java','java.util.ArrayList');
-			var MongoServers = createObject('java','java.util.ArrayList');
+		
+			var MongoCredentials = jLoader.create('java.util.ArrayList');
+			var MongoServers = jLoader.create('java.util.ArrayList');
+		
 			 for (var mongoServer in MongoConfig.servers){
 			 	MongoServers.add(mongoServer);
 			 	MongoCredentials.add(createCredential(MongoConfig.auth.username,structKeyExists(MongoConfig.auth,'db')?javacast('string',MongoConfig.auth.db):javacast('string','admin'),MongoConfig.auth.password.toCharArray()));
 			 }
+		
 			 MongoDb.init(MongoServers ,MongoCredentials, getMongoConfig().getMongoClientOptions() );
+		
 		} else {
-			MongoDb.init( variables.mongoConfig.getServers(), getMongoConfig().getMongoClientOptions() );
+			
+			MongoDb.init( VARIABLES.mongoConfig.getServers(), getMongoConfig().getMongoClientOptions() );
+		
 		}
 
-		return MongoDb.getDatabase(arguments.dbName);
+		return MongoDb.getDatabase(ARGUMENTS.dbName);
 
 	}
 
 	/**
 	* Gets a CFMongoDB DBCollection object, which wraps the java DBCollection
-	*/
+	**/
 	function getDBCollection( collectionName, dbName=getMongoConfig().getDBName() ){
 
-		if(!structkeyexists(variables.collections, dbName)) variables.collections[dbName]={};
+		if(!structkeyexists(VARIABLES.collections, dbName)) VARIABLES.collections[dbName]={};
 
-		if(!structKeyExists( variables.collections[dbName], collectionName ) ){
+		if(!structKeyExists( VARIABLES.collections[dbName], collectionName ) ){
 
 			//each collection receives their own connection
-			variables.collections[ dbName ][ collectionName ] = Wirebox.getInstance("MongoCollection@cbmongodb").init(getDb().getCollection(collectionName));
+			VARIABLES.collections[ dbName ][ collectionName ] = Wirebox.getInstance("MongoCollection@cbmongodb").init(getDb().getCollection(collectionName));
 			
 		}
 
-		return variables.collections[ dbName ][ collectionName ];
+		return VARIABLES.collections[ dbName ][ collectionName ];
 	}
 
 
 	private function createCredential(required string username,required string password, required authDB='admin'){
-		var MongoCredential = createObject("java",'com.mongodb.MongoCredential');
-		var credential = MongoCredential.createCredential(javacast('string',username),javacast('string',arguments.authDB),arguments.password.toCharArray());
+		var MongoCredential = jLoader.create('com.mongodb.MongoCredential');
+		var credential = MongoCredential.createCredential(javacast('string',username),javacast('string',ARGUMENTS.authDB),ARGUMENTS.password.toCharArray());
 		return credential;
 	}
 
 
 	private function initCollections(){
 		var dbName = getMongoConfig().getDBName();
-		variables.collections = { '#dbName#' = {} };
+		VARIABLES.collections = { '#dbName#' = {} };
 	}
 
 
@@ -113,7 +122,7 @@ component name="MongoClient" accessors=true singleton{
 	*  Adds a user to the database
 	*/
 	function addUser( string username, string password) {
-		getMongoDB( variables.mongoConfig ).addUser(arguments.username, arguments.password.toCharArray());
+		getMongoDB( VARIABLES.mongoConfig ).addUser(ARGUMENTS.username, ARGUMENTS.password.toCharArray());
 		return this;
 	}
 
@@ -121,7 +130,7 @@ component name="MongoClient" accessors=true singleton{
 	* Drops the database currently specified in MongoConfig
 	*/
 	function dropDatabase() {
-		variables.mongo.dropDatabase(variables.mongoConfig.getDBName());
+		VARIABLES.mongo.dropDatabase(VARIABLES.mongoConfig.getDBName());
 		return this;
 	}
 
@@ -139,7 +148,7 @@ component name="MongoClient" accessors=true singleton{
 	*/
 	function close(){
 		try{
-			variables.mongo.close();
+			VARIABLES.mongo.close();
 		}catch(any e){
 			//the error that this throws *appears* to be harmless.
 			writeLog("Error closing Mongo: " & e.message);
@@ -160,8 +169,8 @@ component name="MongoClient" accessors=true singleton{
 	* Decide whether to use the MongoConfig in the variables scope, the one being passed around as arguments, or create a new one
 	*/
 	function getMongoConfig(mongoConfig=""){
-		if(isSimpleValue(arguments.mongoConfig)){
-			mongoConfig = variables.mongoConfig;
+		if(isSimpleValue(ARGUMENTS.mongoConfig)){
+			mongoConfig = VARIABLES.mongoConfig;
 		}
 		return mongoConfig;
 	}
@@ -170,7 +179,7 @@ component name="MongoClient" accessors=true singleton{
 	 * Get the underlying Java driver's Mongo object
 	 */
 	function getMongo(){
-		return variables.mongo;
+		return VARIABLES.mongo;
 	}
 
 	/**

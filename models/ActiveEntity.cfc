@@ -58,7 +58,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	any function query(struct criteria=get_criteria(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
 		var results = this.getDBInstance().find(
 			criteria,
-			{"offset":arguments.offset,"limit":arguments.limit,"sort":arguments.sort}
+			{"offset":ARGUMENTS.offset,"limit":ARGUMENTS.limit,"sort":ARGUMENTS.sort}
 		);
 			
 		this.resetQuery();
@@ -82,13 +82,13 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 **/
 	any function save(required document,upsert=false,returnInstance=false){
 		
-		var doc = getDbInstance().save(arguments.document,arguments.upsert);
+		var doc = getDbInstance().save(ARGUMENTS.document,ARGUMENTS.upsert);
 		
-		if(arguments.upsert){
+		if(ARGUMENTS.upsert){
 			this.evict().load(doc);
 		}
 		
-		if(arguments.returnInstance){
+		if(ARGUMENTS.returnInstance){
 			return this;
 		}
 
@@ -112,13 +112,13 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 **/
 	any function create(returnInstance=false,required document=get_document()){
 
-		var doc = getDbInstance().insertOne(arguments.document);
+		var doc = getDbInstance().insertOne(ARGUMENTS.document);
 		
 		this.set_document(doc);
 		
 		this.set_id(doc['_id']);
 		
-		if(arguments.returnInstance) return this;
+		if(ARGUMENTS.returnInstance) return this;
 
 		return this.get_id().toString();
 	}
@@ -134,31 +134,31 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	any function where(string key,string operator='=',any value){
 		if(key == '_id'){
-			arguments.value = getMongoUtil().newObjectIdFromId(arguments.value);
+			ARGUMENTS.value = getMongoUtil().newObjectIdFromId(ARGUMENTS.value);
 		}
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
 			var criteria=this.get_criteria();
-			switch(arguments.operator){
+			switch(ARGUMENTS.operator){
 				case '!=':
 				case '<>':
-					variables._criteria[arguments.key]={"$ne"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$ne"=ARGUMENTS.value};
 					break;
 				case '>':
-					variables._criteria[arguments.key]={"$gt"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$gt"=ARGUMENTS.value};
 					break;
 				case '<':
-					variables._criteria[arguments.key]={"$lt"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$lt"=ARGUMENTS.value};
 					break;
 				case '>=':
-					variables._criteria[arguments.key]={"$gte"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$gte"=ARGUMENTS.value};
 					break;
 				case '<=':
-					variables._criteria[arguments.key]={"$lte"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$lte"=ARGUMENTS.value};
 					break;
 				default:
-					variables._criteria[arguments.key]=arguments.value;
+					VARIABLES._criteria[ARGUMENTS.key]=ARGUMENTS.value;
 					break;
 			}
 			this.criteria(criteria);
@@ -187,7 +187,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 **/
 	any function limit(numeric max){
 
-		this.set_limit(arguments.max);
+		this.set_limit(ARGUMENTS.max);
 
 		return this;
 	}
@@ -235,7 +235,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 			var results=this.mr();
 		}
 
-		if(arguments.asResult)
+		if(ARGUMENTS.asResult)
 			return results;
 
 		if(asCursor)
@@ -303,7 +303,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	/**************************** Cross Collection Queries ************************/
 
 	any function join(required collection){
-		this.setXCollection(arguments.collection);
+		this.setXCollection(ARGUMENTS.collection);
 		return this;
 	}
 
@@ -312,7 +312,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 			throw("The collection to be joined does not exist.  Please use the <strong>join(required collection)</strong> function to specify this collection before calling <strong>on()</strong>.");
 		
 		//TODO: this methodology needs to be adjusted so we can use this for many-to-many through relationship
-		var mapkey=getMetaData(this).name&arguments.key&this.getXCollection()&operator&arguments.xKey;
+		var mapkey=getMetaData(this).name&ARGUMENTS.key&this.getXCollection()&operator&ARGUMENTS.xKey;
 
 		if(this.loaded()){
 			mapkey=this.get_id()&mapkey;
@@ -347,7 +347,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		this.resetQuery();
 		this.set_id('');
 		for(var prop in get_map()){
-			this.set(prop,this.getPropertyDefault(variables._map[prop]));
+			this.set(prop,this.getPropertyDefault(VARIABLES._map[prop]));
 		}
 	}
 

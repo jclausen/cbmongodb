@@ -15,7 +15,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	* CBJavaloader
 	**/
 	property name="jLoader" inject="loader@cbjavaloader";
-	variables.conf = {};
+	VARIABLES.conf = {};
 
 
 	 /**
@@ -40,7 +40,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	 	}
 	 	if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
 
-		variables.conf = { dbname = dbName, servers = createObject("java",'java.util.ArrayList').init(), auth=auth};
+		VARIABLES.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};
 
 		var item = "";
 	 	for(item in hosts){
@@ -56,34 +56,34 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	 }
 
 	 public function addServer(serverName, serverPort){
-	 	var sa = createObject("java","com.mongodb.ServerAddress").init( serverName, serverPort );
-	 	variables.conf.servers.add( sa );
+	 	var sa = jLoader.create("com.mongodb.ServerAddress").init( serverName, serverPort );
+	 	VARIABLES.conf.servers.add( sa );
 		return this;
 	 }
 
 	 public function removeAllServers(){
-	 	variables.conf.servers.clear();
+	 	VARIABLES.conf.servers.clear();
 	 	return this;
 	 }
 
      public function establishHostInfo(){
 		// environment decisions can often be made from this information
 		var inetAddress = createObject( "java", "java.net.InetAddress");
-		variables.hostAddress = inetAddress.getLocalHost().getHostAddress();
-		variables.hostName = inetAddress.getLocalHost().getHostName();
+		VARIABLES.hostAddress = inetAddress.getLocalHost().getHostAddress();
+		VARIABLES.hostName = inetAddress.getLocalHost().getHostName();
 		return this;
 	}
 
 	function buildMongoClientOptions( struct mongoClientOptions ){
-		var builder = createObject("java","com.mongodb.MongoClientOptions$Builder");
+		var builder = jLoader.create("com.mongodb.MongoClientOptions$Builder");
 
 		for( var key in mongoClientOptions ){
 			var arg = mongoClientOptions[key];
 			evaluate("builder.#key#( arg )");
 		}
 
-		variables.conf.MongoClientOptions = builder.build();
-		return variables.conf.MongoClientOptions;
+		VARIABLES.conf.MongoClientOptions = builder.build();
+		return VARIABLES.conf.MongoClientOptions;
 	}
 
 	 /**

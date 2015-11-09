@@ -26,7 +26,7 @@ component name="MongoUtil" accessors=true singleton{
 		if(getMetadata( obj ).getCanonicalName() == "com.mongodb.CFBasicDBObject") return obj;
 		
 		if(isArray(obj)){
-			var list = createObject("java","java.util.ArrayList");
+			var list = jLoader.create("java.util.ArrayList");
 			for(var member in obj){
 				list.add(toMongo(member));
 			}
@@ -38,7 +38,7 @@ component name="MongoUtil" accessors=true singleton{
 
 	function toMongoDocument(data){
 		
-		var doc = createObject("java",'org.bson.Document');
+		var doc = jLoader.create('org.bson.Document');
 		doc.putAll(data);
 
 		if(!structIsEmpty(data)){
@@ -71,7 +71,7 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function newObjectIDFromID(String id){
 		if( !isSimpleValue( id ) ) return id;
-		return createObject("java","org.bson.types.ObjectId").init(id);
+		return jLoader.create("org.bson.types.ObjectId").init(id);
 	}
 
 	/**
@@ -88,7 +88,7 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function getDateFromDoc( doc ){
 		var ts = doc["_id"].getTime();
-		return createObject("java", "java.util.Date").init(ts);
+		return jLoader.create( "java.util.Date").init(ts);
 	}
 
 	/**
@@ -103,7 +103,7 @@ component name="MongoUtil" accessors=true singleton{
 	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
 	*/
 	function newDBObject(){
-		var dbo = createObject("java",'com.mongodb.BasicDBObject');	
+		var dbo = jLoader.create('com.mongodb.BasicDBObject');	
 		return dbo;
 	}
 
@@ -128,7 +128,7 @@ component name="MongoUtil" accessors=true singleton{
 			} else if(!isNumeric(dbo[i]) and isBoolean(dbo[i])) {
 				dbo[i]=javacast('boolean',dbo[i]);
 			} else if(isDate(dbo[i])){
-				var castDate = createObject('java','java.util.Date').init(dbo[i].getTime());
+				var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
 				dbo[i] = castDate;
 			} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
 				dbo[i] = javacast('null',0);
@@ -173,7 +173,7 @@ component name="MongoUtil" accessors=true singleton{
 	* Indexing Utilities
 	**/
 	function createIndexOptions(options){
-		var idxOptions = createObject("java","com.mongodb.client.model.IndexOptions");
+		var idxOptions = jLoader.create("com.mongodb.client.model.IndexOptions");
 
 		if(structKeyExists(options,'name')) idxOptions.name(options.name);
 		if(structKeyExists(options,'name')) idxOptions.sparse(options.sparse);

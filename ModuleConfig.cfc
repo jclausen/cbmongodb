@@ -78,6 +78,10 @@ component{
 		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
 		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
 		jLoader.appendPaths(modulePath & '/lib/');
+		//jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient');
+
+		// writeDump(var=jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient'),top=1);
+		// abort;
 	}
 
 	/**
