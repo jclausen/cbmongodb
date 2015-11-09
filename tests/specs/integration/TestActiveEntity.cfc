@@ -45,6 +45,9 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 						expect(model.reset().where('address.city','Timbuktu').find()).toBeComponent();
 						expect(model.reset().where('address.city','Timbuktu').find().loaded()).toBeFalse();
 						expect(model.reset().where('address.city',model.getTestDocument().address.city).find(false)).toBeStruct();
+						expect(model.reset().where('address.city',model.getTestDocument().address.city).find(asJSON=true)).toBeTypeOf('string');
+						expect(model.reset().where('address.city',model.getTestDocument().address.city).findAll()).toBeArray();
+						expect(model.reset().where('address.city',model.getTestDocument().address.city).findAll(asJSON=true)).toBeTypeOf('string');
 						expect(model.reset().where('address.city',model.getTestDocument().address.city).find()).toBeComponent();
 						expect(model.reset().where('address.city',model.getTestDocument().address.city).count()).toBe(1);
 						expect(model.reset().where('address.city',model.getTestDocument().address.city).exists()).toBeTrue();

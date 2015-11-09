@@ -209,16 +209,24 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 *
 	 * @chainable
 	 **/
-	any function find(returnInstance=true){
+	any function find(returnInstance=true,asJSON=false){
 		var results=this.limit(1).findAll();
 		if(arrayLen(results)){
 			this.entity(results[1]);
-			if(!returnInstance)
+			if(asJSON){
+				return serializeJSON(results[1]);
+			}
+			if(!returnInstance){
 				return results[1];
+			} 
 		} else if(!returnInstance){
 			return;
 		}
-		return this;
+		if(asJSON){
+			return;
+		} else {
+			return this;	
+		}
 	}
 
 
@@ -228,7 +236,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param boolean asCursor - whether to return the array as a Mongo cursor object (e.g. cursor.next())
 	 *
 	 **/
-	any function findAll(asCursor=false,asResult=false){
+	any function findAll(asCursor=false,asResult=false,asJSON=false){
 		if(isNull(this.getXCollection())){
 			var results=this.query();
 		} else {
@@ -240,6 +248,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 		if(asCursor)
 			return results.asCursor();
+
+		if(asJSON)
+			return results.asJSON();
 
 		return results.asArray();
 	}
