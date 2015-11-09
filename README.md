@@ -3,7 +3,25 @@ MongoDB Module for Coldbox
 ==========================
 CBMongoDB provides Active Record(ish) functionality for managing MongoDB documents and schema using a familiar syntax for CRUD operations and recordset processing and retrieval. 
 
-Compatibility: ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
+- <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
+- <strong>Module Version:</strong> 3.1.0.1 <em>(Release Date: 11/09/2015)</em>
+- <strong>Mongo Java Driver Version:</strong> 3.1.0
+- <strong>Release Notes:</strong>
+>> 1.  Removes Requirement For CFMongoDB Module
+>> 2.  Adds Requirement for CBJavaloader Module
+>> 3.  Implements MongoDB 3.0 Driver
+>> 4.  Implements the ability to use multiple databases
+>> 5.  Implements the ability to configure databases at the entity level
+>> 6.  Implements Native Collection Methods for the 3.0 MongoCollection
+>> 7.  Implements CFML [Aggregation](https://docs.mongodb.org/manual/aggregation/) methods while allowing direct access to native driver methods 
+>> 8.  Implements CFML [Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) methods
+>> 9.  Demonstrates 52% reduction in query execution and database operational functions from the previous version
+>> 10. Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)
+>> 11. Fixes issue with near() GEOSpatial operations on Polygon objects
+>> 12. Re-factors Test Suite to Require the Framework Context
+>> 13. Adds an asJSON argument to find() and findAll() entity queries
+>> 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
+
 
 Installation &amp; Configuration
 --------------------------------
@@ -54,21 +72,23 @@ MongoDB = {
 
 <small>*If using a connection which authenticates against an admin database, MongoDB will create your database if it doesn't exist automatically, so you can use any name you choose for your database (or collections) from the get-go.</small>
 
-4. Extend your models to use the Active Entity service
+4. Extend your models to use the Active Entity service, add your collection attribute and, optionally, a database attribute - if not specified, the database from your configuration will be used
+
+<em>
+In your component attributes, you will also need to specify the collection to be used.  For those coming from relational databases, for our purposes, a collection is equivalent to a table.
+
+Now all of our operations will be performed on the "peoplecollection" collection (which will created if it doesn't exist).
+</em>
+
 ```
-component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" accessors=true{
+component name="MyDocumentModel" extends="cbmongodb.models.ActiveEntity" collection="peoplecollection" database="MyNewDatabase" accessors=true{
 
 }
 ```
 
+
 Usage
----------
-In your model, you will need to specify the collection to be used.  For those coming from relational databases, for our purposes, a collection is equivalent to a table.
-```
-property name="collection" default="peoplecollection";
-```	
-Now all of our operations will be performed on the "peoplecollection" collection (which will created if it doesn't exist).
-	
+---------	
 CBMongoDB will inspect your model properties to create your default document schema.  All you need to do is add `schema=true` to your property and it will be included with the default document.  You can either use a dot notation in the property name field for nested documents (infinite recursion) or specify `parent="myParentProperty"` (single-level recursion).  For example a contact property might be:
 ```
 /**Schema Properties**/
@@ -162,7 +182,7 @@ for(var peep in people){
 }
 ```
 
-Here's where we diverge from RDBMS:  MongoDB has a thing called a "cursor" on multiple record sets.  It is also extremely fast (with some limitations) and, if you're going be returning a large number of documents, is the way to go.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
+Here's where we diverge from RDBMS:  MongoDB uses a "cursor" on multiple record sets.  It is extremely fast (with some limitations) and, if you're going be looping through a large number of documents, is the way to go. Because of the way the cursor is designed, it doesn't actually start executing queries on the database until the first time a record is requested.  If we use the "asCursor" argument in find_all([boolean asCursor]), we recevie the cursor back:
 
 ```
 var people = this.reset().find_all(true);  //or find_all(asCursor=true), if you're feeling verbose	
@@ -192,6 +212,101 @@ var noDoes = this.reset().where('last_name','Doe').delete();
 ```
 
 That's basic CRUD functionality.  Read the API documentation for details on the individual functions and arguments.
+
+Aggregation
+-----------
+
+[Aggregation](https://docs.mongodb.org/manual/aggregation/) of your results allows you to filter, calculate new values and group them in a result set.
+
+CBMongoDB has suppoort for the aggregation methods of $group, $match, $projection (along with $sort) in its Collection object.
+
+Here's an example, using our people collection.  In this case we want to return a query that returns the number of people, by Zip Code, in Grand Rapids, Michigan.  Our aggregation query would be assembled like so:
+
+
+```
+//We'll need our db collection object for this operation
+var Collection = people.getDBInstance();
+
+//Match Grand Rapids, Michigan
+var agMatch={"city":"Grand Rapids","state":"Michigan"};
+
+//Create the group parameters for our results.  Note the self-referential use of "$" before postalcode
+var agGroup={"_id":"$postalcode","count":{"$sum":1}};
+//Sort those records ascending
+var agSort={"_id":1};
+var aggregation = Collection.aggregate(
+	criteria=agMatch,
+	group=agGroup,
+	sort=agSort
+);
+
+```
+
+This would return a result in which the result array (represented as JSON below), would look like:
+
+```
+[
+	{
+		"_id":49503,
+		"count":25
+	},
+	{
+		"_id":49506,
+		"count":15
+	},
+	{
+		"_id":49512,
+		"count":1
+	}
+]
+```
+
+
+For more information on Aggregation functionality see the API docs for the module and view [Mongo's Documentation](https://docs.mongodb.org/manual/aggregation/).
+
+Map-Reduce
+----------
+
+[Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) functionality expands aggregation by allowing you uto use javascript to return customized results. 
+
+Using the people collection, again, let's perform the same aggregation function  using Map-Reduce:
+
+```
+//We'll need our db collection object again
+var Collection = people.getDBInstance();
+//Define our mapping function, which emits the records we will reduce
+var map="
+	function(){
+		if(this.city === 'Grand Rapids' && this.state === 'Michigan') emit(this._id,this.iteration)
+	}
+";
+
+//Define our reduction of those mapped records, which duplicates our aggregation functionality and key names
+var reduce = "
+	function(key,iterations){
+	    var groupedZipCodes = [];
+		for (var i in iterations){
+			var existing = groupZipCodes.find(function (d) {
+			    return d.postalcode === iterations[i].postalcode;
+			});
+			if(typeof(existing === 'undefined')){
+				groupedZipCodes.push({"_id":iterations[i].postalcode,"count":1});	
+			} else {
+				//we can modify this by reference
+				existing.count++;
+			}
+		} 
+		return groupedZipCodes;
+	}
+";
+
+//Finally Run our query, which will produce the same result as aggregate()
+var reduction = Collection.mapReduce(map,reduce);
+```
+
+For more information on how to use Map-Reduce, see [Mongo's documentation examples](https://docs.mongodb.org/manual/tutorial/map-reduce-examples/).
+
+
 
 Geospatial Functions
 --------------------
@@ -255,10 +370,17 @@ nearby_peeps=some_person
 
 Currently all of the MongoDB supported core spatial functions are represented, including `intersects()` so feel free to browse the many free data sets on GitHub and play around.
 
+Advanced Usage
+-------------
+
+1. Explore the API Documentation by navigating, from the webroot of your Coldbox App, to [index.cfm - which you may need if you're not using SES]/cbmongodb/docs
+2. All of the driver native methods are available through the collection object, as well as is direct access to the driver collection object.  For more information, [check out the Mongo Driver Documentation](http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/).
+
+
 Issues
 --------------
 
-***NULL* support:** At the present time, in order to maintain compatibility for ACF, the conventions of this module assume a lack of full null support.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. 
+***NULL* support:** At the present time, in order to maintain compatibility for ACF, the conventions of this module assume a lack of full null support.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. The option for full null support is planned in a future patch.
 
 Issues with the module may be [posted here](https://github.com/jclausen/cbmongodb).
 
