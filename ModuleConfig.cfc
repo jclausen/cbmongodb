@@ -126,7 +126,7 @@ component{
 		var MongoDBSettings		= oConfig.getPropertyMixin( "MongoDB", "variables", {} );
 
 		
-		//backward compatibility
+		//check if a config has been misplaced within the custom settings structure
 		if(structIsEmpty(MongoDbSettings) and structKeyExists(configStruct,"MongoDB")){
 			MongoDBSettings = duplicate(configStruct.MongoDB);
 		}		
@@ -153,7 +153,6 @@ component{
 
 		// Incorporate settings
 		structAppend( configStruct.MongoDB, MongoDBSettings, true );
-
 
 		VARIABLES.MongoDBConfig = configStruct.MongoDB;
 
