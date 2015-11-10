@@ -35,19 +35,30 @@ component{
 	* CBMongoDB Module Registration
 	*/
 	function configure(){
+		//Retrieve our module settings
+		parseParentSettings();
+
 		// Layout Settings
 		layoutSettings = {noLayout:true};
-		// SES Routes
-		routes = [
-			// Module Entry Point
-			{ pattern="/", handler="home", action="index" },
-			// Convention Route
-			{ pattern="/:handler/:action?" }
-		];
 
-		variables.MongoDrivers = [modulePath & '/lib/mongo-java-driver-3.1.0.jar',modulePath & '/lib/mongodb-driver-core-3.0.4.jar',modulePath & '/lib/mongodb-driver-async-3.0.4.jar'];
-		
-		parseParentSettings();
+		// SES Routes
+		if(VARIABLES.MongoDBConfig.permitDocs || VARIABLES.MongoDBConfig.permitTests){
+			routes = [
+				// Module Entry Point
+				{ pattern="/", handler="Docs", action="index" },
+				// Convention Route
+				{ pattern="/:handler/:action?" }
+			];	
+		}
+
+		// if(VARIABLES.MongoDBConfig.permitAPI){
+		// 	routes = [
+		// 		// Module Entry Point
+		// 		{ pattern="/api/", handler="api.v1.GenericMongoAPI", action="index" },
+		// 		// Convention Route
+		// 		{ pattern="/:collection/:action?/:_id?" }
+		// 	];	
+		// }
 
 
 		/**	
@@ -110,8 +121,19 @@ component{
 	* Prepare settings for MongoDB Connections.
 	*/
 	private function parseParentSettings(){
+		var oConfig 			= controller.getSetting( "ColdBoxConfig" );
+		var configStruct 		= controller.getConfigSettings();
+		var MongoDBSettings		= oConfig.getPropertyMixin( "MongoDB", "variables", {} );
+
+		
+		//backward compatibility
+		if(structIsEmpty(MongoDbSettings) and structKeyExists(configStruct,"MongoDB")){
+			MongoDBSettings = duplicate(configStruct.MongoDB);
+		}		
+			
 		//default config struct
 		configStruct.MongoDB = {
+			//The default hosts
 			hosts		= [
 							{
 								serverName='127.0.0.1',
@@ -119,13 +141,19 @@ component{
 							}
 							
 						  ],
+			//The default database
 			db 	= "test",
-			viewTimeout	= "1000"
+			//whether to permit viewing of the API documentation
+			permitDocs = true,
+			//whether to permit unit tests to run
+			permitTests = true,
+			//whether to permit generic API access (future implementation)
+			permitAPI = true,
 		};
-		var oConfig 			= controller.getSetting( "MongoDb" );
-		
+
 		// Incorporate settings
-		structAppend( configStruct.MongoDB, oConfig, true );
+		structAppend( configStruct.MongoDB, MongoDBSettings, true );
+
 
 		VARIABLES.MongoDBConfig = configStruct.MongoDB;
 
