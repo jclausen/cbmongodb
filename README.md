@@ -24,6 +24,8 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 13. Adds an asJSON argument to find() and findAll() entity queries
 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
 
+- <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
+
 
 Installation &amp; Configuration
 --------------------------------
@@ -31,20 +33,27 @@ Installation &amp; Configuration
 1. [Install MongoDB](http://docs.mongodb.org/manual/installation/) and start up an instance of `mongod` or sign up for a free account with a third party DB service like [MongoLab](https://mongolab.com/plans/)
 2. Create a Coldbox application ( `box install coldbox && box coldbox create app` ) or use an existing one
 3. With [CommmandBox](http://www.ortussolutions.com/products/commandbox) just type `box install cbmongodb` from the root of your project.
-4. Add your settings (with your own config) within the settings struct config/Coldbox.cfc*
+4. Add your settings (with your own config) to config/Coldbox.cfc
 
 **Localhost Example Without Authentication**
 	
 ```
 MongoDB = {
+	//an array of servers to connect to
 	hosts= [
 	{
 		serverName='127.0.0.1',
 		serverPort='27017'
 	}
   ],
+  	//The default database to connect to
 	db 	= "mydbname",
-	viewTimeout	= "1000"
+	//whether to permit viewing of the API documentation
+	permitDocs = true,
+	//whether to permit unit tests to run
+	permitTests = true,
+	//whether to permit API access to the Generic API (future implementation)
+	permitAPI = true
 };
 ```
 
@@ -52,23 +61,31 @@ MongoDB = {
 
 **Connection with Authentication Example**
 
-<small>*Note that some third-party providers (e.g. [MongoLab](https://mongolab.com/plans/)) use the connnection database as the authentication database.  Nine times out of ten, however, the `authenticationDB` value will be &quot;admin&quot;. If you omit that host key, the connection will default to &quot;admin&quot;.*</small>
+<small><strong>NOTE:</strong> Some third-party providers (e.g. [MongoLab](https://mongolab.com/plans/)) use the connnection database as the authentication database.  Nine times out of ten, however, the `authenticationDB` value will be &quot;admin&quot;. If you omit that host key, the connection will default to &quot;admin&quot;.*</small>
 	
 ```
 MongoDB = {
+	//an array of servers to connect to
 	hosts= [
 
 	{
 		serverName='ds012345.mongolab.com',
 		serverPort='12345',
+		//Note that auth credentials are required for the first server only.  All other instances assume duplicate credentials
 		username="myUsername",
 		password="my53cUr3P455",
 		authenticationDB="myremotedb"
 	}
 	
   ],
+  	//The default database to connect to
 	db 	= "mydbname",
-	viewTimeout	= "1000"
+	//whether to permit viewing of the API documentation
+	permitDocs = true,
+	//whether to permit unit tests to run
+	permitTests = true,
+	//whether to permit generic API
+	permitAPI = true
 };
 ```
 
@@ -139,12 +156,12 @@ Once we've created the document, it automatically becomes the Active Entity.
 var isLoaded=person.loaded(); //will return true	
 ```
 
-There is a special `_id` value that is created by MongoDB when the document is inserted.  This can serve as your "primary key" (e.g. - when you query for it directly, Mongo is really, really fast):
+There is a special `_id` value that is created by MongoDB when the document is inserted.  This serves as your "primary key" provides the unique identifier for the document (when you query for it directly, Mongo is really, really fast):
 ```
 var pkey=person.get_id();
 ```
 
-or you can add human readable unique values (tags/slugs) and index them:
+You may add human readable unique values (tags/slugs) and index them:
 ```
 property name="tag" schema=true index=true unique=true;
 ```
@@ -173,7 +190,7 @@ structDelete(newperson,'_id');
 newperson = this.reset().populate(newperson).set('first_name','Jane').set('last_name','Doe').create();
 ```
 
-Now we can find our multiple records - which will return an array (Note: I probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
+Now we can find our multiple records - which will return an array (Note: We probably don't need to use reset(), but it's a good practice to clear any active query criteria from previous queries)
 
 ```
 var people = this.reset().findAll();	
@@ -194,7 +211,7 @@ while(people.hasNext()){
 }
 ```	
 
-Lastly, let's clean up our test documents.  The `delete()` function allows a boolean of "truncate" which defaults to FALSE. If you set this argument to true, without a loaded record or existing criteria, it will delete all documents from the collection.  In this case, we're just going to delete our records one at a time, using our cursor:
+Lastly, let's clean up our test documents.  *The `delete()` function allows a boolean argument of "truncate" which defaults to FALSE. If you set this argument to true, without a loaded record or existing criteria, it will delete all documents from the collection.*  In this case, we're just going to delete our records one at a time, using our cursor:
 
 ```
 var people = this.reset().findAll(true);
@@ -208,6 +225,7 @@ while(people.hasNext()){
 ```
 
 Optionally, you could delete all records matching a given criteria using a where() clause:
+
 ```
 var noDoes = this.reset().where('last_name','Doe').delete();
 ```
@@ -327,7 +345,7 @@ component name="States" extends="cbmongodb.models.GEOEntity" accessors=true{
 	/**Schema Properties**/
 	property name="name" schema=true index=true validate="string";
 	property name="abbr" schema=true index=true validate="string";
-	property name="geometry" schema=true index="true" validate="array" geo=true geotype="MultiPolygon";
+	property name="geometry" schema=true index=true validate="array" geo=true geotype="MultiPolygon";
 }
 ```
 
@@ -347,16 +365,18 @@ The create() returns our _id value, so let's load up our entity:
 ```
 michigan = states.get(michigan);
 ```
-First we'll find all of the people in michigan:
+First we'll find all of the people in Michigan:
 ```
 people=michigan.within('geometry','Person.address.location').findAll(); 
 ```
-Note that "michigan" is still loaded, but once we call the near/far spatial operator, the instance returned is the "far" entity.  Any where() clauses before or after the spatial comparison method will be exectuted on the far entity. The above might return a large recordset so let's restrict that a bit.  (We'll use our spatial query to prevent loading folks from Grand Rapids, Minnesota):
+Note that "michigan" is still the loaded entity, but once we call the near/far spatial operator, the instance being returned after the operator is the "far" entity.  Any where() clauses before or after the spatial comparison method will be exectuted on the far entity. The above might return a large recordset so let's restrict that a bit.  (We'll use our spatial query to prevent loading folks from Grand Rapids, Minnesota):
+
 ```
 GRPeeps=michigan.where('address.city','Grand Rapids').within('geometry','People.address.location').findAll();
 ```
 
 Now let's looks at those some of those people returned.  In this case we'll take our first person and see all of the other people within a 10 mile radius.
+
 ```
 somePerson=GRPeeps[1];
 nearbyPeeps=somePerson
@@ -389,7 +409,7 @@ Issues with the module may be [posted here](https://github.com/jclausen/cbmongod
 Getting Involved
 ----------------
 
-Fork -- Commit -- Request a pull, either to the upstream project or to this one (upstream changes are merged weekly). For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/) would be peachy.
+Fork -- Commit -- Request a pull, contributions are welcome. For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/) would be peachy.  Feel free to add issues or feature suggestions as they arise in your development. 
 
 ------------------------------------------------------------
 
