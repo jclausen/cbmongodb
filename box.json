@@ -27,7 +27,7 @@
 		"runner" : ['tests/runner.cfm']
 	},
 	"dependencies" 	:{
-		"cfjavaloader" : "1.0.0"
+		"cbjavaloader" : "1.0.0"
 	},
 	"devdependencies" : {
 		"testbox" : ">2.0"		
