@@ -136,11 +136,16 @@ component{
 			//The default hosts
 			hosts		= [
 							{
-								serverName='127.0.0.1',
-								serverPort='27017',
+								serverName:'127.0.0.1',
+								serverPort:'27017',
 							}
 							
 						  ],
+			//the default client options
+			clientOptions = {
+				//The connection timeout in ms (if omitted, the timeout is 30000ms)
+				"connectTimeout":2000
+			},
 			//The default database
 			db 	= "test",
 			//whether to permit viewing of the API documentation
