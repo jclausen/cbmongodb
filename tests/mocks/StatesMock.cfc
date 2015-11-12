@@ -1,4 +1,4 @@
-component name="StatesMock" extends="cbmongodb.models.GEOEntity" collection="states" database="cbmongodb_unit_tests" accessors=true{
+component name="StatesMock" extends="cbmongodb.models.GEOEntity" collection="states" database="cbmongo_unit_tests" accessors=true{
 	property name="test_document" default="";
 	/**Schema Properties**/
 	property name="name" schema=true index=true validate="string";

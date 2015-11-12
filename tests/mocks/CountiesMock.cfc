@@ -1,4 +1,4 @@
-component name="CountiesMock" extends="cbmongodb.models.GEOEntity" database="cbmongodb_unit_tests" accessors=true{
+component name="CountiesMock" extends="cbmongodb.models.GEOEntity" database="cbmongo_unit_tests" accessors=true{
 	/**
 	* Leave our collection property in place to ensure backward compatibility
 	* @deprecated
