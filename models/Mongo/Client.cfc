@@ -76,21 +76,21 @@ component name="MongoClient" accessors=true singleton{
 	**/
 	private function connect(required dbName=getMongoConfig().getDBName()){
 
+		var MongoConfigSettings = MongoConfig.getDefaults();
 		//Ensure only a single connection to each database
 		if(structKeyExists(VARIABLES.databases,arguments.dbName)) return VARIABLES.databases[arguments.dbName];
-
 
 		//New database connections
 		var MongoDb = VARIABLES.mongo;
 		
-		if(structKeyExists(MongoConfig,'auth') and len(MongoConfig.auth.username) and len(MongoConfig.auth.password)){
+		if(structKeyExists(MongoConfigSettings,'auth') and len(MongoConfigSettings.auth.username) and len(MongoConfigSettings.auth.password)){
 		
 			var MongoCredentials = jLoader.create('java.util.ArrayList');
 			var MongoServers = jLoader.create('java.util.ArrayList');
 		
-			 for (var mongoServer in MongoConfig.servers){
+			 for (var mongoServer in MongoConfigSettings.servers){
 			 	MongoServers.add(mongoServer);
-			 	MongoCredentials.add(createCredential(MongoConfig.auth.username,structKeyExists(MongoConfig.auth,'db')?javacast('string',MongoConfig.auth.db):javacast('string','admin'),MongoConfig.auth.password.toCharArray()));
+			 	MongoCredentials.add(createCredential(MongoConfigSettings.auth.username,structKeyExists(MongoConfigSettings.auth,'db')?javacast('string',MongoConfigSettings.auth.db):javacast('string','admin'),MongoConfigSettings.auth.password.toCharArray()));
 			 }
 		
 			 MongoDb.init(MongoServers ,MongoCredentials, getMongoConfig().getMongoClientOptions() );
@@ -125,7 +125,7 @@ component name="MongoClient" accessors=true singleton{
 
 	private function createCredential(required string username,required string password, required authDB='admin'){
 		var MongoCredential = jLoader.create('com.mongodb.MongoCredential');
-		var credential = MongoCredential.createCredential(javacast('string',username),javacast('string',ARGUMENTS.authDB),ARGUMENTS.password.toCharArray());
+		var credential = MongoCredential.createScramSha1Credential(javacast('string',username),javacast('string',ARGUMENTS.authDB),ARGUMENTS.password.toCharArray());
 		return credential;
 	}
 
