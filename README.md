@@ -4,7 +4,7 @@ MongoDB Module for Coldbox
 CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo 3.0 Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.1.0.1 <em>(Release Date: 11/09/2015)</em>
+- <strong>Module Version:</strong> 3.1.0.2 <em>(Release Date: 11/09/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
 
@@ -59,7 +59,7 @@ MongoDB = {
 
 
 
-**Connection with Authentication Example**
+**Advanced Connections with Authentication Example**
 
 <small><strong>NOTE:</strong> Some third-party providers (e.g. [MongoLab](https://mongolab.com/plans/)) use the connnection database as the authentication database.  Nine times out of ten, however, the `authenticationDB` value will be &quot;admin&quot;. If you omit that host key, the connection will default to &quot;admin&quot;.*</small>
 	
@@ -68,16 +68,22 @@ MongoDB = {
 	//an array of servers to connect to
 	hosts= [
 
-	{
-		serverName='ds012345.mongolab.com',
-		serverPort='12345',
-		//Note that auth credentials are required for the first server only.  All other instances assume duplicate credentials
-		username="myUsername",
-		password="my53cUr3P455",
-		authenticationDB="myremotedb"
-	}
-	
-  ],
+		{
+			serverName='ds012345.mongolab.com',
+			serverPort='12345',
+			//Note that auth credentials are required for the first server only.  All other instances assume duplicate credentials
+			username="myUsername",
+			password="my53cUr3P455",
+			authenticationDB="myremotedb"
+		}
+		
+	  ],
+  	//the default client options
+	clientOptions = {
+		//The connection timeout in ms (if omitted, the timeout is 30000ms)
+		"connectTimeout":2000
+	},
+
   	//The default database to connect to
 	db 	= "mydbname",
 	//whether to permit viewing of the API documentation
@@ -90,6 +96,8 @@ MongoDB = {
 ```
 
 <small>*If using a connection which authenticates against an admin database, MongoDB will create your database if it doesn't exist automatically, so you can use any name you choose for your database (or collections) from the get-go.</small>
+
+<small><strong>Client Options:</strong> Advanced connection options may be specified, including `readPreference` and `writeConcern`.  See the [MongoClientOptions Builder](http://api.mongodb.org/java/current/com/mongodb/MongoClientOptions.Builder.html) documentation for details on available options. <em>If an option is specified which is not available, the Config object will throw an error.</em></small>
 
 4. Extend your models to use the Active Entity service, add your collection attribute and, optionally, a database attribute - if not specified, the database from your configuration will be used
 
