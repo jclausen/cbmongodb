@@ -79,7 +79,21 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 
 		for( var key in mongoClientOptions ){
 			var arg = mongoClientOptions[key];
-			evaluate("builder.#key#( arg )");
+			try{
+			
+				evaluate("builder.#key#( arg )");
+			
+			} catch (any e){
+
+				throw (message="The Mongo Client option #key# could not be found.  Please verify your clientOptions settings contain only valid MongoClientOptions settings: http://api.mongodb.org/java/current/com/mongodb/MongoClientOptions.Builder.html");
+			
+			}
+			
+		}
+
+		//Set our server selection timeout to our connect timeout if it's not specified - this prevents auth failures from taking 30000ms to return the error
+		if(!structKeyExists(mongoClientOptions,'serverSelectionTimeout')){
+			builder.serverSelectionTimeout(structKeyExists(mongoClientOptions,'connectTimeout')?mongoClientOptions.connectTimeout:3000);
 		}
 
 		VARIABLES.conf.MongoClientOptions = builder.build();

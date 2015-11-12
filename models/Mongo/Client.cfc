@@ -77,6 +77,7 @@ component name="MongoClient" accessors=true singleton{
 	private function connect(required dbName=getMongoConfig().getDBName()){
 
 		var MongoConfigSettings = MongoConfig.getDefaults();
+
 		//Ensure only a single connection to each database
 		if(structKeyExists(VARIABLES.databases,arguments.dbName)) return VARIABLES.databases[arguments.dbName];
 
@@ -89,11 +90,10 @@ component name="MongoClient" accessors=true singleton{
 			var MongoServers = jLoader.create('java.util.ArrayList');
 		
 			 for (var mongoServer in MongoConfigSettings.servers){
-			 	MongoServers.add(mongoServer);
-			 	MongoCredentials.add(createCredential(MongoConfigSettings.auth.username,structKeyExists(MongoConfigSettings.auth,'db')?javacast('string',MongoConfigSettings.auth.db):javacast('string','admin'),MongoConfigSettings.auth.password.toCharArray()));
+			 	MongoCredentials.add(createCredential(MongoConfigSettings.auth.username,MongoConfigSettings.auth.password,structKeyExists(MongoConfigSettings.auth,'db')?MongoConfigSettings.auth.db:'admin'));
 			 }
 		
-			 MongoDb.init(MongoServers ,MongoCredentials, getMongoConfig().getMongoClientOptions() );
+			 MongoDb.init(MongoConfig.getServers(),MongoCredentials, getMongoConfig().getMongoClientOptions() );
 		
 		} else {
 			
@@ -124,8 +124,10 @@ component name="MongoClient" accessors=true singleton{
 
 
 	private function createCredential(required string username,required string password, required authDB='admin'){
+		
 		var MongoCredential = jLoader.create('com.mongodb.MongoCredential');
-		var credential = MongoCredential.createScramSha1Credential(javacast('string',username),javacast('string',ARGUMENTS.authDB),ARGUMENTS.password.toCharArray());
+
+		var credential = MongoCredential.createCredential(javacast('string',username),javacast('string',ARGUMENTS.authDB),ARGUMENTS.password.toCharArray());
 		return credential;
 	}
 
