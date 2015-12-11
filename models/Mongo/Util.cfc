@@ -128,6 +128,7 @@ component name="MongoUtil" accessors=true singleton{
 			} else if(!isNumeric(dbo[i]) and isBoolean(dbo[i])) {
 				dbo[i]=javacast('boolean',dbo[i]);
 			} else if(isDate(dbo[i])){
+				dbo[i] = parseDateTime(dbo[i]);
 				var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
 				dbo[i] = castDate;
 			} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
