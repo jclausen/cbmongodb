@@ -59,8 +59,6 @@ component name="MongoClient" accessors=true singleton{
 		//Read Preference Configuration
 		VARIABLES.ReadPreference = jLoader.create("com.mongodb.ReadPreference");
 
-
-
 		//Prepare our default database connection
 		initDatabases();
 
@@ -101,12 +99,15 @@ component name="MongoClient" accessors=true singleton{
 		
 		}
 
-		return MongoDb.getDatabase(ARGUMENTS.dbName);
+		var connection = MongoDb.getDatabase(ARGUMENTS.dbName);
+		VARIABLES.databases[arguments.dbName]=connection;
+		
+		return connection;
 
 	}
 
 	/**
-	* Gets a CFMongoDB DBCollection object, which wraps the java DBCollection
+	* Gets a CBMongoDB DBCollection object, which wraps the java DBCollection
 	**/
 	function getDBCollection( collectionName, dbName=getMongoConfig().getDBName() ){
 
@@ -135,8 +136,6 @@ component name="MongoClient" accessors=true singleton{
 	private function initDatabases(){
 		var dbName = getMongoConfig().getDbName();
 		VARIABLES.databases = {};
-		//initialize our default connection;
-		connect(dbName)
 	}
 
 	private function initCollections(){
@@ -174,10 +173,7 @@ component name="MongoClient" accessors=true singleton{
 	  NOTE: If you do not close your mongo object, you WILL leak connections!
 	*/
 	function close(){
-
-		for (var db in getDatabases()){
-			VARIABLES.databases[db].close();
-		}
+		VARIABLES.mongo.close();
 		return this;
 	}
 

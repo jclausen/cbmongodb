@@ -110,12 +110,19 @@ component{
 	/**
 	* CBMongoDB Module Activation - Fires when the module is loaded
 	*/
-	function onLoad(){}
+	function onLoad(){
+		//jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient');
+
+		// writeDump(var=jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient'),top=1);
+		// abort;
+	}
 
 	/**
 	* CBMongoDB Module Deactivation - Fired when the module is unloaded
 	*/
-	function onUnload(){}
+	function onUnload(){
+		Wirebox.getInstance("MongoClient@cbmongodb").close();
+	}
 
 	/**
 	* Prepare settings for MongoDB Connections.
