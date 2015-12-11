@@ -23,7 +23,7 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function toMongo(any obj){
 
-		if(getMetadata( obj ).getCanonicalName() == "com.mongodb.CFBasicDBObject") return obj;
+		if(getMetaData(obj).name !== 'lucee.runtime.type.StructImpl' && getMetadata( obj ).getCanonicalName() == "com.mongodb.CFBasicDBObject") return obj;
 		
 		if(isArray(obj)){
 			var list = jLoader.create("java.util.ArrayList");
