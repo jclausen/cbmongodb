@@ -60,7 +60,15 @@ component{
 		// 	];	
 		// }
 
-
+		//ensure cbjavaloader is an activated module
+		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
+			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
+		}
+		
+		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
+		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
+		jLoader.appendPaths(modulePath & '/lib/');
+	 	
 		/**	
 		* Utility Classes
 		**/
@@ -102,15 +110,7 @@ component{
 	/**
 	* CBMongoDB Module Activation - Fires when the module is loaded
 	*/
-	function onLoad(){
-		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
-		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
-		jLoader.appendPaths(modulePath & '/lib/');
-		//jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient');
-
-		// writeDump(var=jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient'),top=1);
-		// abort;
-	}
+	function onLoad(){}
 
 	/**
 	* CBMongoDB Module Deactivation - Fired when the module is unloaded
