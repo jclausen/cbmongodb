@@ -110,7 +110,7 @@ component name="MongoCollection" accessors=true {
 
 		if(results.hasNext()){
 	
-			return results.next();
+			return getMongoUtil().toCF(results.next());
 	
 		} else {
 	
@@ -170,7 +170,7 @@ component name="MongoCollection" accessors=true {
 		//FIXME: Not currently operational - casting issue?
 		//var distinct = getDBCollection().distinct(ARGUMENTS.fieldName,toMongo(ARGUMENTS.criteria));
 		
-		return getDbCollection().distinct(argumentCollection=arguments);
+		return getMongoUtil().toCF(getDbCollection().distinct(argumentCollection=arguments));
 	}
 
 	
@@ -228,7 +228,7 @@ component name="MongoCollection" accessors=true {
 
 		getDbCollection().insertMany(mongoDocs);
 
-		return mongoDocs;
+		return getMongoUtil().toCF(mongoDocs);
 	}
 
 	/**
@@ -315,7 +315,7 @@ component name="MongoCollection" accessors=true {
 		var updateOptions = jLoader.create('com.mongodb.client.model.FindOneAndUpdateOptions');
 		updateOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
 
-		return getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation),updateOptions);
+		return getMongoUtil().toCF(getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation),updateOptions));
 
 	}
 	
