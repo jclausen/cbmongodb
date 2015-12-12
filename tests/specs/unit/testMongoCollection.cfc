@@ -22,6 +22,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 				describe("Tests Collection Insert Methods",function(){
 					it("tests insertMany()",function(){
 						var bulkInsert = variables.Collection.insertMany(duplicate(testDocs));
+						expect(bulkInsert).toBeArray();
 						variables.bulkInsert = bulkInsert;
 						expect(arrayLen(bulkInsert)).toBe(1000);
 						expect(bulkInsert[1]).toHaveKey('_id');
@@ -29,6 +30,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 					});
 					it("tests insertOne()",function(){
 						var singleInsert = variables.Collection.insertOne(testDocs[1]);
+						expect(singleInsert).toBeStruct();
 						expect(singleInsert).toHaveKey('_id');
 						expect(variables.Collection.count()).toBe(1001);
 					});
@@ -37,6 +39,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 					});
 					it("tests save() method with upsert",function(){
 						var upsertInsert = variables.Collection.save(testDocs[2],true);
+						expect(upsertInsert).toBeStruct();
 						expect(upsertInsert).toHaveKey("_id");
 						expect(upsertInsert).toHaveKey("date");
 						expect(isDate(upsertInsert['date'])).toBeTrue();
