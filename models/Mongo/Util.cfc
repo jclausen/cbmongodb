@@ -52,17 +52,20 @@ component name="MongoUtil" accessors=true singleton{
 	* Converts a Mongo DBObject to a ColdFusion structure
 	*/
 	function toCF(BasicDBObject){
+		//if we're in a loop iteration and the array item is simple, return it
+		if(isSimpleValue(BasicDBObject)) return BasicDbObject;
+
 		if(isArray(BasicDBObject)){
-			var cfObj = []
-			for(var obj in BasicDBObjectj){
+			var cfObj = [];
+			for(var obj in BasicDBObject){
 				arrayAppend(cfObj,toCF(obj))
 			}
 		} else {
-
 			var cfObj = {};
 			cfObj.putAll(BasicDBObject);
-		
+			if(structKeyExists(cfObj,'_id') and !isSimpleValue(cfObj['_id'])) cfObj['_id'] = cfObj['_id'].toString();
 		}
+
 		return cfObj;
 	}
 
