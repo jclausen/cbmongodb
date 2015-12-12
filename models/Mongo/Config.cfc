@@ -10,7 +10,7 @@
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 * 
 */
-component accessors="true" output="false" hint="Main configuration for MongoDB Connections"{
+component accessors=true output="false" hint="Main configuration for MongoDB Connections"{
 	/**
 	* CBJavaloader
 	**/
