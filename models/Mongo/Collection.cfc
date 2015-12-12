@@ -312,7 +312,10 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function findOneAndUpdate(required criteria,required operation){
 
-		return getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation));
+		var updateOptions = jLoader.create('com.mongodb.client.model.FindOneAndUpdateOptions');
+		updateOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
+
+		return getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation),updateOptions);
 
 	}
 	
@@ -330,8 +333,11 @@ component name="MongoCollection" accessors=true {
 		var search = utils.toMongo(ARGUMENTS.criteria);
 
 		var update = utils.toMongoDocument(ARGUMENTS.document);
+
+		var replaceOptions = jLoader.create('com.mongodb.client.model.FindOneAndReplaceOptions');
+		replaceOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
 		
-		return this.getDBCollection().findOneAndReplace(search,update);
+		return this.getDBCollection().findOneAndReplace(search,update,replaceOptions);
 
 	}
 
