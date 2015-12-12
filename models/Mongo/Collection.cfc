@@ -266,7 +266,7 @@ component name="MongoCollection" accessors=true {
 			var doc=findOneAndReplace(criteria,ARGUMENTS.document);	
 		}
 
-		return getMongoUtil.toCF(doc);
+		return getMongoUtil().toCF(doc);
 
 	}
 
