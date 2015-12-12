@@ -9,7 +9,7 @@
 * @attribute string database 		The database to connect to.  If omitted, the database specified in the hosts config will be used. NOTE:Authentication credentials must match the server-level auth config.
 * @attribute string collection 		The name of the collection that the entity should map to
 */
-component name="BaseDocumentService"  accessors="true" database="test" collection="default"{
+component name="BaseDocumentService" database="test" collection="default" accessors=true{
 	/**
 	 * Injected Properties
 	 **/
@@ -91,7 +91,7 @@ component name="BaseDocumentService"  accessors="true" database="test" collectio
 		if(structKeyExists(meta,'collection')){
 			this.collectionName = trim(meta.collection);
 		} else if(structKeyExists(VARIABLES,'collection')) {
-			this.collectionName = getCollection();
+			this.collectionName = VARIABLES.collection;
 		} else {
 			throw('Could not connect to MongoDB.  No Collection property or component attribute exists.');
 		}
@@ -101,13 +101,16 @@ component name="BaseDocumentService"  accessors="true" database="test" collectio
 		* @deprecated
 		**/
 		setCollection(this.collectionName);
+
+
 		/**
 		* 
 		*  Make sure our injected properties exist
 		**/
+
 		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
 			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
-		} else if(isNull(getWirebox) and structKeyExists(application,'cbController')){
+		} else if(isNull(getWirebox()) and structKeyExists(application,'cbController')){
 			appplication.cbController.getWirebox().autowire(this);
 		} else {
 			throw('Wirebox IOC Injection is required to use this service');
@@ -118,7 +121,7 @@ component name="BaseDocumentService"  accessors="true" database="test" collectio
 
 		//Connect to Mongo
 		this.setDb(this.getMongoClient());
-		
+
 		//If we have a database attribute
 		if(structKeyExists(meta,'database')){
 			this.setDbInstance(this.getDb().getDBCollection( this.collectionName, trim(meta.database) ));
@@ -143,38 +146,45 @@ component name="BaseDocumentService"  accessors="true" database="test" collectio
 	any function detect(){
 
 		var properties=getMetaData(this).properties;
-		
+
 		for(var prop in properties){
 			
 			if(structKeyExists(prop,'schema') and prop.schema){
-				//add the property to your our map
-				structAppend(this.get_map(),{prop.name=prop},true);
-				
-				if(structKeyExists(prop,"parent")){
+				try {
+
+					//add the property to your our map
+					structAppend(this.get_map(),{prop.name=prop},true);
 					
-					//Test for doubling up on our parent attribute and dot notation
-					var prop_name=listToArray(prop.name,'.');
-					if(prop_name[1] EQ prop.parent){
-						throw('IllegalAttributeException: The parent attribute &quot;'&prop.parent&'&quot; has been been duplicated in <strong>'&getMetaData(this).name&'</strong>. Use either dot notation for your property name or specify a parent attribute.')
+					if(structKeyExists(prop,"parent")){
+						
+						//Test for doubling up on our parent attribute and dot notation
+						var prop_name=listToArray(prop.name,'.');
+						if(prop_name[1] EQ prop.parent){
+							throw('IllegalAttributeException: The parent attribute &quot;'&prop.parent&'&quot; has been been duplicated in <strong>'&getMetaData(this).name&'</strong>. Use either dot notation for your property name or specify a parent attribute.')
+						}
+						//TODO: add upstream introspection to handle infinite nesting
+						this.set(prop.parent&'.'&prop.name,this.getPropertyDefault(prop));
+					
+					} else {
+						
+						this.set(prop.name,this.getPropertyDefault(prop));
+
 					}
-					//TODO: add upstream introspection to handle infinite nesting
-					this.set(prop.parent&'.'&prop.name,this.getPropertyDefault(prop));
-				
-				} else {
-					
-					this.set(prop.name,this.getPropertyDefault(prop));
 
-				}
+					//test for index values
+					if(structKeyExists(prop,'index')){
+						//FIXME: Turning off for now
+						this.applyIndex(prop,properties);
+					}
 
-				//test for index values
-				if(structKeyExists(prop,'index')){
-					//FIXME: Turning off for now
-					this.applyIndex(prop,properties);
+				} catch (any error){
+					throw("An error ocurred while attempting to instantiate #meta.name#.  The cause of the exception was #error.message#");	
 				}
 
 			}
 
 		}
+
 		this.set_default_document(structCopy(this.get_document()));
 	}
 
