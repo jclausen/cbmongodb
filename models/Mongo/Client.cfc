@@ -136,6 +136,8 @@ component name="MongoClient" accessors=true singleton{
 	private function initDatabases(){
 		var dbName = getMongoConfig().getDbName();
 		VARIABLES.databases = {};
+		//create our defautlt connection;
+		connect(dbName);
 	}
 
 	private function initCollections(){
