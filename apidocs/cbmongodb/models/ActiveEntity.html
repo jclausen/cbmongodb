@@ -836,7 +836,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#find()">find</A></strong>([any returnInstance='true'])
+			<strong><a href="ActiveEntity.html#find()">find</A></strong>([any returnInstance='true'], [any asJSON='false'])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find one record and return the query.
@@ -851,7 +851,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#findAll()">findAll</A></strong>([any asCursor='false'], [any asResult='false'])
+			<strong><a href="ActiveEntity.html#findAll()">findAll</A></strong>([any asCursor='false'], [any asResult='false'], [any asJSON='false'])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find all records matching the current query params.
@@ -884,8 +884,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#get_keys()">get_keys</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
-			
 		</td>
 	</tr>
 	
@@ -898,8 +896,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<td>
 			<strong><a href="ActiveEntity.html#get_limit()">get_limit</A></strong>()
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
 			
 		</td>
 	</tr>
@@ -914,8 +910,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#get_offset()">get_offset</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
-			
 		</td>
 	</tr>
 	
@@ -929,8 +923,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#get_operators()">get_operators</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
-			
 		</td>
 	</tr>
 	
@@ -943,8 +935,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<td>
 			<strong><a href="ActiveEntity.html#get_sort()">get_sort</A></strong>()
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
 			
 		</td>
 	</tr>
@@ -1161,8 +1151,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#set_keys()">set_keys</A></strong>(any _keys)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
-			
 		</td>
 	</tr>
 	
@@ -1175,8 +1163,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<td>
 			<strong><a href="ActiveEntity.html#set_limit()">set_limit</A></strong>(any _limit)
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -1191,8 +1177,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#set_offset()">set_offset</A></strong>(any _offset)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
-			
 		</td>
 	</tr>
 	
@@ -1206,8 +1190,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#set_operators()">set_operators</A></strong>(any _operators)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
-			
 		</td>
 	</tr>
 	
@@ -1220,8 +1202,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<td>
 			<strong><a href="ActiveEntity.html#set_sort()">set_sort</A></strong>(any _sort)
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -2434,7 +2414,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<a name="find()"><!-- --></a>
 	<h3>find</h3>
 	
-	<kbd>public any <strong>find</strong>([any returnInstance='true'])</kbd>
+	<kbd>public any <strong>find</strong>([any returnInstance='true'], [any asJSON='false'])</kbd>
 	
 	<br><br>
 
@@ -2456,6 +2436,8 @@ we'll need to pass our active entity document objects rather than as comparisons
 		
 		<dd><code>returnInstance</code></dd>
 		
+		<dd><code>asJSON</code></dd>
+		
 		</dl>
 	
 
@@ -2468,7 +2450,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<a name="findAll()"><!-- --></a>
 	<h3>findAll</h3>
 	
-	<kbd>public any <strong>findAll</strong>([any asCursor='false'], [any asResult='false'])</kbd>
+	<kbd>public any <strong>findAll</strong>([any asCursor='false'], [any asResult='false'], [any asJSON='false'])</kbd>
 	
 	<br><br>
 
@@ -2491,6 +2473,8 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dd><code>asCursor</code></dd>
 		
 		<dd><code>asResult</code></dd>
+		
+		<dd><code>asJSON</code></dd>
 		
 		</dl>
 	
@@ -2536,8 +2520,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>get: </p>
-	
 
 	
 		
@@ -2562,8 +2544,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	
 	<br><br>
 
-	
-		<p>get: </p>
 	
 
 	
@@ -2590,8 +2570,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>get: </p>
-	
 
 	
 		
@@ -2617,8 +2595,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>get: </p>
-	
 
 	
 		
@@ -2643,8 +2619,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	
 	<br><br>
 
-	
-		<p>get: </p>
 	
 
 	
@@ -3122,8 +3096,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>set: </p>
-	
 
 	
 		
@@ -3155,8 +3127,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	
 	<br><br>
 
-	
-		<p>set: </p>
 	
 
 	
@@ -3190,8 +3160,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>set: </p>
-	
 
 	
 		
@@ -3224,8 +3192,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>set: </p>
-	
 
 	
 		
@@ -3257,8 +3223,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	
 	<br><br>
 
-	
-		<p>set: </p>
 	
 
 	

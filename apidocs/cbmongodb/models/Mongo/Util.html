@@ -469,7 +469,7 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Util.html#asArray()">asArray</A></strong>([any dbResult], [any stringify='false'])
+			<strong><a href="Util.html#asArray()">asArray</A></strong>([any dbResult])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the results of a dbResult object as an array of documents.
@@ -599,8 +599,6 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 			<strong><a href="Util.html#getMongoConfig()">getMongoConfig</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
-			
 		</td>
 	</tr>
 	
@@ -613,8 +611,6 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		<td>
 			<strong><a href="Util.html#getNullSupport()">getNullSupport</A></strong>()
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: .
 			
 		</td>
 	</tr>
@@ -630,6 +626,19 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether this doc is an instance of a CFMongoDB CFBasicDBObject.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="Util.html#isObjectIdString()">isObjectIdString</A></strong>(any sId)
+			<br>
 			
 		</td>
 	</tr>
@@ -717,8 +726,6 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 			<strong><a href="Util.html#setMongoConfig()">setMongoConfig</A></strong>(any MongoConfig)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
-			
 		</td>
 	</tr>
 	
@@ -731,8 +738,6 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		<td>
 			<strong><a href="Util.html#setNullSupport()">setNullSupport</A></strong>(any NullSupport)
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: .
 			
 		</td>
 	</tr>
@@ -975,7 +980,7 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 	<a name="asArray()"><!-- --></a>
 	<h3>asArray</h3>
 	
-	<kbd>public any <strong>asArray</strong>([any dbResult], [any stringify='false'])</kbd>
+	<kbd>public any <strong>asArray</strong>([any dbResult])</kbd>
 	
 	<br><br>
 
@@ -996,8 +1001,6 @@ The utility methods used to assist in correct typing of objects passed to the Mo
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>dbResult</code></dd>
-		
-		<dd><code>stringify</code></dd>
 		
 		</dl>
 	
@@ -1281,8 +1284,6 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	<br><br>
 
 	
-		<p>get: </p>
-	
 
 	
 		
@@ -1307,8 +1308,6 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	
 	<br><br>
 
-	
-		<p>get: </p>
 	
 
 	
@@ -1351,6 +1350,38 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>doc</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="isObjectIdString()"><!-- --></a>
+	<h3>isObjectIdString</h3>
+	
+	<kbd>public any <strong>isObjectIdString</strong>(any sId)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>sId</code></dd>
 		
 		</dl>
 	
@@ -1530,8 +1561,6 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	<br><br>
 
 	
-		<p>set: </p>
-	
 
 	
 		
@@ -1563,8 +1592,6 @@ createOrderedDBObject( [ {"mapreduce"="tasks"}, {"map"=map}, {"reduce"=reduce} ]
 	
 	<br><br>
 
-	
-		<p>set: </p>
 	
 
 	
