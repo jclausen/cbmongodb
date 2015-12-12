@@ -51,6 +51,7 @@ component{
 			];	
 		}
 
+		//Future Implementation:
 		// if(VARIABLES.MongoDBConfig.permitAPI){
 		// 	routes = [
 		// 		// Module Entry Point
@@ -59,7 +60,12 @@ component{
 		// 		{ pattern="/:collection/:action?/:_id?" }
 		// 	];	
 		// }
+	}
 
+	/**
+	* CBMongoDB Module Activation - Fires when the module is loaded
+	*/
+	function onLoad(){
 		//ensure cbjavaloader is an activated module
 		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
 			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
@@ -104,17 +110,6 @@ component{
 		binder.map("People@CBMongoTestMocks").to("cbmongodb.tests.mocks.ActiveEntityMock");
 		binder.map("Counties@CBMongoTestMocks").to("cbmongodb.tests.mocks.CountiesMock");
 		binder.map("States@CBMongoTestMocks").to("cbmongodb.tests.mocks.StatesMock");
-
-	}
-
-	/**
-	* CBMongoDB Module Activation - Fires when the module is loaded
-	*/
-	function onLoad(){
-		//jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient');
-
-		// writeDump(var=jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient'),top=1);
-		// abort;
 	}
 
 	/**
