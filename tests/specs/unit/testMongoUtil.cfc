@@ -51,7 +51,8 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 						var dbResult = variables.activeCollection.find();
 						var encapsulation = MongoUtil.encapsulateDBResult(dbResult);
 						expect(encapsulation.asArray()).toBeArray();
-						expect(getMetadata(encapsulation.asArray()[1]['_id']).getCanonicalName()).toBe('org.bson.types.ObjectId')
+						//test our auto-stringification of the _id value
+						expect(encapsulation.asArray()[1]['_id']).toBeString()
 						expect(arrayLen(encapsulation.asArray())).toBe(5);
 						expect(getMetadata(encapsulation.asCursor()).getCanonicalName()).toBe("com.mongodb.MongoBatchCursorAdapter");
 						expect(encapsulation.asCursor().hasNext()).toBeTrue();
@@ -59,9 +60,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 						expect(next).toHaveKey("one");
 						expect(next).toHaveKey("two");
 						expect(next).toHaveKey("three");
-						//test our stringification of the _id value
-						expect(getMetadata(encapsulation.asArray(true)[1]['_id']).getCanonicalName()).toBe('java.lang.String');
-
+						
 						expect(isJSON(encapsulation.asJSON())).toBeTrue();
 						expect(deSerializeJSON(encapsulation.asJSON())).toBeArray();
 					});

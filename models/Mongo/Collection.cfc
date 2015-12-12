@@ -110,7 +110,7 @@ component name="MongoCollection" accessors=true {
 
 		if(results.hasNext()){
 	
-			return results.next();
+			return getMongoUtil().toCF(results.next());
 	
 		} else {
 	
@@ -170,7 +170,7 @@ component name="MongoCollection" accessors=true {
 		//FIXME: Not currently operational - casting issue?
 		//var distinct = getDBCollection().distinct(ARGUMENTS.fieldName,toMongo(ARGUMENTS.criteria));
 		
-		return getDbCollection().distinct(argumentCollection=arguments);
+		return getMongoUtil().toCF(getDbCollection().distinct(argumentCollection=arguments));
 	}
 
 	
@@ -207,7 +207,7 @@ component name="MongoCollection" accessors=true {
 		//our doc is updated by reference
 		getDBCollection().insertOne( doc );
 		
-		return doc;
+		return getMongoUtil().toCF(doc);
 
 	}
 
@@ -228,7 +228,7 @@ component name="MongoCollection" accessors=true {
 
 		getDbCollection().insertMany(mongoDocs);
 
-		return mongoDocs;
+		return getMongoUtil().toCF(mongoDocs);
 	}
 
 	/**
@@ -266,7 +266,7 @@ component name="MongoCollection" accessors=true {
 			var doc=findOneAndReplace(criteria,ARGUMENTS.document);	
 		}
 
-		return doc;
+		return getMongoUtil().toCF(doc);
 
 	}
 
@@ -278,7 +278,7 @@ component name="MongoCollection" accessors=true {
 	* @param document 				The document which replaces the queried object
 	**/
 	public function replaceOne(required criteria,required document){
-		return findOneAndReplace(argumentCollection=arguments);
+		return getMongoUtil().toCF(findOneAndReplace(argumentCollection=arguments));
 	}
 
 	/**
@@ -289,7 +289,7 @@ component name="MongoCollection" accessors=true {
 	* @param operation				The operational struct object which updates the queried object
 	**/
 	public function updateOne(required criteria,required operation){
-		return findOneandUpdate(argumentCollection=arguments);
+		return getMongoUtil().toCF(findOneandUpdate(argumentCollection=arguments));
 	}
 
 	/**
@@ -312,7 +312,10 @@ component name="MongoCollection" accessors=true {
 	**/
 	public function findOneAndUpdate(required criteria,required operation){
 
-		return getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation));
+		var updateOptions = jLoader.create('com.mongodb.client.model.FindOneAndUpdateOptions');
+		updateOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
+
+		return getMongoUtil().toCF(getDBCollection().findOneAndUpdate(toMongo(ARGUMENTS.criteria),toMongo(operation),updateOptions));
 
 	}
 	
@@ -330,8 +333,11 @@ component name="MongoCollection" accessors=true {
 		var search = utils.toMongo(ARGUMENTS.criteria);
 
 		var update = utils.toMongoDocument(ARGUMENTS.document);
+
+		var replaceOptions = jLoader.create('com.mongodb.client.model.FindOneAndReplaceOptions');
+		replaceOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
 		
-		return this.getDBCollection().findOneAndReplace(search,update);
+		return getMongoUtil().toCF(this.getDBCollection().findOneAndReplace(search,update,replaceOptions));
 
 	}
 

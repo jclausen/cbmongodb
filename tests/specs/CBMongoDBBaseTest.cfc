@@ -25,6 +25,5 @@ component name="CBMongoDBBaseTest" extends="testbox.system.BaseSpec"{
           People.getDbInstance().drop();
           States.getDbInstance().drop();
           Counties.getDbInstance().drop(); 
-		  MongoClient.close();
 	}
 }

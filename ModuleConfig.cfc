@@ -17,7 +17,7 @@ component{
 	this.webURL 			= "http://https://github.com/jclausen/cbmongodb";
 	this.description 		= "Coldbox SDK and Virtual Entity Service for MongoDB";
 	// Our version changes with the driver version used, only the patch is updated without a full driver updated
-	this.version			= "3.1.0.2";
+	this.version			= "3.1.0.3";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= false;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -51,6 +51,7 @@ component{
 			];	
 		}
 
+		//Future Implementation:
 		// if(VARIABLES.MongoDBConfig.permitAPI){
 		// 	routes = [
 		// 		// Module Entry Point
@@ -59,8 +60,21 @@ component{
 		// 		{ pattern="/:collection/:action?/:_id?" }
 		// 	];	
 		// }
+	}
 
-
+	/**
+	* CBMongoDB Module Activation - Fires when the module is loaded
+	*/
+	function onLoad(){
+		//ensure cbjavaloader is an activated module
+		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
+			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
+		}
+		
+		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
+		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
+		jLoader.appendPaths(modulePath & '/lib/');
+	 	
 		/**	
 		* Utility Classes
 		**/
@@ -96,26 +110,14 @@ component{
 		binder.map("People@CBMongoTestMocks").to("cbmongodb.tests.mocks.ActiveEntityMock");
 		binder.map("Counties@CBMongoTestMocks").to("cbmongodb.tests.mocks.CountiesMock");
 		binder.map("States@CBMongoTestMocks").to("cbmongodb.tests.mocks.StatesMock");
-
-	}
-
-	/**
-	* CBMongoDB Module Activation - Fires when the module is loaded
-	*/
-	function onLoad(){
-		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
-		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
-		jLoader.appendPaths(modulePath & '/lib/');
-		//jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient');
-
-		// writeDump(var=jLoader.getURLClassLoader().loadClass('com.mongodb.MongoClient'),top=1);
-		// abort;
 	}
 
 	/**
 	* CBMongoDB Module Deactivation - Fired when the module is unloaded
 	*/
-	function onUnload(){}
+	function onUnload(){
+		Wirebox.getInstance("MongoClient@cbmongodb").close();
+	}
 
 	/**
 	* Prepare settings for MongoDB Connections.

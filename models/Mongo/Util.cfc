@@ -23,7 +23,7 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function toMongo(any obj){
 
-		if(getMetadata( obj ).getCanonicalName() == "com.mongodb.CFBasicDBObject") return obj;
+		if(getMetaData(obj).name !== 'lucee.runtime.type.StructImpl' && getMetadata( obj ).getCanonicalName() == "com.mongodb.CFBasicDBObject") return obj;
 		
 		if(isArray(obj)){
 			var list = jLoader.create("java.util.ArrayList");
@@ -52,17 +52,25 @@ component name="MongoUtil" accessors=true singleton{
 	* Converts a Mongo DBObject to a ColdFusion structure
 	*/
 	function toCF(BasicDBObject){
+		if(isNull(BasicDBObject)) return;
+		//if we're in a loop iteration and the array item is simple, return it
+		if(isSimpleValue(BasicDBObject)) return BasicDbObject;
+
 		if(isArray(BasicDBObject)){
-			var cfObj = []
-			for(var obj in BasicDBObjectj){
+			var cfObj = [];
+			for(var obj in BasicDBObject){
 				arrayAppend(cfObj,toCF(obj))
 			}
 		} else {
-
 			var cfObj = {};
 			cfObj.putAll(BasicDBObject);
-		
 		}
+
+		//auto-stringify _id 
+		if(isStruct(cfObj) && structKeyExists(cfObj,'_id') && !isSimpleValue(cfObj['_id'])){
+			cfObj['_id'] = cfObj['_id'].toString();
+		} 
+
 		return cfObj;
 	}
 
@@ -98,6 +106,19 @@ component name="MongoUtil" accessors=true singleton{
 		return NOT isSimpleValue( doc ) AND getMetadata( doc ).getCanonicalName() eq "com.mongodb.CFBasicDBObject";
 	}
 
+	function isObjectIdString(required sId){
+
+		return (
+			isSimpleValue(sId) 
+			&& 
+			!isNumeric(sId)
+			&&
+			left(trim(sId),1) != '$'
+			&&
+			arrayLen(sId.getBytes("UTF-8")) == 24
+		);
+	}
+
 
 	/**
 	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
@@ -121,17 +142,24 @@ component name="MongoUtil" accessors=true singleton{
 	function ensureTyping(required dbo){
 
 		for(var i in dbo){
-			if(isArray(dbo[i])){
-				ensureTypesInArray(dbo[i]);
-			} else if(isStruct(dbo[i])){
-				ensureTyping(dbo[i]);
-			} else if(!isNumeric(dbo[i]) and isBoolean(dbo[i])) {
-				dbo[i]=javacast('boolean',dbo[i]);
-			} else if(isDate(dbo[i])){
-				var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
-				dbo[i] = castDate;
+			if(!isNull(dbo[i])){
+				if(isArray(dbo[i])){
+					ensureTypesInArray(dbo[i]);
+				} else if(isStruct(dbo[i])){
+					ensureTyping(dbo[i]);
+				} else if(!isNumeric(dbo[i]) and isBoolean(dbo[i])) {
+					dbo[i]=javacast('boolean',dbo[i]);
+				} else if(isDate(dbo[i])){
+					dbo[i] = parseDateTime(dbo[i]);
+					var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
+					dbo[i] = castDate;
+				} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
+					dbo[i] = javacast('null',0);
+				} else if (i == '_id' && isObjectIdString(dbo[i])){
+					dbo[i] = newObjectIDFromID(dbo[i]);
+				}	
 			} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
-				dbo[i] = javacast('null',0);
+				dbo[i] = javacast('null',0);				
 			}
 		}
 	}
@@ -156,17 +184,14 @@ component name="MongoUtil" accessors=true singleton{
 	/**
 	* Returns the results of a dbResult object as an array of documents
 	**/
-	function asArray(dbResult,stringify=false){
+	function asArray(dbResult){
 		var aResults = [];
 		var cursor = dbResult.iterator();
 		while(cursor.hasNext()){
 			var nextResult = cursor.next();
-			//TODO:  Add conversion function to recurse the document and convert all BSON ID's
-			if(stringify) nextResult['_id']=nextResult['_id'].toString();
-
 			arrayAppend(aResults,nextResult);
 		}
-		return aResults;
+		return toCF(aResults);
 	}
 
 	/**
