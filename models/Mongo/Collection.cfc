@@ -207,7 +207,7 @@ component name="MongoCollection" accessors=true {
 		//our doc is updated by reference
 		getDBCollection().insertOne( doc );
 		
-		return doc;
+		return getMongoUtil().toCF(doc);
 
 	}
 
@@ -266,7 +266,7 @@ component name="MongoCollection" accessors=true {
 			var doc=findOneAndReplace(criteria,ARGUMENTS.document);	
 		}
 
-		return doc;
+		return getMongoUtil.toCF(doc);
 
 	}
 
@@ -278,7 +278,7 @@ component name="MongoCollection" accessors=true {
 	* @param document 				The document which replaces the queried object
 	**/
 	public function replaceOne(required criteria,required document){
-		return findOneAndReplace(argumentCollection=arguments);
+		return getMongoUtil().toCF(findOneAndReplace(argumentCollection=arguments));
 	}
 
 	/**
@@ -289,7 +289,7 @@ component name="MongoCollection" accessors=true {
 	* @param operation				The operational struct object which updates the queried object
 	**/
 	public function updateOne(required criteria,required operation){
-		return findOneandUpdate(argumentCollection=arguments);
+		return getMongoUtil().toCF(findOneandUpdate(argumentCollection=arguments));
 	}
 
 	/**
@@ -337,7 +337,7 @@ component name="MongoCollection" accessors=true {
 		var replaceOptions = jLoader.create('com.mongodb.client.model.FindOneAndReplaceOptions');
 		replaceOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
 		
-		return this.getDBCollection().findOneAndReplace(search,update,replaceOptions);
+		return getMongoUtil().toCF(this.getDBCollection().findOneAndReplace(search,update,replaceOptions));
 
 	}
 
