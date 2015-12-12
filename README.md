@@ -4,10 +4,13 @@ MongoDB Module for Coldbox
 CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo 3.0 Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.1.0.2 <em>(Release Date: 11/09/2015)</em>
+- <strong>Module Version:</strong> 3.1.0.3 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
 
+
+Major Release v3.1.0:
+----------------------------
 
 1.  Removes Requirement For CFMongoDB Module
 2.  Adds Requirement for CBJavaloader Module
@@ -23,6 +26,16 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 12. Re-factors Test Suite to Require the Framework Context
 13. Adds an asJSON argument to find() and findAll() entity queries
 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
+
+Patch v3.1.0.3:
+--------------
+
+1. Fixes issue with connections not being pooled accurately and adds connection closing to module unload
+2. Moves module bindings to onLoad() to ensure availability of cbjavaloader module
+3. Changes return type of all single record retrievals inserts and updates to native structs and adds auto-stringification of _id (eliminates the need for toString())
+4. Ensures version of returned object from findOneAndUpdate/findOneAndReplace operations is the after-save version
+
+
 
 - <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
 
