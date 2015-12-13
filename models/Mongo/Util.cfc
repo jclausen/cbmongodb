@@ -203,7 +203,7 @@ component name="MongoUtil" accessors=true singleton{
 		var idxOptions = jLoader.create("com.mongodb.client.model.IndexOptions");
 
 		if(structKeyExists(options,'name')) idxOptions.name(options.name);
-		if(structKeyExists(options,'name')) idxOptions.sparse(options.sparse);
+		if(structKeyExists(options,'sparse')) idxOptions.sparse(options.sparse);
 		if(structKeyExists(options,'background')) idxOptions.background(options.background);
 		if(structKeyExists(options,'unique')) idxOptions.unique(options.unique);
 		
