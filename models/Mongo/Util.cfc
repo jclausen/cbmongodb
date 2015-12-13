@@ -12,7 +12,8 @@
 */
 component name="MongoUtil" accessors=true singleton{
 	property name="MongoConfig" inject="MongoConfig@cbmongodb";
-	property name="NullSupport" default=false;/**
+	property name="NullSupport" default=false;
+	/**
 	* 
 	* CBJavaloader
 	**/
@@ -78,7 +79,8 @@ component name="MongoUtil" accessors=true singleton{
 	* Convenience for turning a string _id into a Mongo ObjectId object
 	*/
 	function newObjectIDFromID(String id){
-		if( !isSimpleValue( id ) ) return id;
+		if( !isSimpleValue( id ) || !jLoader.create("org.bson.types.ObjectId").isValid(id)) return id;
+
 		return jLoader.create("org.bson.types.ObjectId").init(id);
 	}
 
