@@ -312,6 +312,52 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	/**
+	* Appends to an existing array schema property
+	**/
+	any function append(required string key, required any value){
+		var doc = this.get_document();
+		var sget="doc";
+		var nest=listToArray(key,'.');
+
+		for(var i=1;i LT arrayLen(nest);i=i+1){
+		  sget=sget&'.'&nest[i];
+		}
+
+		var nested=structGet(sget);
+	
+		if(!isArray(nested[nest[arrayLen(nest)]]))
+			throw("Schema field #key# is not a valid array.");
+
+		arrayAppend(nested[nest[arrayLen(nest)]],value);
+
+		this.entity(this.get_document());
+		return this;
+	}
+
+	/**
+	* Prepends to an existing array property
+	**/
+	any function prepend(required string key, required any value){
+		var doc = this.get_document();
+		var sget="doc";
+		var nest=listToArray(key,'.');
+
+		for(var i=1;i LT arrayLen(nest);i=i+1){
+		  sget=sget&'.'&nest[i];
+		}
+
+		var nested=structGet(sget);
+	
+		if(!isArray(nested[nest[arrayLen(nest)]]))
+			throw("Schema field #key# is not a valid array.");
+
+		arrayPrepend(nested[nest[arrayLen(nest)]],value);
+
+		this.entity(this.get_document());
+		return this;
+	}
+
+	/**
 	 * Alias for get()
 	 **/
 	any function load(required _id,returnInstance=true){
