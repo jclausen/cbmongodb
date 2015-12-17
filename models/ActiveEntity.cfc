@@ -300,8 +300,143 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		return deleted;
 	 }
 
+	 /****************************** Validation Methods *******************************/
+	 /**
+	 * The core validation function for the loaded or populated entity
+	 **/
+	 boolean function isValid(){
+	 	//reset our validation
+	 	set_validation(newValidation());
+	 	
+	 	var modelMap = this.get_map();
+	 	var doc = this.get_document();
+	 	
+	 	for(var mapkey in modelMap){
+	 		var mapping = modelMap[mapkey];
+			//recurse
+			var keyArray = listToArray(mapkey,'.');
 
-	 /******************************Status Methods *******************************/
+			//must be in schema 		
+	 		if(isNull(this.locate(mapkey))) {
+	 			createValidationError(mapping,"missing");
+	 			continue;
+	 		}
+
+	 		var fieldValue = this.locate(mapkey);
+
+	 		//field is required
+	 		if(structKeyExists(mapping,"required") && mapping.required && isSimpleValue(fieldValue) && !len(fieldValue)){
+	 			createValidationError(mapping,"required",fieldValue);
+	 			continue;
+	 		}
+
+	 		//field matches validation type
+	 		if(structKeyExists(mapping,"validation") && !fieldIsValid(fieldValue,mapping)){
+	 			createValidationError(mapping,"validation",fieldValue);
+	 			continue;
+	 		}
+
+	 		//field is unique
+	 		if(structKeyExists(mapping,"unique") && mapping.unique){
+	 			var uniqueCriteria = {"#mapkey#":fieldValue};
+	 			
+	 			if(this.loaded()) uniqueCriteria["_id"] = {"$ne":this.get_id()};
+	 			
+	 			if(!javacast('boolean',getDbInstance().count(uniqueCriteria))){
+	 				createValidationError(mapping,"unique",fieldValue);
+	 				continue;
+	 			}
+
+	 		}
+
+	 		return get_validation().success;
+	 	}
+
+	 }
+
+	 /**
+	 * Checks whether a field meets its validation requirement
+	 * @param any fieldValue		The value of the field
+	 * @param struct mapping		The mapping key for this field
+	 **/
+	 boolean function fieldIsValid(required fieldValue,required mapping){
+	 	// return true if no validation parameters are specified
+	 	if(!structKeyExists(arguments.mapping,'validation')) return true;
+
+	 	//use the native isValid method, which will provide the descriptive error if our validation attribute is not a CFML type
+	 	return isValid(arguments.mapping.validation,arguments.fieldValue);
+
+	 }
+
+	 /**
+	 * Creates a standardized format validation error
+	 * @param struct mapping		The mapping key for this field
+	 * @param string errorType		The error type to append to the validation errors array
+	 * @param any [fieldValue]		The value of the field, if any
+	 **/
+	 void function createValidationError(required mapping,required string errorType="validation",any fieldValue){
+	 	var validations = get_validation();
+	 	validations.success=false;
+	 	var error = {
+	 		"type":arguments.errorType,
+	 		"fieldName":mapping.name,
+	 		"mapping":mapping
+	 	}
+	 	switch(arguments.errorType){
+	 		case "missing":
+	 			error["message"] = "Missing document field #mapping.name#";
+	 			error["description"] = "The #mapping.name# field is missing from the document.";
+	 			break;
+	 		case "validation":
+	 			error["message"] = "Invalid field value for property #mapping.name#";
+	 			error["description"] = "Property #mapping.name# failed validation for type #mapping.validation#";
+	 			break;
+	 		case "unique":
+	 			error["message"] = "The value of #mapping.name# is not unique";
+	 			error["description"] = "The value #fieldValue# for property #mapping.name# failed validation because the field value must be unique.";
+	 			break;
+	 		case "required":
+	 			error["message"] = "Field #mapping.name# is required";
+	 			error["description"] = "#mapping.name# is a required field";
+	 			break;
+
+	 		default:
+	 			error["message"] = "An unknown validation error occurred for property #mapping.name#";
+	 			error["description"] = "";
+	 	}
+
+	 	arrayAppend(validations.errors,error);
+	 }
+
+	 /**
+	 * Returns the results of the validation
+	 * @return null if validation has not been run on the entity | struct if validation has processed
+	 **/
+	 any function getValidationResults(){
+	 	return get_validation();
+	 }
+
+	 /**
+	 * Returns the array of validation errors or null if validation has not been run on the entity
+	 **/
+	 any function getValidationErrors(){
+	 	if(!isNull(get_validation()) && structKeyExists(get_validation(),'errors')){
+	 		return get_validation().errors;
+	 	}
+	 }
+
+	 /**
+	 * Returns the standardized validations structure
+	 **/
+	 struct function newValidation(){
+	 	return {
+
+	 		"success":true,
+	 		"errors":[]
+	 	};
+	 }
+
+	 /****************************** Status Methods *******************************/
 
 	 boolean function loaded(){
 	 	 return (!isNull(this.get_id()) and structKeyExists(this.get_document(),'_id'));
@@ -333,6 +468,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 			'map'=hash(mapkey)
 		};
 	}
+
 
 
 
