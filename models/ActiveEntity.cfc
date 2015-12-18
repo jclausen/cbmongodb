@@ -485,7 +485,10 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	any function scopeEntity(doc){
 		for(var record in doc){
-			variables[record]=doc[record];
+			//ensure nulls are not handled
+			if(!isNull(doc[record])){
+				variables[record]=doc[record];
+			}
 		}
 	}
 
