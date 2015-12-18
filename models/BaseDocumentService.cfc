@@ -178,7 +178,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 					}
 
 				} catch (any error){
-					throw("An error ocurred while attempting to instantiate #meta.name#.  The cause of the exception was #error.message#");	
+					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
 				}
 
 			}
@@ -287,8 +287,13 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function populate(required struct document){
 		var dobj=structCopy(this.get_default_document());
 		for(var prop in document){
-			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop))
+			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop)){
 				this.set(prop,document[prop]);
+				//normalize data
+				if(isNormalizationKey(prop)){
+					normalizeOn(prop);
+				}
+			}
 		}
 		return this;
 	}
@@ -306,7 +311,14 @@ component name="BaseDocumentService" database="test" collection="default" access
 		}
 		var nested=structGet(sget);
 		nested[nest[arrayLen(nest)]]=value;
+
 		this.entity(this.get_document());
+
+		//normalize data after we've scoped our entity
+		if(isSimpleValue(value) && len(value) && isNormalizationKey(arguments.key)){
+			normalizeOn(arguments.key);
+		}
+
 		return this;
 
 	}
@@ -451,6 +463,87 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		return;
 	}
+
+	/**
+	* Auto-normalization methods
+	**/
+
+	/**
+	* Determines whether a property is a normalization key for another property
+	* @param string key 		The property name
+	**/
+	boolean function isNormalizationKey(required string key){
+		var normalizationFields = structFindValue(get_map(),key,"ALL");
+		for(var found in normalizationFields){
+			var mapping = found.owner;
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key) return true;
+		}
+		return false;
+	}
+
+	/**
+	* Returns the normalized data for a normalization key
+	* 
+	* @param string key 	The normalization key property name
+	**/
+	any function getNormalizedData(required string key){
+
+		var normalizationFields = structFindValue(get_map(),key,"ALL");
+
+		for(var found in normalizationFields){
+			var mapping = found.owner;
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && structKeyExists(VARIABLES,mapping.on)){
+				var normalizationMap = mapping;
+				var normTarget = Wirebox.getInstance(mapping.normalize).getCollectionObject().findById(VARIABLES[mapping.on]);
+				if(!isNull(normTarget)){
+					//assemble specified keys, if available
+					if(structKeyExists(mapping,'keys')){
+						var normalizedData = {};
+						for(var normKey in listToArray(mapping.keys)){
+							//handle nulls as empty strings
+							normalizedData[normKey] = normTarget[normKey];		
+						}
+						return normalizedData;
+					} else {
+						return normTarget;
+					}
+
+				} else {
+					throw ("Normalization data for the property #mapping.name# could not be loaded as a record matching the #mapping.normalize# property value of #VARIABLES[mapping.on]# could not be found in the database.")
+				}
+			}
+		}
+
+		//return a null default
+		return javacast('null',0);	
+	}
+
+	/**
+	* Processes auto-normalization of a field
+	* @param string key 	The normalization key property name
+	**/
+	any function normalizeOn(required string key){
+		var normalizationFields = structFindValue(get_map(),key,"ALL");
+
+		for(var found in normalizationFields){
+			var mapping = found.owner;
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key){
+				var normalizationMapping = mapping;
+				break;
+			}
+		}
+
+		if(!isNull(normalizationMapping)){
+			var normData = getNormalizedData(ARGUMENTS.key);
+			if(!isNull(normData)){
+				this.set(normalizationMapping.name,getNormalizedData(ARGUMENTS.key));	
+			}
+		}
+
+		return;
+
+	}
+
 
 	/**
 	 * Returns the default property value
