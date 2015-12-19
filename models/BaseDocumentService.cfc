@@ -397,6 +397,20 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	/**
+	* Returns a CFML copy of the loaded document
+	**/
+	struct function getDocument(){
+		return getMongoUtil().toCF(this.get_document());
+	}
+
+	/**
+	* Utility facade for getDocument()
+	**/
+	struct function asStruct(){
+		return this.getDocument();
+	}
+
+	/**
 	 * Deletes a document by ID
 	 **/
 	any function delete(required _id){
