@@ -7,7 +7,7 @@ component name="CountiesMock" extends="cbmongodb.models.GEOEntity" database="cbm
 	property name="test_documents" default="";
 	/**Schema Properties**/
 	property name="name" schema=true index=true validate="string";
-	property name="geometry" schema=true index=true validate="array" geo=true geotype="MultiPolygon";
+	property name="geometry" schema=true index=true validate="struct" geo=true geotype="MultiPolygon";
 
 
 	function getTestDocuments(){

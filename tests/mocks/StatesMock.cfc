@@ -3,7 +3,7 @@ component name="StatesMock" extends="cbmongodb.models.GEOEntity" collection="sta
 	/**Schema Properties**/
 	property name="name" schema=true index=true validate="string";
 	property name="abbr" schema=true index=true validate="string";
-	property name="geometry" schema=true index="true" validate="array" geo=true geotype="MultiPolygon";
+	property name="geometry" schema=true index="true" validate="struct" geo=true geotype="MultiPolygon";
 	property name="counties" schema=true index=true validate="array";
 
 	function getTestDocument(){
