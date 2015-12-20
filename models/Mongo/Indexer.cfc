@@ -2,7 +2,7 @@
 *
 * Mongo Indexer
 *
-* Maintains Collection Indexes for All Registered
+* Maintains and Tracks Collection Indexes for MongoDB Collection Instances 
 *
 * @singleton
 * @package cbmongodb.models.Mongo
@@ -12,7 +12,7 @@
 */
 component name="MongoIndexer" accessors=true scope="cachebox"{
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
-
+	
 	public function init(){
 		structAppend(VARIABLES,{
 			"indexMap":[],
@@ -66,14 +66,16 @@ component name="MongoIndexer" accessors=true scope="cachebox"{
 				"unique":is_unique
 			}
 
-			arrayAppend(VARIABLES.indexMap,options);
-			arrayAppend(VARIABLES.indexNames,options.name);
-
+			/**
+			* GeoSpatial Indexes have to Re-checked against the db every time, since they will not be created on empty collections
+			**/
 			if(!this.indexExists(ARGUMENTS.dbInstance,index_name)){
 				if(structKeyExists(prop,'geo')){
 					ARGUMENTS.dbInstance.createGeoIndex(prop.name,options);
 				} else {
 					ARGUMENTS.dbInstance.createIndex(idx,options);
+					arrayAppend(VARIABLES.indexMap,options);
+					arrayAppend(VARIABLES.indexNames,options.name);
 				}
 			}
 
