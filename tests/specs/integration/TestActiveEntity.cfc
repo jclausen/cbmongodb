@@ -20,7 +20,7 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 
 			});
 
-			it( "+checks our mocks", function(){
+			it( "Tests Mock Availability", function(){
 				expect(variables.people).toBeComponent();
 				expect(variables.people.get_default_document()).toBeStruct();
 				expect(variables.people.getTestDocument()).toBeStruct();
@@ -28,6 +28,21 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 				//var scope our references for the remaining tests
 				var model=variables.people;
 				var person=variables.people.getTestDocument();
+
+				describe("Tests modifications to entity scopes",function(){
+					it("Tests custom accessor availability and accuracy",function(){
+						var testData = variables.people.getTestDocument();
+						model.reset().populate(testData);
+						for(var prop in getMetaData(model).properties){
+							if(structKeyExists(prop,'schema') && prop.schema){
+								var setter = model["set" & replace(prop.name,'.','_',"ALL")];
+								var getter = model["get" & replace(prop.name,'.','_',"ALL")];
+								expect(setter(model.locate(prop.name))).toBeComponent();
+								expect(getter()).toBe(model.locate(prop.name));	
+							}
+						}
+					});
+				});
 
 				describe("Verifies CRUD Functionality",function(){
 					it("Tests basic validation",function(){
