@@ -8,6 +8,8 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
 
+Changelog:
+=========
 
 Major Release v3.1.0:
 ----------------------------
