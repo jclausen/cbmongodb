@@ -8,6 +8,8 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
 
+Changelog:
+==========
 
 Major Release v3.1.0:
 ----------------------------
@@ -34,7 +36,6 @@ Patch v3.1.0.3:
 2. Moves module bindings to onLoad() to ensure availability of cbjavaloader module
 3. Changes return type of all single record retrievals inserts and updates to native structs and adds auto-stringification of _id (eliminates the need for toString())
 4. Ensures version of returned object from findOneAndUpdate/findOneAndReplace operations is the after-save version
-
 
 
 - <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
