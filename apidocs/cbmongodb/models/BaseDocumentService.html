@@ -524,56 +524,6 @@ Class
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="BaseDocumentService.html#_indexes()">_indexes</A></strong> 
-			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The array which holds the ensured indexes.
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-				<li class="label label-default label-annotations">example = property name="myfield" schema=true index=true;</li>
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
 			<strong><a href="BaseDocumentService.html#_map()">_map</A></strong> 
 			<br>
 			
@@ -960,6 +910,56 @@ Class
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="BaseDocumentService.html#MongoIndexer()">MongoIndexer</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Mongo Indexer Object.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = MongoIndexer@cbmongodb</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="BaseDocumentService.html#MongoUtil()">MongoUtil</A></strong> 
 			<br>
 			
@@ -1103,10 +1103,40 @@ Class
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="BaseDocumentService.html#append()">append</A></strong>(string key, any value)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Appends to an existing array schema property.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="BaseDocumentService.html#applyIndex()">applyIndex</A></strong>(any prop, [any properties='[runtime expression]'])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Create and apply our indexes.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>struct</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#asStruct()">asStruct</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Utility facade for getDocument().
 			
 		</td>
 	</tr>
@@ -1121,7 +1151,7 @@ Class
 			<strong><a href="BaseDocumentService.html#criteria()">criteria</A></strong>([struct criteria])
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UTILS ***************************************.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document Object Location, Searching and Query Utils ***************************************.
 			
 		</td>
 	</tr>
@@ -1167,6 +1197,21 @@ Class
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Evicts the document entity and clears the query arguments.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>void</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#generateSchemaAccessors()">generateSchemaAccessors</A></strong>(struct prop)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SETTERS **********************************.
 			
 		</td>
 	</tr>
@@ -1242,21 +1287,6 @@ Class
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The id of the loaded document.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="BaseDocumentService.html#get_indexes()">get_indexes</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The array which holds the ensured indexes.
 			
 		</td>
 	</tr>
@@ -1370,11 +1400,13 @@ Class
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>struct</code>
 		</td>
 		<td>
-			<strong><a href="BaseDocumentService.html#getIndexInfo()">getIndexInfo</A></strong>()
+			<strong><a href="BaseDocumentService.html#getDocument()">getDocument</A></strong>()
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a CFML copy of the loaded document.
 			
 		</td>
 	</tr>
@@ -1416,10 +1448,40 @@ Class
 			<code>string</code>
 		</td>
 		<td>
+			<strong><a href="BaseDocumentService.html#getMongoIndexer()">getMongoIndexer</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The Mongo Indexer Object.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
 			<strong><a href="BaseDocumentService.html#getMongoUtil()">getMongoUtil</A></strong>()
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The Mongo Utilities Library.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#getNormalizedData()">getNormalizedData</A></strong>(string key)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the normalized data for a normalization key.
 			
 		</td>
 	</tr>
@@ -1458,13 +1520,11 @@ Class
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>boolean</code>
 		</td>
 		<td>
-			<strong><a href="BaseDocumentService.html#indexExists()">indexExists</A></strong>(any name)
+			<strong><a href="BaseDocumentService.html#hasExistingAccessor()">hasExistingAccessor</A></strong>(string suffix)
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns whether the index exists.
 			
 		</td>
 	</tr>
@@ -1473,13 +1533,13 @@ Class
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>boolean</code>
 		</td>
 		<td>
-			<strong><a href="BaseDocumentService.html#indexOrder()">indexOrder</A></strong>(any prop)
+			<strong><a href="BaseDocumentService.html#isNormalizationKey()">isNormalizationKey</A></strong>(string key)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the index sort option.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Determines whether a property is a normalization key for another property.
 			
 		</td>
 	</tr>
@@ -1524,7 +1584,22 @@ Class
 			<strong><a href="BaseDocumentService.html#mapOrder()">mapOrder</A></strong>(any order)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The SQL to Mongo translated ordering statements.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SQL to Mongo ordering translations.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#normalizeOn()">normalizeOn</A></strong>(string key)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Processes auto-normalization of a field.
 			
 		</td>
 	</tr>
@@ -1540,6 +1615,21 @@ Class
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Populate the document object with a structure.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#prepend()">prepend</A></strong>(string key, any value)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prepends to an existing array property.
 			
 		</td>
 	</tr>
@@ -1630,21 +1720,6 @@ Class
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The id of the loaded document.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="BaseDocumentService.html#set_indexes()">set_indexes</A></strong>(any _indexes)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The array which holds the ensured indexes.
 			
 		</td>
 	</tr>
@@ -1765,6 +1840,21 @@ Class
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The MongoDB Client.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="BaseDocumentService.html#setMongoIndexer()">setMongoIndexer</A></strong>(any MongoIndexer)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The Mongo Indexer Object.
 			
 		</td>
 	</tr>
@@ -2054,48 +2144,6 @@ Class
 			<dd><code>required</code> - false</dd>
 			
 		
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="_indexes()"><!-- --></a>
-		<h3>_indexes</h3>
-
-		<kbd>
-			property any 
-			<strong>_indexes</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-			<p>The array which holds the ensured indexes.</p>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-			<dd><code>example</code> - property name="myfield" schema=true index=true;</dd>
 			
 		
 			
@@ -2434,6 +2482,48 @@ You should use the component attribute method to declare your collection name.</
 		<hr>
 	
 		
+		<a name="MongoIndexer()"><!-- --></a>
+		<h3>MongoIndexer</h3>
+
+		<kbd>
+			property any 
+			<strong>MongoIndexer</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>The Mongo Indexer Object</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+			<dd><code>inject</code> - MongoIndexer@cbmongodb</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
 		<a name="MongoUtil()"><!-- --></a>
 		<h3>MongoUtil</h3>
 
@@ -2539,6 +2629,42 @@ You should use the component attribute method to declare your collection name.</
 
 
 	
+	<a name="append()"><!-- --></a>
+	<h3>append</h3>
+	
+	<kbd>public any <strong>append</strong>(string key, any value)</kbd>
+	
+	<br><br>
+
+	
+		<p>Appends to an existing array schema property</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>value</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="applyIndex()"><!-- --></a>
 	<h3>applyIndex</h3>
 	
@@ -2575,6 +2701,33 @@ You should use the component attribute method to declare your collection name.</
 	<hr>
 
 	
+	<a name="asStruct()"><!-- --></a>
+	<h3>asStruct</h3>
+	
+	<kbd>public struct <strong>asStruct</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Utility facade for getDocument()</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="criteria()"><!-- --></a>
 	<h3>criteria</h3>
 	
@@ -2583,7 +2736,7 @@ You should use the component attribute method to declare your collection name.</
 	<br><br>
 
 	
-		<p>UTILS ***************************************</p>
+		<p>Document Object Location, Searching and Query Utils ***************************************</p>
 	
 
 	
@@ -2689,6 +2842,40 @@ You should use the component attribute method to declare your collection name.</
 	
 	
 
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="generateSchemaAccessors()"><!-- --></a>
+	<h3>generateSchemaAccessors</h3>
+	
+	<kbd>public void <strong>generateSchemaAccessors</strong>(struct prop)</kbd>
+	
+	<br><br>
+
+	
+		<p>SETTERS **********************************</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>prop</code></dd>
+		
+		</dl>
 	
 
 	
@@ -2823,33 +3010,6 @@ You should use the component attribute method to declare your collection name.</
 
 	
 		<p>get: The id of the loaded document</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="get_indexes()"><!-- --></a>
-	<h3>get_indexes</h3>
-	
-	<kbd>public string <strong>get_indexes</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: The array which holds the ensured indexes.</p>
 	
 
 	
@@ -3059,13 +3219,15 @@ facade for getDBInstance()</p>
 	<hr>
 
 	
-	<a name="getIndexInfo()"><!-- --></a>
-	<h3>getIndexInfo</h3>
+	<a name="getDocument()"><!-- --></a>
+	<h3>getDocument</h3>
 	
-	<kbd>public any <strong>getIndexInfo</strong>()</kbd>
+	<kbd>public struct <strong>getDocument</strong>()</kbd>
 	
 	<br><br>
 
+	
+		<p>Returns a CFML copy of the loaded document</p>
 	
 
 	
@@ -3138,6 +3300,33 @@ facade for getDBInstance()</p>
 	<hr>
 
 	
+	<a name="getMongoIndexer()"><!-- --></a>
+	<h3>getMongoIndexer</h3>
+	
+	<kbd>public string <strong>getMongoIndexer</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: The Mongo Indexer Object</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getMongoUtil()"><!-- --></a>
 	<h3>getMongoUtil</h3>
 	
@@ -3157,6 +3346,40 @@ facade for getDBInstance()</p>
 	
 	
 
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getNormalizedData()"><!-- --></a>
+	<h3>getNormalizedData</h3>
+	
+	<kbd>public any <strong>getNormalizedData</strong>(string key)</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the normalized data for a normalization key</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		</dl>
 	
 
 	
@@ -3227,15 +3450,13 @@ Used to populate the document defaults</p>
 	<hr>
 
 	
-	<a name="indexExists()"><!-- --></a>
-	<h3>indexExists</h3>
+	<a name="hasExistingAccessor()"><!-- --></a>
+	<h3>hasExistingAccessor</h3>
 	
-	<kbd>public any <strong>indexExists</strong>(any name)</kbd>
+	<kbd>public boolean <strong>hasExistingAccessor</strong>(string suffix)</kbd>
 	
 	<br><br>
 
-	
-		<p>Returns whether the index exists</p>
 	
 
 	
@@ -3250,7 +3471,7 @@ Used to populate the document defaults</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>name</code></dd>
+		<dd><code>suffix</code></dd>
 		
 		</dl>
 	
@@ -3261,15 +3482,15 @@ Used to populate the document defaults</p>
 	<hr>
 
 	
-	<a name="indexOrder()"><!-- --></a>
-	<h3>indexOrder</h3>
+	<a name="isNormalizationKey()"><!-- --></a>
+	<h3>isNormalizationKey</h3>
 	
-	<kbd>public any <strong>indexOrder</strong>(any prop)</kbd>
+	<kbd>public boolean <strong>isNormalizationKey</strong>(string key)</kbd>
 	
 	<br><br>
 
 	
-		<p>Returns the index sort option</p>
+		<p>Determines whether a property is a normalization key for another property</p>
 	
 
 	
@@ -3284,16 +3505,11 @@ Used to populate the document defaults</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>prop</code></dd>
+		<dd><code>key</code></dd>
 		
 		</dl>
 	
 
-	
-		<dl>
-			<dt><strong>Returns:</strong></dt>
-			<dd>numeric order</dd>
-		</dl>
 	
 
 	</dl>
@@ -3383,7 +3599,7 @@ Used to populate the document defaults</p>
 	<br><br>
 
 	
-		<p>The SQL to Mongo translated ordering statements</p>
+		<p>SQL to Mongo ordering translations</p>
 	
 
 	
@@ -3399,6 +3615,40 @@ Used to populate the document defaults</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>order</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="normalizeOn()"><!-- --></a>
+	<h3>normalizeOn</h3>
+	
+	<kbd>public any <strong>normalizeOn</strong>(string key)</kbd>
+	
+	<br><br>
+
+	
+		<p>Processes auto-normalization of a field</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
 		
 		</dl>
 	
@@ -3433,6 +3683,42 @@ Used to populate the document defaults</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>document</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="prepend()"><!-- --></a>
+	<h3>prepend</h3>
+	
+	<kbd>public any <strong>prepend</strong>(string key, any value)</kbd>
+	
+	<br><br>
+
+	
+		<p>Prepends to an existing array property</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>key</code></dd>
+		
+		<dd><code>value</code></dd>
 		
 		</dl>
 	
@@ -3632,40 +3918,6 @@ Used to populate the document defaults</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>_id</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="set_indexes()"><!-- --></a>
-	<h3>set_indexes</h3>
-	
-	<kbd>public any <strong>set_indexes</strong>(any _indexes)</kbd>
-	
-	<br><br>
-
-	
-		<p>set: The array which holds the ensured indexes.</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>_indexes</code></dd>
 		
 		</dl>
 	
@@ -3939,6 +4191,40 @@ You should use the component attribute method to declare your collection name.</
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>MongoClient</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setMongoIndexer()"><!-- --></a>
+	<h3>setMongoIndexer</h3>
+	
+	<kbd>public any <strong>setMongoIndexer</strong>(any MongoIndexer)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: The Mongo Indexer Object</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>MongoIndexer</code></dd>
 		
 		</dl>
 	
