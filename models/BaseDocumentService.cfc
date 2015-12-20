@@ -173,9 +173,11 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 					//test for index values
 					if(structKeyExists(prop,'index')){
-						//FIXME: Turning off for now
 						this.applyIndex(prop,properties);
 					}
+
+					generateSchemaAccessors(prop);
+
 
 				} catch (any error){
 					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
@@ -280,6 +282,34 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 
 	/********************************** SETTERS ***********************************/
+	void function generateSchemaAccessors(required struct prop){
+		var properties=getMetaData(this).properties;
+		var varSafeSeparator = "_";
+		//now create var safe accessors
+		//camel case our accessor
+		var propName = replace(prop.name,'.',' ',"ALL");
+		propName = REReplace(propName, "\b(\S)(\S*)\b", "\u\1\L\2", "all");
+		//now replace our delimiter with a var safe delimiter
+		var accessorSuffix = replace(propName,' ',varSafeSeparator,"ALL");
+		//we need this to make sure a property name doesn't override a top level function or overload
+		if(!hasExistingAccessor(accessorSuffix)){
+			//first clear our existing accessors
+			structDelete(this,'get' & prop.name);
+			structDelete(this,'set' & prop.name);
+			this['get'&accessorSuffix]=function(){return locate(prop.name)};
+			this['set'&accessorSuffix]=function(required value){return this.set(prop.name,arguments.value)};
+		}
+	}
+
+	boolean function hasExistingAccessor(required string suffix){
+		var functions = getMetaData(this).functions;
+		if(arrayContains(functions,'set' & suffix) || arrayContains(functions,'get' & suffix)){
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 
 	/**
 	 * Populate the document object with a structure
@@ -551,12 +581,21 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function locate(string key){
 		var document=this.get_document();
 
+		//if we have an existing document key with that name, return it
 		if(structKeyExists(document,ARGUMENTS.key)){
 			return document[ARGUMENTS.key];
 		} else {
-			if(isDefined('document.#ARGUMENTS.key#')){
-				//FIXME evaluate()??!?
-				return evaluate('document.#ARGUMENTS.key#');
+			var mappings = structFindValue(get_map(),key,"ALL");
+			//return a null if we have no mapping
+			var keyName = ARGUMENTS.key;
+			for(var map in mappings){
+				if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
+					keyName = map.owner.parent & '.' & ARGUMENTS.key;
+				}
+			}
+
+			if(isDefined('document.#keyName#')){
+				return evaluate('document.#keyName#');
 			}
 		}
 		
