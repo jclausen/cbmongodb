@@ -102,8 +102,14 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param returnInstance whether to return the loaded instance
 	 **/
 	any function update(returnInstance=false){
-
-		return this.save(this.get_document());
+		if( !structKeyExists(VARIABLES,'ForceValidation') || !VARIABLES.ForceValidation || this.isValid() ){
+			return this.save(this.get_document());	
+		} else {
+			var errorMessage = 'Document could not be inserted as it did not validate.  Errors: ';
+			for(var error in this.getValidationResults().errors){ errorMessage &= error.description & ", "};
+			throw(errorMessage);
+		}
+		
 	}
 
 	/**
@@ -111,27 +117,29 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
 	 **/
 	any function create(returnInstance=false,required document=get_document()){
+		if( !structKeyExists(VARIABLES,'ForceValidation') || !VARIABLES.ForceValidation || this.isValid() ){
+			var doc = getDbInstance().insertOne(ARGUMENTS.document);
+			
+			this.set_document(doc);
+			
+			this.set_id(doc['_id']);
+			
+			if(ARGUMENTS.returnInstance) return this;
 
-		var doc = getDbInstance().insertOne(ARGUMENTS.document);
-		
-		this.set_document(doc);
-		
-		this.set_id(doc['_id']);
-		
-		if(ARGUMENTS.returnInstance) return this;
-
-		return this.get_id().toString();
+			return this.get_id().toString();
+		} else {
+			var errorMessage = 'Document could not be inserted as it did not validate.  Errors: ';
+			for(var error in this.getValidationResults().errors){ errorMessage &= error.description & ", "};
+			throw(errorMessage);
+		}
 	}
 
 	/**
-	 * Aliase for update() with an explicit upsert argument
-	 **/
-	any function upsert(){
-
-		return this.update(upsert=true);
-
-	}
-
+	* CBMongoDB where clause equivalent.  Appends query criteria to an ongoing query build
+	* @param string key 		The key to be queried
+	* @param mixed 	operator 	When passed as a valid operator, an operational query will be assembled.  When the value is not match to an operator, an "equals" criteria will be appended
+	* @param string [value] 	If a valid operator is passed, the value would provide the operational comparison 
+	**/
 	any function where(string key,string operator='=',any value){
 		if(key == '_id'){
 			ARGUMENTS.value = getMongoUtil().newObjectIdFromId(ARGUMENTS.value);
@@ -301,6 +309,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 }
 
 	 /****************************** Validation Methods *******************************/
+
 	 /**
 	 * The core validation function for the loaded or populated entity
 	 **/
@@ -309,12 +318,11 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 	set_validation(newValidation());
 	 	
 	 	var modelMap = this.get_map();
+
 	 	var doc = this.get_document();
 	 	
 	 	for(var mapkey in modelMap){
 	 		var mapping = modelMap[mapkey];
-			//recurse
-			var keyArray = listToArray(mapkey,'.');
 
 			//must be in schema 		
 	 		if(isNull(this.locate(mapkey))) {
@@ -325,13 +333,33 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 		var fieldValue = this.locate(mapkey);
 
 	 		//field is required
+
 	 		if(structKeyExists(mapping,"required") && mapping.required && isSimpleValue(fieldValue) && !len(fieldValue)){
 	 			createValidationError(mapping,"required",fieldValue);
 	 			continue;
 	 		}
 
-	 		//field matches validation type
-	 		if(structKeyExists(mapping,"validation") && !fieldIsValid(fieldValue,mapping)){
+	 		if( 
+	 			structKeyExists(mapping,"validate") 
+	 			&& 
+	 			( 
+	 				structKeyExists(mapping,"required")
+	 				 || 
+	 				(
+	 				isArray(fieldValue)
+	 				 || 
+	 				isStruct(fieldValue)
+	 				 || 
+	 				 ( 
+	 				 	isSimpleValue(fieldValue) 
+	 				 	&& 
+	 				 	len(fieldValue) 
+	 				 )
+	 				)  
+	 			) 
+	 			&& 
+	 			!fieldIsValid(fieldValue,mapping)
+	 		){
 	 			createValidationError(mapping,"validation",fieldValue);
 	 			continue;
 	 		}
@@ -349,9 +377,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	 		}
 
-	 		return get_validation().success;
 	 	}
 
+	 	return get_validation().success;
 	 }
 
 	 /**
@@ -361,16 +389,16 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 **/
 	 boolean function fieldIsValid(required fieldValue,required mapping){
 	 	// return true if no validation parameters are specified
-	 	if(!structKeyExists(arguments.mapping,'validation')) return true;
+	 	if(!structKeyExists(arguments.mapping,'validate')) return true;
 
 	 	//use the native isValid method, which will provide the descriptive error if our validation attribute is not a CFML type
-	 	return isValid(arguments.mapping.validation,arguments.fieldValue);
+	 	return isValid(arguments.mapping.validate,arguments.fieldValue);
 
 	 }
 
 	 /**
 	 * Creates a standardized format validation error
-	 * @param struct mapping		The mapping key for this field
+	 * @param struct mapping		The mapping key (property name) for this field
 	 * @param string errorType		The error type to append to the validation errors array
 	 * @param any [fieldValue]		The value of the field, if any
 	 **/
@@ -388,8 +416,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 			error["description"] = "The #mapping.name# field is missing from the document.";
 	 			break;
 	 		case "validation":
-	 			error["message"] = "Invalid field value for property #mapping.name#";
-	 			error["description"] = "Property #mapping.name# failed validation for type #mapping.validation#";
+	 			error["message"] = "Invalid field value type for property #mapping.name#";
+	 			error["description"] = "Property #mapping.name# failed validation for type #mapping.validate#.  The type received was #getMetadata(fieldValue).name#";
 	 			break;
 	 		case "unique":
 	 			error["message"] = "The value of #mapping.name# is not unique";
@@ -405,7 +433,12 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 			error["description"] = "";
 	 	}
 
+	 	if(!isNull(fieldValue)){
+	 		error['fieldValue']=fieldValue;
+	 	}
+
 	 	arrayAppend(validations.errors,error);
+	 	this.set_validation(validations);
 	 }
 
 	 /**
@@ -430,21 +463,29 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 **/
 	 struct function newValidation(){
 	 	return {
-
 	 		"success":true,
 	 		"errors":[]
 	 	};
 	 }
 
-	 /****************************** Status Methods *******************************/
+	 /****************************** Status Control Methods *******************************/
 
+	 /**
+	 * Tests whether this is a loaded entity()
+	 **/
 	 boolean function loaded(){
 	 	 return (!isNull(this.get_id()) and structKeyExists(this.get_document(),'_id'));
 	 }
 
+	 /**
+	 * Reloads the loaded entity from the database
+	 **/
 	 any function reload(){
-	 	 return this.where('_id',this.get_id()).find();
+	 	 var entityId = this.get_id();
+	 	 this.reset();
+	 	 return this.load(entityId);
 	 }
+
 
 	/**************************** Cross Collection Queries ************************/
 
@@ -483,6 +524,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		this.scopeEntity(this.get_document());
 	}
 
+	/**
+	* Handles the individual key scoping for entity()
+	**/
 	any function scopeEntity(doc){
 		for(var record in doc){
 			//ensure nulls are not handled
