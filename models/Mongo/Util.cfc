@@ -215,6 +215,21 @@ component name="MongoUtil" accessors=true singleton{
 	}
 
 	/**
+	 * SQL to Mongo translated ordering statements
+	 **/
+	 numeric function mapOrder(required order){
+		var map={'asc'=1,'desc'=-1};
+		if(isNumeric(ARGUMENTS.order)){
+			return ARGUMENTS.order;
+		} else if(structKeyExists(map,lcase(ARGUMENTS.order))) {
+			//FIXME?
+			return javacast('int',map[lcase(ARGUMENTS.order)]);
+		} else {
+			return map.asc;
+		}
+	 }
+
+	/**
 	* Utility Methods Not Currently In Use
 	**/
 

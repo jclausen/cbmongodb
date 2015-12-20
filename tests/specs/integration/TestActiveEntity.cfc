@@ -9,7 +9,7 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 	}
 
 	function afterAll(){
-          super.afterAll();
+        super.afterAll();
 	}
 
 	function run(testResults, testBox){

@@ -66,6 +66,7 @@ component{
 	* CBMongoDB Module Activation - Fires when the module is loaded
 	*/
 	function onLoad(){
+		
 		//ensure cbjavaloader is an activated module
 		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
 			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
@@ -75,19 +76,6 @@ component{
 		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
 		jLoader.appendPaths(modulePath & '/lib/');
 	 	
-		/**	
-		* Utility Classes
-		**/
-		//models.Mongo.Util
-		binder.map("MongoUtil@cbmongodb")
-			.to("cbmongodb.models.Mongo.Util")
-			.initWith()
-			.asSingleton();
-
-		//models.Mongo.Collection
-		binder.map("MongoCollection@cbmongodb")
-			.to('cbmongodb.models.Mongo.Collection')
-			.noInit();
 
 		/**
 		* Singletons
@@ -98,7 +86,29 @@ component{
 			.initWith(VARIABLES.MongoDBConfig)
 			.asSingleton();
 
-		//core client
+		/**	
+		* Utility Classes
+		**/
+
+		//models.Mongo.Util
+		binder.map("MongoUtil@cbmongodb")
+			.to("cbmongodb.models.Mongo.Util")
+			.initWith()
+			.asSingleton();
+
+		//indexer
+		binder.map("MongoIndexer@cbmongodb")
+			.to("cbmongodb.models.Mongo.Indexer")
+			.asSingleton();
+
+		//models.Mongo.Collection
+		binder.map("MongoCollection@cbmongodb")
+			.to('cbmongodb.models.Mongo.Collection')
+			.noInit();
+
+		/**
+		* Mongo Client Singleton
+		**/
 		binder.map( "MongoClient@cbmongodb" )
 			.to( "cbmongodb.models.Mongo.Client" )
 			.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")

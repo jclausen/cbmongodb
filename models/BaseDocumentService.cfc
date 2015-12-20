@@ -36,6 +36,11 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 property name="MongoUtil" inject="MongoUtil@cbmongodb";
 
 	/**
+	* The Mongo Indexer Object
+	**/
+	property name="MongoIndexer" inject="MongoIndexer@cbmongodb";
+	 
+	/**
 	 * The database client w/o a specified collection
 	 **/
 	property name="db";
@@ -72,12 +77,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 	**/
 	property name="_validation";
 	/**
-	 * The array which holds the ensured indexes.
-	 *
-	 * @example property name="myfield" schema=true index=true;
-	 **/
-	property name="_indexes";
-	/**
 	* The schema map which will be persisted for validation and typing
 	**/
 	property name="_map";
@@ -87,7 +86,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 **/
 	any function init(){
 		var meta = getMetaData(this);
-		
+
 		if(structKeyExists(meta,'collection')){
 			this.collectionName = trim(meta.collection);
 		} else if(structKeyExists(VARIABLES,'collection')) {
@@ -132,7 +131,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 		//Default Document Creation
 		this.set_document(structNew());
 		this.set_default_document(structNew());
-		this.set_indexes(arrayNew(1));
 		this.set_map(structNew());
 		this.detect();
 		return this;
@@ -200,86 +198,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 *
 	 **/
 	public function applyIndex(required prop,properties=[]){
-		var idx=structNew();
-		var is_unique=false;
-		var sparse=false;
-		var background=true;
-		if(structKeyExists(prop,'unique') and prop.unique){
-			is_unique=true;
-		}
-		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
-			idx[prop.name]=this.indexOrder(prop);
-			//Now test for a combined index
-			if(structKeyExists(prop,'indexwith')){
-				//re-find our relation since structFind() isn't reliable with nested structs
-				for(var rel in properties){
-					if(rel.name eq prop.indexwith){
-						break;
-					}
-				}
-				idx[rel.name]=this.indexOrder(prop);
-			}
-		} else {
-			idx[ARGUMENTS.prop.name]=this.indexOrder(prop);
-		}
-
-		//Check whether we have records and make it sparse if we're currently empty
-		if(this.getDBInstance().count() EQ 0){
-			sparse=true;
-		}
-		//create implicit name so we can overwrite sparse settings
-		var index_name=hash(serializeJSON(idx));
-		//add our index options
-
-		var options = {
-			"name":index_name,
-			"sparse":sparse,
-			"background":background,
-			"unique":is_unique
-		}
-
-		arrayAppend(this.get_indexes(),options);
-		if(!this.indexExists(index_name)){
-			if(structKeyExists(prop,'geo')){
-				this.getDBInstance().createGeoIndex(prop.name,options);
-			} else {
-				this.getDBInstance().createIndex(idx,options);
-			}
-		}
+		arguments["dbInstance"]=getDbInstance();
+		return MongoIndexer.applyIndex(argumentCollection=arguments);
 	}
-
-	/**
-	 * Returns whether the index exists
-	 **/
-
-	 public function indexExists(required name){
-	 	var existing=this.getIndexInfo();
-		for(idx in existing){
-			if(structKeyExists(idx,'name') and idx['name'] EQ ARGUMENTS.name) return true;
-		}
-		return false;
-	 }
-
-	/**
-	 * Returns the index sort option
-	 *
-	 * @param any prop (e.g. - ASC/DESC||1/-1)
-	 * @return numeric order
-	 **/
-	public function indexOrder(required prop){
-		var order=1;
-		if(structKeyExists(prop,'indexorder')){
-			order=mapOrder(prop.indexorder);
-		}
-		return order;
-	}
-
-	public function getIndexInfo(){
-
-		return getDbInstance().getIndexInfo();
-
-	}
-
 
 	/********************************** SETTERS ***********************************/
 	void function generateSchemaAccessors(required struct prop){
@@ -655,18 +576,10 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	/**
-	 * The SQL to Mongo translated ordering statements
+	 * SQL to Mongo ordering translations
 	 **/
 	 numeric function mapOrder(required order){
-		var map={'asc'=1,'desc'=-1};
-		if(isNumeric(ARGUMENTS.order)){
-			return ARGUMENTS.order;
-		} else if(structKeyExists(map,lcase(ARGUMENTS.order))) {
-			//FIXME?
-			return javacast('int',map[lcase(ARGUMENTS.order)]);
-		} else {
-			return map.asc;
-		}
+		return getMongoUtil().mapOrder(argumentCollection=arguments);
 	 }
 
 	/**
