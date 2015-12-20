@@ -153,7 +153,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 				try {
 
 					//add the property to your our map
-					structAppend(this.get_map(),{"#prop.name#"=prop},true);
+					structAppend(this.get_map(),{"#structKeyExists(prop,'parent') ? prop.parent & '.' & prop.name : prop.name#"=prop},true);
 					
 					if(structKeyExists(prop,"parent")){
 						
@@ -373,7 +373,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * Alias for get()
 	 **/
 	any function load(required _id,returnInstance=true){
-
+		this.reset();
 		return this.get(ARGUMENTS._id,ARGUMENTS.returnInstance);
 	}
 
@@ -442,45 +442,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 		this.set_existing(structCopy(this.get_document()));
 	}
 
-
-	/********************************* UTILS ****************************************/
-
-	void function criteria(struct criteria){
-		
-		if(structKeyExists(ARGUMENTS.criteria,'_id')){
-			//exclude our nested query obects
-			if(!isStruct(ARGUMENTS.criteria['_id']) && isSimpleValue(ARGUMENTS.criteria['_id']))
-				ARGUMENTS.criteria['_id']=getMongoUtil().newObjectIDfromID(ARGUMENTS.criteria['_id']);
-		}
-
-		this.set_criteria(ARGUMENTS.criteria);
-	}
-
-	/**
-	 * Helper function to locate deeply nested document items
-	 *
-	 * @param key the key to locate
-	 * @return any the value of the key or null if the key is not found
-	 * @usage locate('key.subkey.subsubkey.waydowndeepsubkey')
-	 **/
-	any function locate(string key){
-		var document=this.get_document();
-
-		if(structKeyExists(document,ARGUMENTS.key)){
-			return document[ARGUMENTS.key];
-		} else {
-			if(isDefined('document.#ARGUMENTS.key#')){
-				//FIXME evaluate()??!?
-				return evaluate('document.#ARGUMENTS.key#');
-			}
-		}
-		
-		return;
-	}
-
-	/**
-	* Auto-normalization methods
-	**/
+		/*********************** Auto Normalization Methods **********************/
+	
 
 	/**
 	* Determines whether a property is a normalization key for another property
@@ -506,9 +469,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 		for(var found in normalizationFields){
 			var mapping = found.owner;
-			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && structKeyExists(VARIABLES,mapping.on)){
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
 				var normalizationMap = mapping;
-				var normTarget = Wirebox.getInstance(mapping.normalize).getCollectionObject().findById(VARIABLES[mapping.on]);
+				var normTarget = Wirebox.getInstance(mapping.normalize).getCollectionObject().findById(locate(mapping.on));
 				if(!isNull(normTarget)){
 					//assemble specified keys, if available
 					if(structKeyExists(mapping,'keys')){
@@ -548,14 +511,56 @@ component name="BaseDocumentService" database="test" collection="default" access
 		}
 
 		if(!isNull(normalizationMapping)){
-			var normData = getNormalizedData(ARGUMENTS.key);
+			var farData = getNormalizedData(ARGUMENTS.key);
+			var nearData = locate(normalizationMapping.name);
+			if(isStruct(nearData)){
+				structAppend(nearData,farData,true);	
+			} else {
+				nearData=farData;	
+			}
 			if(!isNull(normData)){
-				this.set(normalizationMapping.name,getNormalizedData(ARGUMENTS.key));	
+				this.set(normalizationMapping.name,nearData);	
 			}
 		}
 
 		return;
 
+	}
+
+
+	/********************************* Document Object Location, Searching and Query Utils ****************************************/
+
+	void function criteria(struct criteria){
+		
+		if(structKeyExists(ARGUMENTS.criteria,'_id')){
+			//exclude our nested query obects
+			if(!isStruct(ARGUMENTS.criteria['_id']) && isSimpleValue(ARGUMENTS.criteria['_id']))
+				ARGUMENTS.criteria['_id']=getMongoUtil().newObjectIDfromID(ARGUMENTS.criteria['_id']);
+		}
+
+		this.set_criteria(ARGUMENTS.criteria);
+	}
+
+	/**
+	 * Helper function to locate deeply nested document items
+	 *
+	 * @param key the key to locate
+	 * @return any the value of the key or null if the key is not found
+	 * @usage locate('key.subkey.subsubkey.waydowndeepsubkey')
+	 **/
+	any function locate(string key){
+		var document=this.get_document();
+
+		if(structKeyExists(document,ARGUMENTS.key)){
+			return document[ARGUMENTS.key];
+		} else {
+			if(isDefined('document.#ARGUMENTS.key#')){
+				//FIXME evaluate()??!?
+				return evaluate('document.#ARGUMENTS.key#');
+			}
+		}
+		
+		return;
 	}
 
 
@@ -614,7 +619,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * The SQL to Mongo translated ordering statements
 	 **/
 	 numeric function mapOrder(required order){
-		var map={'asc'=1,'desc'=2};
+		var map={'asc'=1,'desc'=-1};
 		if(isNumeric(ARGUMENTS.order)){
 			return ARGUMENTS.order;
 		} else if(structKeyExists(map,lcase(ARGUMENTS.order))) {
