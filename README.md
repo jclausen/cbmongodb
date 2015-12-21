@@ -1,11 +1,11 @@
 
 MongoDB Module for Coldbox
 ==========================
-CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo 3.0 Java driver for advanced operations.
+CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
 - <strong>Module Version:</strong> 3.2.0.0 <em>(Release Date: 12/12/2015)</em>
-- <strong>Mongo Java Driver Version:</strong> 3.1.0
+- <strong>Mongo Java Driver Version:</strong> 3.2.0
 - <strong>Release Notes:</strong>
 - <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
 
@@ -56,23 +56,6 @@ Changelog:
 1. Updates MongoDB Java driver to version 3.2.0
 2. Adds support for readConcern configuration option
 
-**Major Release v3.1.0:**
-
-1.  Removes Requirement For CFMongoDB Module
-2.  Adds Requirement for CBJavaloader Module
-3.  Implements MongoDB 3.0 Driver
-4.  Implements the ability to use multiple databases
-5.  Implements the ability to configure databases at the entity level
-6.  Implements Native Collection Methods for the 3.0 MongoCollection
-7.  Implements CFML [Aggregation](https://docs.mongodb.org/manual/aggregation/) methods while allowing direct access to native driver methods 
-8.  Implements CFML [Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) methods
-9.  Demonstrates 52% reduction in query execution times and database operations from the previous version
-10. Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)
-11. Fixes issue with near() GEOSpatial operations on Polygon objects
-12. Re-factors Test Suite to Require the Framework Context
-13. Adds an asJSON argument to find() and findAll() entity queries
-14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
-
 **Patch v3.1.0.3:**
 
 1. Fixes issue with connections not being pooled accurately and adds connection closing to module unload
@@ -91,6 +74,22 @@ Changelog:
 7. Fixes issues with property maps not being defined correctly and correct casting of boolean property defaults.
 8. Adds MongoIndexer singleton to delegate index management away from Entity instances.
 
+**Major Release v3.1.0:**
+
+1.  Removes Requirement For CFMongoDB Module
+2.  Adds Requirement for CBJavaloader Module
+3.  Implements MongoDB 3.0 Driver
+4.  Implements the ability to use multiple databases
+5.  Implements the ability to configure databases at the entity level
+6.  Implements Native Collection Methods for the 3.0 MongoCollection
+7.  Implements CFML [Aggregation](https://docs.mongodb.org/manual/aggregation/) methods while allowing direct access to native driver methods 
+8.  Implements CFML [Map-Reduce](https://docs.mongodb.org/manual/core/map-reduce/) methods
+9.  Demonstrates 52% reduction in query execution times and database operations from the previous version
+10. Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)
+11. Fixes issue with near() GEOSpatial operations on Polygon objects
+12. Re-factors Test Suite to Require the Framework Context
+13. Adds an asJSON argument to find() and findAll() entity queries
+14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
 
 
 Issues
