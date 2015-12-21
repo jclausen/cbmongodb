@@ -88,7 +88,7 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 
 					case "readConcern":
 						var rc = this.readConcern(arg);
-						builder.readConcren(rc);
+						builder.readConcern(rc);
 						break;
 
 					case "writeConcern":

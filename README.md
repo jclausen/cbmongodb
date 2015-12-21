@@ -4,7 +4,7 @@ MongoDB Module for Coldbox
 CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo 3.0 Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.1.0.4 <em>(Release Date: 12/12/2015)</em>
+- <strong>Module Version:</strong> 3.2.0.0 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
 - <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
@@ -52,6 +52,10 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 Changelog:
 ----------
 
+**Release v3.2.0.0**
+1. Updates MongoDB Java driver to version 3.2.0
+2. Adds support for readConcern configuration option
+
 **Major Release v3.1.0:**
 
 1.  Removes Requirement For CFMongoDB Module
@@ -86,6 +90,7 @@ Changelog:
 6. Adds append() and prepend() functions to assit in managing document schema arrays.
 7. Fixes issues with property maps not being defined correctly and correct casting of boolean property defaults.
 8. Adds MongoIndexer singleton to delegate index management away from Entity instances.
+
 
 
 Issues
