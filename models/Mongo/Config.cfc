@@ -80,11 +80,21 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 		for( var key in mongoClientOptions ){
 			var arg = mongoClientOptions[key];
 			try{
-			
-				evaluate("builder.#key#( arg )");
-			
+				switch(key){
+					case "readPreference":
+						var rp = this.readPreference(arg);
+						builder.readPreference(rp);
+						break;
+					case "writeConcern":
+						var wc = this.writeConcern(arg);
+						builder.writeConcern(wc);
+						break;
+					default:
+						evaluate("builder.#key#( arg )");
+				}
 			} catch (any e){
-
+				writeDump(var=e,top=1);
+				abort;
 				throw (message="The Mongo Client option #key# could not be found.  Please verify your clientOptions settings contain only valid MongoClientOptions settings: http://api.mongodb.org/java/current/com/mongodb/MongoClientOptions.Builder.html");
 			
 			}
@@ -98,6 +108,36 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 
 		VARIABLES.conf.MongoClientOptions = builder.build();
 		return VARIABLES.conf.MongoClientOptions;
+	}
+
+	private function readPreference(required string preference){
+		var rp = jLoader.create('com.mongodb.ReadPreference');
+
+		switch(preference){
+			case "primary":
+				return rp.primary();
+				break;
+			case "nearest":
+				return rp.nearest();
+				break;
+			case "primaryPreferred":
+				return rp.primaryPreferred();
+				break;
+			case "secondary":
+				return rp.secondary();
+				break;
+			case "secondaryPreferred":
+				return rp.secondaryPreferred();
+				break;
+			default:
+				return rp.primary();
+		}
+
+	}
+
+	private function writeConcern(required string concern){
+		var wc = jLoader.create('com.mongodb.WriteConcern');
+		return wc[uCase(concern)];
 	}
 
 	 /**
