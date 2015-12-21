@@ -17,13 +17,6 @@ Changelog:
 
 **Patch v3.1.0.4:**
 
-1. Fixes issue with connections not being pooled accurately and adds connection closing to module unload
-2. Moves module bindings to onLoad() to ensure availability of cbjavaloader module
-3. Changes return type of all single record retrievals inserts and updates to native structs and adds auto-stringification of _id (eliminates the need for toString())
-4. Ensures version of returned object from findOneAndUpdate/findOneAndReplace operations is the after-save version
-
-**Patch v3.1.0.3:**
-
 1. Adds validation methods for entities and support for new property `ForceValidation`, which will prevent saving of documents which do not validate
 2. Adds auto-normalization capabilities for schema properties.  When attributes are configured, schema will auto-normalize when set() and populate() methods are called.
 3. Implements full support for component accessors on all schema properties.  Var safe accessor closures are generated to allow recursion through an underscore delimiter (e.g. `getFirstLevel_SecondLevel()` to retrieve `getDocument().FirstLevel.SecondLevel`)
@@ -32,6 +25,13 @@ Changelog:
 6. Adds append() and prepend() functions to assit in managing document schema arrays.
 7. Fixes issues with property maps not being defined correctly and correct casting of boolean property defaults.
 8. Adds MongoIndexer singleton to delegate index management away from Entity instances.
+
+**Patch v3.1.0.3:**
+
+1. Fixes issue with connections not being pooled accurately and adds connection closing to module unload
+2. Moves module bindings to onLoad() to ensure availability of cbjavaloader module
+3. Changes return type of all single record retrievals inserts and updates to native structs and adds auto-stringification of _id (eliminates the need for toString())
+4. Ensures version of returned object from findOneAndUpdate/findOneAndReplace operations is the after-save version
 
 **Major Release v3.1.0:**
 
