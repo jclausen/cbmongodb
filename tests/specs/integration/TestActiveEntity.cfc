@@ -54,6 +54,16 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 						expect(arrayLen(model.getValidationResults().errors)).toBe(0);
 						
 						//set some invalid results
+
+						//state length
+						//check that it validates if empty
+						model.set('address.state','');
+						expect(model.isValid()).toBeTrue();
+						model.set('address.state','Michigan');
+						expect(model.isValid()).toBeFalse("State field with a length greater than 2 validated true incorrectly");
+						expect(arrayLen(model.getValidationResults().errors)).toBe(1,"State field length validation failed");
+						model.set('address.state','MI');
+						
 						
 						//telephone validation
 						model.set('phone.home','ABCDEF~GH%IJkL$MNO%PQRS');

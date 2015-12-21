@@ -339,6 +339,11 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 			continue;
 	 		}
 
+	 		if(structKeyExists(mapping,"length") && isSimpleValue(fieldValue) && len(fieldValue) && len(fieldValue) != mapping.length){
+	 			createValidationError(mapping,"length",fieldValue);
+	 			continue;
+	 		}
+
 	 		if( 
 	 			structKeyExists(mapping,"validate") 
 	 			&& 
@@ -422,6 +427,10 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 		case "unique":
 	 			error["message"] = "The value of #mapping.name# is not unique";
 	 			error["description"] = "The value #fieldValue# for property #mapping.name# failed validation because the field value must be unique.";
+	 			break;
+	 		case "length":
+	 			error["message"] = "The value of #mapping.name# fails to meet the specified length of #mapping.length#";
+	 			error["description"] = "The value #fieldValue# for property #mapping.name# failed validation because the length of the field must be equal to #mapping.length#.";
 	 			break;
 	 		case "required":
 	 			error["message"] = "Field #mapping.name# is required";

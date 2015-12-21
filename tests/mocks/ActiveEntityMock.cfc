@@ -30,7 +30,7 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" collec
 		'address'={
 			'street'='123 Anywhere Lane',
 			'city'='Grand Rapids',
-			'state'='Michigan',
+			'state'='MI',
 			'postalcode'='49546',
 			'country'='USA',
 			'location'=this.toGeoJSON([-85.570381,42.9130449])
