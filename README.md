@@ -6,47 +6,6 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
 - <strong>Module Version:</strong> 3.2.0.0 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.2.0
-- <strong>Release Notes:</strong>
-
-
-<ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki" class="wiki-page-link">Wiki Home</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/1.-Installation-&amp;-Configuration" class="wiki-page-link">1. Installation &amp; Configuration</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2B.-Validation" class="wiki-page-link">2B. Validation</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2C.-Loading-and-Querying-Documents" class="wiki-page-link">2C. Loading and Querying Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/3.-Geospatial-Functions" class="wiki-page-link">3. Geospatial Functions</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/4.-Aggregation" class="wiki-page-link">4. Aggregation</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/6.-Advanced-Usage" class="wiki-page-link">6. Advanced Usage</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/7.-Issues" class="wiki-page-link">7. Issues</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/8.-Get-Involved" class="wiki-page-link">8. Get Involved</a></strong>
-    </li>
-  </ul>
 
 Changelog:
 ----------
@@ -90,6 +49,49 @@ Changelog:
 12. Re-factors Test Suite to Require the Framework Context
 13. Adds an asJSON argument to find() and findAll() entity queries
 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
+
+Documentation
+-------------
+
+
+<ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki" class="wiki-page-link">Wiki Home</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/1.-Installation-&amp;-Configuration" class="wiki-page-link">1. Installation &amp; Configuration</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2B.-Validation" class="wiki-page-link">2B. Validation</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2C.-Loading-and-Querying-Documents" class="wiki-page-link">2C. Loading and Querying Documents</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/3.-Geospatial-Functions" class="wiki-page-link">3. Geospatial Functions</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/4.-Aggregation" class="wiki-page-link">4. Aggregation</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/6.-Advanced-Usage" class="wiki-page-link">6. Advanced Usage</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/7.-Issues" class="wiki-page-link">7. Issues</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/8.-Get-Involved" class="wiki-page-link">8. Get Involved</a></strong>
+    </li>
+  </ul>
 
 
 Issues
