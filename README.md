@@ -11,42 +11,43 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 
 
 <ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
-<li>
-  <strong><a href="/jclausen/cbmongodb/wiki" class="wiki-page-link">Wiki Home</a></strong>
-      <ul>
-      <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/1.-Installation" class="wiki-page-link">1. Installation</a></strong>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki" class="wiki-page-link">Wiki Home</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/1.-Installation-&amp;-Configuration" class="wiki-page-link">1. Installation &amp; Configuration</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/2B.-Loading-and-Querying-Documents" class="wiki-page-link">2B. Loading and Querying Documents</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/3.-Geospatial-Functions" class="wiki-page-link">3. Geospatial Functions</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2B.-Validation" class="wiki-page-link">2B. Validation</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/4.-Aggregation" class="wiki-page-link">4. Aggregation</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2C.-Loading-and-Querying-Documents" class="wiki-page-link">2C. Loading and Querying Documents</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/3.-Geospatial-Functions" class="wiki-page-link">3. Geospatial Functions</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/6.-Advanced-Usage" class="wiki-page-link">6. Advanced Usage</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/4.-Aggregation" class="wiki-page-link">4. Aggregation</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/7.-Issues" class="wiki-page-link">7. Issues</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
     </li>
     <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/8.-Get-Involved" class="wiki-page-link">8. Get Involved</a></strong>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/6.-Advanced-Usage" class="wiki-page-link">6. Advanced Usage</a></strong>
     </li>
-</ul>
-</li>
-</ul>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/7.-Issues" class="wiki-page-link">7. Issues</a></strong>
+    </li>
+    <li>
+      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/8.-Get-Involved" class="wiki-page-link">8. Get Involved</a></strong>
+    </li>
+  </ul>
 
 Changelog:
 ----------
