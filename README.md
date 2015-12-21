@@ -7,7 +7,6 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 - <strong>Module Version:</strong> 3.2.0.0 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.2.0
 - <strong>Release Notes:</strong>
-- <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
 
 
 <ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
