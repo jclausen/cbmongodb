@@ -85,10 +85,17 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 						var rp = this.readPreference(arg);
 						builder.readPreference(rp);
 						break;
+
+					case "readConcern":
+						var rc = this.readConcern(arg);
+						builder.readConcren(rc);
+						break;
+
 					case "writeConcern":
 						var wc = this.writeConcern(arg);
 						builder.writeConcern(wc);
 						break;
+
 					default:
 						evaluate("builder.#key#( arg )");
 				}
@@ -133,6 +140,11 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 				return rp.primary();
 		}
 
+	}
+
+	private function readConcern(required string concern){
+		var rc = jLoader.create('com.mongodb.ReadConcern');
+		return rc[uCase(concern)];
 	}
 
 	private function writeConcern(required string concern){
