@@ -65,6 +65,10 @@ component name="MongoUtil" accessors=true singleton{
 		} else {
 			var cfObj = {};
 			cfObj.putAll(BasicDBObject);
+			//loop our keys to ensure first-level items with sub-documents objects are converted
+			for(var key in cfObj){
+				if(!isNull(cfObj[key]) && ( isArray(cfObj[key]) || isStruct(cfObj[key]) ) ) cfObj[key] = toCF(cfObj[key]);
+			}
 		}
 
 		//auto-stringify _id 
@@ -209,6 +213,21 @@ component name="MongoUtil" accessors=true singleton{
 		
 		return idxOptions;
 	}
+
+	/**
+	 * SQL to Mongo translated ordering statements
+	 **/
+	 numeric function mapOrder(required order){
+		var map={'asc'=1,'desc'=-1};
+		if(isNumeric(ARGUMENTS.order)){
+			return ARGUMENTS.order;
+		} else if(structKeyExists(map,lcase(ARGUMENTS.order))) {
+			//FIXME?
+			return javacast('int',map[lcase(ARGUMENTS.order)]);
+		} else {
+			return map.asc;
+		}
+	 }
 
 	/**
 	* Utility Methods Not Currently In Use

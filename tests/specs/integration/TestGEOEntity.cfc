@@ -38,6 +38,7 @@ component name="TestModelGEOEntity" extends="cbmongodb.tests.specs.CBMongoDBBase
 
 				expect(arrayLen(Counties.reset().findAll())).toBe(4);
 
+
 				describe("performs our geospatial comparison tests",function(){
 					it("tests within() comparisons",function(){
 						

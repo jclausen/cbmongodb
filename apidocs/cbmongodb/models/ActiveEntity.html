@@ -760,6 +760,21 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
+			<code>void</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#createValidationError()">createValidationError</A></strong>(any mapping, string errorType='validation', [any fieldValue])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a standardized format validation error.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
 			<code>boolean</code>
 		</td>
 		<td>
@@ -825,6 +840,21 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test whether a record matching the current criteria exists.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>boolean</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#fieldIsValid()">fieldIsValid</A></strong>(any fieldValue, any mapping)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checks whether a field meets its validation requirement.
 			
 		</td>
 	</tr>
@@ -943,6 +973,36 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#getValidationErrors()">getValidationErrors</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the array of validation errors or null if validation has not been run on the entity.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#getValidationResults()">getValidationResults</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the results of the validation.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
 			<code>string</code>
 		</td>
 		<td>
@@ -965,6 +1025,21 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The map reduction.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>boolean</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#isValid()">isValid</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The core validation function for the loaded or populated entity.
 			
 		</td>
 	</tr>
@@ -1009,7 +1084,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#loaded()">loaded</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status Methods ******************************.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tests whether this is a loaded entity().
 			
 		</td>
 	</tr>
@@ -1025,6 +1100,21 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map reduce query method.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>struct</code>
+		</td>
+		<td>
+			<strong><a href="ActiveEntity.html#newValidation()">newValidation</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the standardized validations structure.
 			
 		</td>
 	</tr>
@@ -1082,6 +1172,8 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<strong><a href="ActiveEntity.html#reload()">reload</A></strong>()
 			<br>
 			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reloads the loaded entity from the database.
+			
 		</td>
 	</tr>
 	
@@ -1122,6 +1214,8 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<td>
 			<strong><a href="ActiveEntity.html#scopeEntity()">scopeEntity</A></strong>([any doc])
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles the individual key scoping for entity().
 			
 		</td>
 	</tr>
@@ -1258,23 +1352,10 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#upsert()">upsert</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aliase for update() with an explicit upsert argument.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
 			<strong><a href="ActiveEntity.html#where()">where</A></strong>([string key], [string operator='='], [any value])
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CBMongoDB where clause equivalent.
 			
 		</td>
 	</tr>
@@ -1336,6 +1417,24 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 				
 					
 					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
 				
 					
 					
@@ -1540,6 +1639,15 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 				
 					
 					
+					
+						
+					
+					
+					
+					
+				
+					
+					
 				
 					
 					
@@ -1757,9 +1865,36 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 					
 					
 				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
 				
 				
-					<a href="../..//cbmongodb/models/BaseDocumentService.html#applyIndex()">applyIndex</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#criteria()">criteria</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#detect()">detect</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get()">get</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_default_document()">get_default_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_document()">get_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_existing()">get_existing</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_id()">get_id</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_indexes()">get_indexes</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_map()">get_map</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_validation()">get_validation</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getAppSettings()">getAppSettings</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getCollection()">getCollection</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getCollectionObject()">getCollectionObject</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getDb()">getDb</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getDbInstance()">getDbInstance</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getIndexInfo()">getIndexInfo</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getLogbox()">getLogbox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getMongoClient()">getMongoClient</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getMongoUtil()">getMongoUtil</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getPropertyDefault()">getPropertyDefault</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getWirebox()">getWirebox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#indexExists()">indexExists</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#indexOrder()">indexOrder</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#load()">load</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#locate()">locate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#mapOrder()">mapOrder</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#populate()">populate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#reset()">reset</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set()">set</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_default_document()">set_default_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_document()">set_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_existing()">set_existing</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_id()">set_id</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_indexes()">set_indexes</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_map()">set_map</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_validation()">set_validation</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setAppSettings()">setAppSettings</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setCollection()">setCollection</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setDb()">setDb</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setDbInstance()">setDbInstance</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setLogbox()">setLogbox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setMongoClient()">setMongoClient</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setMongoUtil()">setMongoUtil</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setWirebox()">setWirebox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toGeoJSON()">toGeoJSON</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toMongo()">toMongo</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toMongoDocument()">toMongoDocument</a>
+				
+					<a href="../..//cbmongodb/models/BaseDocumentService.html#append()">append</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#applyIndex()">applyIndex</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#asStruct()">asStruct</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#criteria()">criteria</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#detect()">detect</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#generateSchemaAccessors()">generateSchemaAccessors</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get()">get</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_default_document()">get_default_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_document()">get_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_existing()">get_existing</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_id()">get_id</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_map()">get_map</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#get_validation()">get_validation</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getAppSettings()">getAppSettings</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getCollection()">getCollection</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getCollectionObject()">getCollectionObject</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getDb()">getDb</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getDbInstance()">getDbInstance</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getDocument()">getDocument</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getLogbox()">getLogbox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getMongoClient()">getMongoClient</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getMongoIndexer()">getMongoIndexer</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getMongoUtil()">getMongoUtil</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getNormalizedData()">getNormalizedData</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getPropertyDefault()">getPropertyDefault</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#getWirebox()">getWirebox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#hasExistingAccessor()">hasExistingAccessor</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#isNormalizationKey()">isNormalizationKey</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#load()">load</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#locate()">locate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#mapOrder()">mapOrder</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#normalizeOn()">normalizeOn</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#populate()">populate</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#prepend()">prepend</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#reset()">reset</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set()">set</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_default_document()">set_default_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_document()">set_document</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_existing()">set_existing</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_id()">set_id</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_map()">set_map</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#set_validation()">set_validation</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setAppSettings()">setAppSettings</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setCollection()">setCollection</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setDb()">setDb</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setDbInstance()">setDbInstance</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setLogbox()">setLogbox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setMongoClient()">setMongoClient</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setMongoIndexer()">setMongoIndexer</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setMongoUtil()">setMongoUtil</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#setWirebox()">setWirebox</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toGeoJSON()">toGeoJSON</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toMongo()">toMongo</a>, <a href="../..//cbmongodb/models/BaseDocumentService.html#toMongoDocument()">toMongoDocument</a>
 				
 			</td>
 		</tr>
@@ -2240,6 +2375,44 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
+	<a name="createValidationError()"><!-- --></a>
+	<h3>createValidationError</h3>
+	
+	<kbd>public void <strong>createValidationError</strong>(any mapping, string errorType='validation', [any fieldValue])</kbd>
+	
+	<br><br>
+
+	
+		<p>Creates a standardized format validation error</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>mapping</code></dd>
+		
+		<dd><code>errorType</code></dd>
+		
+		<dd><code>fieldValue</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="criteriaExists()"><!-- --></a>
 	<h3>criteriaExists</h3>
 	
@@ -2403,6 +2576,42 @@ we'll need to pass our active entity document objects rather than as comparisons
 	
 	
 
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="fieldIsValid()"><!-- --></a>
+	<h3>fieldIsValid</h3>
+	
+	<kbd>public boolean <strong>fieldIsValid</strong>(any fieldValue, any mapping)</kbd>
+	
+	<br><br>
+
+	
+		<p>Checks whether a field meets its validation requirement</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>fieldValue</code></dd>
+		
+		<dd><code>mapping</code></dd>
+		
+		</dl>
 	
 
 	
@@ -2637,6 +2846,65 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
+	<a name="getValidationErrors()"><!-- --></a>
+	<h3>getValidationErrors</h3>
+	
+	<kbd>public any <strong>getValidationErrors</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the array of validation errors or null if validation has not been run on the entity</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getValidationResults()"><!-- --></a>
+	<h3>getValidationResults</h3>
+	
+	<kbd>public any <strong>getValidationResults</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the results of the validation</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>null if validation has not been run on the entity | struct if validation has processed</dd>
+		</dl>
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getXCollection()"><!-- --></a>
 	<h3>getXCollection</h3>
 	
@@ -2675,6 +2943,33 @@ we'll need to pass our active entity document objects rather than as comparisons
 
 	
 		<p>get: The map reduction</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="isValid()"><!-- --></a>
+	<h3>isValid</h3>
+	
+	<kbd>public boolean <strong>isValid</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>The core validation function for the loaded or populated entity</p>
 	
 
 	
@@ -2769,7 +3064,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>Status Methods ******************************</p>
+		<p>Tests whether this is a loaded entity()</p>
 	
 
 	
@@ -2797,6 +3092,33 @@ we'll need to pass our active entity document objects rather than as comparisons
 
 	
 		<p>Map reduce query method</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="newValidation()"><!-- --></a>
+	<h3>newValidation</h3>
+	
+	<kbd>public struct <strong>newValidation</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the standardized validations structure</p>
 	
 
 	
@@ -2935,6 +3257,8 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
+		<p>Reloads the loaded entity from the database</p>
+	
 
 	
 		
@@ -3029,6 +3353,8 @@ we'll need to pass our active entity document objects rather than as comparisons
 	
 	<br><br>
 
+	
+		<p>Handles the individual key scoping for entity()</p>
 	
 
 	
@@ -3353,33 +3679,6 @@ Alias for save() with an explicit</p>
 	<hr>
 
 	
-	<a name="upsert()"><!-- --></a>
-	<h3>upsert</h3>
-	
-	<kbd>public any <strong>upsert</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Aliase for update() with an explicit upsert argument</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
 	<a name="where()"><!-- --></a>
 	<h3>where</h3>
 	
@@ -3387,6 +3686,8 @@ Alias for save() with an explicit</p>
 	
 	<br><br>
 
+	
+		<p>CBMongoDB where clause equivalent.  Appends query criteria to an ongoing query build</p>
 	
 
 	

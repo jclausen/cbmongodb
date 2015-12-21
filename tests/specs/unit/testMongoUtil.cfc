@@ -1,5 +1,5 @@
 /*******************************************************************************
-*	Integration Test for /cfmongodb/models/ActiveEntity.cfc
+*	Unit Tests for cbmongodb.models.Mongo.MongoUtil
 *******************************************************************************/
 component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
 

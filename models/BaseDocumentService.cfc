@@ -36,6 +36,11 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 property name="MongoUtil" inject="MongoUtil@cbmongodb";
 
 	/**
+	* The Mongo Indexer Object
+	**/
+	property name="MongoIndexer" inject="MongoIndexer@cbmongodb";
+	 
+	/**
 	 * The database client w/o a specified collection
 	 **/
 	property name="db";
@@ -72,12 +77,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 	**/
 	property name="_validation";
 	/**
-	 * The array which holds the ensured indexes.
-	 *
-	 * @example property name="myfield" schema=true index=true;
-	 **/
-	property name="_indexes";
-	/**
 	* The schema map which will be persisted for validation and typing
 	**/
 	property name="_map";
@@ -87,7 +86,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 **/
 	any function init(){
 		var meta = getMetaData(this);
-		
+
 		if(structKeyExists(meta,'collection')){
 			this.collectionName = trim(meta.collection);
 		} else if(structKeyExists(VARIABLES,'collection')) {
@@ -132,7 +131,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 		//Default Document Creation
 		this.set_document(structNew());
 		this.set_default_document(structNew());
-		this.set_indexes(arrayNew(1));
 		this.set_map(structNew());
 		this.detect();
 		return this;
@@ -153,7 +151,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 				try {
 
 					//add the property to your our map
-					structAppend(this.get_map(),{prop.name=prop},true);
+					structAppend(this.get_map(),{"#structKeyExists(prop,'parent') ? prop.parent & '.' & prop.name : prop.name#"=prop},true);
 					
 					if(structKeyExists(prop,"parent")){
 						
@@ -173,12 +171,14 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 					//test for index values
 					if(structKeyExists(prop,'index')){
-						//FIXME: Turning off for now
 						this.applyIndex(prop,properties);
 					}
 
+					generateSchemaAccessors(prop);
+
+
 				} catch (any error){
-					throw("An error ocurred while attempting to instantiate #meta.name#.  The cause of the exception was #error.message#");	
+					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
 				}
 
 			}
@@ -198,88 +198,39 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 *
 	 **/
 	public function applyIndex(required prop,properties=[]){
-		var idx=structNew();
-		var is_unique=false;
-		var sparse=false;
-		var background=true;
-		if(structKeyExists(prop,'unique') and prop.unique){
-			is_unique=true;
-		}
-		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
-			idx[prop.name]=this.indexOrder(prop);
-			//Now test for a combined index
-			if(structKeyExists(prop,'indexwith')){
-				//re-find our relation since structFind() isn't reliable with nested structs
-				for(var rel in properties){
-					if(rel.name eq prop.indexwith){
-						break;
-					}
-				}
-				idx[rel.name]=this.indexOrder(prop);
-			}
-		} else {
-			idx[ARGUMENTS.prop.name]=this.indexOrder(prop);
-		}
-
-		//Check whether we have records and make it sparse if we're currently empty
-		if(this.getDBInstance().count() EQ 0){
-			sparse=true;
-		}
-		//create implicit name so we can overwrite sparse settings
-		var index_name=hash(serializeJSON(idx));
-		//add our index options
-
-		var options = {
-			"name":index_name,
-			"sparse":sparse,
-			"background":background,
-			"unique":is_unique
-		}
-
-		arrayAppend(this.get_indexes(),options);
-		if(!this.indexExists(index_name)){
-			if(structKeyExists(prop,'geo')){
-				this.getDBInstance().createGeoIndex(prop.name,options);
-			} else {
-				this.getDBInstance().createIndex(idx,options);
-			}
-		}
+		arguments["dbInstance"]=getDbInstance();
+		return MongoIndexer.applyIndex(argumentCollection=arguments);
 	}
-
-	/**
-	 * Returns whether the index exists
-	 **/
-
-	 public function indexExists(required name){
-	 	var existing=this.getIndexInfo();
-		for(idx in existing){
-			if(structKeyExists(idx,'name') and idx['name'] EQ ARGUMENTS.name) return true;
-		}
-		return false;
-	 }
-
-	/**
-	 * Returns the index sort option
-	 *
-	 * @param any prop (e.g. - ASC/DESC||1/-1)
-	 * @return numeric order
-	 **/
-	public function indexOrder(required prop){
-		var order=1;
-		if(structKeyExists(prop,'indexorder')){
-			order=mapOrder(prop.indexorder);
-		}
-		return order;
-	}
-
-	public function getIndexInfo(){
-
-		return getDbInstance().getIndexInfo();
-
-	}
-
 
 	/********************************** SETTERS ***********************************/
+	void function generateSchemaAccessors(required struct prop){
+		var properties=getMetaData(this).properties;
+		var varSafeSeparator = "_";
+		//now create var safe accessors
+		//camel case our accessor
+		var propName = replace(prop.name,'.',' ',"ALL");
+		propName = REReplace(propName, "\b(\S)(\S*)\b", "\u\1\L\2", "all");
+		//now replace our delimiter with a var safe delimiter
+		var accessorSuffix = replace(propName,' ',varSafeSeparator,"ALL");
+		//we need this to make sure a property name doesn't override a top level function or overload
+		if(!hasExistingAccessor(accessorSuffix)){
+			//first clear our existing accessors
+			structDelete(this,'get' & prop.name);
+			structDelete(this,'set' & prop.name);
+			this['get'&accessorSuffix]=function(){return locate(prop.name)};
+			this['set'&accessorSuffix]=function(required value){return this.set(prop.name,arguments.value)};
+		}
+	}
+
+	boolean function hasExistingAccessor(required string suffix){
+		var functions = getMetaData(this).functions;
+		if(arrayContains(functions,'set' & suffix) || arrayContains(functions,'get' & suffix)){
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 
 	/**
 	 * Populate the document object with a structure
@@ -287,8 +238,13 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function populate(required struct document){
 		var dobj=structCopy(this.get_default_document());
 		for(var prop in document){
-			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop))
+			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop)){
 				this.set(prop,document[prop]);
+				//normalize data
+				if(isNormalizationKey(prop)){
+					normalizeOn(prop);
+				}
+			}
 		}
 		return this;
 	}
@@ -306,16 +262,69 @@ component name="BaseDocumentService" database="test" collection="default" access
 		}
 		var nested=structGet(sget);
 		nested[nest[arrayLen(nest)]]=value;
+
 		this.entity(this.get_document());
+
+		//normalize data after we've scoped our entity
+		if(isSimpleValue(value) && len(value) && isNormalizationKey(arguments.key)){
+			normalizeOn(arguments.key);
+		}
+
 		return this;
 
+	}
+
+	/**
+	* Appends to an existing array schema property
+	**/
+	any function append(required string key, required any value){
+		var doc = this.get_document();
+		var sget="doc";
+		var nest=listToArray(key,'.');
+
+		for(var i=1;i LT arrayLen(nest);i=i+1){
+		  sget=sget&'.'&nest[i];
+		}
+
+		var nested=structGet(sget);
+	
+		if(!isArray(nested[nest[arrayLen(nest)]]))
+			throw("Schema field #key# is not a valid array.");
+
+		arrayAppend(nested[nest[arrayLen(nest)]],value);
+
+		this.entity(this.get_document());
+		return this;
+	}
+
+	/**
+	* Prepends to an existing array property
+	**/
+	any function prepend(required string key, required any value){
+		var doc = this.get_document();
+		var sget="doc";
+		var nest=listToArray(key,'.');
+
+		for(var i=1;i LT arrayLen(nest);i=i+1){
+		  sget=sget&'.'&nest[i];
+		}
+
+		var nested=structGet(sget);
+	
+		if(!isArray(nested[nest[arrayLen(nest)]]))
+			throw("Schema field #key# is not a valid array.");
+
+		arrayPrepend(nested[nest[arrayLen(nest)]],value);
+
+		this.entity(this.get_document());
+		return this;
 	}
 
 	/**
 	 * Alias for get()
 	 **/
 	any function load(required _id,returnInstance=true){
-
+		this.reset();
 		return this.get(ARGUMENTS._id,ARGUMENTS.returnInstance);
 	}
 
@@ -336,6 +345,20 @@ component name="BaseDocumentService" database="test" collection="default" access
 		} else {
 			return this;
 		}
+	}
+
+	/**
+	* Returns a CFML copy of the loaded document
+	**/
+	struct function getDocument(){
+		return getMongoUtil().toCF(this.get_document());
+	}
+
+	/**
+	* Utility facade for getDocument()
+	**/
+	struct function asStruct(){
+		return this.getDocument();
 	}
 
 	/**
@@ -370,8 +393,93 @@ component name="BaseDocumentService" database="test" collection="default" access
 		this.set_existing(structCopy(this.get_document()));
 	}
 
+		/*********************** Auto Normalization Methods **********************/
+	
 
-	/********************************* UTILS ****************************************/
+	/**
+	* Determines whether a property is a normalization key for another property
+	* @param string key 		The property name
+	**/
+	boolean function isNormalizationKey(required string key){
+		var normalizationFields = structFindValue(get_map(),key,"ALL");
+		for(var found in normalizationFields){
+			var mapping = found.owner;
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key) return true;
+		}
+		return false;
+	}
+
+	/**
+	* Returns the normalized data for a normalization key
+	* 
+	* @param string key 	The normalization key property name
+	**/
+	any function getNormalizedData(required string key){
+
+		var normalizationFields = structFindValue(get_map(),key,"ALL");
+
+		for(var found in normalizationFields){
+			var mapping = found.owner;
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
+				var normalizationMap = mapping;
+				var normTarget = Wirebox.getInstance(mapping.normalize).getCollectionObject().findById(locate(mapping.on));
+				if(!isNull(normTarget)){
+					//assemble specified keys, if available
+					if(structKeyExists(mapping,'keys')){
+						var normalizedData = {};
+						for(var normKey in listToArray(mapping.keys)){
+							//handle nulls as empty strings
+							normalizedData[normKey] = normTarget[normKey];		
+						}
+						return normalizedData;
+					} else {
+						return normTarget;
+					}
+
+				} else {
+					throw ("Normalization data for the property #mapping.name# could not be loaded as a record matching the #mapping.normalize# property value of #VARIABLES[mapping.on]# could not be found in the database.")
+				}
+			}
+		}
+
+		//return a null default
+		return javacast('null',0);	
+	}
+
+	/**
+	* Processes auto-normalization of a field
+	* @param string key 	The normalization key property name
+	**/
+	any function normalizeOn(required string key){
+		var normalizationFields = structFindValue(get_map(),key,"ALL");
+
+		for(var found in normalizationFields){
+			var mapping = found.owner;
+			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key){
+				var normalizationMapping = mapping;
+				break;
+			}
+		}
+
+		if(!isNull(normalizationMapping)){
+			var farData = getNormalizedData(ARGUMENTS.key);
+			var nearData = locate(normalizationMapping.name);
+			if(isStruct(nearData)){
+				structAppend(nearData,farData,true);	
+			} else {
+				nearData=farData;	
+			}
+			if(!isNull(normData)){
+				this.set(normalizationMapping.name,nearData);	
+			}
+		}
+
+		return;
+
+	}
+
+
+	/********************************* Document Object Location, Searching and Query Utils ****************************************/
 
 	void function criteria(struct criteria){
 		
@@ -394,17 +502,27 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function locate(string key){
 		var document=this.get_document();
 
+		//if we have an existing document key with that name, return it
 		if(structKeyExists(document,ARGUMENTS.key)){
 			return document[ARGUMENTS.key];
 		} else {
-			if(isDefined('document.#ARGUMENTS.key#')){
-				//FIXME evaluate()??!?
-				return evaluate('document.#ARGUMENTS.key#');
+			var mappings = structFindValue(get_map(),key,"ALL");
+			//return a null if we have no mapping
+			var keyName = ARGUMENTS.key;
+			for(var map in mappings){
+				if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
+					keyName = map.owner.parent & '.' & ARGUMENTS.key;
+				}
+			}
+
+			if(isDefined('document.#keyName#')){
+				return evaluate('document.#keyName#');
 			}
 		}
 		
 		return;
 	}
+
 
 	/**
 	 * Returns the default property value
@@ -414,7 +532,12 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function getPropertyDefault(prop){
 		var empty_string='';
 		if(structKeyExists(prop,'default')){
-			return prop.default;
+			switch(prop.validate){
+				case "boolean":
+					return javacast('boolean',prop.default);
+				default:
+					return prop.default;
+			}
 		} else if(structKeyExists(prop,'validate')) {
 			switch(prop.validate){
 				case 'string':
@@ -453,18 +576,10 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	/**
-	 * The SQL to Mongo translated ordering statements
+	 * SQL to Mongo ordering translations
 	 **/
 	 numeric function mapOrder(required order){
-		var map={'asc'=1,'desc'=2};
-		if(isNumeric(ARGUMENTS.order)){
-			return ARGUMENTS.order;
-		} else if(structKeyExists(map,lcase(ARGUMENTS.order))) {
-			//FIXME?
-			return javacast('int',map[lcase(ARGUMENTS.order)]);
-		} else {
-			return map.asc;
-		}
+		return getMongoUtil().mapOrder(argumentCollection=arguments);
 	 }
 
 	/**
