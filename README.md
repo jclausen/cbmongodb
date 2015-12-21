@@ -77,7 +77,7 @@ Changelog:
 
 **Patch v3.1.0.4:**
 
-1. Adds validation methods for entities and support for new property `ForceValidation`, which will not save documents which do not validate
+1. Adds validation methods for entities and support for new property `ForceValidation`, which will prevent saving of documents which do not validate
 2. Adds auto-normalization capabilities for schema properties.  When attributes are configured, schema will auto-normalize when set() and populate() methods are called.
 3. Implements full support for component accessors on all schema properties.  Var safe accessor closures are generated to allow recursion through an underscore delimiter (e.g. `getFirstLevel_SecondLevel()` to retrieve `getDocument().FirstLevel.SecondLevel`)
 4. Fixes native CFML data types not being sanitized on deeply nested structs and arrays.
