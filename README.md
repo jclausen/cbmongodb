@@ -7,7 +7,46 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 - <strong>Module Version:</strong> 3.1.0.4 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.1.0
 - <strong>Release Notes:</strong>
+- <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
 
+
+<ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
+<li>
+  <strong><a href="/jclausen/cbmongodb/wiki" class="wiki-page-link">Wiki Home</a></strong>
+      <ul>
+      <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/1.-Installation" class="wiki-page-link">1. Installation</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/2B.-Loading-and-Querying-Documents" class="wiki-page-link">2B. Loading and Querying Documents</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/3.-Geospatial-Functions" class="wiki-page-link">3. Geospatial Functions</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/4.-Aggregation" class="wiki-page-link">4. Aggregation</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/6.-Advanced-Usage" class="wiki-page-link">6. Advanced Usage</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/7.-Issues" class="wiki-page-link">7. Issues</a></strong>
+    </li>
+    <li>
+      <strong><a href="/jclausen/cbmongodb/wiki/8.-Get-Involved" class="wiki-page-link">8. Get Involved</a></strong>
+    </li>
+</ul>
+</li>
+</ul>
 Changelog:
 =========
 
@@ -49,48 +88,6 @@ Patch v3.1.0.4:
 7. Fixes issues with property maps not being defined correctly and correct casting of boolean property defaults.
 8. Adds MongoIndexer singleton to delegate index management away from Entity instances.
 
-
-
-
-- <strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.
-
-<ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
-<li>
-  <strong><a href="/jclausen/cbmongodb/wiki" class="wiki-page-link">Wiki Home</a></strong>
-      <ul>
-      <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/1.-Installation" class="wiki-page-link">1. Installation</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/2B.-Loading-and-Querying-Documents" class="wiki-page-link">2B. Loading and Querying Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/3.-Geospatial-Functions" class="wiki-page-link">3. Geospatial Functions</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/4.-Aggregation" class="wiki-page-link">4. Aggregation</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/6.-Advanced-Usage" class="wiki-page-link">6. Advanced Usage</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/7.-Issues" class="wiki-page-link">7. Issues</a></strong>
-    </li>
-    <li>
-      <strong><a href="/jclausen/cbmongodb/wiki/8.-Get-Involved" class="wiki-page-link">8. Get Involved</a></strong>
-    </li>
-</ul>
-</li>
-</ul>
 
 Issues
 --------------
