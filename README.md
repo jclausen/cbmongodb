@@ -53,6 +53,7 @@ Changelog:
 ----------
 
 **Release v3.2.0.0**
+
 1. Updates MongoDB Java driver to version 3.2.0
 2. Adds support for readConcern configuration option
 
