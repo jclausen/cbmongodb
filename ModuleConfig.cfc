@@ -126,7 +126,9 @@ component{
 	* CBMongoDB Module Deactivation - Fired when the module is unloaded
 	*/
 	function onUnload(){
-		Wirebox.getInstance("MongoClient@cbmongodb").close();
+		if(Wirebox.containsInstance("MongoClient@cbmongodb")){
+			Wirebox.getInstance("MongoClient@cbmongodb").close();		
+		}
 	}
 
 	/**
