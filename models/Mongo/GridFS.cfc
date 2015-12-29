@@ -4,7 +4,6 @@
 *
 * Processes Mongo GridFS Transactions
 *
-* @singleton
 * @package cbmongodb.models.Mongo
 * @author Jon Clausen <jon_clausen@silowebworks.com>
 * @license Apache v2.0 <http://www.apache.org/licenses/>
