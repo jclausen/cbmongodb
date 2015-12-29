@@ -532,12 +532,17 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function getPropertyDefault(prop){
 		var empty_string='';
 		if(structKeyExists(prop,'default')){
-			switch(prop.validate){
-				case "boolean":
-					return javacast('boolean',prop.default);
-				default:
-					return prop.default;
+			if(structKeyExists(prop,'validate')){
+				switch(prop.validate){
+					case "boolean":
+						return javacast('boolean',prop.default);
+					default:
+						return prop.default;
+				}	
+			} else {
+				return prop.default;
 			}
+			
 		} else if(structKeyExists(prop,'validate')) {
 			switch(prop.validate){
 				case 'string':
