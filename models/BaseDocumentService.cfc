@@ -223,7 +223,11 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	boolean function hasExistingAccessor(required string suffix){
-		var functions = getMetaData(this).functions;
+		if(structKeyExists(getMetadata(this),'functions')){
+			var functions = getMetaData(this).functions;
+		} else{
+			functions = [];
+		}
 		if(arrayContains(functions,'set' & suffix) || arrayContains(functions,'get' & suffix)){
 			return true;
 		} else {
