@@ -144,7 +144,12 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function detect(){
 
 		var properties=getMetaData(this).properties;
-
+		//add our extended properties in case there are schema items
+		if(structKeyExists(getMetaData(this),'extends') && structKeyExists(getMetaData(this).extends,'properties')){
+			var extendedProperties = getMetaData(this).extends.properties;
+			arrayAppend(properties,extendedProperties,true);
+		}
+		
 		for(var prop in properties){
 			
 			if(structKeyExists(prop,'schema') and prop.schema){
