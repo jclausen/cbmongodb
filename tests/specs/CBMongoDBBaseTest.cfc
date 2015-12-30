@@ -5,6 +5,7 @@ component name="CBMongoDBBaseTest" extends="testbox.system.BaseSpec"{
 	property name="People" inject="People@CBMongoTestMocks";
 	property name="States" inject="States@CBMongoTestMocks";
 	property name="Counties" inject="Counties@CBMongoTestMocks";
+	property name="FileEntity" inject="Files@CBMongoTestMocks";
 		
 	function beforeAll(){
 		
