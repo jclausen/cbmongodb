@@ -78,9 +78,8 @@ component{
 	 	
 
 		/**
-		* Singletons
+		* Main Configuration Object Singleton
 		**/
-		//configuration object
 		binder.map("MongoConfig@cbmongodb")
 			.to('cbmongodb.models.Mongo.Config')
 			.initWith(VARIABLES.MongoDBConfig)
@@ -101,13 +100,23 @@ component{
 			.to("cbmongodb.models.Mongo.Indexer")
 			.asSingleton();
 
+		/**
+		* Manual Instantiation Instances
+		**/
+
 		//models.Mongo.Collection
 		binder.map("MongoCollection@cbmongodb")
 			.to('cbmongodb.models.Mongo.Collection')
 			.noInit();
 
+
+		//models.Mongo.GridFS
+		binder.map("GridFS@cbmongodb")
+			.to('cbmongodb.models.Mongo.GridFS')
+			.noInit();
+
 		/**
-		* Mongo Client Singleton
+		* The Mongo Client Singleton
 		**/
 		binder.map( "MongoClient@cbmongodb" )
 			.to( "cbmongodb.models.Mongo.Client" )
@@ -120,6 +129,7 @@ component{
 		binder.map("People@CBMongoTestMocks").to("cbmongodb.tests.mocks.ActiveEntityMock");
 		binder.map("Counties@CBMongoTestMocks").to("cbmongodb.tests.mocks.CountiesMock");
 		binder.map("States@CBMongoTestMocks").to("cbmongodb.tests.mocks.StatesMock");
+		binder.map("Files@CBMongoTestMocks").to("cbmongodb.tests.mocks.FileEntityMock");
 	}
 
 	/**
@@ -168,6 +178,19 @@ component{
 			permitTests = true,
 			//whether to permit generic API access (future implementation)
 			permitAPI = true,
+			//GridFS settings - this key is omitted by default
+			//GridFS = {
+				// "imagestorage":{
+				// 	//whether to store the cfimage metadata
+				// 	"metadata":true,
+				// 	//the max allowed width of images in the GridFS store
+				// 	"maxwidth":1000,
+				// 	//the max allowed height of images in the GridFS store
+				// 	"maxheight":1000,
+				// 	//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
+				// 	"tmpDirectory":"/includes/tmp/"
+				// }
+			//}
 		};
 
 		// Incorporate settings
