@@ -20,7 +20,7 @@
 	"contributors"		: [
 		"Jon Clausen <jon_clausen@silowebworks.com"
 	],
-	"ignore"			: [],
+	"ignore"			: ['tests/assets'],
 	"testbox"			: {
 		"runner" : ['tests/runner.cfm']
 	},

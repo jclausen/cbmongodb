@@ -30,7 +30,7 @@ component name="TestModelFileEntity" extends="cbmongodb.tests.specs.CBMongoDBBas
 				expect(FileEntity.isValid()).toBeFalse();
 				var testFiles = DirectoryList(path=expandPath('/cbmongodb/tests/assets'),filter="*.jpeg");
 				//make sure we have at least two files to test
-				expect(arrayLen(testFiles)).toBeGT(1);
+				expect(arrayLen(testFiles)).toBeGT(1,"Test image files were not found to test GridFS methods. You may add your own images to /cbmongodb/tests/assets/ to test the GridFS functionality");
 				var testFile1 = testFiles[1];
 				var testFile2 = testFiles[2];
 				//now set some file associations
