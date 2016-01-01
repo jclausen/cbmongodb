@@ -88,11 +88,15 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 						expect(arrayLen(model.getValidationResults().errors)).toBe(8);
 					});
 					it('Tests entity insert operations', function(){
+						//ensure we have an empty collection
+						model.reset().delete(truncate=true);
+						expect(model.count()).toBe(0)
 						expect(model.reset().populate(variables.people.getTestDocument())).toBeComponent();
 						var document_id=model.create();
 						expect(document_id).toBeString();
 						//test entity load
 						expect(model.reset().load(document_id).loaded()).toBeTrue();
+						
 						expect(model.whereNotI().count()).toBe(0);
 
 						describe("Test auto-normalization",function(){							
