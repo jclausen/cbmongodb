@@ -144,6 +144,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
+			if(key == '_id') ARGUMENTS.value = getMongoUtil().newObjectIdFromId(ARGUMENTS.value);
 			var criteria=this.get_criteria();
 			switch(ARGUMENTS.operator){
 				case '!=':
@@ -294,7 +295,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		
 		} else if(!this.loaded() and !this.criteriaExists() and truncate){
 			//authorized truncation
-			this.getDBInstance().remove();
+			this.getDBInstance().remove(criteria={});
 		
 		} else if(this.loaded()) {
 			//defaults to delete by the loaded id
