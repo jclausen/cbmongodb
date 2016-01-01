@@ -44,7 +44,21 @@ component name="TestModelFileEntity" extends="cbmongodb.tests.specs.CBMongoDBBas
 				Expect(FileEntity.loaded()).toBeTrue();
 
 				describe("Tests the ability to retreive and update File Entities",function(){
-					it("Tests the baility to update a File Entity",function(){
+					it("Tests file eviction",function(){
+						var retrieved = FileEntity.reset().load(fileEntityId);
+						expect(isNull(retrieved.getGFSFileObject())).toBeTrue();
+						
+						//retrieving our extension will scope the variable
+						var fileExtension = retrieved.getExtension();
+						expect(isNull(retrieved.getGFSFileObject())).toBeFalse();
+						
+						//reset() will call the evict() overload
+						retrieved.reset();
+						expect(retrieved.loaded()).toBeFalse();
+						expect(isNull(retrieved.getGFSFileObject())).toBeTrue();
+
+					});
+					it("Tests the ability to update a File Entity",function(){
 						var retrieved = FileEntity.reset().load(fileEntityId);
 						expect(retrieved.loaded()).toBeTrue();
 
@@ -58,6 +72,74 @@ component name="TestModelFileEntity" extends="cbmongodb.tests.specs.CBMongoDBBas
 						expect(retrieved.getFileId() == file1Id).toBeFalse();
 
 						expect(isNull(retrieved.getGridFSInstance().findById(file1Id))).toBeTrue();
+					});
+
+
+					it("Tests the ability to write a GridFS entity to a file",function(){
+						var writeable = FileEntity.reset().load(fileEntityId);
+						var fileId = writeable.getFileId();
+						var fileExtension = writeable.getExtension();
+						var fileObj = writeable.getFileObject();
+						var fileName = "BDDTestImage#writeable.getFileId()#.#fileExtension#";
+						var filePath = expandPath('/cbmongodb/tests/assets/tmp');
+						if(!directoryExists(filePath)) directoryCreate(filePath);
+
+						var written = writeable.writeTo(filePath & '/' & fileName);
+
+						expect(written).toBe(filePath & '/' & fileName);
+						expect(fileExists(filePath & '/' & fileName)).toBeTrue();
+
+						fileDelete(filePath & '/' & fileName);
+
+						//now test with just the directory as the path
+						var written = writeable.writeTo(filePath);
+						expect(listLast(written,'/')).toBe(fileId & '.' &fileExtension);
+						expect(fileExists(written)).toBeTrue();
+
+						fileDelete(written);
+
+					});
+
+					it("Tests image-specific functions for a GridFS image",function(){
+
+						var retrieved = FileEntity.reset().load(fileEntityId);
+						
+						//pull an image object test our native image methods
+						var imgObj = retrieved.getImageObject();
+
+						expect(getMetaData(imgObj).name).toBe('javaxt.io.Image');
+
+						//test our other metadata types
+						var BufferedImage = retrieved.getBufferedImage();
+						expect(getMetaData(BufferedImage).name).toBe('java.awt.image.BufferedImage');
+
+						var ImageGraphics = retrieved.getImageGraphics();
+						expect(getMetaData(ImageGraphics).name).toBe('sun.java2d.SunGraphics2D');
+
+						var CFImage = retrieved.getCFImage();
+						expect(CFImage).toBeStruct();
+
+						//grab our original height and width
+						var originalHeight = imgObj.getHeight();
+						var originalWidth = imgObj.getWidth();
+
+						//scale without crop
+						imgObj.setHeight(100);
+						imgObj.setWidth(100);
+						expect(imgObj.getHeight()).toBeLTE(100);
+						expect(imgObj.getWidth()).toBeLTE(100);
+						var imgHeight = imgObj.getHeight();
+						imgObj.rotate(90);
+						expect(imgObj.getWidth()).toBe(imgHeight);
+
+						//now create a 100x100 image cropped from center
+						var imgObj = retrieved.getImageObject(100,100,originalWidth/2,originalHeight/2);
+						expect(imgObj.getHeight()).toBe(100);
+						expect(imgObj.getWidth()).toBe(100);
+						
+
+
+
 					});
 
 					it("Test the ability to delete a File Entity",function(){

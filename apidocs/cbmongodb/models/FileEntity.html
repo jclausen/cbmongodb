@@ -461,6 +461,49 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="FileEntity.html#GFSFileObject()">GFSFileObject</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="FileEntity.html#GridFS()">GridFS</A></strong> 
 			<br>
 			
@@ -518,6 +561,53 @@ File Entity object for MongoDB GridFS File Storage</p>
 			
 				
 			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#jLoader()">jLoader</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = loader@cbjavaloader</li>
 				
 			
 				
@@ -651,11 +741,86 @@ File Entity object for MongoDB GridFS File Storage</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#evict()">evict</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Overload to evict().
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
 			<code>string</code>
 		</td>
 		<td>
 			<strong><a href="FileEntity.html#getBucketName()">getBucketName</A></strong>()
 			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getBufferedImage()">getBufferedImage</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the buffered image object for accessing the raw pixels of an image.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getCFImage()">getCFImage</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a native CFML Image from the GridFS file.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getExtension()">getExtension</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the file extension of the stored GridFS file.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getFile()">getFile</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Convenience alias for getFileObject().
 			
 		</td>
 	</tr>
@@ -680,6 +845,21 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="FileEntity.html#getFileInputStream()">getFileInputStream</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Java file output stream for the GridFS file object, which may be used for advanced operations.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="FileEntity.html#getFileObject()">getFileObject</A></strong>()
 			<br>
 			
@@ -692,13 +872,11 @@ File Entity object for MongoDB GridFS File Storage</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#getFileOutputStream()">getFileOutputStream</A></strong>()
+			<strong><a href="FileEntity.html#getFilePath()">getFilePath</A></strong>()
 			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Java file output stream for the GridFS file object.
 			
 		</td>
 	</tr>
@@ -710,7 +888,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#getFilePath()">getFilePath</A></strong>()
+			<strong><a href="FileEntity.html#getGFSFileObject()">getGFSFileObject</A></strong>()
 			<br>
 			
 		</td>
@@ -737,6 +915,62 @@ File Entity object for MongoDB GridFS File Storage</p>
 		</td>
 		<td>
 			<strong><a href="FileEntity.html#getGridFSInstance()">getGridFSInstance</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getImageGraphics()">getImageGraphics</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Buffered Image 2DGraphics object.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getImageObject()">getImageObject</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a javaxt.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getJLoader()">getJLoader</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getMimeType()">getMimeType</A></strong>()
 			<br>
 			
 		</td>
@@ -831,6 +1065,19 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="FileEntity.html#setGFSFileObject()">setGFSFileObject</A></strong>(any GFSFileObject)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="FileEntity.html#setGridFS()">setGridFS</A></strong>(any GridFS)
 			<br>
 			
@@ -857,8 +1104,66 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
+			<strong><a href="FileEntity.html#setJLoader()">setJLoader</A></strong>(any jLoader)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
 			<strong><a href="FileEntity.html#setMongoConfig()">setMongoConfig</A></strong>(any MongoConfig)
 			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>private&nbsp;any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#throwFileMissing()">throwFileMissing</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Throws an error that the file is missing from the GridFS bucket.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>void</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#writeImageToBrowser()">writeImageToBrowser</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'], [any mimeType], [any expiration])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Writes an image directly to the browser and aborts the remainder of the request.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#writeTo()">writeTo</A></strong>(string Path, struct imageArgs='[runtime expression]')
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write the stored GridFS file to a path with optional image transformation arguments.
 			
 		</td>
 	</tr>
@@ -944,12 +1249,6 @@ File Entity object for MongoDB GridFS File Storage</p>
 				
 					
 					
-					
-						
-					
-					
-					
-					
 				
 					
 					
@@ -1298,7 +1597,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 				
 				
 				
-					<a href="../..//cbmongodb/models/ActiveEntity.html#clearScope()">clearScope</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#count()">count</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#create()">create</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#createValidationError()">createValidationError</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#criteriaExists()">criteriaExists</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#entity()">entity</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#evict()">evict</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#exists()">exists</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#fieldIsValid()">fieldIsValid</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#find()">find</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#findAll()">findAll</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_criteria()">get_criteria</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_keys()">get_keys</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_limit()">get_limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_offset()">get_offset</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_operators()">get_operators</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_sort()">get_sort</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getValidationErrors()">getValidationErrors</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getValidationResults()">getValidationResults</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getXCollection()">getXCollection</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getXReduce()">getXReduce</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#isValid()">isValid</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#join()">join</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#limit()">limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#loaded()">loaded</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#mr()">mr</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#newValidation()">newValidation</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#on()">on</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#order()">order</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#query()">query</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#reload()">reload</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#resetQuery()">resetQuery</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#save()">save</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#scopeEntity()">scopeEntity</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_criteria()">set_criteria</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_keys()">set_keys</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_limit()">set_limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_offset()">set_offset</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_operators()">set_operators</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_sort()">set_sort</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#setXCollection()">setXCollection</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#setXReduce()">setXReduce</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#update()">update</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#where()">where</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#whereNotI()">whereNotI</a>
+					<a href="../..//cbmongodb/models/ActiveEntity.html#clearScope()">clearScope</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#count()">count</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#create()">create</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#createValidationError()">createValidationError</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#criteriaExists()">criteriaExists</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#entity()">entity</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#exists()">exists</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#fieldIsValid()">fieldIsValid</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#find()">find</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#findAll()">findAll</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_criteria()">get_criteria</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_keys()">get_keys</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_limit()">get_limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_offset()">get_offset</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_operators()">get_operators</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_sort()">get_sort</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getValidationErrors()">getValidationErrors</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getValidationResults()">getValidationResults</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getXCollection()">getXCollection</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getXReduce()">getXReduce</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#isValid()">isValid</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#join()">join</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#limit()">limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#loaded()">loaded</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#mr()">mr</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#newValidation()">newValidation</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#on()">on</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#order()">order</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#query()">query</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#reload()">reload</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#resetQuery()">resetQuery</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#save()">save</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#scopeEntity()">scopeEntity</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_criteria()">set_criteria</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_keys()">set_keys</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_limit()">set_limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_offset()">set_offset</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_operators()">set_operators</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_sort()">set_sort</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#setXCollection()">setXCollection</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#setXReduce()">setXReduce</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#update()">update</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#where()">where</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#whereNotI()">whereNotI</a>
 				
 			</td>
 		</tr>
@@ -2000,6 +2299,42 @@ File Entity object for MongoDB GridFS File Storage</p>
 		<hr>
 	
 		
+		<a name="GFSFileObject()"><!-- --></a>
+		<h3>GFSFileObject</h3>
+
+		<kbd>
+			property any 
+			<strong>GFSFileObject</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
 		<a name="GridFS()"><!-- --></a>
 		<h3>GridFS</h3>
 
@@ -2061,6 +2396,46 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<dd><code>required</code> - false</dd>
 			
 		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="jLoader()"><!-- --></a>
+		<h3>jLoader</h3>
+
+		<kbd>
+			property any 
+			<strong>jLoader</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+			<dd><code>inject</code> - loader@cbjavaloader</dd>
 			
 		
 			
@@ -2183,6 +2558,45 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<hr>
 
 	
+	<a name="evict()"><!-- --></a>
+	<h3>evict</h3>
+	
+	<kbd>public any <strong>evict</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Overload to evict()</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+		<dl>
+			<dt><strong>Overrides:</strong></dt>
+			<dd>
+			<code>
+			<a href="../..//cbmongodb/models/ActiveEntity.html#evict()">evict</a></code>
+			in class
+			<code>
+				<a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">ActiveEntity</a>
+			</code>
+			</dd>
+		</dl>
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getBucketName()"><!-- --></a>
 	<h3>getBucketName</h3>
 	
@@ -2208,6 +2622,140 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<hr>
 
 	
+	<a name="getBufferedImage()"><!-- --></a>
+	<h3>getBufferedImage</h3>
+	
+	<kbd>public any <strong>getBufferedImage</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the buffered image object for accessing the raw pixels of an image</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getCFImage()"><!-- --></a>
+	<h3>getCFImage</h3>
+	
+	<kbd>public any <strong>getCFImage</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns a native CFML Image from the GridFS file</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getExtension()"><!-- --></a>
+	<h3>getExtension</h3>
+	
+	<kbd>public any <strong>getExtension</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the file extension of the stored GridFS file</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFile()"><!-- --></a>
+	<h3>getFile</h3>
+	
+	<kbd>public any <strong>getFile</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Convenience alias for getFileObject()</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="getFileId()"><!-- --></a>
 	<h3>getFileId</h3>
 	
@@ -2215,6 +2763,33 @@ File Entity object for MongoDB GridFS File Storage</p>
 	
 	<br><br>
 
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFileInputStream()"><!-- --></a>
+	<h3>getFileInputStream</h3>
+	
+	<kbd>public any <strong>getFileInputStream</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the Java file output stream for the GridFS file object, which may be used for advanced operations</p>
 	
 
 	
@@ -2260,15 +2835,13 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<hr>
 
 	
-	<a name="getFileOutputStream()"><!-- --></a>
-	<h3>getFileOutputStream</h3>
+	<a name="getFilePath()"><!-- --></a>
+	<h3>getFilePath</h3>
 	
-	<kbd>public any <strong>getFileOutputStream</strong>()</kbd>
+	<kbd>public string <strong>getFilePath</strong>()</kbd>
 	
 	<br><br>
 
-	
-		<p>Returns the Java file output stream for the GridFS file object</p>
 	
 
 	
@@ -2287,10 +2860,10 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<hr>
 
 	
-	<a name="getFilePath()"><!-- --></a>
-	<h3>getFilePath</h3>
+	<a name="getGFSFileObject()"><!-- --></a>
+	<h3>getGFSFileObject</h3>
 	
-	<kbd>public string <strong>getFilePath</strong>()</kbd>
+	<kbd>public string <strong>getGFSFileObject</strong>()</kbd>
 	
 	<br><br>
 
@@ -2341,6 +2914,137 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<h3>getGridFSInstance</h3>
 	
 	<kbd>public string <strong>getGridFSInstance</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getImageGraphics()"><!-- --></a>
+	<h3>getImageGraphics</h3>
+	
+	<kbd>public any <strong>getImageGraphics</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the Buffered Image 2DGraphics object</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getImageObject()"><!-- --></a>
+	<h3>getImageObject</h3>
+	
+	<kbd>public any <strong>getImageObject</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns a javaxt.io.Image object from the GridFS file 
+Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javaxt.io&class=Image</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getJLoader()"><!-- --></a>
+	<h3>getJLoader</h3>
+	
+	<kbd>public string <strong>getJLoader</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getMimeType()"><!-- --></a>
+	<h3>getMimeType</h3>
+	
+	<kbd>public any <strong>getMimeType</strong>()</kbd>
 	
 	<br><br>
 
@@ -2555,6 +3259,38 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<hr>
 
 	
+	<a name="setGFSFileObject()"><!-- --></a>
+	<h3>setGFSFileObject</h3>
+	
+	<kbd>public any <strong>setGFSFileObject</strong>(any GFSFileObject)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>GFSFileObject</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="setGridFS()"><!-- --></a>
 	<h3>setGridFS</h3>
 	
@@ -2619,6 +3355,38 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<hr>
 
 	
+	<a name="setJLoader()"><!-- --></a>
+	<h3>setJLoader</h3>
+	
+	<kbd>public any <strong>setJLoader</strong>(any jLoader)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>jLoader</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
 	<a name="setMongoConfig()"><!-- --></a>
 	<h3>setMongoConfig</h3>
 	
@@ -2641,6 +3409,113 @@ File Entity object for MongoDB GridFS File Storage</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>MongoConfig</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="throwFileMissing()"><!-- --></a>
+	<h3>throwFileMissing</h3>
+	
+	<kbd>private any <strong>throwFileMissing</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Throws an error that the file is missing from the GridFS bucket</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="writeImageToBrowser()"><!-- --></a>
+	<h3>writeImageToBrowser</h3>
+	
+	<kbd>public void <strong>writeImageToBrowser</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'], [any mimeType], [any expiration])</kbd>
+	
+	<br><br>
+
+	
+		<p>Writes an image directly to the browser and aborts the remainder of the request</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
+		
+		<dd><code>mimeType</code></dd>
+		
+		<dd><code>expiration</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="writeTo()"><!-- --></a>
+	<h3>writeTo</h3>
+	
+	<kbd>public any <strong>writeTo</strong>(string Path, struct imageArgs='[runtime expression]')</kbd>
+	
+	<br><br>
+
+	
+		<p>Write the stored GridFS file to a path with optional image transformation arguments</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>Path</code></dd>
+		
+		<dd><code>imageArgs</code></dd>
 		
 		</dl>
 	

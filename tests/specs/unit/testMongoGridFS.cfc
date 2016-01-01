@@ -36,6 +36,7 @@ component name="TestGridFS" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
 					expect(fileInfo).toHaveKey('mimetype');
 					expect(fileInfo).toHaveKey('extension');
 					expect(isNull(fileRetrieved)).toBeFalse();
+
 					expect(fileRetrieved.getId().toString()).toBe(created);
 					//findOne()
 					var fileFindOne = GFSInstance.findOne({"_id":created});

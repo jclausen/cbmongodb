@@ -18,8 +18,13 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	property name="MongoConfig" inject="MongoConfig@cbmongodb";
 	//Our GridFS Object (uninstantiated)
 	property name="GridFS" inject="GridFS@cbmongodb";
+	//Javaloader
+	property name="jLoader" inject="loader@cbjavaloader";
+
 	//Placeholder for the instantiated GridFS Instance
 	property name="GridFSInstance";
+	//Placeholder for activeEntity fileObject
+	property name="GFSFileObject";
 
 	//The GridFS FileID Property
 	property name="fileId" schema=true required=true;
@@ -42,6 +47,14 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 
 		return this;
 
+	}
+
+	/**
+	* Overload to evict()
+	**/
+	public function evict(){
+		VARIABLES.GFSFileObject = javacast('null',0);
+		return super.evict();
 	}
 
 	/**
@@ -70,6 +83,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	**/
 	boolean function delete(truncate=false){
 		if(this.loaded()){
+			VARIABLES.GFSFileObject = javacast('null',0);
 			GridFSInstance.removeById(getFileId());
 		}
 		return super.delete(argumentCollection=arguments);
@@ -79,23 +93,176 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* Alias for loadFile()
 	**/
 	public function setFile(required string filePath,deleteFile=false){
+		VARIABLES.GFSFileObject = javacast('null',0);
 		return this.loadFile(argumentCollection=arguments);
 	}
+
 
 	/**
 	* Gets the core MongoDB GridFS file object - http://api.mongodb.org/java/current/com/mongodb/gridfs/GridFSFile.html
 	**/
 	public function getFileObject(){
-		return GridFSInstance.findById(getFileId());
+		if(isNull(getGFSFileObject())){
+			setGFSFileObject(GridFSInstance.findById(getFileId()));
+		}
+		return getGFSFileObject();
 	}
 
 	/**
-	* Returns the Java file output stream for the GridFS file object
+	* Convenience alias for getFileObject()
 	**/
-	public function getFileOutputStream(){
-		var gfsFile = getFile();
-		if(isNull(gfsFile)) throw("The GridFS file with the id #this.getFileId()# could not be found in the bucket #getBucketName()#");
-
-		return gfsFile.getOutputStream();
+	public function getFile(){
+		return getFileObject();
 	}
+
+	/**
+	* Returns the file extension of the stored GridFS file
+	**/
+	public function getExtension(){
+		var gfsFile = getFileObject();
+		if(isNull(gfsFile)) throwFileMissing();
+
+		return gfsFile.get('fileInfo')['extension'];
+	}
+
+	public function getMimeType(){
+		var gfsFile = getFileObject();
+		if(isNull(gfsFile)) throwFileMissing();
+		return gfsFile.get('fileInfo')['mimetype'];	
+	}
+
+
+	/**
+	* Returns the Java file output stream for the GridFS file object, which may be used for advanced operations
+	**/
+	public function getFileInputStream(){
+		var gfsFile = getFileObject();
+		if(isNull(gfsFile)) throwFileMissing();
+
+		return gfsFile.getInputStream();
+	}
+
+
+	/**
+	* Write the stored GridFS file to a path with optional image transformation arguments
+	* @param string Path 		Either the full path of the image or a directory to save the image to.  If a directory is provided, the fileId will be used.
+	* @param string imageArgs 	The standard sizing and image options (e.g. - {width:100,height:100,x:100,y:100}) see getImageObject() for additional information
+	**/
+	public function writeTo(required string Path,required struct imageArgs={}){
+		var gfsFile = getFileObject();
+		var fileInfo = gfsFile.get('fileInfo');
+
+		//if we have a directory, use our file name
+		if(directoryExists(ARGUMENTS.Path)){
+			var fileName = this.getFileId() & '.' & fileInfo['extension'];
+			ARGUMENTS.Path &= '/' & fileName;
+		}
+
+		if(listLast(ARGUMENTS.Path,'.') != fileInfo['extension']) ARGUMENTS.PATH &= '.'&fileInfo['extension'];
+
+		getImageObject(argumentCollection = imageArgs).saveAs(ARGUMENTS.path);
+
+		return ARGUMENTS.Path;
+	}
+
+	/**
+	* Image-specfic functions
+	**/
+
+	/**
+	* 
+	* Writes an image directly to the browser and aborts the remainder of the request
+	* 
+	* @param numeric width 			The maximum width of the image
+	* @param numeric height 		The maximum height of the image
+	* @param numeric x				The x offset from the upper left corner to crop the image
+	* @param numeric y				The y offset from the upper left corner to crop the image 
+	* @param string mimeType 		The mimetype to serve the image - will convert the original mime type to the destination (e.g. - jpg to png)
+	* @param Date expiration 		An optional expiration date to specify in the header for the image content
+	**/
+	public void function writeImageToBrowser(numeric width,numeric height,numeric x=0,numeric y=0,mimeType,expiration){
+		
+		if(!isNull(expiration) and isDate(ARGUMENTS.expiration)){
+			expirationSeconds = dateDiff('s',now(),ARGUMENTS.expiration);
+			cfheader(name="expires",value=GetHTTPTimeString(ARGUMENTS.expiration));
+			cfheader(name="cache-control",value="max-age=#expirationSeconds#");
+		}
+		if(isNull(ARGUMENTS.mimeType)) ARGUMENTS.mimeType = getMimeType();
+
+		var response = getPageContext().getResponse();
+		response.setHeader('Content-Type', ARGUMENTS.mimeType);
+
+		ImageIO = jLoader.create("javax.imageio.ImageIO");
+		ImageIO.write(getBufferedImage(argumentCollection=arguments),listLast(ARGUMENTS.mimeType,'/'),response.getOutputStream());
+		ImageIO.close();
+	    abort;
+	}
+
+	/**
+	* Returns a native CFML Image from the GridFS file
+	* 
+	* @param numeric width 		The maximum width of the image
+	* @param numeric height 	The maximum height of the image
+	* @param numeric x			The x offset from the upper left corner to crop the image
+	* @param numeric y			The y offset from the upper left corner to crop the image
+	**/
+	public any function getCFImage(numeric width,numeric height,numeric x=0,numeric y=0) {
+		return imageNew(getBufferedImage(argumentCollection=arguments));
+	}
+
+	/**
+	* Returns a javaxt.io.Image object from the GridFS file 
+	* Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javaxt.io&class=Image
+	* 
+	* @param numeric width 		The maximum width of the image
+	* @param numeric height 	The maximum height of the image
+	* @param numeric x			The x offset from the upper left corner to crop the image
+	* @param numeric y			The y offset from the upper left corner to crop the image
+	**/
+	public any function getImageObject(numeric width,numeric height,numeric x=0,numeric y=0){
+		var ImageIO = jLoader.create("javaxt.io.Image").init(getFileInputStream());
+
+		if(ARGUMENTS.x + ARGUMENTS.y <> 0){
+			if(isNull(ARGUMENTS.height)) ARGUMENTS.height = ImageIO.getHeight()-ARGUMENTS.y;
+			if(isNull(ARGUMENTS.width)) ARGUMENTS.width = ImageIO.getWidth()-ARGUMENTS.x;
+			ImageIO.crop(ARGUMENTS.x,ARGUMENTS.y,ARGUMENTS.width,ARGUMENTS.height);
+		} else {
+			if(!isNull(ARGUMENTS.height)) ImageIO.setHeight(ARGUMENTS.height);
+			if(!isNull(ARGUMENTS.width)) ImageIO.setWidth(ARGUMENTS.width);
+		}
+
+		return ImageIO;
+	}
+
+	/**
+	* Returns the buffered image object for accessing the raw pixels of an image
+	* 
+	* @param numeric width 		The maximum width of the image
+	* @param numeric height 	The maximum height of the image
+	* @param numeric x			The x offset from the upper left corner to crop the image
+	* @param numeric y			The y offset from the upper left corner to crop the image
+	**/
+	public function getBufferedImage(numeric width,numeric height,numeric x=0,numeric y=0){
+		return getImageObject(argumentCollection=arguments).getBufferedImage();
+	}
+
+	/**
+	* Returns the Buffered Image 2DGraphics object
+	* 
+	* @param numeric width 		The maximum width of the image
+	* @param numeric height 	The maximum height of the image
+	* @param numeric x			The x offset from the upper left corner to crop the image
+	* @param numeric y			The y offset from the upper left corner to crop the image
+	**/
+	public function getImageGraphics(numeric width,numeric height,numeric x=0,numeric y=0){
+		return getBufferedImage(argumentCollection=arguments).getGraphics();
+	}
+
+	/**
+	* Throws an error that the file is missing from the GridFS bucket
+	**/
+	private function throwFileMissing(){
+		throw("The GridFS file with the id #this.getFileId()# could not be found in the bucket #getBucketName()#")
+	}
+
 }
