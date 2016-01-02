@@ -9,9 +9,14 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 
 Changelog:
 ----------
+
 **Patch v3.2.0.1**
 
-1. Adds GridFS Support and FileEntity for Active Record Management of GridFS files
+1. Fixes issues with module load/unload connection operations
+2. Adds GridFS operational support
+3. Adds GridFS FileEntity model
+4. Fixes issues with `_id` queries not being typed appropriately
+5. Fixes error when attempting to truncate a collection
 
 **Release v3.2.0.0**
 
@@ -52,6 +57,7 @@ Changelog:
 12. Re-factors Test Suite to Require the Framework Context
 13. Adds an asJSON argument to find() and findAll() entity queries
 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
+
 
 Documentation
 -------------
