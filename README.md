@@ -116,8 +116,5 @@ Getting Involved
 
 Fork -- Commit -- Request a pull, contributions are welcome. For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/) would be peachy.  Feel free to add issues or feature suggestions as they arise in your development. 
 
-------------------------------------------------------------
 
-<a id="fn1"></a>
-<sup>1</sup> <small>Valid operators currently include "=","!=","<",">",">=","<=","IN" and "Exists"</small>
 
