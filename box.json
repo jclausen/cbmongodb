@@ -20,9 +20,9 @@
 	"contributors"		: [
 		"Jon Clausen <jon_clausen@silowebworks.com"
 	],
-	"ignore"			: ['tests/assets'],
+	"ignore"			: ["tests/assets"],
 	"testbox"			: {
-		"runner" : ['tests/runner.cfm']
+		"runner" : ["tests/runner.cfm"]
 	},
 	"dependencies" 	:{
 		"cbjavaloader" : "1.0.0"

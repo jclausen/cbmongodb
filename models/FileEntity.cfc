@@ -145,29 +145,29 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 
 	/**
 	* Write the stored GridFS file to a path with optional image transformation arguments
-	* @param string Path 		Either the full path of the image or a directory to save the image to.  If a directory is provided, the fileId will be used.
-	* @param string imageArgs 	The standard sizing and image options (e.g. - {width:100,height:100,x:100,y:100}) see getImageObject() for additional information
+	* @param string destination 	Either the full path of the image or a directory to save the image to.  If a directory is provided, the fileId will be used.
+	* @param string imageArgs 		The standard sizing and image options (e.g. - {width:100,height:100,x:100,y:100}) see getImageObject() for additional information
 	**/
-	public function writeTo(required string Path,required struct imageArgs={}){
+	public function writeTo(required string destination,required struct imageArgs={}){
 		var gfsFile = getFileObject();
 		var fileInfo = gfsFile.get('fileInfo');
 		var imageFormats = listToArray(lcase(getReadableImageFormats()));
 
 		//if we have a directory, use our file name
-		if(directoryExists(ARGUMENTS.Path)){
+		if(directoryExists(ARGUMENTS.destination)){
 			var fileName = this.getFileId() & '.' & fileInfo['extension'];
-			ARGUMENTS.Path &= '/' & fileName;
+			ARGUMENTS.destination &= '/' & fileName;
 		}
 
-		if(listLast(ARGUMENTS.Path,'.') != fileInfo['extension']) ARGUMENTS.PATH &= '.'&fileInfo['extension'];
+		if(listLast(ARGUMENTS.destination,'.') != fileInfo['extension']) ARGUMENTS.destination &= '.'&fileInfo['extension'];
 
 		if(arrayFind(imageFormats,getMimeType())){
-			getImageObject(argumentCollection = imageArgs).saveAs(ARGUMENTS.path);	
+			getImageObject(argumentCollection = imageArgs).saveAs(ARGUMENTS.destination);	
 		} else {
-			gfsFile.writeTo(ARGUMENTS.path);
+			gfsFile.writeTo(ARGUMENTS.destination);
 		}
 
-		return ARGUMENTS.Path;
+		return ARGUMENTS.destination;
 	}
 
 	/**
