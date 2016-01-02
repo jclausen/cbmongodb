@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>ActiveEntity</title>
+	<title>FileEntity</title>
 	<meta name="keywords" content="cbmongodb.models.concurrent.Callable interface">
 	<!-- common assets -->
 	
@@ -96,7 +96,7 @@ $(document).ready(function() {
 	      	</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../../index.html?cbmongodb/models/ActiveEntity.html" target="_top">
+				<li><a href="../../index.html?cbmongodb/models/FileEntity.html" target="_top">
 					<i class="glyphicon glyphicon-fullscreen"></i> Frames
 					</a>
 				</li>
@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 Class
 
- ActiveEntity</h2>
+ FileEntity</h2>
 
 
 
@@ -131,6 +131,14 @@ Class
 
 
 	
+		
+	
+	
+
+	
+		
+		
+			
 		
 	
 	
@@ -155,7 +163,8 @@ Class
 <!-- Inheritance Tree-->
 <pre>lucee.Component
         <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">cbmongodb.models.BaseDocumentService</a>
-            <img src="../../resources/inherit.gif" alt="extended by ">cbmongodb.models.ActiveEntity
+            <img src="../../resources/inherit.gif" alt="extended by "><a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">cbmongodb.models.ActiveEntity</a>
+                <img src="../../resources/inherit.gif" alt="extended by ">cbmongodb.models.FileEntity
 </pre>
 
 <div class="panel panel-default">
@@ -264,13 +273,7 @@ Class
   	<div class="panel-body">
 	
 		
-		<a href="../..//cbmongodb/models/FileEntity.html" title="class in cbmongodb.models">FileEntity</a>
-	
-		,
-		<a href="../..//cbmongodb/models/GEOEntity.html" title="class in cbmongodb.models">GEOEntity</a>
-	
-		,
-		<a href="../..//cbmongodb/tests/mocks/ActiveEntityMock.html" title="class in cbmongodb.models">ActiveEntityMock</a>
+		<a href="../..//cbmongodb/tests/mocks/FileEntityMock.html" title="class in cbmongodb.models">FileEntityMock</a>
 	
 	</div>
 </div>
@@ -280,8 +283,8 @@ Class
 
 
 <div id="class-hint">
-	<p>Active Entity for CBMongoDB
-allows you to enhance your usage of MongoDB with an Active Record pattern</p>
+	<p>File Entity (e.g. GridFS) for CBMongoDB
+File Entity object for MongoDB GridFS File Storage</p>
 </div>
 
 
@@ -323,53 +326,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#_criteria()">_criteria</A></strong> 
-			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Default query arguments.
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#_keys()">_keys</A></strong> 
+			<strong><a href="FileEntity.html#bucketName()">bucketName</A></strong> 
 			<br>
 			
 			<br><br>
@@ -392,6 +349,8 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		</td>
 		<td align="right" valign="top" width="1%">
 			
+				<code>fs</code>
+			
 		</td>
 		<td align="right" valign="top" width="1%">
 			<code>
@@ -412,7 +371,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#_limit()">_limit</A></strong> 
+			<strong><a href="FileEntity.html#fileId()">fileId</A></strong> 
 			<br>
 			
 			<br><br>
@@ -427,48 +386,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 				
 			
 				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-				<code>0</code>
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#_offset()">_offset</A></strong> 
-			<br>
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
+				<li class="label label-default label-annotations">schema = true</li>
 				
 			
 				
@@ -480,8 +398,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		</td>
 		<td align="right" valign="top" width="1%">
 			
-				<code>0</code>
-			
 		</td>
 		<td align="right" valign="top" width="1%">
 			<code>
@@ -490,7 +406,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		</td>
 		<td align="right" valign="top" width="1%">
 			<code>
-				false
+				yes
 			</code>
 		</td>
 	</tr>
@@ -502,7 +418,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#_operators()">_operators</A></strong> 
+			<strong><a href="FileEntity.html#filePath()">filePath</A></strong> 
 			<br>
 			
 			<br><br>
@@ -545,7 +461,7 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#_sort()">_sort</A></strong> 
+			<strong><a href="FileEntity.html#GFSFileObject()">GFSFileObject</A></strong> 
 			<br>
 			
 			<br><br>
@@ -588,11 +504,55 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#xCollection()">xCollection</A></strong> 
+			<strong><a href="FileEntity.html#GridFS()">GridFS</A></strong> 
 			<br>
 			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A separate collection to be queried.
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = GridFS@cbmongodb</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#GridFSInstance()">GridFSInstance</A></strong> 
+			<br>
 			
 			<br><br>
 			<ul>
@@ -634,11 +594,8 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#xReduce()">xReduce</A></strong> 
+			<strong><a href="FileEntity.html#jLoader()">jLoader</A></strong> 
 			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The map reduction.
 			
 			<br><br>
 			<ul>
@@ -647,6 +604,57 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			
 				
 			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = loader@cbjavaloader</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#MongoConfig()">MongoConfig</A></strong> 
+			<br>
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = MongoConfig@cbmongodb</li>
 				
 			
 				
@@ -692,10 +700,8 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<tr>
 			
 			<td>
-				<strong><a href="ActiveEntity.html#init()">init</A></strong>()
+				<strong><a href="FileEntity.html#init()">init</A></strong>()
 				<br>
-				
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Virtual Entity Constructor ( if you override it, make sure you call super.
 				
 			</td>
 		</tr>
@@ -720,26 +726,13 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>boolean</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#clearScope()">clearScope</A></strong>()
+			<strong><a href="FileEntity.html#delete()">delete</A></strong>([any truncate='false'])
 			<br>
 			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>numeric</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#count()">count</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Count the records in the current query.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Overload to delete method to ensure GFS files are deleted as well.
 			
 		</td>
 	</tr>
@@ -751,10 +744,396 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#create()">create</A></strong>([any returnInstance='false'], any document='[runtime expression]')
+			<strong><a href="FileEntity.html#evict()">evict</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Overload to evict().
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getBucketName()">getBucketName</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getBufferedImage()">getBufferedImage</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the buffered image object for accessing the raw pixels of an image.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getCFImage()">getCFImage</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a native CFML Image from the GridFS file.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getExtension()">getExtension</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the file extension of the stored GridFS file.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getFile()">getFile</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Convenience alias for getFileObject().
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getFileId()">getFileId</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getFileInputStream()">getFileInputStream</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Java file output stream for the GridFS file object, which may be used for advanced operations.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getFileObject()">getFileObject</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gets the core MongoDB GridFS file object - http://api.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getFilePath()">getFilePath</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getGFSFileObject()">getGFSFileObject</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getGridFS()">getGridFS</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getGridFSInstance()">getGridFSInstance</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getImageGraphics()">getImageGraphics</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Buffered Image 2DGraphics object.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getImageObject()">getImageObject</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a javaxt.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getJLoader()">getJLoader</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getMimeType()">getMimeType</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#getMongoConfig()">getMongoConfig</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#loadFile()">loadFile</A></strong>(string filePath, [any deleteFile='false'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set our file from a path.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setBucketName()">setBucketName</A></strong>(any bucketName)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setFile()">setFile</A></strong>(string filePath, [any deleteFile='false'])
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alias for loadFile().
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setFileId()">setFileId</A></strong>(any fileId)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setFilePath()">setFilePath</A></strong>(any filePath)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setGFSFileObject()">setGFSFileObject</A></strong>(any GFSFileObject)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setGridFS()">setGridFS</A></strong>(any GridFS)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setGridFSInstance()">setGridFSInstance</A></strong>(any GridFSInstance)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setJLoader()">setJLoader</A></strong>(any jLoader)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#setMongoConfig()">setMongoConfig</A></strong>(any MongoConfig)
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>private&nbsp;any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#throwFileMissing()">throwFileMissing</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Throws an error that the file is missing from the GridFS bucket.
 			
 		</td>
 	</tr>
@@ -766,38 +1145,10 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>void</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#createValidationError()">createValidationError</A></strong>(any mapping, string errorType='validation', [any fieldValue])
+			<strong><a href="FileEntity.html#writeImageToBrowser()">writeImageToBrowser</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'], [any mimeType], [any expiration])
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates a standardized format validation error.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>boolean</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#criteriaExists()">criteriaExists</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>boolean</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#delete()">delete</A></strong>([any truncate='false'])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete a document, with optional truncate flag.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Writes an image directly to the browser and aborts the remainder of the request.
 			
 		</td>
 	</tr>
@@ -809,571 +1160,10 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="ActiveEntity.html#entity()">entity</A></strong>([struct record])
+			<strong><a href="FileEntity.html#writeTo()">writeTo</A></strong>(string Path, struct imageArgs='[runtime expression]')
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scopes the active entity.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#evict()">evict</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;overload the upstream evict to clear query params.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>boolean</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#exists()">exists</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test whether a record matching the current criteria exists.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>boolean</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#fieldIsValid()">fieldIsValid</A></strong>(any fieldValue, any mapping)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checks whether a field meets its validation requirement.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#find()">find</A></strong>([any returnInstance='true'], [any asJSON='false'])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find one record and return the query.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#findAll()">findAll</A></strong>([any asCursor='false'], [any asResult='false'], [any asJSON='false'])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Find all records matching the current query params.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#get_criteria()">get_criteria</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Default query arguments.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#get_keys()">get_keys</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#get_limit()">get_limit</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#get_offset()">get_offset</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#get_operators()">get_operators</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#get_sort()">get_sort</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#getValidationErrors()">getValidationErrors</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the array of validation errors or null if validation has not been run on the entity.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#getValidationResults()">getValidationResults</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the results of the validation.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#getXCollection()">getXCollection</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: A separate collection to be queried.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#getXReduce()">getXReduce</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The map reduction.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>boolean</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#isValid()">isValid</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The core validation function for the loaded or populated entity.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#join()">join</A></strong>(any collection)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cross Collection Queries ***********************.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#limit()">limit</A></strong>([numeric max])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set maxrows|limit for query.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>boolean</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#loaded()">loaded</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tests whether this is a loaded entity().
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#mr()">mr</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map reduce query method.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>struct</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#newValidation()">newValidation</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the standardized validations structure.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#on()">on</A></strong>(any key, [any operator='='], any xKey)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#order()">order</A></strong>([any key], [any direction])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set the order|sort for the upcoming query.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#query()">query</A></strong>([struct criteria='[runtime expression]'], [numeric offset='[runtime expression]'], [numeric limit='[runtime expression]'], [any sort='[runtime expression]'])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The master query method.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#reload()">reload</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reloads the loaded entity from the database.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#resetQuery()">resetQuery</A></strong>([any evict='true'])
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#save()">save</A></strong>(any document, [any upsert='false'], [any returnInstance='false'])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Save the current entity.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#scopeEntity()">scopeEntity</A></strong>([any doc])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Handles the individual key scoping for entity().
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#set_criteria()">set_criteria</A></strong>(any _criteria)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Default query arguments.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#set_keys()">set_keys</A></strong>(any _keys)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#set_limit()">set_limit</A></strong>(any _limit)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#set_offset()">set_offset</A></strong>(any _offset)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#set_operators()">set_operators</A></strong>(any _operators)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#set_sort()">set_sort</A></strong>(any _sort)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#setXCollection()">setXCollection</A></strong>(any xCollection)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: A separate collection to be queried.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#setXReduce()">setXReduce</A></strong>(any xReduce)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The map reduction.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#update()">update</A></strong>([any returnInstance='false'])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates the loaded record.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#where()">where</A></strong>([string key], [string operator='='], [any value])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CBMongoDB where clause equivalent.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="ActiveEntity.html#whereNotI()">whereNotI</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Convenience function to exclude the current active entity.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write the stored GridFS file to a path with optional image transformation arguments.
 			
 		</td>
 	</tr>
@@ -1384,6 +1174,434 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 
 <a name="inherited_methods"><!-- --></a>
 
+
+	
+
+	
+
+	&nbsp;
+	<a name="methods_inherited_from_class_cbmongodb.models.ActiveEntity"><!-- --></a>
+	<table class="table table-hover table-bordered">
+		<tr class="info">
+			<th align="left">
+				<strong>Methods inherited from class <kbd><a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">cbmongodb.models.ActiveEntity</a></kbd></strong>
+			</th>
+		</tr>
+		<tr>
+			<td>
+				
+				
+				
+					
+					
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+					
+					
+					
+						
+					
+					
+					
+					
+				
+				
+				
+					<a href="../..//cbmongodb/models/ActiveEntity.html#clearScope()">clearScope</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#count()">count</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#create()">create</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#createValidationError()">createValidationError</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#criteriaExists()">criteriaExists</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#entity()">entity</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#exists()">exists</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#fieldIsValid()">fieldIsValid</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#find()">find</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#findAll()">findAll</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_criteria()">get_criteria</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_keys()">get_keys</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_limit()">get_limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_offset()">get_offset</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_operators()">get_operators</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#get_sort()">get_sort</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getValidationErrors()">getValidationErrors</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getValidationResults()">getValidationResults</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getXCollection()">getXCollection</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#getXReduce()">getXReduce</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#isValid()">isValid</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#join()">join</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#limit()">limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#loaded()">loaded</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#mr()">mr</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#newValidation()">newValidation</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#on()">on</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#order()">order</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#query()">query</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#reload()">reload</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#resetQuery()">resetQuery</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#save()">save</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#scopeEntity()">scopeEntity</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_criteria()">set_criteria</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_keys()">set_keys</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_limit()">set_limit</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_offset()">set_offset</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_operators()">set_operators</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#set_sort()">set_sort</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#setXCollection()">setXCollection</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#setXReduce()">setXReduce</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#update()">update</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#where()">where</a>, <a href="../..//cbmongodb/models/ActiveEntity.html#whereNotI()">whereNotI</a>
+				
+			</td>
+		</tr>
+	</table>
 
 	
 
@@ -1949,8 +2167,6 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 	<br><br>
 
 	
-	<p>Virtual Entity Constructor ( if you override it, make sure you call super.init() )</p>
-	
 
 	
 	<hr>
@@ -1969,50 +2185,14 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 
 	
 		
-		<a name="_criteria()"><!-- --></a>
-		<h3>_criteria</h3>
+		<a name="bucketName()"><!-- --></a>
+		<h3>bucketName</h3>
 
 		<kbd>
 			property any 
-			<strong>_criteria</strong>
+			<strong>bucketName</strong>
 			
-		</kbd>
-
-		<br><br>
-		
-			<p>Default query arguments</p>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="_keys()"><!-- --></a>
-		<h3>_keys</h3>
-
-		<kbd>
-			property any 
-			<strong>_keys</strong>
+			= [fs]
 			
 		</kbd>
 
@@ -2043,14 +2223,52 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<hr>
 	
 		
-		<a name="_limit()"><!-- --></a>
-		<h3>_limit</h3>
+		<a name="fileId()"><!-- --></a>
+		<h3>fileId</h3>
 
 		<kbd>
 			property any 
-			<strong>_limit</strong>
+			<strong>fileId</strong>
 			
-			= [0]
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - yes</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>schema</code> - true</dd>
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="filePath()"><!-- --></a>
+		<h3>filePath</h3>
+
+		<kbd>
+			property any 
+			<strong>filePath</strong>
 			
 		</kbd>
 
@@ -2081,14 +2299,12 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<hr>
 	
 		
-		<a name="_offset()"><!-- --></a>
-		<h3>_offset</h3>
+		<a name="GFSFileObject()"><!-- --></a>
+		<h3>GFSFileObject</h3>
 
 		<kbd>
 			property any 
-			<strong>_offset</strong>
-			
-			= [0]
+			<strong>GFSFileObject</strong>
 			
 		</kbd>
 
@@ -2119,12 +2335,52 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<hr>
 	
 		
-		<a name="_operators()"><!-- --></a>
-		<h3>_operators</h3>
+		<a name="GridFS()"><!-- --></a>
+		<h3>GridFS</h3>
 
 		<kbd>
 			property any 
-			<strong>_operators</strong>
+			<strong>GridFS</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+			<dd><code>inject</code> - GridFS@cbmongodb</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="GridFSInstance()"><!-- --></a>
+		<h3>GridFSInstance</h3>
+
+		<kbd>
+			property any 
+			<strong>GridFSInstance</strong>
 			
 		</kbd>
 
@@ -2155,12 +2411,12 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<hr>
 	
 		
-		<a name="_sort()"><!-- --></a>
-		<h3>_sort</h3>
+		<a name="jLoader()"><!-- --></a>
+		<h3>jLoader</h3>
 
 		<kbd>
 			property any 
-			<strong>_sort</strong>
+			<strong>jLoader</strong>
 			
 		</kbd>
 
@@ -2176,6 +2432,10 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 			<dd><code>required</code> - false</dd>
 			
 		
+			
+		
+			
+			<dd><code>inject</code> - loader@cbjavaloader</dd>
 			
 		
 			
@@ -2191,20 +2451,16 @@ allows you to enhance your usage of MongoDB with an Active Record pattern</p>
 		<hr>
 	
 		
-		<a name="xCollection()"><!-- --></a>
-		<h3>xCollection</h3>
+		<a name="MongoConfig()"><!-- --></a>
+		<h3>MongoConfig</h3>
 
 		<kbd>
 			property any 
-			<strong>xCollection</strong>
+			<strong>MongoConfig</strong>
 			
 		</kbd>
 
 		<br><br>
-		
-			<p>A separate collection to be queried
-As MongoDB doesn't support joins in the RDBMS fashion,
-we'll need to pass our active entity document objects rather than as comparisons</p>
 		
 
 		<dl>
@@ -2219,41 +2475,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 			
 		
 			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="xReduce()"><!-- --></a>
-		<h3>xReduce</h3>
-
-		<kbd>
-			property any 
-			<strong>xReduce</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-			<p>The map reduction</p>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
+			<dd><code>inject</code> - MongoConfig@cbmongodb</dd>
 			
 		
 			
@@ -2290,157 +2512,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 
 
 	
-	<a name="clearScope()"><!-- --></a>
-	<h3>clearScope</h3>
-	
-	<kbd>public any <strong>clearScope</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="count()"><!-- --></a>
-	<h3>count</h3>
-	
-	<kbd>public numeric <strong>count</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Count the records in the current query</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="create()"><!-- --></a>
-	<h3>create</h3>
-	
-	<kbd>public any <strong>create</strong>([any returnInstance='false'], any document='[runtime expression]')</kbd>
-	
-	<br><br>
-
-	
-		<p>Creates</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>returnInstance</code></dd>
-		
-		<dd><code>document</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="createValidationError()"><!-- --></a>
-	<h3>createValidationError</h3>
-	
-	<kbd>public void <strong>createValidationError</strong>(any mapping, string errorType='validation', [any fieldValue])</kbd>
-	
-	<br><br>
-
-	
-		<p>Creates a standardized format validation error</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>mapping</code></dd>
-		
-		<dd><code>errorType</code></dd>
-		
-		<dd><code>fieldValue</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="criteriaExists()"><!-- --></a>
-	<h3>criteriaExists</h3>
-	
-	<kbd>public boolean <strong>criteriaExists</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
 	<a name="delete()"><!-- --></a>
 	<h3>delete</h3>
 	
@@ -2449,7 +2520,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>Delete a document, with optional truncate flag</p>
+		<p>Overload to delete method to ensure GFS files are deleted as well</p>
 	
 
 	
@@ -2463,10 +2534,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 			<dt><strong>Overrides:</strong></dt>
 			<dd>
 			<code>
-			<a href="../..//cbmongodb/models/BaseDocumentService.html#delete()">delete</a></code>
+			<a href="../..//cbmongodb/models/ActiveEntity.html#delete()">delete</a></code>
 			in class
 			<code>
-				<a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">BaseDocumentService</a>
+				<a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">ActiveEntity</a>
 			</code>
 			</dd>
 		</dl>
@@ -2487,40 +2558,6 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="entity()"><!-- --></a>
-	<h3>entity</h3>
-	
-	<kbd>public any <strong>entity</strong>([struct record])</kbd>
-	
-	<br><br>
-
-	
-		<p>Scopes the active entity</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>record</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
 	<a name="evict()"><!-- --></a>
 	<h3>evict</h3>
 	
@@ -2529,7 +2566,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<br><br>
 
 	
-		<p>overload the upstream evict to clear query params</p>
+		<p>Overload to evict()</p>
 	
 
 	
@@ -2543,10 +2580,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 			<dt><strong>Overrides:</strong></dt>
 			<dd>
 			<code>
-			<a href="../..//cbmongodb/models/BaseDocumentService.html#evict()">evict</a></code>
+			<a href="../..//cbmongodb/models/ActiveEntity.html#evict()">evict</a></code>
 			in class
 			<code>
-				<a href="../../cbmongodb/models/BaseDocumentService.html" title="class in cbmongodb.models">BaseDocumentService</a>
+				<a href="../../cbmongodb/models/ActiveEntity.html" title="class in cbmongodb.models">ActiveEntity</a>
 			</code>
 			</dd>
 		</dl>
@@ -2560,15 +2597,13 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="exists()"><!-- --></a>
-	<h3>exists</h3>
+	<a name="getBucketName()"><!-- --></a>
+	<h3>getBucketName</h3>
 	
-	<kbd>public boolean <strong>exists</strong>()</kbd>
+	<kbd>public string <strong>getBucketName</strong>()</kbd>
 	
 	<br><br>
 
-	
-		<p>Test whether a record matching the current criteria exists</p>
 	
 
 	
@@ -2587,15 +2622,15 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="fieldIsValid()"><!-- --></a>
-	<h3>fieldIsValid</h3>
+	<a name="getBufferedImage()"><!-- --></a>
+	<h3>getBufferedImage</h3>
 	
-	<kbd>public boolean <strong>fieldIsValid</strong>(any fieldValue, any mapping)</kbd>
+	<kbd>public any <strong>getBufferedImage</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
 	
 	<br><br>
 
 	
-		<p>Checks whether a field meets its validation requirement</p>
+		<p>Returns the buffered image object for accessing the raw pixels of an image</p>
 	
 
 	
@@ -2610,9 +2645,13 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>fieldValue</code></dd>
+		<dd><code>width</code></dd>
 		
-		<dd><code>mapping</code></dd>
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
 		
 		</dl>
 	
@@ -2623,15 +2662,15 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="find()"><!-- --></a>
-	<h3>find</h3>
+	<a name="getCFImage()"><!-- --></a>
+	<h3>getCFImage</h3>
 	
-	<kbd>public any <strong>find</strong>([any returnInstance='true'], [any asJSON='false'])</kbd>
+	<kbd>public any <strong>getCFImage</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
 	
 	<br><br>
 
 	
-		<p>Find one record and return the query</p>
+		<p>Returns a native CFML Image from the GridFS file</p>
 	
 
 	
@@ -2646,9 +2685,13 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>returnInstance</code></dd>
+		<dd><code>width</code></dd>
 		
-		<dd><code>asJSON</code></dd>
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
 		
 		</dl>
 	
@@ -2659,15 +2702,248 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="findAll()"><!-- --></a>
-	<h3>findAll</h3>
+	<a name="getExtension()"><!-- --></a>
+	<h3>getExtension</h3>
 	
-	<kbd>public any <strong>findAll</strong>([any asCursor='false'], [any asResult='false'], [any asJSON='false'])</kbd>
+	<kbd>public any <strong>getExtension</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>Find all records matching the current query params</p>
+		<p>Returns the file extension of the stored GridFS file</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFile()"><!-- --></a>
+	<h3>getFile</h3>
+	
+	<kbd>public any <strong>getFile</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Convenience alias for getFileObject()</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFileId()"><!-- --></a>
+	<h3>getFileId</h3>
+	
+	<kbd>public string <strong>getFileId</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFileInputStream()"><!-- --></a>
+	<h3>getFileInputStream</h3>
+	
+	<kbd>public any <strong>getFileInputStream</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the Java file output stream for the GridFS file object, which may be used for advanced operations</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFileObject()"><!-- --></a>
+	<h3>getFileObject</h3>
+	
+	<kbd>public any <strong>getFileObject</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>Gets the core MongoDB GridFS file object - http://api.mongodb.org/java/current/com/mongodb/gridfs/GridFSFile.html</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFilePath()"><!-- --></a>
+	<h3>getFilePath</h3>
+	
+	<kbd>public string <strong>getFilePath</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getGFSFileObject()"><!-- --></a>
+	<h3>getGFSFileObject</h3>
+	
+	<kbd>public string <strong>getGFSFileObject</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getGridFS()"><!-- --></a>
+	<h3>getGridFS</h3>
+	
+	<kbd>public string <strong>getGridFS</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getGridFSInstance()"><!-- --></a>
+	<h3>getGridFSInstance</h3>
+	
+	<kbd>public string <strong>getGridFSInstance</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getImageGraphics()"><!-- --></a>
+	<h3>getImageGraphics</h3>
+	
+	<kbd>public any <strong>getImageGraphics</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the Buffered Image 2DGraphics object</p>
 	
 
 	
@@ -2682,11 +2958,13 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>asCursor</code></dd>
+		<dd><code>width</code></dd>
 		
-		<dd><code>asResult</code></dd>
+		<dd><code>height</code></dd>
 		
-		<dd><code>asJSON</code></dd>
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
 		
 		</dl>
 	
@@ -2697,309 +2975,16 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="get_criteria()"><!-- --></a>
-	<h3>get_criteria</h3>
+	<a name="getImageObject()"><!-- --></a>
+	<h3>getImageObject</h3>
 	
-	<kbd>public string <strong>get_criteria</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: Default query arguments</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="get_keys()"><!-- --></a>
-	<h3>get_keys</h3>
-	
-	<kbd>public string <strong>get_keys</strong>()</kbd>
+	<kbd>public any <strong>getImageObject</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
 	
 	<br><br>
 
 	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="get_limit()"><!-- --></a>
-	<h3>get_limit</h3>
-	
-	<kbd>public string <strong>get_limit</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="get_offset()"><!-- --></a>
-	<h3>get_offset</h3>
-	
-	<kbd>public string <strong>get_offset</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="get_operators()"><!-- --></a>
-	<h3>get_operators</h3>
-	
-	<kbd>public string <strong>get_operators</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="get_sort()"><!-- --></a>
-	<h3>get_sort</h3>
-	
-	<kbd>public string <strong>get_sort</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getValidationErrors()"><!-- --></a>
-	<h3>getValidationErrors</h3>
-	
-	<kbd>public any <strong>getValidationErrors</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Returns the array of validation errors or null if validation has not been run on the entity</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getValidationResults()"><!-- --></a>
-	<h3>getValidationResults</h3>
-	
-	<kbd>public any <strong>getValidationResults</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Returns the results of the validation</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-		<dl>
-			<dt><strong>Returns:</strong></dt>
-			<dd>null if validation has not been run on the entity | struct if validation has processed</dd>
-		</dl>
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getXCollection()"><!-- --></a>
-	<h3>getXCollection</h3>
-	
-	<kbd>public string <strong>getXCollection</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: A separate collection to be queried
-As MongoDB doesn't support joins in the RDBMS fashion,
-we'll need to pass our active entity document objects rather than as comparisons</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getXReduce()"><!-- --></a>
-	<h3>getXReduce</h3>
-	
-	<kbd>public string <strong>getXReduce</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: The map reduction</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="isValid()"><!-- --></a>
-	<h3>isValid</h3>
-	
-	<kbd>public boolean <strong>isValid</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>The core validation function for the loaded or populated entity</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="join()"><!-- --></a>
-	<h3>join</h3>
-	
-	<kbd>public any <strong>join</strong>(any collection)</kbd>
-	
-	<br><br>
-
-	
-		<p>Cross Collection Queries ***********************</p>
+		<p>Returns a javaxt.io.Image object from the GridFS file 
+Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javaxt.io&class=Image</p>
 	
 
 	
@@ -3014,7 +2999,13 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>collection</code></dd>
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
 		
 		</dl>
 	
@@ -3025,15 +3016,90 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="limit()"><!-- --></a>
-	<h3>limit</h3>
+	<a name="getJLoader()"><!-- --></a>
+	<h3>getJLoader</h3>
 	
-	<kbd>public any <strong>limit</strong>([numeric max])</kbd>
+	<kbd>public string <strong>getJLoader</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>Set maxrows|limit for query</p>
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getMimeType()"><!-- --></a>
+	<h3>getMimeType</h3>
+	
+	<kbd>public any <strong>getMimeType</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getMongoConfig()"><!-- --></a>
+	<h3>getMongoConfig</h3>
+	
+	<kbd>public string <strong>getMongoConfig</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="loadFile()"><!-- --></a>
+	<h3>loadFile</h3>
+	
+	<kbd>public any <strong>loadFile</strong>(string filePath, [any deleteFile='false'])</kbd>
+	
+	<br><br>
+
+	
+		<p>Set our file from a path</p>
 	
 
 	
@@ -3048,7 +3114,9 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>max</code></dd>
+		<dd><code>filePath</code></dd>
+		
+		<dd><code>deleteFile</code></dd>
 		
 		</dl>
 	
@@ -3059,91 +3127,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="loaded()"><!-- --></a>
-	<h3>loaded</h3>
+	<a name="setBucketName()"><!-- --></a>
+	<h3>setBucketName</h3>
 	
-	<kbd>public boolean <strong>loaded</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Tests whether this is a loaded entity()</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="mr()"><!-- --></a>
-	<h3>mr</h3>
-	
-	<kbd>public any <strong>mr</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Map reduce query method</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="newValidation()"><!-- --></a>
-	<h3>newValidation</h3>
-	
-	<kbd>public struct <strong>newValidation</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Returns the standardized validations structure</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="on()"><!-- --></a>
-	<h3>on</h3>
-	
-	<kbd>public any <strong>on</strong>(any key, [any operator='='], any xKey)</kbd>
+	<kbd>public any <strong>setBucketName</strong>(any bucketName)</kbd>
 	
 	<br><br>
 
@@ -3161,11 +3148,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>key</code></dd>
-		
-		<dd><code>operator</code></dd>
-		
-		<dd><code>xKey</code></dd>
+		<dd><code>bucketName</code></dd>
 		
 		</dl>
 	
@@ -3176,15 +3159,15 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="order()"><!-- --></a>
-	<h3>order</h3>
+	<a name="setFile()"><!-- --></a>
+	<h3>setFile</h3>
 	
-	<kbd>public any <strong>order</strong>([any key], [any direction])</kbd>
+	<kbd>public any <strong>setFile</strong>(string filePath, [any deleteFile='false'])</kbd>
 	
 	<br><br>
 
 	
-		<p>Set the order|sort for the upcoming query</p>
+		<p>Alias for loadFile()</p>
 	
 
 	
@@ -3199,49 +3182,9 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>key</code></dd>
+		<dd><code>filePath</code></dd>
 		
-		<dd><code>direction</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="query()"><!-- --></a>
-	<h3>query</h3>
-	
-	<kbd>public any <strong>query</strong>([struct criteria='[runtime expression]'], [numeric offset='[runtime expression]'], [numeric limit='[runtime expression]'], [any sort='[runtime expression]'])</kbd>
-	
-	<br><br>
-
-	
-		<p>The master query method</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>criteria</code></dd>
-		
-		<dd><code>offset</code></dd>
-		
-		<dd><code>limit</code></dd>
-		
-		<dd><code>sort</code></dd>
+		<dd><code>deleteFile</code></dd>
 		
 		</dl>
 	
@@ -3252,37 +3195,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="reload()"><!-- --></a>
-	<h3>reload</h3>
+	<a name="setFileId()"><!-- --></a>
+	<h3>setFileId</h3>
 	
-	<kbd>public any <strong>reload</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Reloads the loaded entity from the database</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="resetQuery()"><!-- --></a>
-	<h3>resetQuery</h3>
-	
-	<kbd>public any <strong>resetQuery</strong>([any evict='true'])</kbd>
+	<kbd>public any <strong>setFileId</strong>(any fileId)</kbd>
 	
 	<br><br>
 
@@ -3300,7 +3216,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>evict</code></dd>
+		<dd><code>fileId</code></dd>
 		
 		</dl>
 	
@@ -3311,116 +3227,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="save()"><!-- --></a>
-	<h3>save</h3>
+	<a name="setFilePath()"><!-- --></a>
+	<h3>setFilePath</h3>
 	
-	<kbd>public any <strong>save</strong>(any document, [any upsert='false'], [any returnInstance='false'])</kbd>
-	
-	<br><br>
-
-	
-		<p>Save the current entity</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>document</code></dd>
-		
-		<dd><code>upsert</code></dd>
-		
-		<dd><code>returnInstance</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="scopeEntity()"><!-- --></a>
-	<h3>scopeEntity</h3>
-	
-	<kbd>public any <strong>scopeEntity</strong>([any doc])</kbd>
-	
-	<br><br>
-
-	
-		<p>Handles the individual key scoping for entity()</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>doc</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="set_criteria()"><!-- --></a>
-	<h3>set_criteria</h3>
-	
-	<kbd>public any <strong>set_criteria</strong>(any _criteria)</kbd>
-	
-	<br><br>
-
-	
-		<p>set: Default query arguments</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>_criteria</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="set_keys()"><!-- --></a>
-	<h3>set_keys</h3>
-	
-	<kbd>public any <strong>set_keys</strong>(any _keys)</kbd>
+	<kbd>public any <strong>setFilePath</strong>(any filePath)</kbd>
 	
 	<br><br>
 
@@ -3438,7 +3248,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>_keys</code></dd>
+		<dd><code>filePath</code></dd>
 		
 		</dl>
 	
@@ -3449,10 +3259,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="set_limit()"><!-- --></a>
-	<h3>set_limit</h3>
+	<a name="setGFSFileObject()"><!-- --></a>
+	<h3>setGFSFileObject</h3>
 	
-	<kbd>public any <strong>set_limit</strong>(any _limit)</kbd>
+	<kbd>public any <strong>setGFSFileObject</strong>(any GFSFileObject)</kbd>
 	
 	<br><br>
 
@@ -3470,7 +3280,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>_limit</code></dd>
+		<dd><code>GFSFileObject</code></dd>
 		
 		</dl>
 	
@@ -3481,10 +3291,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="set_offset()"><!-- --></a>
-	<h3>set_offset</h3>
+	<a name="setGridFS()"><!-- --></a>
+	<h3>setGridFS</h3>
 	
-	<kbd>public any <strong>set_offset</strong>(any _offset)</kbd>
+	<kbd>public any <strong>setGridFS</strong>(any GridFS)</kbd>
 	
 	<br><br>
 
@@ -3502,7 +3312,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>_offset</code></dd>
+		<dd><code>GridFS</code></dd>
 		
 		</dl>
 	
@@ -3513,10 +3323,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="set_operators()"><!-- --></a>
-	<h3>set_operators</h3>
+	<a name="setGridFSInstance()"><!-- --></a>
+	<h3>setGridFSInstance</h3>
 	
-	<kbd>public any <strong>set_operators</strong>(any _operators)</kbd>
+	<kbd>public any <strong>setGridFSInstance</strong>(any GridFSInstance)</kbd>
 	
 	<br><br>
 
@@ -3534,7 +3344,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>_operators</code></dd>
+		<dd><code>GridFSInstance</code></dd>
 		
 		</dl>
 	
@@ -3545,10 +3355,10 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="set_sort()"><!-- --></a>
-	<h3>set_sort</h3>
+	<a name="setJLoader()"><!-- --></a>
+	<h3>setJLoader</h3>
 	
-	<kbd>public any <strong>set_sort</strong>(any _sort)</kbd>
+	<kbd>public any <strong>setJLoader</strong>(any jLoader)</kbd>
 	
 	<br><br>
 
@@ -3566,7 +3376,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>_sort</code></dd>
+		<dd><code>jLoader</code></dd>
 		
 		</dl>
 	
@@ -3577,17 +3387,13 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="setXCollection()"><!-- --></a>
-	<h3>setXCollection</h3>
+	<a name="setMongoConfig()"><!-- --></a>
+	<h3>setMongoConfig</h3>
 	
-	<kbd>public any <strong>setXCollection</strong>(any xCollection)</kbd>
+	<kbd>public any <strong>setMongoConfig</strong>(any MongoConfig)</kbd>
 	
 	<br><br>
 
-	
-		<p>set: A separate collection to be queried
-As MongoDB doesn't support joins in the RDBMS fashion,
-we'll need to pass our active entity document objects rather than as comparisons</p>
 	
 
 	
@@ -3602,7 +3408,7 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>xCollection</code></dd>
+		<dd><code>MongoConfig</code></dd>
 		
 		</dl>
 	
@@ -3613,15 +3419,42 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="setXReduce()"><!-- --></a>
-	<h3>setXReduce</h3>
+	<a name="throwFileMissing()"><!-- --></a>
+	<h3>throwFileMissing</h3>
 	
-	<kbd>public any <strong>setXReduce</strong>(any xReduce)</kbd>
+	<kbd>private any <strong>throwFileMissing</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>set: The map reduction</p>
+		<p>Throws an error that the file is missing from the GridFS bucket</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="writeImageToBrowser()"><!-- --></a>
+	<h3>writeImageToBrowser</h3>
+	
+	<kbd>public void <strong>writeImageToBrowser</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'], [any mimeType], [any expiration])</kbd>
+	
+	<br><br>
+
+	
+		<p>Writes an image directly to the browser and aborts the remainder of the request</p>
 	
 
 	
@@ -3636,7 +3469,17 @@ we'll need to pass our active entity document objects rather than as comparisons
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>xReduce</code></dd>
+		<dd><code>width</code></dd>
+		
+		<dd><code>height</code></dd>
+		
+		<dd><code>x</code></dd>
+		
+		<dd><code>y</code></dd>
+		
+		<dd><code>mimeType</code></dd>
+		
+		<dd><code>expiration</code></dd>
 		
 		</dl>
 	
@@ -3647,16 +3490,15 @@ we'll need to pass our active entity document objects rather than as comparisons
 	<hr>
 
 	
-	<a name="update()"><!-- --></a>
-	<h3>update</h3>
+	<a name="writeTo()"><!-- --></a>
+	<h3>writeTo</h3>
 	
-	<kbd>public any <strong>update</strong>([any returnInstance='false'])</kbd>
+	<kbd>public any <strong>writeTo</strong>(string Path, struct imageArgs='[runtime expression]')</kbd>
 	
 	<br><br>
 
 	
-		<p>Updates the loaded record
-Alias for save() with an explicit</p>
+		<p>Write the stored GridFS file to a path with optional image transformation arguments</p>
 	
 
 	
@@ -3671,75 +3513,11 @@ Alias for save() with an explicit</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>returnInstance</code></dd>
+		<dd><code>Path</code></dd>
+		
+		<dd><code>imageArgs</code></dd>
 		
 		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="where()"><!-- --></a>
-	<h3>where</h3>
-	
-	<kbd>public any <strong>where</strong>([string key], [string operator='='], [any value])</kbd>
-	
-	<br><br>
-
-	
-		<p>CBMongoDB where clause equivalent.  Appends query criteria to an ongoing query build</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>key</code></dd>
-		
-		<dd><code>operator</code></dd>
-		
-		<dd><code>value</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="whereNotI()"><!-- --></a>
-	<h3>whereNotI</h3>
-	
-	<kbd>public any <strong>whereNotI</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Convenience function to exclude the current active entity
-If the entity is not loaded, no query restrictions will be added</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
 	
 
 	

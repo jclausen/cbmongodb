@@ -72,7 +72,7 @@ component name="MongoClient" accessors=true singleton{
 	/**
 	* Our connection to the Mongo Server
 	**/
-	private function connect(required dbName=getMongoConfig().getDBName()){
+	public function connect(required dbName=getMongoConfig().getDBName()){
 
 		var MongoConfigSettings = MongoConfig.getDefaults();
 

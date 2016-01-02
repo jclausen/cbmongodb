@@ -144,7 +144,12 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function detect(){
 
 		var properties=getMetaData(this).properties;
-
+		//add our extended properties in case there are schema items
+		if(structKeyExists(getMetaData(this),'extends') && structKeyExists(getMetaData(this).extends,'properties')){
+			var extendedProperties = getMetaData(this).extends.properties;
+			arrayAppend(properties,extendedProperties,true);
+		}
+		
 		for(var prop in properties){
 			
 			if(structKeyExists(prop,'schema') and prop.schema){
@@ -223,7 +228,11 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	boolean function hasExistingAccessor(required string suffix){
-		var functions = getMetaData(this).functions;
+		if(structKeyExists(getMetadata(this),'functions')){
+			var functions = getMetaData(this).functions;
+		} else{
+			functions = [];
+		}
 		if(arrayContains(functions,'set' & suffix) || arrayContains(functions,'get' & suffix)){
 			return true;
 		} else {
@@ -532,12 +541,17 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function getPropertyDefault(prop){
 		var empty_string='';
 		if(structKeyExists(prop,'default')){
-			switch(prop.validate){
-				case "boolean":
-					return javacast('boolean',prop.default);
-				default:
-					return prop.default;
+			if(structKeyExists(prop,'validate')){
+				switch(prop.validate){
+					case "boolean":
+						return javacast('boolean',prop.default);
+					default:
+						return prop.default;
+				}	
+			} else {
+				return prop.default;
 			}
+			
 		} else if(structKeyExists(prop,'validate')) {
 			switch(prop.validate){
 				case 'string':

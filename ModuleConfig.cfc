@@ -17,7 +17,7 @@ component{
 	this.webURL 			= "http://https://github.com/jclausen/cbmongodb";
 	this.description 		= "Coldbox SDK and Virtual Entity Service for MongoDB";
 	// Our version changes with the driver version used, only the patch is updated without a full driver updated
-	this.version			= "3.2.0.0";
+	this.version			= "3.2.0.1";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= false;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -78,9 +78,8 @@ component{
 	 	
 
 		/**
-		* Singletons
+		* Main Configuration Object Singleton
 		**/
-		//configuration object
 		binder.map("MongoConfig@cbmongodb")
 			.to('cbmongodb.models.Mongo.Config')
 			.initWith(VARIABLES.MongoDBConfig)
@@ -101,13 +100,23 @@ component{
 			.to("cbmongodb.models.Mongo.Indexer")
 			.asSingleton();
 
+		/**
+		* Manual Instantiation Instances
+		**/
+
 		//models.Mongo.Collection
 		binder.map("MongoCollection@cbmongodb")
 			.to('cbmongodb.models.Mongo.Collection')
 			.noInit();
 
+
+		//models.Mongo.GridFS
+		binder.map("GridFS@cbmongodb")
+			.to('cbmongodb.models.Mongo.GridFS')
+			.noInit();
+
 		/**
-		* Mongo Client Singleton
+		* The Mongo Client Singleton
 		**/
 		binder.map( "MongoClient@cbmongodb" )
 			.to( "cbmongodb.models.Mongo.Client" )
@@ -120,13 +129,16 @@ component{
 		binder.map("People@CBMongoTestMocks").to("cbmongodb.tests.mocks.ActiveEntityMock");
 		binder.map("Counties@CBMongoTestMocks").to("cbmongodb.tests.mocks.CountiesMock");
 		binder.map("States@CBMongoTestMocks").to("cbmongodb.tests.mocks.StatesMock");
+		binder.map("Files@CBMongoTestMocks").to("cbmongodb.tests.mocks.FileEntityMock");
 	}
 
 	/**
 	* CBMongoDB Module Deactivation - Fired when the module is unloaded
 	*/
 	function onUnload(){
-		Wirebox.getInstance("MongoClient@cbmongodb").close();
+		if(Wirebox.containsInstance("MongoClient@cbmongodb")){
+			Wirebox.getInstance("MongoClient@cbmongodb").close();		
+		}
 	}
 
 	/**
@@ -166,6 +178,19 @@ component{
 			permitTests = true,
 			//whether to permit generic API access (future implementation)
 			permitAPI = true,
+			//GridFS settings - this key is omitted by default
+			//GridFS = {
+				// "imagestorage":{
+				// 	//whether to store the cfimage metadata
+				// 	"metadata":true,
+				// 	//the max allowed width of images in the GridFS store
+				// 	"maxwidth":1000,
+				// 	//the max allowed height of images in the GridFS store
+				// 	"maxheight":1000,
+				// 	//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
+				// 	"tmpDirectory":"/includes/tmp/"
+				// }
+			//}
 		};
 
 		// Incorporate settings

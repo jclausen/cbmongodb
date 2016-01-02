@@ -9,6 +9,9 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 
 Changelog:
 ----------
+**Patch v3.2.0.1**
+
+1. Adds GridFS Support and FileEntity for Active Record Management of GridFS files
 
 **Release v3.2.0.0**
 

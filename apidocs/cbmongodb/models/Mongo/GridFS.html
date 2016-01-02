@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Client</title>
+	<title>GridFS</title>
 	<meta name="keywords" content="cbmongodb.models.Mongo.concurrent.Callable interface">
 	<!-- common assets -->
 	
@@ -96,7 +96,7 @@ $(document).ready(function() {
 	      	</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="../../../index.html?cbmongodb/models/Mongo/Client.html" target="_top">
+				<li><a href="../../../index.html?cbmongodb/models/Mongo/GridFS.html" target="_top">
 					<i class="glyphicon glyphicon-fullscreen"></i> Frames
 					</a>
 				</li>
@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 Class
 
- Client</h2>
+ GridFS</h2>
 
 
 
@@ -146,7 +146,7 @@ Class
 
 <!-- Inheritance Tree-->
 <pre>lucee.Component
-        <img src="../../../resources/inherit.gif" alt="extended by ">cbmongodb.models.Mongo.Client
+        <img src="../../../resources/inherit.gif" alt="extended by ">cbmongodb.models.Mongo.GridFS
 </pre>
 
 <div class="panel panel-default">
@@ -156,15 +156,6 @@ Class
 		
 			
 		
-			
-		
-			
-			
-			<li class="label label-danger label-annotations">
-				singleton 
-				
-			</li>
-			&nbsp;
 			
 		
 			
@@ -264,8 +255,8 @@ Class
 
 
 <div id="class-hint">
-	<p>Mongo Client
-Maintains the Database Connection via the Native Driver</p>
+	<p>Mongo GridFS
+Processes Mongo GridFS Transactions</p>
 </div>
 
 
@@ -307,7 +298,57 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#collections()">collections</A></strong> 
+			<strong><a href="GridFS.html#AppSettings()">AppSettings</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Application Settings.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = wirebox:properties</li>
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#bucketName()">bucketName</A></strong> 
 			<br>
 			
 			<br><br>
@@ -350,7 +391,53 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#databases()">databases</A></strong> 
+			<strong><a href="GridFS.html#dbInstance()">dbInstance</A></strong> 
+			<br>
+			
+			<!-- only grab the first sentence of the hint -->
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Core GridFS connection properties.
+			
+			<br><br>
+			<ul>
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+				
+			
+			</ul>
+
+		</td>
+		<td align="right" valign="top" width="1%">
+			
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				true
+			</code>
+		</td>
+		<td align="right" valign="top" width="1%">
+			<code>
+				false
+			</code>
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#GridInstance()">GridInstance</A></strong> 
 			<br>
 			
 			<br><br>
@@ -393,7 +480,7 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#jLoader()">jLoader</A></strong> 
+			<strong><a href="GridFS.html#jLoader()">jLoader</A></strong> 
 			<br>
 			
 			<!-- only grab the first sentence of the hint -->
@@ -443,11 +530,11 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#Mongo()">Mongo</A></strong> 
+			<strong><a href="GridFS.html#MongoClient()">MongoClient</A></strong> 
 			<br>
 			
 			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Properties created on init().
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Mongo Client Instance.
 			
 			<br><br>
 			<ul>
@@ -456,6 +543,10 @@ Maintains the Database Connection via the Native Driver</p>
 			
 				
 			
+				
+			
+				
+				<li class="label label-default label-annotations">inject = MongoClient@cbmongodb</li>
 				
 			
 				
@@ -489,97 +580,11 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#MongoAsync()">MongoAsync</A></strong> 
-			<br>
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#MongoConfig()">MongoConfig</A></strong> 
-			<br>
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#MongoUtil()">MongoUtil</A></strong> 
+			<strong><a href="GridFS.html#MongoUtil()">MongoUtil</A></strong> 
 			<br>
 			
 			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Utility Class.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Mongo Utils.
 			
 			<br><br>
 			<ul>
@@ -592,142 +597,6 @@ Maintains the Database Connection via the Native Driver</p>
 			
 				
 				<li class="label label-default label-annotations">inject = MongoUtil@cbmongodb</li>
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#ReadPreference()">ReadPreference</A></strong> 
-			<br>
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#wirebox()">wirebox</A></strong> 
-			<br>
-			
-			<!-- only grab the first sentence of the hint -->
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Wirebox.
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
-				
-			
-				
-				<li class="label label-default label-annotations">inject = wirebox</li>
-				
-			
-				
-			
-				
-			
-				
-			
-			</ul>
-
-		</td>
-		<td align="right" valign="top" width="1%">
-			
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				true
-			</code>
-		</td>
-		<td align="right" valign="top" width="1%">
-			<code>
-				false
-			</code>
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#WriteConcern()">WriteConcern</A></strong> 
-			<br>
-			
-			<br><br>
-			<ul>
-			
-				
-			
-				
-			
 				
 			
 				
@@ -773,8 +642,10 @@ Maintains the Database Connection via the Native Driver</p>
 		<tr>
 			
 			<td>
-				<strong><a href="Client.html#init()">init</A></strong>([any MongoConfig])
+				<strong><a href="GridFS.html#init()">init</A></strong>(string db, string bucket='fs')
 				<br>
+				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Initialize The GridFS Instance.
 				
 			</td>
 		</tr>
@@ -799,13 +670,13 @@ Maintains the Database Connection via the Native Driver</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#addUser()">addUser</A></strong>([string username], [string password])
+			<strong><a href="GridFS.html#createFile()">createFile</A></strong>(string filePath, [string fileName], boolean deleteFile='false')
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Adds a user to the database.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Creates and stores a GridFS file.
 			
 		</td>
 	</tr>
@@ -817,10 +688,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#close()">close</A></strong>()
+			<strong><a href="GridFS.html#find()">find</A></strong>(struct criteria)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Closes the underlying mongodb object.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finds a file by search criteria.
 			
 		</td>
 	</tr>
@@ -832,23 +703,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#connect()">connect</A></strong>(any dbName='[runtime expression]')
+			<strong><a href="GridFS.html#findById()">findById</A></strong>(any id)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Our connection to the Mongo Server.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>private&nbsp;any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#createCredential()">createCredential</A></strong>(string username, string password, any authDB='admin')
-			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Retreives a GridFS file by ObjectId.
 			
 		</td>
 	</tr>
@@ -860,10 +718,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#dropDatabase()">dropDatabase</A></strong>()
+			<strong><a href="GridFS.html#findOne()">findOne</A></strong>(struct criteria)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Drops the database currently specified in MongoConfig.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Finds an returns a single document with search criteria.
 			
 		</td>
 	</tr>
@@ -875,7 +733,22 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getCollections()">getCollections</A></strong>()
+			<strong><a href="GridFS.html#getAppSettings()">getAppSettings</A></strong>()
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Application Settings.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#getBucketName()">getBucketName</A></strong>()
 			<br>
 			
 		</td>
@@ -888,8 +761,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getDatabases()">getDatabases</A></strong>()
+			<strong><a href="GridFS.html#getDbInstance()">getDbInstance</A></strong>()
 			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Core GridFS connection properties.
 			
 		</td>
 	</tr>
@@ -901,10 +776,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getDBCollection()">getDBCollection</A></strong>([any collectionName], [any dbName='[runtime expression]'])
+			<strong><a href="GridFS.html#getFileList()">getFileList</A></strong>(struct criteria='[runtime expression]')
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gets a CBMongoDB DBCollection object, which wraps the java DBCollection.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the iterative cursor of the files contained in the GridFS Bucket.
 			
 		</td>
 	</tr>
@@ -916,7 +791,20 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getJLoader()">getJLoader</A></strong>()
+			<strong><a href="GridFS.html#getGridInstance()">getGridInstance</A></strong>()
+			<br>
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>string</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#getJLoader()">getJLoader</A></strong>()
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: CBJavaloader.
@@ -928,28 +816,13 @@ Maintains the Database Connection via the Native Driver</p>
 	
 	<tr>
 		<td align="right" valign="top" width="1%">
-			<code>any</code>
+			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getLastError()">getLastError</A></strong>()
+			<strong><a href="GridFS.html#getMongoClient()">getMongoClient</A></strong>()
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the last error for the current connection.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getMongo()">getMongo</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the underlying Java driver's Mongo object.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: The Mongo Client Instance.
 			
 		</td>
 	</tr>
@@ -961,94 +834,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>string</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#getMongoAsync()">getMongoAsync</A></strong>()
+			<strong><a href="GridFS.html#getMongoUtil()">getMongoUtil</A></strong>()
 			<br>
 			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getMongoConfig()">getMongoConfig</A></strong>([any mongoConfig=''])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Decide whether to use the MongoConfig in the variables scope, the one being passed around as arguments, or create a new one.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getMongoDB()">getMongoDB</A></strong>([any mongoConfig=''])
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Get the underlying Java driver's DB object.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getMongoUtil()">getMongoUtil</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Utility Class.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getReadPreference()">getReadPreference</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getWirebox()">getWirebox</A></strong>()
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Wirebox.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>string</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#getWriteConcern()">getWriteConcern</A></strong>()
-			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get: Mongo Utils.
 			
 		</td>
 	</tr>
@@ -1060,20 +849,7 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>private&nbsp;any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#initCollections()">initCollections</A></strong>()
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>private&nbsp;any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#initDatabases()">initDatabases</A></strong>()
+			<strong><a href="GridFS.html#isReadableImage()">isReadableImage</A></strong>([any filePath])
 			<br>
 			
 		</td>
@@ -1086,7 +862,52 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setCollections()">setCollections</A></strong>(any collections)
+			<strong><a href="GridFS.html#remove()">remove</A></strong>(struct criteria)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes a GridFS file by criteria.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#removeById()">removeById</A></strong>(any id)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Removes a GridFS file by id.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#setAppSettings()">setAppSettings</A></strong>(any AppSettings)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Application Settings.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#setBucketName()">setBucketName</A></strong>(any bucketName)
 			<br>
 			
 		</td>
@@ -1099,7 +920,22 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setDatabases()">setDatabases</A></strong>(any databases)
+			<strong><a href="GridFS.html#setDbInstance()">setDbInstance</A></strong>(any dbInstance)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Core GridFS connection properties.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="GridFS.html#setGridInstance()">setGridInstance</A></strong>(any GridInstance)
 			<br>
 			
 		</td>
@@ -1112,7 +948,7 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setJLoader()">setJLoader</A></strong>(any jLoader)
+			<strong><a href="GridFS.html#setJLoader()">setJLoader</A></strong>(any jLoader)
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: CBJavaloader.
@@ -1127,10 +963,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setMongo()">setMongo</A></strong>(any Mongo)
+			<strong><a href="GridFS.html#setMongoClient()">setMongoClient</A></strong>(any MongoClient)
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Properties created on init().
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: The Mongo Client Instance.
 			
 		</td>
 	</tr>
@@ -1142,77 +978,10 @@ Maintains the Database Connection via the Native Driver</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="Client.html#setMongoAsync()">setMongoAsync</A></strong>(any MongoAsync)
+			<strong><a href="GridFS.html#setMongoUtil()">setMongoUtil</A></strong>(any MongoUtil)
 			<br>
 			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#setMongoConfig()">setMongoConfig</A></strong>(any MongoConfig)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#setMongoUtil()">setMongoUtil</A></strong>(any MongoUtil)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Utility Class.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#setReadPreference()">setReadPreference</A></strong>(any ReadPreference)
-			<br>
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#setWirebox()">setWirebox</A></strong>(any wirebox)
-			<br>
-			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Wirebox.
-			
-		</td>
-	</tr>
-	
-	
-	
-	<tr>
-		<td align="right" valign="top" width="1%">
-			<code>any</code>
-		</td>
-		<td>
-			<strong><a href="Client.html#setWriteConcern()">setWriteConcern</A></strong>(any WriteConcern)
-			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set: Mongo Utils.
 			
 		</td>
 	</tr>
@@ -1265,17 +1034,21 @@ Maintains the Database Connection via the Native Driver</p>
 
 	<a name="init()"><!-- --></a><h3>
 	init</h3>
-	<kbd>public <strong>init</strong>([any MongoConfig])</kbd>
+	<kbd>public <strong>init</strong>(string db, string bucket='fs')</kbd>
 
 	<br><br>
 
+	
+	<p>Initialize The GridFS Instance</p>
 	
 
 	
 	<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-			<dd><code>MongoConfig</code></dd>
+			<dd><code>db</code></dd>
+		
+			<dd><code>bucket</code></dd>
 		
 	</dl>
 	
@@ -1295,12 +1068,54 @@ Maintains the Database Connection via the Native Driver</p>
 
 	
 		
-		<a name="collections()"><!-- --></a>
-		<h3>collections</h3>
+		<a name="AppSettings()"><!-- --></a>
+		<h3>AppSettings</h3>
 
 		<kbd>
 			property any 
-			<strong>collections</strong>
+			<strong>AppSettings</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>Application Settings</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+			<dd><code>inject</code> - wirebox:properties</dd>
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="bucketName()"><!-- --></a>
+		<h3>bucketName</h3>
+
+		<kbd>
+			property any 
+			<strong>bucketName</strong>
 			
 		</kbd>
 
@@ -1331,12 +1146,50 @@ Maintains the Database Connection via the Native Driver</p>
 		<hr>
 	
 		
-		<a name="databases()"><!-- --></a>
-		<h3>databases</h3>
+		<a name="dbInstance()"><!-- --></a>
+		<h3>dbInstance</h3>
 
 		<kbd>
 			property any 
-			<strong>databases</strong>
+			<strong>dbInstance</strong>
+			
+		</kbd>
+
+		<br><br>
+		
+			<p>Core GridFS connection properties</p>
+		
+
+		<dl>
+		<dt><strong>Attributes:</strong></dt>
+		
+			
+		
+			
+			<dd><code>required</code> - false</dd>
+			
+		
+			
+		
+			
+		
+			
+		
+			
+			<dd><code>serializable</code> - true</dd>
+			
+		
+		</dl>
+
+		<hr>
+	
+		
+		<a name="GridInstance()"><!-- --></a>
+		<h3>GridInstance</h3>
+
+		<kbd>
+			property any 
+			<strong>GridInstance</strong>
 			
 		</kbd>
 
@@ -1409,18 +1262,18 @@ Maintains the Database Connection via the Native Driver</p>
 		<hr>
 	
 		
-		<a name="Mongo()"><!-- --></a>
-		<h3>Mongo</h3>
+		<a name="MongoClient()"><!-- --></a>
+		<h3>MongoClient</h3>
 
 		<kbd>
 			property any 
-			<strong>Mongo</strong>
+			<strong>MongoClient</strong>
 			
 		</kbd>
 
 		<br><br>
 		
-			<p>Properties created on init()</p>
+			<p>The Mongo Client Instance</p>
 		
 
 		<dl>
@@ -1435,75 +1288,7 @@ Maintains the Database Connection via the Native Driver</p>
 			
 		
 			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="MongoAsync()"><!-- --></a>
-		<h3>MongoAsync</h3>
-
-		<kbd>
-			property any 
-			<strong>MongoAsync</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="MongoConfig()"><!-- --></a>
-		<h3>MongoConfig</h3>
-
-		<kbd>
-			property any 
-			<strong>MongoConfig</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
+			<dd><code>inject</code> - MongoClient@cbmongodb</dd>
 			
 		
 			
@@ -1530,7 +1315,7 @@ Maintains the Database Connection via the Native Driver</p>
 
 		<br><br>
 		
-			<p>Utility Class</p>
+			<p>Mongo Utils</p>
 		
 
 		<dl>
@@ -1546,120 +1331,6 @@ Maintains the Database Connection via the Native Driver</p>
 		
 			
 			<dd><code>inject</code> - MongoUtil@cbmongodb</dd>
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="ReadPreference()"><!-- --></a>
-		<h3>ReadPreference</h3>
-
-		<kbd>
-			property any 
-			<strong>ReadPreference</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="wirebox()"><!-- --></a>
-		<h3>wirebox</h3>
-
-		<kbd>
-			property any 
-			<strong>wirebox</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-			<p>Wirebox</p>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
-			
-		
-			
-			<dd><code>inject</code> - wirebox</dd>
-			
-		
-			
-		
-			
-		
-			
-			<dd><code>serializable</code> - true</dd>
-			
-		
-		</dl>
-
-		<hr>
-	
-		
-		<a name="WriteConcern()"><!-- --></a>
-		<h3>WriteConcern</h3>
-
-		<kbd>
-			property any 
-			<strong>WriteConcern</strong>
-			
-		</kbd>
-
-		<br><br>
-		
-
-		<dl>
-		<dt><strong>Attributes:</strong></dt>
-		
-			
-		
-			
-			<dd><code>required</code> - false</dd>
-			
-		
 			
 		
 			
@@ -1696,15 +1367,15 @@ Maintains the Database Connection via the Native Driver</p>
 
 
 	
-	<a name="addUser()"><!-- --></a>
-	<h3>addUser</h3>
+	<a name="createFile()"><!-- --></a>
+	<h3>createFile</h3>
 	
-	<kbd>public any <strong>addUser</strong>([string username], [string password])</kbd>
+	<kbd>public string <strong>createFile</strong>(string filePath, [string fileName], boolean deleteFile='false')</kbd>
 	
 	<br><br>
 
 	
-		<p>Adds a user to the database</p>
+		<p>Creates and stores a GridFS file</p>
 	
 
 	
@@ -1719,61 +1390,35 @@ Maintains the Database Connection via the Native Driver</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>username</code></dd>
+		<dd><code>filePath</code></dd>
 		
-		<dd><code>password</code></dd>
+		<dd><code>fileName</code></dd>
+		
+		<dd><code>deleteFile</code></dd>
 		
 		</dl>
 	
 
 	
-
-	</dl>
-	<hr>
-
-	
-	<a name="close()"><!-- --></a>
-	<h3>close</h3>
-	
-	<kbd>public any <strong>close</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Closes the underlying mongodb object. Once closed, you cannot perform additional mongo operations and you'll need to init a new mongo.
-Best practice is to close mongo in your Application.cfc's onApplicationStop() method. Something like:
-getBeanFactory().getBean("mongo").close();
-or
-application.mongo.close()
-depending on how you're initializing and making mongo available to your app
-NOTE: If you do not close your mongo object, you WILL leak connections!</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
+		<dl>
+			<dt><strong>Returns:</strong></dt>
+			<dd>string 			Returns the string representation of the file ID</dd>
+		</dl>
 	
 
 	</dl>
 	<hr>
 
 	
-	<a name="connect()"><!-- --></a>
-	<h3>connect</h3>
+	<a name="find()"><!-- --></a>
+	<h3>find</h3>
 	
-	<kbd>public any <strong>connect</strong>(any dbName='[runtime expression]')</kbd>
+	<kbd>public any <strong>find</strong>(struct criteria)</kbd>
 	
 	<br><br>
 
 	
-		<p>Our connection to the Mongo Server</p>
+		<p>Finds a file by search criteria</p>
 	
 
 	
@@ -1788,7 +1433,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>dbName</code></dd>
+		<dd><code>criteria</code></dd>
 		
 		</dl>
 	
@@ -1799,13 +1444,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="createCredential()"><!-- --></a>
-	<h3>createCredential</h3>
+	<a name="findById()"><!-- --></a>
+	<h3>findById</h3>
 	
-	<kbd>private any <strong>createCredential</strong>(string username, string password, any authDB='admin')</kbd>
+	<kbd>public any <strong>findById</strong>(any id)</kbd>
 	
 	<br><br>
 
+	
+		<p>Retreives a GridFS file by ObjectId</p>
 	
 
 	
@@ -1820,11 +1467,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>username</code></dd>
-		
-		<dd><code>password</code></dd>
-		
-		<dd><code>authDB</code></dd>
+		<dd><code>id</code></dd>
 		
 		</dl>
 	
@@ -1835,92 +1478,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="dropDatabase()"><!-- --></a>
-	<h3>dropDatabase</h3>
+	<a name="findOne()"><!-- --></a>
+	<h3>findOne</h3>
 	
-	<kbd>public any <strong>dropDatabase</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>Drops the database currently specified in MongoConfig</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getCollections()"><!-- --></a>
-	<h3>getCollections</h3>
-	
-	<kbd>public string <strong>getCollections</strong>()</kbd>
+	<kbd>public any <strong>findOne</strong>(struct criteria)</kbd>
 	
 	<br><br>
 
 	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getDatabases()"><!-- --></a>
-	<h3>getDatabases</h3>
-	
-	<kbd>public string <strong>getDatabases</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getDBCollection()"><!-- --></a>
-	<h3>getDBCollection</h3>
-	
-	<kbd>public any <strong>getDBCollection</strong>([any collectionName], [any dbName='[runtime expression]'])</kbd>
-	
-	<br><br>
-
-	
-		<p>Gets a CBMongoDB DBCollection object, which wraps the java DBCollection</p>
+		<p>Finds an returns a single document with search criteria</p>
 	
 
 	
@@ -1935,11 +1501,147 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>collectionName</code></dd>
-		
-		<dd><code>dbName</code></dd>
+		<dd><code>criteria</code></dd>
 		
 		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getAppSettings()"><!-- --></a>
+	<h3>getAppSettings</h3>
+	
+	<kbd>public string <strong>getAppSettings</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: Application Settings</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getBucketName()"><!-- --></a>
+	<h3>getBucketName</h3>
+	
+	<kbd>public string <strong>getBucketName</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getDbInstance()"><!-- --></a>
+	<h3>getDbInstance</h3>
+	
+	<kbd>public string <strong>getDbInstance</strong>()</kbd>
+	
+	<br><br>
+
+	
+		<p>get: Core GridFS connection properties</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getFileList()"><!-- --></a>
+	<h3>getFileList</h3>
+	
+	<kbd>public any <strong>getFileList</strong>(struct criteria='[runtime expression]')</kbd>
+	
+	<br><br>
+
+	
+		<p>Returns the iterative cursor of the files contained in the GridFS Bucket</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>criteria</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="getGridInstance()"><!-- --></a>
+	<h3>getGridInstance</h3>
+	
+	<kbd>public string <strong>getGridInstance</strong>()</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
 	
 
 	
@@ -1975,15 +1677,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getLastError()"><!-- --></a>
-	<h3>getLastError</h3>
+	<a name="getMongoClient()"><!-- --></a>
+	<h3>getMongoClient</h3>
 	
-	<kbd>public any <strong>getLastError</strong>()</kbd>
+	<kbd>public string <strong>getMongoClient</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>Returns the last error for the current connection.</p>
+		<p>get: The Mongo Client Instance</p>
 	
 
 	
@@ -2002,15 +1704,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getMongo()"><!-- --></a>
-	<h3>getMongo</h3>
+	<a name="getMongoUtil()"><!-- --></a>
+	<h3>getMongoUtil</h3>
 	
-	<kbd>public any <strong>getMongo</strong>()</kbd>
+	<kbd>public string <strong>getMongoUtil</strong>()</kbd>
 	
 	<br><br>
 
 	
-		<p>Get the underlying Java driver's Mongo object</p>
+		<p>get: Mongo Utils</p>
 	
 
 	
@@ -2029,40 +1731,13 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getMongoAsync()"><!-- --></a>
-	<h3>getMongoAsync</h3>
+	<a name="isReadableImage()"><!-- --></a>
+	<h3>isReadableImage</h3>
 	
-	<kbd>public string <strong>getMongoAsync</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getMongoConfig()"><!-- --></a>
-	<h3>getMongoConfig</h3>
-	
-	<kbd>public any <strong>getMongoConfig</strong>([any mongoConfig=''])</kbd>
+	<kbd>private any <strong>isReadableImage</strong>([any filePath])</kbd>
 	
 	<br><br>
 
-	
-		<p>Decide whether to use the MongoConfig in the variables scope, the one being passed around as arguments, or create a new one</p>
 	
 
 	
@@ -2077,7 +1752,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>mongoConfig</code></dd>
+		<dd><code>filePath</code></dd>
 		
 		</dl>
 	
@@ -2088,15 +1763,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getMongoDB()"><!-- --></a>
-	<h3>getMongoDB</h3>
+	<a name="remove()"><!-- --></a>
+	<h3>remove</h3>
 	
-	<kbd>public any <strong>getMongoDB</strong>([any mongoConfig=''])</kbd>
+	<kbd>public any <strong>remove</strong>(struct criteria)</kbd>
 	
 	<br><br>
 
 	
-		<p>Get the underlying Java driver's DB object</p>
+		<p>Removes a GridFS file by criteria</p>
 	
 
 	
@@ -2111,7 +1786,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>mongoConfig</code></dd>
+		<dd><code>criteria</code></dd>
 		
 		</dl>
 	
@@ -2122,167 +1797,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="getMongoUtil()"><!-- --></a>
-	<h3>getMongoUtil</h3>
+	<a name="removeById()"><!-- --></a>
+	<h3>removeById</h3>
 	
-	<kbd>public string <strong>getMongoUtil</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: Utility Class</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getReadPreference()"><!-- --></a>
-	<h3>getReadPreference</h3>
-	
-	<kbd>public string <strong>getReadPreference</strong>()</kbd>
+	<kbd>public any <strong>removeById</strong>(any id)</kbd>
 	
 	<br><br>
 
 	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getWirebox()"><!-- --></a>
-	<h3>getWirebox</h3>
-	
-	<kbd>public string <strong>getWirebox</strong>()</kbd>
-	
-	<br><br>
-
-	
-		<p>get: Wirebox</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="getWriteConcern()"><!-- --></a>
-	<h3>getWriteConcern</h3>
-	
-	<kbd>public string <strong>getWriteConcern</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="initCollections()"><!-- --></a>
-	<h3>initCollections</h3>
-	
-	<kbd>private any <strong>initCollections</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="initDatabases()"><!-- --></a>
-	<h3>initDatabases</h3>
-	
-	<kbd>private any <strong>initDatabases</strong>()</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setCollections()"><!-- --></a>
-	<h3>setCollections</h3>
-	
-	<kbd>public any <strong>setCollections</strong>(any collections)</kbd>
-	
-	<br><br>
-
+		<p>Removes a GridFS file by id</p>
 	
 
 	
@@ -2297,7 +1820,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>collections</code></dd>
+		<dd><code>id</code></dd>
 		
 		</dl>
 	
@@ -2308,10 +1831,44 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="setDatabases()"><!-- --></a>
-	<h3>setDatabases</h3>
+	<a name="setAppSettings()"><!-- --></a>
+	<h3>setAppSettings</h3>
 	
-	<kbd>public any <strong>setDatabases</strong>(any databases)</kbd>
+	<kbd>public any <strong>setAppSettings</strong>(any AppSettings)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: Application Settings</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>AppSettings</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setBucketName()"><!-- --></a>
+	<h3>setBucketName</h3>
+	
+	<kbd>public any <strong>setBucketName</strong>(any bucketName)</kbd>
 	
 	<br><br>
 
@@ -2329,7 +1886,73 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>databases</code></dd>
+		<dd><code>bucketName</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setDbInstance()"><!-- --></a>
+	<h3>setDbInstance</h3>
+	
+	<kbd>public any <strong>setDbInstance</strong>(any dbInstance)</kbd>
+	
+	<br><br>
+
+	
+		<p>set: Core GridFS connection properties</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>dbInstance</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="setGridInstance()"><!-- --></a>
+	<h3>setGridInstance</h3>
+	
+	<kbd>public any <strong>setGridInstance</strong>(any GridInstance)</kbd>
+	
+	<br><br>
+
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>GridInstance</code></dd>
 		
 		</dl>
 	
@@ -2374,15 +1997,15 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<hr>
 
 	
-	<a name="setMongo()"><!-- --></a>
-	<h3>setMongo</h3>
+	<a name="setMongoClient()"><!-- --></a>
+	<h3>setMongoClient</h3>
 	
-	<kbd>public any <strong>setMongo</strong>(any Mongo)</kbd>
+	<kbd>public any <strong>setMongoClient</strong>(any MongoClient)</kbd>
 	
 	<br><br>
 
 	
-		<p>set: Properties created on init()</p>
+		<p>set: The Mongo Client Instance</p>
 	
 
 	
@@ -2397,71 +2020,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>Mongo</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setMongoAsync()"><!-- --></a>
-	<h3>setMongoAsync</h3>
-	
-	<kbd>public any <strong>setMongoAsync</strong>(any MongoAsync)</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>MongoAsync</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setMongoConfig()"><!-- --></a>
-	<h3>setMongoConfig</h3>
-	
-	<kbd>public any <strong>setMongoConfig</strong>(any MongoConfig)</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>MongoConfig</code></dd>
+		<dd><code>MongoClient</code></dd>
 		
 		</dl>
 	
@@ -2480,7 +2039,7 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 	<br><br>
 
 	
-		<p>set: Utility Class</p>
+		<p>set: Mongo Utils</p>
 	
 
 	
@@ -2496,104 +2055,6 @@ NOTE: If you do not close your mongo object, you WILL leak connections!</p>
 		<dt><strong>Parameters:</strong></dt>
 		
 		<dd><code>MongoUtil</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setReadPreference()"><!-- --></a>
-	<h3>setReadPreference</h3>
-	
-	<kbd>public any <strong>setReadPreference</strong>(any ReadPreference)</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>ReadPreference</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setWirebox()"><!-- --></a>
-	<h3>setWirebox</h3>
-	
-	<kbd>public any <strong>setWirebox</strong>(any wirebox)</kbd>
-	
-	<br><br>
-
-	
-		<p>set: Wirebox</p>
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>wirebox</code></dd>
-		
-		</dl>
-	
-
-	
-
-	</dl>
-	<hr>
-
-	
-	<a name="setWriteConcern()"><!-- --></a>
-	<h3>setWriteConcern</h3>
-	
-	<kbd>public any <strong>setWriteConcern</strong>(any WriteConcern)</kbd>
-	
-	<br><br>
-
-	
-
-	
-		
-		
-	
-
-	
-	
-
-	
-		<dl>
-		<dt><strong>Parameters:</strong></dt>
-		
-		<dd><code>WriteConcern</code></dd>
 		
 		</dl>
 	
