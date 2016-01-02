@@ -204,7 +204,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	}
 
 	/**
-	* Returns a native CFML Image from the GridFS file
+	* Returns a native CFML Image (e.g. "<cfimage>") from the GridFS file
 	* 
 	* @param numeric width 		The maximum width of the image
 	* @param numeric height 	The maximum height of the image
