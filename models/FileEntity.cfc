@@ -151,6 +151,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	public function writeTo(required string Path,required struct imageArgs={}){
 		var gfsFile = getFileObject();
 		var fileInfo = gfsFile.get('fileInfo');
+		var imageFormats = listToArray(lcase(getReadableImageFormats()));
 
 		//if we have a directory, use our file name
 		if(directoryExists(ARGUMENTS.Path)){
@@ -160,7 +161,11 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 
 		if(listLast(ARGUMENTS.Path,'.') != fileInfo['extension']) ARGUMENTS.PATH &= '.'&fileInfo['extension'];
 
-		getImageObject(argumentCollection = imageArgs).saveAs(ARGUMENTS.path);
+		if(arrayFind(imageFormats,getMimeType())){
+			getImageObject(argumentCollection = imageArgs).saveAs(ARGUMENTS.path);	
+		} else {
+			gfsFile.writeTo(ARGUMENTS.path);
+		}
 
 		return ARGUMENTS.Path;
 	}
@@ -175,12 +180,12 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* 
 	* @param numeric width 			The maximum width of the image
 	* @param numeric height 		The maximum height of the image
-	* @param numeric x				The x offset from the upper left corner to crop the image
-	* @param numeric y				The y offset from the upper left corner to crop the image 
+	* @param any x				The x offset from the upper left corner to crop the image or "center"
+	* @param any y				The y offset from the upper left corner to crop the image or "center" 
 	* @param string mimeType 		The mimetype to serve the image - will convert the original mime type to the destination (e.g. - jpg to png)
 	* @param Date expiration 		An optional expiration date to specify in the header for the image content
 	**/
-	public void function writeImageToBrowser(numeric width,numeric height,numeric x=0,numeric y=0,mimeType,expiration){
+	public void function writeImageToBrowser(numeric width,numeric height,any x=0,any y=0,mimeType,expiration){
 		
 		if(!isNull(expiration) and isDate(ARGUMENTS.expiration)){
 			expirationSeconds = dateDiff('s',now(),ARGUMENTS.expiration);
@@ -203,10 +208,10 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* 
 	* @param numeric width 		The maximum width of the image
 	* @param numeric height 	The maximum height of the image
-	* @param numeric x			The x offset from the upper left corner to crop the image
-	* @param numeric y			The y offset from the upper left corner to crop the image
+	* @param any x			The x offset from the upper left corner to crop the image or "center"
+	* @param any y			The y offset from the upper left corner to crop the image or "center"
 	**/
-	public any function getCFImage(numeric width,numeric height,numeric x=0,numeric y=0) {
+	public any function getCFImage(numeric width,numeric height,any x=0,any y=0) {
 		return imageNew(getBufferedImage(argumentCollection=arguments));
 	}
 
@@ -216,16 +221,14 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* 
 	* @param numeric width 		The maximum width of the image
 	* @param numeric height 	The maximum height of the image
-	* @param numeric x			The x offset from the upper left corner to crop the image
-	* @param numeric y			The y offset from the upper left corner to crop the image
+	* @param any x			The x offset from the upper left corner of the original image for the crop or "center" (will be recalulated to the new scale)
+	* @param any y			The y offset from the upper left corner of the original image for the crop or "center" (will be recalulated to the new scale)
 	**/
-	public any function getImageObject(numeric width,numeric height,numeric x=0,numeric y=0){
+	public any function getImageObject(numeric width,numeric height,any x=0,any y=0){
 		var ImageIO = jLoader.create("javaxt.io.Image").init(getFileInputStream());
 
-		if(ARGUMENTS.x + ARGUMENTS.y <> 0){
-			if(isNull(ARGUMENTS.height)) ARGUMENTS.height = ImageIO.getHeight()-ARGUMENTS.y;
-			if(isNull(ARGUMENTS.width)) ARGUMENTS.width = ImageIO.getWidth()-ARGUMENTS.x;
-			ImageIO.crop(ARGUMENTS.x,ARGUMENTS.y,ARGUMENTS.width,ARGUMENTS.height);
+		if(ARGUMENTS.x != 0 && ARGUMENTS.y !=0){
+			scaleAndCropToFit(ImageIO,ARGUMENTS);
 		} else {
 			if(!isNull(ARGUMENTS.height)) ImageIO.setHeight(ARGUMENTS.height);
 			if(!isNull(ARGUMENTS.width)) ImageIO.setWidth(ARGUMENTS.width);
@@ -239,10 +242,10 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* 
 	* @param numeric width 		The maximum width of the image
 	* @param numeric height 	The maximum height of the image
-	* @param numeric x			The x offset from the upper left corner to crop the image
-	* @param numeric y			The y offset from the upper left corner to crop the image
+	* @param any x			The x offset from the upper left corner to crop the image or "center"
+	* @param any y			The y offset from the upper left corner to crop the image or "center"
 	**/
-	public function getBufferedImage(numeric width,numeric height,numeric x=0,numeric y=0){
+	public function getBufferedImage(numeric width,numeric height,any x=0,any y=0){
 		return getImageObject(argumentCollection=arguments).getBufferedImage();
 	}
 
@@ -251,11 +254,55 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* 
 	* @param numeric width 		The maximum width of the image
 	* @param numeric height 	The maximum height of the image
-	* @param numeric x			The x offset from the upper left corner to crop the image
-	* @param numeric y			The y offset from the upper left corner to crop the image
+	* @param any x			The x offset from the upper left corner to crop the image or "center"
+	* @param any y			The y offset from the upper left corner to crop the image or "center"
 	**/
-	public function getImageGraphics(numeric width,numeric height,numeric x=0,numeric y=0){
+	public function getImageGraphics(numeric width,numeric height,any x=0,any y=0){
 		return getBufferedImage(argumentCollection=arguments).getGraphics();
+	}
+
+	/**
+	* Scale an image and crop to fit dimensions
+	* @param javaxt.io.Image Img 	The Image object to be manipulated
+	* @param string imageArgs 		The standard sizing and image options (e.g. - {width:100,height:100,x:100,y:100}) see getImageObject() for additional information
+	**/
+	public any function scaleAndCropToFit(required Img,required struct imageArgs){
+		var originalWidth = Img.getWidth();
+		var originalHeight = Img.getHeight();
+		var destWidth = imageArgs.width;
+		var destHeight = imageArgs.height;
+		
+		//Scale down our image proportionally to the largest size necessary
+		if(destHeight > destWidth){
+			Img.setWidth(destHeight);
+		} else if (destWidth > destHeight) {
+			Img.setHeight(destWidth);
+		} else if(originalHeight > originalWidth){
+			Img.setWidth(destHeight);
+		} else {
+			Img.setHeight(destWidth);
+		}
+		
+		//calculate our differentials
+		var diffWidth = Img.getWidth()/originalWidth;
+		var diffHeight = Img.getHeight()/originalHeight;
+		
+		//recalculate all of our crop boundaries
+		if(isNumeric(imageArgs.x) && isNumeric(imageArgs.y)){
+			imageArgs.x = diffWidth*imageArgs.x;
+			imageArgs.y = diffHeight*imageArgs.y;
+		}
+		
+		//check for our "center" x/y args
+		if(imageArgs.x == 'center'){
+			imageArgs.x = (Img.getWidth()/2)-(destWidth/2);
+		}
+		if(imageArgs.y == 'center'){
+			imageArgs.y = (Img.getHeight()/2)-(destHeight/2);
+		}
+
+		return Img.crop(imageArgs.x,imageArgs.y,destWidth,destHeight);
+
 	}
 
 	/**
