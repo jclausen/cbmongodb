@@ -199,6 +199,17 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
+	* Set the offset for a query
+	* 
+	* @chainable
+	**/
+	any function offset(numeric offset){
+		this.set_offset(ARGUMENTS.offset);
+
+		return this;
+	}
+
+	/**
 	 * Set the order|sort for the upcoming query
 	 *
 	 * @chainable
