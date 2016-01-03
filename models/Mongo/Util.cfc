@@ -83,7 +83,7 @@ component name="MongoUtil" accessors=true singleton{
 	* Convenience for turning a string _id into a Mongo ObjectId object
 	*/
 	function newObjectIDFromID(String id){
-		if( !isSimpleValue( id ) || !jLoader.create("org.bson.types.ObjectId").isValid(id)) return id;
+		if( !isSimpleValue( id ) || !isObjectId(id)) return id;
 
 		return jLoader.create("org.bson.types.ObjectId").init(id);
 	}
@@ -93,8 +93,12 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function newIDCriteriaObject(String id){
 		var dbo = newDBObject();
-		dbo.put("_id",newObjectIDFromID(id));
+		dbo.put("_id",newObjectIDFromID(ARGUMENTS.id));
 		return dbo;
+	}
+
+	function isObjectId(string id){
+		return jLoader.create("org.bson.types.ObjectId").isValid(ARGUMENTS.id);
 	}
 
 	/**
