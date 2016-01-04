@@ -301,19 +301,19 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		
 		} else if(!this.loaded() and this.criteriaExists()){
 			//delete by criteria
-			deleted=getDBInstance().remove(this.get_criteria());	
+			deleted=javacast('boolean',getDBInstance().remove(this.get_criteria()).getDeletedCount());	
 			this.reset();
 		
 		} else if(!this.loaded() and !this.criteriaExists() and truncate){
 			//authorized truncation
-			this.getDBInstance().remove(criteria={});
+			deleted = javacast('boolean',this.getDBInstance().remove(criteria={}).getDeletedCount());
 		
 		} else if(this.loaded()) {
 			//defaults to delete by the loaded id
-			deleted=super.delete(this.get_id());
+			deleted=javacast('boolean',super.delete(this.get_id()).getDeletedCount());
 			this.reset();
 		}
-		
+
 		return deleted;
 	 }
 
