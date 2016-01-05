@@ -64,7 +64,15 @@ component name="MongoUtil" accessors=true singleton{
 			}
 		} else {
 			var cfObj = {};
-			cfObj.putAll(BasicDBObject);
+
+			//structAppend(cfObj,BasicDBObject)
+			try{
+				cfObj.putAll(BasicDBObject);
+			} catch (any e){
+				if(getMetaData(BasicDBObject).getName() == 'org.bson.BsonUndefined') return javacast('null',0);
+
+				return BasicDBObject;
+			}
 			//loop our keys to ensure first-level items with sub-documents objects are converted
 			for(var key in cfObj){
 				if(!isNull(cfObj[key]) && ( isArray(cfObj[key]) || isStruct(cfObj[key]) ) ) cfObj[key] = toCF(cfObj[key]);
