@@ -4,11 +4,18 @@ MongoDB Module for Coldbox
 CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.2.0.1 <em>(Release Date: 12/12/2015)</em>
+- <strong>Module Version:</strong> 3.2.0.2 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.2.0
 
 Changelog:
 ----------
+
+**Patch v3.2.0.2**
+
+1. Fixes issues with unexpected driver return types
+2. Adds `offset()` helper method (alias for `set_offset()`) to ActiveEntity
+3. Adds `isObjectId()` helper method to MongoUtil for detecting whether an object is a Mongo _id string
+
 
 **Patch v3.2.0.1**
 
