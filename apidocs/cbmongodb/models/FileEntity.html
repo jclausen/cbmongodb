@@ -772,7 +772,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#getBufferedImage()">getBufferedImage</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<strong><a href="FileEntity.html#getBufferedImage()">getBufferedImage</A></strong>([numeric width], [numeric height], [any x='0'], [any y='0'])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the buffered image object for accessing the raw pixels of an image.
@@ -787,10 +787,10 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#getCFImage()">getCFImage</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<strong><a href="FileEntity.html#getCFImage()">getCFImage</A></strong>([numeric width], [numeric height], [any x='0'], [any y='0'])
 			<br>
 			
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a native CFML Image from the GridFS file.
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a native CFML Image (e.
 			
 		</td>
 	</tr>
@@ -927,7 +927,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#getImageGraphics()">getImageGraphics</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<strong><a href="FileEntity.html#getImageGraphics()">getImageGraphics</A></strong>([numeric width], [numeric height], [any x='0'], [any y='0'])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns the Buffered Image 2DGraphics object.
@@ -942,7 +942,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#getImageObject()">getImageObject</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])
+			<strong><a href="FileEntity.html#getImageObject()">getImageObject</A></strong>([numeric width], [numeric height], [any x='0'], [any y='0'])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns a javaxt.
@@ -1000,6 +1000,21 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set our file from a path.
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" valign="top" width="1%">
+			<code>any</code>
+		</td>
+		<td>
+			<strong><a href="FileEntity.html#scaleAndCropToFit()">scaleAndCropToFit</A></strong>(any Img, struct imageArgs)
+			<br>
+			
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scale an image and crop to fit dimensions.
 			
 		</td>
 	</tr>
@@ -1145,7 +1160,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>void</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#writeImageToBrowser()">writeImageToBrowser</A></strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'], [any mimeType], [any expiration])
+			<strong><a href="FileEntity.html#writeImageToBrowser()">writeImageToBrowser</A></strong>([numeric width], [numeric height], [any x='0'], [any y='0'], [any mimeType], [any expiration])
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Writes an image directly to the browser and aborts the remainder of the request.
@@ -1160,7 +1175,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 			<code>any</code>
 		</td>
 		<td>
-			<strong><a href="FileEntity.html#writeTo()">writeTo</A></strong>(string Path, struct imageArgs='[runtime expression]')
+			<strong><a href="FileEntity.html#writeTo()">writeTo</A></strong>(string destination, struct imageArgs='[runtime expression]')
 			<br>
 			
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write the stored GridFS file to a path with optional image transformation arguments.
@@ -2625,7 +2640,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<a name="getBufferedImage()"><!-- --></a>
 	<h3>getBufferedImage</h3>
 	
-	<kbd>public any <strong>getBufferedImage</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	<kbd>public any <strong>getBufferedImage</strong>([numeric width], [numeric height], [any x='0'], [any y='0'])</kbd>
 	
 	<br><br>
 
@@ -2665,12 +2680,12 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<a name="getCFImage()"><!-- --></a>
 	<h3>getCFImage</h3>
 	
-	<kbd>public any <strong>getCFImage</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	<kbd>public any <strong>getCFImage</strong>([numeric width], [numeric height], [any x='0'], [any y='0'])</kbd>
 	
 	<br><br>
 
 	
-		<p>Returns a native CFML Image from the GridFS file</p>
+		<p>Returns a native CFML Image (e.g. "<cfimage>") from the GridFS file</p>
 	
 
 	
@@ -2938,7 +2953,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<a name="getImageGraphics()"><!-- --></a>
 	<h3>getImageGraphics</h3>
 	
-	<kbd>public any <strong>getImageGraphics</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	<kbd>public any <strong>getImageGraphics</strong>([numeric width], [numeric height], [any x='0'], [any y='0'])</kbd>
 	
 	<br><br>
 
@@ -2978,7 +2993,7 @@ File Entity object for MongoDB GridFS File Storage</p>
 	<a name="getImageObject()"><!-- --></a>
 	<h3>getImageObject</h3>
 	
-	<kbd>public any <strong>getImageObject</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'])</kbd>
+	<kbd>public any <strong>getImageObject</strong>([numeric width], [numeric height], [any x='0'], [any y='0'])</kbd>
 	
 	<br><br>
 
@@ -3117,6 +3132,42 @@ Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javax
 		<dd><code>filePath</code></dd>
 		
 		<dd><code>deleteFile</code></dd>
+		
+		</dl>
+	
+
+	
+
+	</dl>
+	<hr>
+
+	
+	<a name="scaleAndCropToFit()"><!-- --></a>
+	<h3>scaleAndCropToFit</h3>
+	
+	<kbd>public any <strong>scaleAndCropToFit</strong>(any Img, struct imageArgs)</kbd>
+	
+	<br><br>
+
+	
+		<p>Scale an image and crop to fit dimensions</p>
+	
+
+	
+		
+		
+	
+
+	
+	
+
+	
+		<dl>
+		<dt><strong>Parameters:</strong></dt>
+		
+		<dd><code>Img</code></dd>
+		
+		<dd><code>imageArgs</code></dd>
 		
 		</dl>
 	
@@ -3449,7 +3500,7 @@ Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javax
 	<a name="writeImageToBrowser()"><!-- --></a>
 	<h3>writeImageToBrowser</h3>
 	
-	<kbd>public void <strong>writeImageToBrowser</strong>([numeric width], [numeric height], [numeric x='0'], [numeric y='0'], [any mimeType], [any expiration])</kbd>
+	<kbd>public void <strong>writeImageToBrowser</strong>([numeric width], [numeric height], [any x='0'], [any y='0'], [any mimeType], [any expiration])</kbd>
 	
 	<br><br>
 
@@ -3493,7 +3544,7 @@ Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javax
 	<a name="writeTo()"><!-- --></a>
 	<h3>writeTo</h3>
 	
-	<kbd>public any <strong>writeTo</strong>(string Path, struct imageArgs='[runtime expression]')</kbd>
+	<kbd>public any <strong>writeTo</strong>(string destination, struct imageArgs='[runtime expression]')</kbd>
 	
 	<br><br>
 
@@ -3513,7 +3564,7 @@ Documentation http://www.javaxt.com/documentation/?jar=javaxt-core&package=javax
 		<dl>
 		<dt><strong>Parameters:</strong></dt>
 		
-		<dd><code>Path</code></dd>
+		<dd><code>destination</code></dd>
 		
 		<dd><code>imageArgs</code></dd>
 		
