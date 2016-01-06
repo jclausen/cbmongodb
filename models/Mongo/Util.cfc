@@ -64,7 +64,15 @@ component name="MongoUtil" accessors=true singleton{
 			}
 		} else {
 			var cfObj = {};
-			cfObj.putAll(BasicDBObject);
+
+			//structAppend(cfObj,BasicDBObject)
+			try{
+				cfObj.putAll(BasicDBObject);
+			} catch (any e){
+				if(getMetaData(BasicDBObject).getName() == 'org.bson.BsonUndefined') return javacast('null',0);
+
+				return BasicDBObject;
+			}
 			//loop our keys to ensure first-level items with sub-documents objects are converted
 			for(var key in cfObj){
 				if(!isNull(cfObj[key]) && ( isArray(cfObj[key]) || isStruct(cfObj[key]) ) ) cfObj[key] = toCF(cfObj[key]);
@@ -83,7 +91,7 @@ component name="MongoUtil" accessors=true singleton{
 	* Convenience for turning a string _id into a Mongo ObjectId object
 	*/
 	function newObjectIDFromID(String id){
-		if( !isSimpleValue( id ) || !jLoader.create("org.bson.types.ObjectId").isValid(id)) return id;
+		if( !isSimpleValue( id ) || !isObjectId(id)) return id;
 
 		return jLoader.create("org.bson.types.ObjectId").init(id);
 	}
@@ -93,8 +101,12 @@ component name="MongoUtil" accessors=true singleton{
 	*/
 	function newIDCriteriaObject(String id){
 		var dbo = newDBObject();
-		dbo.put("_id",newObjectIDFromID(id));
+		dbo.put("_id",newObjectIDFromID(ARGUMENTS.id));
 		return dbo;
+	}
+
+	function isObjectId(string id){
+		return jLoader.create("org.bson.types.ObjectId").isValid(ARGUMENTS.id);
 	}
 
 	/**

@@ -375,9 +375,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 **/
 	any function delete(required _id){
 
-		var deleted=this.getDBInstance().findOneAndDelete(getMongoUtil().newIDCriteriaObject(arguments['_id']));
+		var deleted=this.getDBInstance().deleteOne(getMongoUtil().newIDCriteriaObject(arguments['_id']));
 		
-		return true;
+		return deleted.wasAcknowledged();
 	}
 
 

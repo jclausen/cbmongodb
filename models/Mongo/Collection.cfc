@@ -108,15 +108,7 @@ component name="MongoCollection" accessors=true {
 
 		results = this.find(qId).asCursor();
 
-		if(results.hasNext()){
-	
-			return getMongoUtil().toCF(results.next());
-	
-		} else {
-	
-			return javacast('null',0)
-	
-		}
+		return getMongoUtil().toCF(results.tryNext());
 	}
 
 	/**
