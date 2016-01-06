@@ -310,7 +310,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		
 		} else if(this.loaded()) {
 			//defaults to delete by the loaded id
-			deleted=javacast('boolean',super.delete(this.get_id()).getDeletedCount());
+			deleted=super.delete(this.get_id());
 			this.reset();
 		}
 
