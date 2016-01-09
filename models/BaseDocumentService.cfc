@@ -144,6 +144,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function detect(){
 
 		var properties=getMetaData(this).properties;
+
 		//add our extended properties in case there are schema items
 		if(structKeyExists(getMetaData(this),'extends') && structKeyExists(getMetaData(this).extends,'properties')){
 			var extendedProperties = getMetaData(this).extends.properties;
@@ -158,6 +159,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 					//add the property to your our map
 					structAppend(this.get_map(),{"#structKeyExists(prop,'parent') ? prop.parent & '.' & prop.name : prop.name#"=prop},true);
 					
+					generateSchemaAccessors(prop);
+
 					if(structKeyExists(prop,"parent")){
 						
 						//Test for doubling up on our parent attribute and dot notation
@@ -165,6 +168,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 						if(prop_name[1] EQ prop.parent){
 							throw('IllegalAttributeException: The parent attribute &quot;'&prop.parent&'&quot; has been been duplicated in <strong>'&getMetaData(this).name&'</strong>. Use either dot notation for your property name or specify a parent attribute.')
 						}
+
 						//TODO: add upstream introspection to handle infinite nesting
 						this.set(prop.parent&'.'&prop.name,this.getPropertyDefault(prop));
 					
@@ -178,9 +182,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 					if(structKeyExists(prop,'index')){
 						this.applyIndex(prop,properties);
 					}
-
-					generateSchemaAccessors(prop);
-
 
 				} catch (any error){
 					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
@@ -266,11 +267,18 @@ component name="BaseDocumentService" database="test" collection="default" access
 		var sget="doc";
 		var nest=listToArray(key,'.');
 
-		for(var i=1;i LT arrayLen(nest);i=i+1){
-		  sget=sget&'.'&nest[i];
+		//handle top level struct containers which may be out of sequence in our property array
+		if(arrayLen(nest) == 1 && isStruct(value) && structIsEmpty(value)){
+			if(!structKeyExists(doc,nest[1])) doc[nest[1]]=value;
+		} else {
+			for(var i=1;i LT arrayLen(nest);i=i+1){
+			  sget=sget&'.'&nest[i];
+			}
+
+			var nested=structGet(sget);
+			nested[nest[arrayLen(nest)]]=value;
+
 		}
-		var nested=structGet(sget);
-		nested[nest[arrayLen(nest)]]=value;
 
 		this.entity(this.get_document());
 
