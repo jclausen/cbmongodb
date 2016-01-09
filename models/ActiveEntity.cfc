@@ -384,7 +384,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 			
 	 			if(this.loaded()) uniqueCriteria["_id"] = {"$ne":this.get_id()};
 	 			
-	 			if(!javacast('boolean',getDbInstance().count(uniqueCriteria))){
+	 			if(javacast('boolean',getDbInstance().count(uniqueCriteria))){
 	 				createValidationError(mapping,"unique",fieldValue);
 	 				continue;
 	 			}
