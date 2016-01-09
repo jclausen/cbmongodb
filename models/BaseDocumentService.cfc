@@ -246,10 +246,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * Populate the document object with a structure
 	 **/
 	any function populate(required struct document){
-		var dobj=structCopy(this.get_default_document());
-		for(var prop in document){
-			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop)){
-				this.set(prop,document[prop]);
+		for(var prop in ARGUMENTS.document){
+			if(!isNull(locate(prop))){
+				this.set(prop,ARGUMENTS.document[prop]);
 				//normalize data
 				if(isNormalizationKey(prop)){
 					normalizeOn(prop);
