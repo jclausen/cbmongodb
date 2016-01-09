@@ -382,8 +382,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 		if(structKeyExists(mapping,"unique") && mapping.unique){
 	 			var uniqueCriteria = {"#mapkey#":fieldValue};
 	 			
-	 			if(this.loaded()) uniqueCriteria["_id"] = {"$ne":this.get_id()};
-	 			
+	 			if(this.loaded()) uniqueCriteria["_id"] = {"$ne":getMongoUtil().newObjectIdFromId(this.get_id())};
+
 	 			if(javacast('boolean',getDbInstance().count(uniqueCriteria))){
 	 				createValidationError(mapping,"unique",fieldValue);
 	 				continue;
