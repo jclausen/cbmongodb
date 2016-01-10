@@ -117,6 +117,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
 	 **/
 	any function create(returnInstance=false,required document=get_document()){
+		if(this.loaded()) throw("The create method may not be called on a loaded entity. Use the update() method to update an existing entity or reset the entity state");
+
 		if( !structKeyExists(VARIABLES,'ForceValidation') || !VARIABLES.ForceValidation || this.isValid() ){
 			var doc = getDbInstance().insertOne(ARGUMENTS.document);
 			
