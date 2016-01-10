@@ -264,12 +264,13 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function set(required key, required value){
 		var doc =this.get_document();
 		var sget="doc";
-		var nest=listToArray(key,'.');
+		var nest=listToArray(getDocumentPath(ARGUMENTS.key),'.');
 
 		//handle top level struct containers which may be out of sequence in our property array
 		if(arrayLen(nest) == 1 && isStruct(value) && structIsEmpty(value)){
 			if(!structKeyExists(doc,nest[1])) doc[nest[1]]=value;
 		} else {
+
 			for(var i=1;i LT arrayLen(nest);i=i+1){
 			  sget=sget&'.'&nest[i];
 			}
@@ -522,15 +523,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 		if(structKeyExists(document,ARGUMENTS.key)){
 			return document[ARGUMENTS.key];
 		} else {
-			var mappings = structFindValue(get_map(),key,"ALL");
-			//return a null if we have no mapping
-			var keyName = ARGUMENTS.key;
-			for(var map in mappings){
-				if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
-					keyName = map.owner.parent & '.' & ARGUMENTS.key;
-				}
-			}
-
+			var keyName = getDocumentPath(ARGUMENTS.key);
 			if(isDefined('document.#keyName#')){
 				return evaluate('document.#keyName#');
 			}
@@ -538,6 +531,25 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		return;
 	}
+
+	/**
+	* Returns the document path for a given property name or key
+	* @param string key 	The property name
+	**/
+	string function getDocumentPath(required string key){
+		
+		if(structKeyExists(get_default_document(),ARGUMENTS.key)) return ARGUMENTS.key;
+
+		var mappings = structFindValue(get_map(),ARGUMENTS.key,"ALL");
+		var documentPath = ARGUMENTS.key;
+		for(var map in mappings){
+			if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
+				documentPath = map.owner.parent & '.' & ARGUMENTS.key;
+			}
+		}
+
+		return documentPath;
+	} 
 
 
 	/**
