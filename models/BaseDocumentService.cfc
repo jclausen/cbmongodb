@@ -246,6 +246,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * Populate the document object with a structure
 	 **/
 	any function populate(required struct document){
+		//auto-evict a non loaded entity when populating
+		if(!this.loaded()) this.evict();
+		
 		for(var prop in ARGUMENTS.document){
 			if(!isNull(locate(prop))){
 				this.set(prop,ARGUMENTS.document[prop]);
