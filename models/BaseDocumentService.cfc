@@ -449,7 +449,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 						var normalizedData = {};
 						for(var normKey in listToArray(mapping.keys)){
 							//handle nulls as empty strings
-							normalizedData[normKey] = normTarget.locate(normKey);		
+							var normData = normTarget.locate(normKey);
+							normalizedData[normKey] = !isNull(normData)?normData:'';		
 						}
 						return normalizedData;
 					} else {
