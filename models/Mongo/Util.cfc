@@ -209,6 +209,7 @@ component name="MongoUtil" accessors=true singleton{
 			var nextResult = cursor.next();
 			arrayAppend(aResults,nextResult);
 		}
+		cursor.close();
 		return toCF(aResults);
 	}
 
