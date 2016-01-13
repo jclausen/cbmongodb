@@ -442,18 +442,18 @@ component name="BaseDocumentService" database="test" collection="default" access
 			var mapping = found.owner;
 			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
 				var normalizationMap = mapping;
-				var normTarget = Wirebox.getInstance(mapping.normalize).getCollectionObject().findById(locate(mapping.on));
-				if(!isNull(normTarget)){
+				var normTarget = Wirebox.getInstance(mapping.normalize).load(locate(mapping.on));
+				if(normTarget.loaded()){
 					//assemble specified keys, if available
 					if(structKeyExists(mapping,'keys')){
 						var normalizedData = {};
 						for(var normKey in listToArray(mapping.keys)){
 							//handle nulls as empty strings
-							normalizedData[normKey] = normTarget[normKey];		
+							normalizedData[normKey] = normTarget.locate(normKey);		
 						}
 						return normalizedData;
 					} else {
-						return normTarget;
+						return normTarget.getDocument();
 					}
 
 				} else {
