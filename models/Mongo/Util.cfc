@@ -195,7 +195,7 @@ component name="MongoUtil" accessors=true singleton{
 		enc['asCursor']=function(){return dbResult.iterator()};
 		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify)};
 		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
-		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult,true))};
+		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult))};
 		return enc;
 	}
 
