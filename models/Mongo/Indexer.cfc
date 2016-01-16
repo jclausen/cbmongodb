@@ -71,6 +71,7 @@ component name="MongoIndexer" accessors=true scope="cachebox"{
 			**/
 			if(!this.indexExists(ARGUMENTS.dbInstance,index_name)){
 				if(structKeyExists(prop,'geo')){
+					structDelete(options,'sparse');
 					ARGUMENTS.dbInstance.createGeoIndex(prop.name,options);
 				} else {
 					ARGUMENTS.dbInstance.createIndex(idx,options);
