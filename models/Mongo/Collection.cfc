@@ -110,6 +110,8 @@ component name="MongoCollection" accessors=true {
 		var firstResult = results.tryNext();
 		results.close();
 
+		if(isNull(firstResult)) return;
+
 		return getMongoUtil().toCF(firstResult);
 	}
 
