@@ -142,7 +142,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	* @param mixed 	operator 	When passed as a valid operator, an operational query will be assembled.  When the value is not match to an operator, an "equals" criteria will be appended
 	* @param string [value] 	If a valid operator is passed, the value would provide the operational comparison 
 	**/
-	any function where(string key,string operator='=',any value){
+	any function where(string key,any operator='=',any value){
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
