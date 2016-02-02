@@ -458,7 +458,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 					}
 
 				} else {
-					throw ("Normalization data for the property #mapping.name# could not be loaded as a record matching the #mapping.normalize# property value of #VARIABLES[mapping.on]# could not be found in the database.")
+					throw ("Normalization data for the property #mapping.name# could not be loaded as a record matching the #mapping.normalize# property value of #locate(mapping.on)# could not be found in the database.")
 				}
 			}
 		}
