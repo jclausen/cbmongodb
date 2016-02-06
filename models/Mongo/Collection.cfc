@@ -106,10 +106,15 @@ component name="MongoCollection" accessors=true {
 	public function findById(required id){
 		var qId = getMongoUtil().newIDCriteriaObject(ARGUMENTS.id);
 
-		results = this.find(qId).asCursor();
+		var results = this.find(qId).asCursor();
+		var firstResult = results.tryNext();
+		results.close();
 
-		return getMongoUtil().toCF(results.tryNext());
+		if(isNull(firstResult)) return;
+
+		return getMongoUtil().toCF(firstResult);
 	}
+
 
 	/**
 	* Performs an aggregation operation on the collection using match or projection

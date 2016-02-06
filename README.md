@@ -1,14 +1,27 @@
 
 MongoDB Module for Coldbox
 ==========================
-CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
+CBMongoDB applies an Active Record patter to manage MongoDB documents and schema.  It allows the use of a familiar syntax for CRUD operations, recordset processing and retrieval. 
+The module makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.2.0.2 <em>(Release Date: 12/12/2015)</em>
+- <strong>Module Version:</strong> 3.2.0.4 <em>(Release Date: 12/12/2015)</em>
 - <strong>Mongo Java Driver Version:</strong> 3.2.0
 
 Changelog:
 ----------
+
+**Patch v3.2.0.4**
+
+1. Fixes a schema issue where a parent struct is being overwritten by the default container when the child attribute is lower aphabetically
+2. Fixes an issue with unique validation
+3. Fixes population issues when passing nested structs
+4. Fixes issues with nested keys on normalization
+4. Adds auto-eviction prior to population
+5. Adds explicit closes to cursors uses for single record retrieval
+6. Changes index naming scheme to prevent different collections from having the same index name hash
+7. Adds the ability to pass a struct as the first argument to `where()`
+
 **Patch v3.2.0.3**
 
 1. Fixes ACF Compatibility Issues

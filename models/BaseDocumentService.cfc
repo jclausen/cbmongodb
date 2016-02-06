@@ -144,6 +144,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function detect(){
 
 		var properties=getMetaData(this).properties;
+
 		//add our extended properties in case there are schema items
 		if(structKeyExists(getMetaData(this),'extends') && structKeyExists(getMetaData(this).extends,'properties')){
 			var extendedProperties = getMetaData(this).extends.properties;
@@ -158,6 +159,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 					//add the property to your our map
 					structAppend(this.get_map(),{"#structKeyExists(prop,'parent') ? prop.parent & '.' & prop.name : prop.name#"=prop},true);
 					
+					generateSchemaAccessors(prop);
+
 					if(structKeyExists(prop,"parent")){
 						
 						//Test for doubling up on our parent attribute and dot notation
@@ -165,6 +168,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 						if(prop_name[1] EQ prop.parent){
 							throw('IllegalAttributeException: The parent attribute &quot;'&prop.parent&'&quot; has been been duplicated in <strong>'&getMetaData(this).name&'</strong>. Use either dot notation for your property name or specify a parent attribute.')
 						}
+
 						//TODO: add upstream introspection to handle infinite nesting
 						this.set(prop.parent&'.'&prop.name,this.getPropertyDefault(prop));
 					
@@ -178,9 +182,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 					if(structKeyExists(prop,'index')){
 						this.applyIndex(prop,properties);
 					}
-
-					generateSchemaAccessors(prop);
-
 
 				} catch (any error){
 					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
@@ -245,10 +246,12 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * Populate the document object with a structure
 	 **/
 	any function populate(required struct document){
-		var dobj=structCopy(this.get_default_document());
-		for(var prop in document){
-			if(structKeyExists(dobj,prop) or structKeyExists(variables,prop)){
-				this.set(prop,document[prop]);
+		//auto-evict a non loaded entity when populating
+		if(!this.loaded()) this.evict();
+		
+		for(var prop in ARGUMENTS.document){
+			if(!isNull(locate(prop))){
+				this.set(prop,ARGUMENTS.document[prop]);
 				//normalize data
 				if(isNormalizationKey(prop)){
 					normalizeOn(prop);
@@ -264,13 +267,21 @@ component name="BaseDocumentService" database="test" collection="default" access
 	any function set(required key, required value){
 		var doc =this.get_document();
 		var sget="doc";
-		var nest=listToArray(key,'.');
+		var nest=listToArray(getDocumentPath(ARGUMENTS.key),'.');
 
-		for(var i=1;i LT arrayLen(nest);i=i+1){
-		  sget=sget&'.'&nest[i];
+		//handle top level struct containers which may be out of sequence in our property array
+		if(arrayLen(nest) == 1 && isStruct(value) && structIsEmpty(value)){
+			if(!structKeyExists(doc,nest[1])) doc[nest[1]]=value;
+		} else {
+
+			for(var i=1;i LT arrayLen(nest);i=i+1){
+			  sget=sget&'.'&nest[i];
+			}
+
+			var nested=structGet(sget);
+			nested[nest[arrayLen(nest)]]=value;
+
 		}
-		var nested=structGet(sget);
-		nested[nest[arrayLen(nest)]]=value;
 
 		this.entity(this.get_document());
 
@@ -431,22 +442,23 @@ component name="BaseDocumentService" database="test" collection="default" access
 			var mapping = found.owner;
 			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
 				var normalizationMap = mapping;
-				var normTarget = Wirebox.getInstance(mapping.normalize).getCollectionObject().findById(locate(mapping.on));
-				if(!isNull(normTarget)){
+				var normTarget = Wirebox.getInstance(mapping.normalize).load(locate(mapping.on));
+				if(normTarget.loaded()){
 					//assemble specified keys, if available
 					if(structKeyExists(mapping,'keys')){
 						var normalizedData = {};
 						for(var normKey in listToArray(mapping.keys)){
 							//handle nulls as empty strings
-							normalizedData[normKey] = normTarget[normKey];		
+							var normData = normTarget.locate(normKey);
+							normalizedData[normKey] = !isNull(normData)?normData:'';		
 						}
 						return normalizedData;
 					} else {
-						return normTarget;
+						return normTarget.getDocument();
 					}
 
 				} else {
-					throw ("Normalization data for the property #mapping.name# could not be loaded as a record matching the #mapping.normalize# property value of #VARIABLES[mapping.on]# could not be found in the database.")
+					throw ("Normalization data for the property #mapping.name# could not be loaded as a record matching the #mapping.normalize# property value of #locate(mapping.on)# could not be found in the database.")
 				}
 			}
 		}
@@ -515,15 +527,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 		if(structKeyExists(document,ARGUMENTS.key)){
 			return document[ARGUMENTS.key];
 		} else {
-			var mappings = structFindValue(get_map(),key,"ALL");
-			//return a null if we have no mapping
-			var keyName = ARGUMENTS.key;
-			for(var map in mappings){
-				if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
-					keyName = map.owner.parent & '.' & ARGUMENTS.key;
-				}
-			}
-
+			var keyName = getDocumentPath(ARGUMENTS.key);
 			if(isDefined('document.#keyName#')){
 				return evaluate('document.#keyName#');
 			}
@@ -531,6 +535,25 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		return;
 	}
+
+	/**
+	* Returns the document path for a given property name or key
+	* @param string key 	The property name
+	**/
+	string function getDocumentPath(required string key){
+		
+		if(structKeyExists(get_default_document(),ARGUMENTS.key)) return ARGUMENTS.key;
+
+		var mappings = structFindValue(get_map(),ARGUMENTS.key,"ALL");
+		var documentPath = ARGUMENTS.key;
+		for(var map in mappings){
+			if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
+				documentPath = map.owner.parent & '.' & ARGUMENTS.key;
+			}
+		}
+
+		return documentPath;
+	} 
 
 
 	/**

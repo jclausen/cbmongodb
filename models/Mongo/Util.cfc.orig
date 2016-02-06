@@ -191,11 +191,19 @@ component name="MongoUtil" accessors=true singleton{
 
 	function encapsulateDBResult(dbResult){
 		var enc = {};
+<<<<<<< HEAD
+		enc['getResult']=function(){return dbResult};
+		enc['asCursor']=function(){return dbResult.iterator()};
+		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify)};
+		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
+		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult))};
+=======
 		enc['getResult']=function(){return dbResult;};
 		enc['asCursor']=function(){return dbResult.iterator();};
 		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify);};
 		enc['forEach']=function(required fn){return dbResult.forEach(fn);};
 		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult,true));};
+>>>>>>> master
 		return enc;
 	}
 

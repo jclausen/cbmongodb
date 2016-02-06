@@ -67,10 +67,15 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Map reduce query method
+	 * Map reduce query method* Performs a Map-Reduce operation on the collection
+	* 
+	* @param string map 		 The javascript map command <a href="https://docs.mongodb.org/manual/core/map-reduce/">Docs</a>
+	* @param string reduce 		 The javascript reduction command <a href="https://docs.mongodb.org/manual/core/map-reduce/">Docs</a>
 	 **/
-	any function mr(){
-		//TODO: Implement
+	any function mapReduce(required string map, required string reduce){
+
+		return getDbInstance().mapReduce(argumentCollection=arguments);
+
 	}
 
 
@@ -117,6 +122,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
 	 **/
 	any function create(returnInstance=false,required document=get_document()){
+		if(this.loaded()) throw("The create method may not be called on a loaded entity. Use the update() method to update an existing entity or reset the entity state");
+
 		if( !structKeyExists(VARIABLES,'ForceValidation') || !VARIABLES.ForceValidation || this.isValid() ){
 			var doc = getDbInstance().insertOne(ARGUMENTS.document);
 			
@@ -136,11 +143,15 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	/**
 	* CBMongoDB where clause equivalent.  Appends query criteria to an ongoing query build
-	* @param string key 		The key to be queried
+	* @param mixed key 			A string value of key to be queried.  This argument also accepts a struct, which operates as a pass-through method to criteria()
 	* @param mixed 	operator 	When passed as a valid operator, an operational query will be assembled.  When the value is not match to an operator, an "equals" criteria will be appended
 	* @param string [value] 	If a valid operator is passed, the value would provide the operational comparison 
 	**/
-	any function where(string key,string operator='=',any value){
+	any function where(key,any operator='=',any value){
+
+		if(isStruct(ARGUMENTS.key)) return this.appendCriteria(ARGUMENTS.key);
+
+		
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
@@ -382,9 +393,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 		if(structKeyExists(mapping,"unique") && mapping.unique){
 	 			var uniqueCriteria = {"#mapkey#":fieldValue};
 	 			
-	 			if(this.loaded()) uniqueCriteria["_id"] = {"$ne":this.get_id()};
-	 			
-	 			if(!javacast('boolean',getDbInstance().count(uniqueCriteria))){
+	 			if(this.loaded()) uniqueCriteria["_id"] = {"$ne":getMongoUtil().newObjectIdFromId(this.get_id())};
+
+	 			if(javacast('boolean',getDbInstance().count(uniqueCriteria))){
 	 				createValidationError(mapping,"unique",fieldValue);
 	 				continue;
 	 			}
@@ -588,6 +599,18 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 			return false;
 
 		return true;
+	}
+
+
+	any function appendCriteria(struct criteria){
+		
+		structAppend(
+			this.get_criteria(),
+			ARGUMENTS.criteria,
+			true
+		);
+
+		return this;
 	}
 
 }

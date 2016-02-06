@@ -56,7 +56,7 @@ component name="MongoIndexer" accessors=true scope="cachebox"{
 			sparse=true;
 		}
 		//create implicit name so we can overwrite sparse settings
-		var index_name=hash(serializeJSON(idx));
+		var index_name=hash(dbInstance.getCollectionName() & serializeJSON(idx));
 		if(!arrayContains(VARIABLES.indexNames,index_name)){
 			//add our index options
 			var options = {
@@ -71,6 +71,7 @@ component name="MongoIndexer" accessors=true scope="cachebox"{
 			**/
 			if(!this.indexExists(ARGUMENTS.dbInstance,index_name)){
 				if(structKeyExists(prop,'geo')){
+					structDelete(options,'sparse');
 					ARGUMENTS.dbInstance.createGeoIndex(prop.name,options);
 				} else {
 					ARGUMENTS.dbInstance.createIndex(idx,options);
