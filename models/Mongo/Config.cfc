@@ -27,8 +27,8 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 	 		application.wirebox.autowire(this);
 	 	}
 	 	
-	 	var hosts = structKeyExists(configStruct,'hosts')?configStruct.hosts: [{serverName='localhost',serverPort='27017'}]
-	 	var dbName= configStruct.db 
+	 	var hosts = structKeyExists(configStruct,'hosts')?configStruct.hosts: [{serverName='localhost',serverPort='27017'}];
+	 	var dbName= configStruct.db; 
 	 	var MongoClientOptions=structKeyExists(configStruct,'clientOptions')?configStruct.clientOptions:{};
 
 
@@ -37,7 +37,7 @@ component accessors=true output="false" hint="Main configuration for MongoDB Con
 	 	var auth = {
 	 		username:structKeyExists(hosts[1],'username')?hosts[1].username:"",
 	 		password:structKeyExists(hosts[1],'password')?hosts[1].password:""
-	 	}
+	 	};
 	 	if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
 
 		VARIABLES.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};

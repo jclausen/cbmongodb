@@ -66,7 +66,7 @@ component name="GridFS" accessors=true {
 			"name":ARGUMENTS.fileName,
 			"extension":listLast(ARGUMENTS.filePath,'.'),
 			"mimetype":fileGetMimeType(ARGUMENTs.filePath)
-		}
+		};
 
 		//image storage processing - skipped if GridFS settings are not enabled
 		if(structKeyExists(AppSettings.MongoDB,'GridFS') && isReadableImage(filePath)){

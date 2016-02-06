@@ -64,7 +64,7 @@ component name="MongoIndexer" accessors=true scope="cachebox"{
 				"sparse":sparse,
 				"background":background,
 				"unique":is_unique
-			}
+			};
 
 			/**
 			* GeoSpatial Indexes have to Re-checked against the db every time, since they will not be created on empty collections

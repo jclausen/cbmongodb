@@ -423,7 +423,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 		"type":arguments.errorType,
 	 		"fieldName":mapping.name,
 	 		"mapping":mapping
-	 	}
+	 	};
 	 	switch(arguments.errorType){
 	 		case "missing":
 	 			error["message"] = "Missing document field #mapping.name#";
