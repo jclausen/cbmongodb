@@ -603,7 +603,12 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 
 	any function appendCriteria(struct criteria){
-		structMerge(this.get_criteria(),ARGUMENTS.criteria);
+		
+		structAppend(
+			this.get_criteria(),
+			ARGUMENTS.criteria,
+			true
+		);
 
 		return this;
 	}
