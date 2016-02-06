@@ -146,7 +146,27 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 								expect(model.reset().where('address.city',model.getTestDocument().address.city).find()).toBeComponent();
 								expect(model.reset().where('address.city',model.getTestDocument().address.city).count()).toBe(1);
 								expect(model.reset().where('address.city',model.getTestDocument().address.city).exists()).toBeTrue();
-							})
+							});
+
+							it("Tests the ability for where() to accept a struct as the first argument",function(){
+								expect(model.reset().where({'address.city':'Timbuktu'}).find(false)).toBeNull();
+								expect(model.reset().where({'address.city':'Timbuktu'}).find()).toBeComponent();
+								expect(model.reset().where({'address.city':'Timbuktu'}).find().loaded()).toBeFalse();
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).find(false)).toBeStruct();
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).find()).toBeComponent();
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).count()).toBe(1);
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).exists()).toBeTrue();
+							});
+
+							it("Tests that passing a struct twice as a where() argument appends the criteria",function(){
+								model.reset()
+									.where({'address.city': model.getTestDocument().address.city} )
+									.where({'firstName':model.getTestDocument().firstName});
+
+								expect(model.get_criteria()).toHaveKey('address.city');
+								expect(model.get_criteria()).toHaveKey('firstName');
+
+							});
 
 							it("Tests entity update operations",function(){
 								//test our updates
