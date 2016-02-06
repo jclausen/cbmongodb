@@ -9,6 +9,8 @@ CBMongoDB applies an Active Record to manage MongoDB documents and schema using 
 
 Changelog:
 ----------
+**Patch v3.2.0.3**
+1. Fixes ACF Compatibility Issues
 
 **Patch v3.2.0.2**
 
