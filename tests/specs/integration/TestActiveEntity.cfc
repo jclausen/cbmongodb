@@ -163,8 +163,6 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 									.where({'address.city': model.getTestDocument().address.city} )
 									.where({'first_name':model.getTestDocument().first_name});
 
-									
-
 								expect(model.get_criteria()).toHaveKey('address.city');
 								expect(model.get_criteria()).toHaveKey('first_name');
 
