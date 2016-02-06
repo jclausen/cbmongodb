@@ -1,7 +1,7 @@
 
 MongoDB Module for Coldbox
 ==========================
-CBMongoDB applies an Active Record patter to manage MongoDB documents and schema.  It allows the use of a familiar syntax for CRUD operations, recordset processing and retrieval. 
+CBMongoDB applies an Active Record pattern to manage MongoDB documents and schema.  It allows the use of a familiar syntax for CRUD operations, recordset processing and retrieval. 
 The module makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
