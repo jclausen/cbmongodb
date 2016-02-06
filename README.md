@@ -18,7 +18,7 @@ Changelog:
 3. Fixes population issues when passing nested structs
 4. Fixes issues with nested keys on normalization
 4. Adds auto-eviction prior to population
-5. Adds explicit closes to cursors uses for single record retrieval
+5. Adds explicit closing to cursor use for single record retrieval
 6. Changes index naming scheme to prevent different collections from having the same index name hash
 7. Adds the ability to pass a struct as the first argument to `where()`
 
