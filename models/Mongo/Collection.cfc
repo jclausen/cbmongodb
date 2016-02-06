@@ -353,7 +353,7 @@ component name="MongoCollection" accessors=true {
 	public function findOneAndDelete(required struct criteria,options){
 
 		if(isNull(options)){
-			return getDBCollection().findOneAndDelete(getMongoUtil().toMongo(ARGUMENTS.criteria))
+			return getDBCollection().findOneAndDelete(getMongoUtil().toMongo(ARGUMENTS.criteria));
 		} else {
 			return getDBCollection().findOneAndDelete(
 				getMongoUtil().toMongo(ARGUMENTS.criteria),
