@@ -60,7 +60,7 @@ component name="MongoUtil" accessors=true singleton{
 		if(isArray(BasicDBObject)){
 			var cfObj = [];
 			for(var obj in BasicDBObject){
-				arrayAppend(cfObj,toCF(obj))
+				arrayAppend(cfObj,toCF(obj));
 			}
 		} else {
 			var cfObj = {};
@@ -191,11 +191,11 @@ component name="MongoUtil" accessors=true singleton{
 
 	function encapsulateDBResult(dbResult){
 		var enc = {};
-		enc['getResult']=function(){return dbResult};
-		enc['asCursor']=function(){return dbResult.iterator()};
-		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify)};
-		enc['forEach']=function(required fn){return dbResult.forEach(fn)};
-		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult,true))};
+		enc['getResult']=function(){return dbResult;};
+		enc['asCursor']=function(){return dbResult.iterator();};
+		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify);};
+		enc['forEach']=function(required fn){return dbResult.forEach(fn);};
+		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult,true));};
 		return enc;
 	}
 

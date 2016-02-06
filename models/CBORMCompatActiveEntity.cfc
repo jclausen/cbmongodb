@@ -29,7 +29,7 @@ component extends="cbmongodb.models.ActiveEntity"{
 		this.criteria(ARGUMENTS.criteria);
 		if(len(ARGUMENTS.SortOrder)){
 			var sort=listToArray(ARGUMENTS.sortOrder,' ');
-			var
+			
 			this.setSort({sort[1]=sort[2]});
 		}
 		return this.query();
