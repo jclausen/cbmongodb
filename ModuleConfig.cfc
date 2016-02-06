@@ -50,16 +50,7 @@ component{
 				{ pattern="/:handler/:action?" }
 			];	
 		}
-
-		//Future Implementation:
-		// if(VARIABLES.MongoDBConfig.permitAPI){
-		// 	routes = [
-		// 		// Module Entry Point
-		// 		{ pattern="/api/", handler="api.v1.GenericMongoAPI", action="index" },
-		// 		// Convention Route
-		// 		{ pattern="/:collection/:action?/:_id?" }
-		// 	];	
-		// }
+		
 	}
 
 	/**
