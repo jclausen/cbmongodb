@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Unit Tests for cbmongodb.models.mongo.MongoCollection
 *******************************************************************************/
-component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest"{
+component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest" appMapping="/root"{
 	property name="GridFS" inject="id:GridFS@cbmongodb";
 	property name="GFSInstance";
 

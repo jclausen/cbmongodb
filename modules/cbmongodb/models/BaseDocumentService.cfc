@@ -133,8 +133,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 		this.set_default_document(structNew());
 		this.set_map(structNew());
 		this.detect();
-		return this;
 
+		return this;
 	}
 
 	/*********************** INSTANTIATION AND OPTIMIZATION **********************/
@@ -188,11 +188,12 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 					//test for index values
 					if(structKeyExists(prop,'index')){
-						this.applyIndex(prop,properties);
+						this.applyIndex(prop, properties);
 					}
 
 				} catch (any error){
-					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
+					//writeDump(error);abort;
+					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.detail#");	
 				}
 			}
 
@@ -210,8 +211,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * @param struct properties - the full properties structure (required if prop contains and "indexwith" attribute)
 	 *
 	 **/
-	public function applyIndex(required prop,properties=[]){
-		arguments["dbInstance"]=getDbInstance();
+	public function applyIndex(required prop, properties=[]){
+		arguments["dbInstance"] = this.getDbInstance();
+
 		return MongoIndexer.applyIndex(argumentCollection=arguments);
 	}
 
@@ -219,17 +221,21 @@ component name="BaseDocumentService" database="test" collection="default" access
 	void function generateSchemaAccessors(required struct prop){
 		var properties=getMetaData(this).properties;
 		var varSafeSeparator = "_";
+		
 		//now create var safe accessors
 		//camel case our accessor
 		var propName = replace(prop.name,'.',' ',"ALL");
 		propName = REReplace(propName, "\b(\S)(\S*)\b", "\u\1\L\2", "all");
+		
 		//now replace our delimiter with a var safe delimiter
-		var accessorSuffix = replace(propName,' ',varSafeSeparator,"ALL");
+		var accessorSuffix = replace(propName,' ', varSafeSeparator, "ALL");
+		
 		//we need this to make sure a property name doesn't override a top level function or overload
 		if(!hasExistingAccessor(accessorSuffix)){
 			//first clear our existing accessors
 			structDelete(this,'get' & prop.name);
 			structDelete(this,'set' & prop.name);
+			
 			this['get'&accessorSuffix]=function(){return locate(prop.name);};
 			this['set'&accessorSuffix]=function(required value){return this.set(prop.name,arguments.value);};
 		}

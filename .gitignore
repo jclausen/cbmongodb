@@ -5,7 +5,6 @@ settings.xml
 test/results/*.properties
 test/results/*.html
 test/results/*.log
-logs/*.log
 modules/cbi18n/
 modules/cbjavaloader/
 modules/cborm/

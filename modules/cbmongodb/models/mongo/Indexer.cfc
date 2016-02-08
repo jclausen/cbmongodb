@@ -11,7 +11,7 @@
 * 
 */
 component name="MongoIndexer" accessors="true" scope="cachebox"{
-	property name="MongoUtil" inject="id:MongoUtil@cbmongodb";
+	property name="mongoUtil" inject="id:MongoUtil@cbmongodb";
 	
 	public function init(){
 		structAppend(variables,{
@@ -32,11 +32,14 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 		var is_unique=false;
 		var sparse=false;
 		var background=true;
+
 		if(structKeyExists(prop,'unique') and prop.unique){
 			is_unique=true;
 		}
+		
 		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
 			idx[prop.name]=this.indexOrder(prop);
+			
 			//Now test for a combined index
 			if(structKeyExists(prop,'indexwith')){
 				//re-find our relation since structFind() isn't reliable with nested structs
@@ -57,6 +60,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 		}
 		//create implicit name so we can overwrite sparse settings
 		var index_name=hash(dbInstance.getCollectionName() & serializeJSON(idx));
+
 		if(!arrayContains(variables.indexNames,index_name)){
 			//add our index options
 			var options = {
@@ -104,7 +108,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	public function indexOrder(required prop){
 		var order=1;
 		if(structKeyExists(prop,'indexorder')){
-			order=MongoUtil.mapOrder(prop.indexorder);
+			order=mongoUtil.mapOrder(prop.indexorder);
 		}
 		return order;
 	}

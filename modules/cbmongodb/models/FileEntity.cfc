@@ -12,17 +12,22 @@
 
 component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors="true" {
 	property name="bucketName" default="fs";
+	
 	//Our file path for temporary file operations
 	property name="filePath";
+	
 	//Mongo Config
 	property name="MongoConfig" inject="id:MongoConfig@cbmongodb";
+	
 	//Our GridFS Object (uninstantiated)
 	property name="GridFS" inject="id:GridFS@cbmongodb";
+	
 	//Javaloader
 	property name="jLoader" inject="id:loader@cbjavaloader";
 
 	//Placeholder for the instantiated GridFS Instance
 	property name="GridFSInstance";
+	
 	//Placeholder for activeEntity fileObject
 	property name="GFSFileObject";
 
@@ -31,7 +36,9 @@ component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors
 
 
 	public function init(){
-		super.init(argumentCollection=ARGUMENTS);
+		application.wirebox.autowire(this);
+
+		super.init(argumentCollection=arguments);
 		
 		//Instantiate our Partner GridFS
 		var md = getMetadata(this);
@@ -46,7 +53,6 @@ component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors
 		setGridFSInstance(GridFS.init(dbName,getBucketName()));
 
 		return this;
-
 	}
 
 	/**
@@ -87,7 +93,7 @@ component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors
 			GridFSInstance.removeById(getFileId());
 		}
 		return super.delete(argumentCollection=arguments);
-	 }
+	}
 
 	/**
 	* Alias for loadFile()

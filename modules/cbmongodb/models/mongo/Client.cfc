@@ -38,12 +38,17 @@ component name="MongoClient" accessors="true"{
 	property name="collections";
 	property name="databases";
 	
-	
+	/**
+	* Constructor
+	*/
 	public function init(){
 
 		return this;
 	}
 
+	/**
+	* After init the autowire properties
+	*/
 	public function onDIComplete(){
 		this.setMongoConfig(getMongoConfig());
 		

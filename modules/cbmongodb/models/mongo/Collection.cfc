@@ -466,14 +466,14 @@ component name="MongoCollection" accessors="true"{
 	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
 	* @param string	geoType 		The GEOJSON spatial type to apply for the index.  Defaults to '2dsphere'.
 	**/
-	public function createGeoIndex(required string field,required options={},required string geoType='2dsphere'){
+	public function createGeoIndex(required string field, required options={}, required string geoType='2dsphere'){
 
 		var idxOptions = getMongoUtil().createIndexOptions(options);
 		var doc = { "#arguments.field#" = arguments.geoType };
 
 		try{
 
-			this.getDBCollection().createIndex(toMongo(doc),idxOptions);
+			this.getDBCollection().createIndex(toMongo(doc), idxOptions);
 
 		} catch(any e){
 

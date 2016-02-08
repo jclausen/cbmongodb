@@ -13,11 +13,11 @@ component name="GridFS" accessors="true" {
 	/**
 	* The Mongo Client Instance
 	**/
-	property name="MongoClient" inject="id:MongoClient@cbmongodb";
+	property name="mongoClient" inject="id:MongoClient@cbmongodb";
 	/**
 	* Mongo Utils
 	**/
-	property name="MongoUtil" inject="id:MongoUtil@cbmongodb";
+	property name="mongoUtil" inject="id:MongoUtil@cbmongodb";
 	/**
 	* CBJavaloader
 	**/
@@ -25,7 +25,7 @@ component name="GridFS" accessors="true" {
 	/**
 	* Application Settings
 	**/
-	property name="AppSettings" inject="wirebox:properties";
+	property name="appSettings" inject="wirebox:properties";
 	/**
 	* Core GridFS connection properties
 	**/
@@ -40,11 +40,15 @@ component name="GridFS" accessors="true" {
 	* @param string db 		The name of the database to use
 	* @param string bucket 	The name of the bucket to use
 	**/
-	function init(required string db,required string bucket='fs'){	
+	function init(string db="", string bucket='fs'){	
+
 		//Our implementation depends on the older DB construction
-		setDBInstance(MongoClient.getMongo().getDb(arguments.db));
-		setBucketName(arguments.bucket);
-		setGridInstance(jLoader.create("com.mongodb.gridfs.GridFS").init(variables.dbInstance,variables.bucketName));
+		if(len(arguments.db) > 0){
+			setDBInstance(mongoClient.getMongo().getDb(arguments.db));
+			setBucketName(arguments.bucket);
+			setGridInstance(jLoader.create("com.mongodb.gridfs.GridFS").init(variables.dbInstance,variables.bucketName));
+		}
+
 		return this;
 	}
 
@@ -59,18 +63,19 @@ component name="GridFS" accessors="true" {
 	public string function createFile(required string filePath,string fileName,required boolean deleteFile=false){
 		if(isNull(GridInstance)) throw("GridFS not initialized.");
 		var inputStream = jLoader.create("java.io.FileInputStream").init(filePath);
+		
 		//create a file name from our path if not specified
 		if(isNull(arguments.fileName)) arguments.fileName = listLast(filePath,'/');
-		//default file data storage
-		var fileData = {
-			"name":arguments.fileName,
-			"extension":listLast(arguments.filePath,'.'),
-			"mimetype":fileGetMimeType(arguments.filePath)
+			//default file data storage
+			var fileData = {
+				"name":arguments.fileName,
+				"extension":listLast(arguments.filePath,'.'),
+				"mimetype":fileGetMimeType(arguments.filePath)
 		};
 
 		//image storage processing - skipped if GridFS settings are not enabled
-		if(structKeyExists(AppSettings.MongoDB,'GridFS') && isReadableImage(filePath)){
-			var GridFSConfig = AppSettings.MongoDB.GridFS;
+		if(structKeyExists(appSettings.MongoDB,'GridFS') && isReadableImage(filePath)){
+			var GridFSConfig = appSettings.MongoDB.GridFS;
 			var img = imageRead(filePath);
 
 			if(structKeyExists(GridFSConfig,'imagestorage')){
@@ -103,7 +108,7 @@ component name="GridFS" accessors="true" {
 
 		created.setContentType(fileData.mimetype);
 
-		created.put('fileInfo', MongoUtil.toMongo(fileData));
+		created.put('fileInfo', mongoUtil.toMongo(fileData));
 
 		created.save();
 
@@ -124,7 +129,7 @@ component name="GridFS" accessors="true" {
 	**/
 	function findById(required any id){
 		if(isSimpleValue(arguments.id)){
-			arguments.id = MongoUtil.newObjectIdFromId(arguments.id);
+			arguments.id = mongoUtil.newObjectIdFromId(arguments.id);
 		}
 
 		return GridInstance.findOne(arguments.id);
@@ -138,7 +143,7 @@ component name="GridFS" accessors="true" {
 	function find(required struct criteria){
 		if(isNull(GridInstance)) throw("GridFS not initialized.");
 
-		return GridInstance.find(MongoUtil.toMongo(arguments.criteria));
+		return GridInstance.find(mongoUtil.toMongo(arguments.criteria));
 
 	}	
 
@@ -150,7 +155,7 @@ component name="GridFS" accessors="true" {
 	function findOne(required struct criteria){
 		if(isNull(GridInstance)) throw("GridFS not initialized.");
 
-		return GridInstance.findOne(MongoUtil.toMongo(arguments.criteria));
+		return GridInstance.findOne(mongoUtil.toMongo(arguments.criteria));
 
 	}
 
@@ -162,7 +167,7 @@ component name="GridFS" accessors="true" {
 	function getFileList(required struct criteria={}){
 		if(isNull(GridInstance)) throw("GridFS not initialized.");
 
-		return GridInstance.getFileList(MongoUtil.toMongo(arguments.criteria));
+		return GridInstance.getFileList(mongoUtil.toMongo(arguments.criteria));
 
 	}
 
@@ -172,8 +177,8 @@ component name="GridFS" accessors="true" {
 	* @param any id 	The Mongo ObjectID or _id string representation
 	**/
 	function removeById(required any id){
-		var criteria = MongoUtil.newIdCriteriaObject(arguments.id);
-		return GridInstance.remove(MongoUtil.toMongo(criteria));
+		var criteria = mongoUtil.newIdCriteriaObject(arguments.id);
+		return GridInstance.remove(mongoUtil.toMongo(criteria));
 	}
 
 	/**
@@ -182,7 +187,7 @@ component name="GridFS" accessors="true" {
 	* @param struct criteria 	The CFML struct representation of the Mongo criteria query
 	**/
 	function remove(required struct criteria){
-		return GridInstance.remove(MongoUtil.toMongo(arguments.criteria));
+		return GridInstance.remove(mongoUtil.toMongo(arguments.criteria));
 	}
 
 	private function isReadableImage(filePath){

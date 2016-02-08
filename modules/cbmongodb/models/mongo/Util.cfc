@@ -12,18 +12,19 @@
 */
 component name="MongoUtil" accessors="true"{
 	property name="MongoConfig" inject="id:MongoConfig@cbmongodb";
-	property name="NullSupport" default="false";
+	//property name="NullSupport" default="false";
 	/**
 	* 
 	* CBJavaloader
 	**/
 	property name="jLoader" inject="id:loader@cbjavaloader";
-
+	
+	param name="nullSupport" default="false"; 
+	
 	/**
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
 	function toMongo(any obj){
-
 		if(getMetaData(obj).name != "lucee.runtime.type.StructImpl" && getMetadata(obj).getCanonicalName() == "com.mongodb.CFBasicDBObject"){
 			return obj;
 		} 
@@ -59,6 +60,7 @@ component name="MongoUtil" accessors="true"{
 	*/
 	function toCF(BasicDBObject){
 		if(isNull(BasicDBObject)) return;
+		
 		//if we're in a loop iteration and the array item is simple, return it
 		if(isSimpleValue(BasicDBObject)) return BasicDbObject;
 
@@ -74,7 +76,7 @@ component name="MongoUtil" accessors="true"{
 			try{
 				cfObj.putAll(BasicDBObject);
 			} catch (any e){
-				if(getMetaData(BasicDBObject).getName() == 'org.bson.BsonUndefined') return javacast('null',0);
+				if(getMetaData(BasicDBObject).getName() == 'org.bson.BsonUndefined') return javacast("null", "");
 
 				return BasicDBObject;
 			}
@@ -154,34 +156,45 @@ component name="MongoUtil" accessors="true"{
 	function dbObjectNew(contents){
 		var dbo = newDBObject();
 		dbo.putAll(toMongoDocument(contents));
-		if(!structIsEmpty(dbo)){
+		
+		if(!isStruct(dbo) && ListLen(structKeyList(dbo)) > 0){
 			ensureTyping(dbo);
 		}
+		
 		return dbo;
-		
-		
 	}
 
 	function ensureTyping(required dbo){
 		for(var i in dbo){
+			//WriteLog(type="Error",  file="cbmongodb", text="dbo[i]: #i#");
 			if(!isNull(dbo[i])){
 				if(isArray(dbo[i])){
 					ensureTypesInArray(dbo[i]);
 				} else if(isStruct(dbo[i])){
 					ensureTyping(dbo[i]);
-				} else if(!isNumeric(dbo[i]) and isBoolean(dbo[i])) {
-					dbo[i]=javacast('boolean',dbo[i]);
+				} else if(!isNumeric(dbo[i]) && len(dbo[i]) != 0 && isBoolean(dbo[i]) && dbo[i] != "Empty") {
+					//WriteLog(type="Error",  file="cbmongodb", text="key-value: #lCase(trim(dbo[i]))#");
+					//dbo[i] = javacast('boolean', lCase(trim(dbo[i])));
+					switch(lCase(trim(dbo[i]))){
+						case "yes":
+							dbo.put(i, CreateObject("java","java.lang.Boolean").init("true"));
+						break;
+					
+						default:
+							dbo.put(i, CreateObject("java","java.lang.Boolean").init("false"));
+						break;
+					}
 				} else if(isDate(dbo[i])){
 					dbo[i] = parseDateTime(dbo[i]);
 					var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
-					dbo[i] = castDate;
+					dbo.put(i, castDate);
 				} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
-					dbo[i] = javacast('null',0);
+					dbo.put(i, javacast('null',0));
 				} else if (i == '_id' && isObjectIdString(dbo[i])){
-					dbo[i] = newObjectIDFromID(dbo[i]);
+					dbo.put(i, newObjectIDFromID(dbo[i]));
 				}	
-			} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
-				dbo[i] = javacast('null',0);				
+			} else if(nullSupport and IsSimpleValue(dbo[i]) and len(dbo[i]) eq 0){
+				dbo.put(i, javacast("null", ""));				
 			}
 		}
 	}
@@ -209,10 +222,13 @@ component name="MongoUtil" accessors="true"{
 	function asArray(dbResult){
 		var aResults = [];
 		var cursor = dbResult.iterator();
+		//WriteLog(type="Error",  file="cbmongodb", text="key-value: #cursor.toString()#");
 		while(cursor.hasNext()){
 			var nextResult = cursor.next();
-			arrayAppend(aResults,nextResult);
+			WriteLog(type="Error",  file="cbmongodb", text="key-value: #nextResult.toString()#");
+			arrayAppend(aResults, nextResult);
 		}
+
 		cursor.close();
 		return toCF(aResults);
 	}
@@ -236,11 +252,12 @@ component name="MongoUtil" accessors="true"{
 	 **/
 	 numeric function mapOrder(required order){
 		var map={'asc'=1,'desc'=-1};
+		
 		if(isNumeric(arguments.order)){
 			return arguments.order;
-		} else if(structKeyExists(map,lcase(arguments.order))) {
+		} else if(structKeyExists(map, lcase(arguments.order))) {
 			//FIXME?
-			return javacast('int',map[lcase(arguments.order)]);
+			return javacast('int', map[lcase(arguments.order)]);
 		} else {
 			return map.asc;
 		}

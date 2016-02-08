@@ -20,65 +20,64 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	variables.conf = {};
 
 
-	 /**
-	 * Constructor
-	 * @hosts Defaults to [{serverName='localhost',serverPort='27017'}]
-	 */
-	 public function init(configStruct){
+	/**
+	* Constructor
+	* @hosts Defaults to [{serverName='localhost',serverPort='27017'}]
+	*/
+	public function init(configStruct){
 	 	setConfigStruct(arguments.configStruct);
 
 	 	return this;
-	 }
+	}
 
-	 /**
-	 * Constructor
-	 * @hosts Defaults to [{serverName='localhost',serverPort='27017'}]
-	 */
-	 public function onDIComplete(){
-	 	if(isNull(jLoader)){
-	 		application.wirebox.autowire(this);
-	 	}
-	 	
-	 	var hosts = structKeyExists(configStruct,'hosts')?configStruct.hosts: [{serverName='localhost',serverPort='27017'}];
-	 	var dbName = configStruct.db; 
-	 	var MongoClientOptions = structKeyExists(configStruct,'clientOptions')?configStruct.clientOptions:{};
+	/**
+	* After init the autowire properties
+	*/
+	public function onDIComplete(){
+		if(isNull(jLoader)){
+			application.wirebox.autowire(this);
+		}
+		
+		var hosts = structKeyExists(configStruct,'hosts')?configStruct.hosts: [{serverName='localhost',serverPort='27017'}];
+		var dbName = configStruct.db; 
+		var MongoClientOptions = structKeyExists(configStruct,'clientOptions')?configStruct.clientOptions:{};
 
 
-	 	establishHostInfo();
-	 	
-	 	var auth = {
-	 		username:structKeyExists(hosts[1],'username')?hosts[1].username:"",
-	 		password:structKeyExists(hosts[1],'password')?hosts[1].password:""
-	 	};
-	 	if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
+		establishHostInfo();
+		
+		var auth = {
+			username:structKeyExists(hosts[1],'username')?hosts[1].username:"",
+			password:structKeyExists(hosts[1],'password')?hosts[1].password:""
+		};
+		if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
 
-		variables.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};
+	variables.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};
 
-		var item = "";
-	 	for(item in hosts){
-	 		addServer( item.serverName, item.serverPort );
-	 	}
-		//turn the struct of MongoClientOptions into a proper object
-		buildMongoClientOptions( mongoClientOptions );
+	var item = "";
+		for(item in hosts){
+			addServer( item.serverName, item.serverPort );
+		}
+	//turn the struct of MongoClientOptions into a proper object
+	buildMongoClientOptions( mongoClientOptions );
 
-		//main entry point for environment-aware configuration; subclasses should do their work in here
-		environment = configureEnvironment();
+	//main entry point for environment-aware configuration; subclasses should do their work in here
+	environment = configureEnvironment();
 
-	 	return this;
-	 }
-
-	 public function addServer(serverName, serverPort){
-	 	var sa = jLoader.create("com.mongodb.ServerAddress").init( serverName, serverPort );
-	 	variables.conf.servers.add( sa );
 		return this;
-	 }
+	}
 
-	 public function removeAllServers(){
-	 	variables.conf.servers.clear();
-	 	return this;
-	 }
+	public function addServer(serverName, serverPort){
+		var sa = jLoader.create("com.mongodb.ServerAddress").init( serverName, serverPort );
+		variables.conf.servers.add( sa );
+	return this;
+	}
 
-     public function establishHostInfo(){
+	public function removeAllServers(){
+		variables.conf.servers.clear();
+		return this;
+	}
+
+    public function establishHostInfo(){
 		// environment decisions can often be made from this information
 		var inetAddress = createObject( "java", "java.net.InetAddress");
 		variables.hostAddress = inetAddress.getLocalHost().getHostAddress();
@@ -164,28 +163,33 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 		return wc[uCase(concern)];
 	}
 
-	 /**
-	 * Main extension point: do whatever it takes to decide environment;
-	 * set environment-specific defaults by overriding the environment-specific
-	 * structure keyed on the environment name you decide
-	 */
-	 public string function configureEnvironment(){
-	 	//overriding classes could do all manner of interesting things here... read config from properties file, etc.
-	 	return "local";
-	 }
+	/**
+	* Main extension point: do whatever it takes to decide environment;
+	* set environment-specific defaults by overriding the environment-specific
+	* structure keyed on the environment name you decide
+	*/
+	public string function configureEnvironment(){
+		//overriding classes could do all manner of interesting things here... read config from properties file, etc.
+		return "local";
+	}
 
-	 public string function getDBName(){ return getDefaults().dbName; }
+	public string function getDBName(){ 
+		return getDefaults().dbName; 
+	}
 
-	 public Array function getServers(){return getDefaults().servers; }
+	public Array function getServers(){
+		return getDefaults().servers; 
+	}
 
-	 public function getMongoClientOptions(){
-	 	if( not structKeyExists(getDefaults(), "mongoClientOptions") ){
-	 		buildMongoClientOptions({});
-	 	}
-	 	return getDefaults().mongoClientOptions;
-	 }
+	public function getMongoClientOptions(){
+		if( not structKeyExists(getDefaults(), "mongoClientOptions") ){
+			buildMongoClientOptions({});
+		}
+		return getDefaults().mongoClientOptions;
+	}
 
-	 public struct function getDefaults(){ return conf; }
-
+	public struct function getDefaults(){ 
+	 	return conf; 
+	}
 
 }

@@ -32,7 +32,6 @@ component {
 	// Module Dependencies to be loaded in order
 	this.dependencies 		= ['cbjavaloader'];
 	
-	//
 	MongoDBConfig = "";
 	
 	function configure(){
@@ -158,9 +157,9 @@ component {
 			//whether to permit unit tests to run
 			permitTests = true,
 			//whether to permit generic API access (future implementation)
-			permitAPI = true
+			permitAPI = true,
 			//GridFS settings - this key is omitted by default
-			/*GridFS = {
+			GridFS = {
 				"imagestorage":{
 					//whether to store the cfimage metadata
 					"metadata":true,
@@ -171,7 +170,7 @@ component {
 					//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
 					"tmpDirectory":"/includes/tmp/"
 				}
-			}*/
+			}
 		};
 
 		// Incorporate settings
