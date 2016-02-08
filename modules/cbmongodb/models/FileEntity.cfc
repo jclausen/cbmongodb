@@ -10,7 +10,7 @@
 * 
 */
 
-component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors="true" {
+component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" accessors="true" {
 	property name="bucketName" default="fs";
 	
 	//Our file path for temporary file operations
@@ -36,10 +36,12 @@ component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors
 
 
 	public function init(){
-		application.wirebox.autowire(this);
-
 		super.init(argumentCollection=arguments);
-		
+
+		return this;		
+	}
+
+	public function onDIComplete(){
 		//Instantiate our Partner GridFS
 		var md = getMetadata(this);
 		if(structKeyExists(md,'bucket')) setBucketName(md.bucket);
@@ -54,7 +56,7 @@ component name="CFMongoFileEntity" extends="cborm.models.ActiveEntity" accessors
 
 		return this;
 	}
-
+		
 	/**
 	* Overload to evict()
 	**/

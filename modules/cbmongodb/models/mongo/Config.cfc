@@ -51,17 +51,18 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 		};
 		if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
 
-	variables.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};
+		variables.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};
 
-	var item = "";
+		var item = "";
 		for(item in hosts){
 			addServer( item.serverName, item.serverPort );
 		}
-	//turn the struct of MongoClientOptions into a proper object
-	buildMongoClientOptions( mongoClientOptions );
+		
+		//turn the struct of MongoClientOptions into a proper object
+		buildMongoClientOptions( mongoClientOptions );
 
-	//main entry point for environment-aware configuration; subclasses should do their work in here
-	environment = configureEnvironment();
+		//main entry point for environment-aware configuration; subclasses should do their work in here
+		environment = configureEnvironment();
 
 		return this;
 	}

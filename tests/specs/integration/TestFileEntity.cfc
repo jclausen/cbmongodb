@@ -17,10 +17,10 @@ component name="TestModelFileEntity" extends="tests.specs.CBMongoDBBaseTest"{
 
 			it("Tests the ability to create a File entity",function(){
 				//create a test person
-				var personId = VARIABLES.people.reset().populate(variables.people.getTestDocument()).create();
+				var personId = variables.people.reset().populate(variables.people.getTestDocument()).create();
 				expect(personId).toBeString();
 
-				var FileEntity = VARIABLES.FileEntity;
+				var FileEntity = variables.FileEntity;
 				FileEntity.setPerson_id(personId);
 				//test our normalization
 				expect(FileEntity.getPerson()).toBeStruct();

@@ -9,7 +9,7 @@
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 *
 */
-component extends="cborm.models.ActiveEntity"{
+component extends="cbmongodb.models.ActiveEntity"{
 	/************************************ CBORM Compat VES Methods********************************/
 	any function list(struct criteria=get_criteria(),keys=get_keys(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort(),boolean asQuery=getDefaultAsQuery()){
 		 results=this.query(argumentCollection=arguments);

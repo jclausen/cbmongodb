@@ -7,7 +7,7 @@
 * @author Jon Clausen <jon_clausen@silowebworks.com>
 * @license Apache v2.0 <http://www.apache.org/licenses/>
 */
-component name="GEOEntityService" extends="cborm.models.ActiveEntity" accessors="true" {
+component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" accessors="true" {
 
 	/**
 	 *  that a local entity is contains a foreign object

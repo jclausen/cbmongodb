@@ -192,7 +192,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 					}
 
 				} catch (any error){
-					//writeDump(error);abort;
+					writeDump(error);abort;
 					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.detail#");	
 				}
 			}
@@ -278,22 +278,24 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * Sets a document property
 	 **/
 	any function set(required key, required value){
-		var doc =this.get_document();
-		var sget="doc";
-		var nest=listToArray(getDocumentPath(arguments.key),'.');
+		var doc 	= this.get_document();
+		var sget 	= "doc";
+		var nest 	= listToArray(getDocumentPath(arguments.key),'.');
 
 		//handle top level struct containers which may be out of sequence in our property array
-		if(arrayLen(nest) == 1 && isStruct(value) && structIsEmpty(value)){
-			if(!structKeyExists(doc,nest[1])) doc[nest[1]]=value;
+		if(arrayLen(nest) == 1 && isStruct(arguments.value) && structIsEmpty(arguments.value)){
+			if(!structKeyExists(doc, nest[1])) doc[nest[1]] = arguments.value;
 		} else {
 
-			for(var i=1;i LT arrayLen(nest);i=i+1){
-			  sget=sget&'.'&nest[i];
+			for(var i=1; i <= arrayLen(nest); i=i+1){
+			  sget = sget&'.'&nest[i];
 			}
 
-			var nested=structGet(sget);
-			nested[nest[arrayLen(nest)]]=value;
-
+			if(arrayLen(nest) > 1){
+				var nested = structGet(sget);
+				//WriteLog(type="Error",  file="cbmongodb", text="key-value: #nest.toString()# : #arguments.value.toString()#");
+				nested[nest[arrayLen(nest)]] = arguments.value;
+			}
 		}
 
 		this.entity(this.get_document());

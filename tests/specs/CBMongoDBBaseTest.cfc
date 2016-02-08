@@ -1,7 +1,7 @@
 component name="CBMongoDBBaseTest" extends="coldbox.system.testing.BaseTestCase" appMapping="/root"{
 	
-	//property name="MongoUtil" inject="id:MongoUtil@cbmongodb";
-	//property name="MongoClient" inject="id:MongoClient@cbmongodb";
+	property name="MongoUtil" inject="id:MongoUtil@cbmongodb";
+	property name="MongoClient" inject="id:MongoClient@cbmongodb";
 	property name="Wirebox" inject="wirebox";
 	
 	property name="People" inject="id:People@CBMongoTestMocks";
@@ -13,8 +13,8 @@ component name="CBMongoDBBaseTest" extends="coldbox.system.testing.BaseTestCase"
 
 	function beforeAll(){
 		super.beforeAll();
-		MongoClient = getModel("MongoClient@cbmongodb");
-		MongoUtil =  getModel("MongoUtil@cbmongodb");
+		//MongoClient = application.wirebox.getInstance("MongoClient@cbmongodb");
+		//MongoUtil =  application.wirebox.getInstance("MongoUtil@cbmongodb");
 
 		//new coldbox.system.ioc.Injector(binder="tests.resources.WireBox");
 		
@@ -30,16 +30,16 @@ component name="CBMongoDBBaseTest" extends="coldbox.system.testing.BaseTestCase"
 			application.wirebox.autowire(this);	
 		}
 
-		//expect(isNull(Wirebox)).toBeFalse("Autowiring Failed");
-		//expect(isNull(MongoUtil)).toBeFalse("Autowiring Failed!");
+		expect(isNull(Wirebox)).toBeFalse("Autowiring Failed");
+		expect(isNull(MongoUtil)).toBeFalse("Autowiring Failed!");
 	}
 
 	function afterAll(){
 		super.afterAll();
 
 		//drop all of our collections
-		People.getDbInstance().drop();
-		States.getDbInstance().drop();
-		Counties.getDbInstance().drop(); 
+		application.wirebox.getInstance("People@CBMongoTestMocks").getDbInstance().drop();
+		application.wirebox.getInstance("States@CBMongoTestMocks").getDbInstance().drop();
+		application.wirebox.getInstance("Counties@CBMongoTestMocks").getDbInstance().drop();
 	}
 }

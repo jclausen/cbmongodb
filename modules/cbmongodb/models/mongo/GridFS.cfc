@@ -43,15 +43,20 @@ component name="GridFS" accessors="true" {
 	function init(string db="", string bucket='fs'){	
 
 		//Our implementation depends on the older DB construction
-		if(len(arguments.db) > 0){
-			setDBInstance(mongoClient.getMongo().getDb(arguments.db));
+		if(len(arguments.db) > 1 ){
+			setDBInstance(arguments.db);
 			setBucketName(arguments.bucket);
-			setGridInstance(jLoader.create("com.mongodb.gridfs.GridFS").init(variables.dbInstance,variables.bucketName));
-		}
 
+			setDBInstance(mongoClient.getMongo().getDb(variables.dbInstance));
+			setGridInstance(jLoader.create("com.mongodb.gridfs.GridFS").init(variables.dbInstance, variables.bucketName));
+		}	
 		return this;
 	}
 
+	function onDIComplete(){	
+
+		return this;
+	}
 
 	/**
 	* Creates and stores a GridFS file
@@ -118,7 +123,6 @@ component name="GridFS" accessors="true" {
 		if(arguments.deleteFile) fileDelete(arguments.filePath);
 
 		return created.getId().toString();
-
 
 	}
 

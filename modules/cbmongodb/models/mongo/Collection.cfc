@@ -38,16 +38,20 @@ component name="MongoCollection" accessors="true"{
 	**/
 	public function init(dbCollectionInstance){
 		//if, for some reason, we need to instantiate manually
-		if(isNull(MongoUtil)) application.wirebox.autowire(this);
+		//if(isNull(MongoUtil)) application.wirebox.autowire(this);
 		
 		variables.dbCollection = arguments.dbCollectionInstance;
 		//add an immutability testing property
 		variables.collectionName = getDbCollection().getNamespace().getCollectionName();
 		
 		return this;
-
 	}
 	
+	function onDIComplete(){	
+
+		return this;
+	}
+
 	/** 
 	* ====================================
 	* Basic Collection Operational Methods
@@ -456,7 +460,6 @@ component name="MongoCollection" accessors="true"{
 		
 		}					
 
-
 	}
 
 	/**
@@ -477,7 +480,7 @@ component name="MongoCollection" accessors="true"{
 
 		} catch(any e){
 
-			throw("Geo Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>");
+			throw("Geo Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong> doc:[#doc.toString()#]");
 		
 		}
 

@@ -174,7 +174,7 @@ component name="MongoUtil" accessors="true"{
 					ensureTyping(dbo[i]);
 				} else if(!isNumeric(dbo[i]) && len(dbo[i]) != 0 && isBoolean(dbo[i]) && dbo[i] != "Empty") {
 					//WriteLog(type="Error",  file="cbmongodb", text="key-value: #lCase(trim(dbo[i]))#");
-					//dbo[i] = javacast('boolean', lCase(trim(dbo[i])));
+					//dbo.put(i, javacast('boolean', dbo[i]));
 					switch(lCase(trim(dbo[i]))){
 						case "yes":
 							dbo.put(i, CreateObject("java","java.lang.Boolean").init("true"));
@@ -185,7 +185,7 @@ component name="MongoUtil" accessors="true"{
 						break;
 					}
 				} else if(isDate(dbo[i])){
-					dbo[i] = parseDateTime(dbo[i]);
+					dbo.put(i, parseDateTime(dbo[i]));
 					var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
 					dbo.put(i, castDate);
 				} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){

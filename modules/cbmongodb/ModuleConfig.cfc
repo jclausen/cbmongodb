@@ -101,8 +101,7 @@ component {
 
 		//models.mongo.GridFS
 		binder.map("GridFS@cbmongodb")
-			.to('#moduleMapping#.models.mongo.GridFS')
-			.noInit();
+			.to('#moduleMapping#.models.mongo.GridFS');
 
 		/**
 		* The Mongo Client Singleton
