@@ -1,0 +1,12 @@
+.settings
+logs/*.log
+settings.xml
+.netbeans
+test/results/*.properties
+test/results/*.html
+test/results/*.log
+logs/*.log
+modules/cbi18n/
+modules/cbjavaloader/
+modules/cborm/
+modules/cbvalidation/
