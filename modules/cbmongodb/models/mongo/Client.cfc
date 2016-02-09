@@ -14,23 +14,23 @@ component name="MongoClient" accessors="true"{
 	//injected properties
 	/**
 	* 
-	 * Wirebox
-	 **/
+	* Wirebox
+	*/
 	property name="wirebox" inject="wirebox";
 	/**
 	* CBJavaloader
-	**/
+	*/
 	property name="jLoader" inject="id:loader@cbjavaloader";
 	/**
-	 * Utility Class
-	 **/
+	* Utility Class
+	*/
 	property name="MongoUtil" inject="id:MongoUtil@cbmongodb";
 
 	property name="MongoConfig" inject="id:MongoConfig@cbmongodb";
 
 	/**
-	 * Properties created on init()
-	 **/
+	* Properties created on init()
+	*/
 	property name="Mongo";
 	property name="MongoAsync";
 	property name="WriteConcern";
@@ -75,7 +75,7 @@ component name="MongoClient" accessors="true"{
 
 	/**
 	* Our connection to the Mongo Server
-	**/
+	*/
 	public function connect(required dbName=getMongoConfig().getDBName()){
 
 		var MongoConfigSettings = MongoConfig.getDefaults();
@@ -112,7 +112,7 @@ component name="MongoClient" accessors="true"{
 
 	/**
 	* Gets a CBMongoDB DBCollection object, which wraps the java DBCollection
-	**/
+	*/
 	function getDBCollection( collectionName, dbName=getMongoConfig().getDBName() ){
 
 		if(!structkeyexists(variables.collections, dbName)) variables.collections[dbName]={};

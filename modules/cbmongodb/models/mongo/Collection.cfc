@@ -89,7 +89,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct [criteria]	The search criteria for the query
 	* @param struct [options] 	The options for the search (accepts: offset,limit,skip)
-	**/
+	*/
 	public function find(required criteria={}, required struct options={}){
 
 		var results = getDBCollection().find(getMongoUtil().toMongoDocument(arguments.criteria));
@@ -107,9 +107,9 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param mixed id 				The id of the document to be retrieved - may be either a BSON object or string
 	* @return mixed result|null 	Returns the result if found or returns null if the document was not found
-	**/
+	*/
 	public function findById(required id){
-		var qId = getMongoUtil().newIDCriteriaObject(arguments.id);
+		var qId = getMongoUtil().newIDCriteriaObject(ARGUMENTS.id);
 
 		var results = this.find(qId).asCursor();
 		var firstResult = results.tryNext();
@@ -129,7 +129,7 @@ component name="MongoCollection" accessors="true"{
 	* @param struct group 			The group by operational command (e.g. {"_id":"$orderId","$sum":"amount"} where $orderId references the orderId key in the document)
 	* @param struct [projection] 	A projection to be used on items in the collection (e.g. {"name":{$toUpper:"$firstName"}})
 	* @param mixed sort 			A string or struct used to sort the results (e.g. "name" or {"name":-1}).  Must be included within the projection key name
-	**/
+	*/
 	public function aggregate(struct criteria, required struct group, struct projection,sort){
 		
 		if(isNull(arguments.criteria) and isNull(arguments.projection)) 

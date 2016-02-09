@@ -16,9 +16,9 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 
 		describe( "MongoDB Active Entity", function(){
 
-			/*beforeEach(function( currentSpec ){
+			beforeEach(function( currentSpec ){
 
-			});*/
+			});
 
 			it( "Tests Mock Availability", function(){
 				expect(variables.people).toBeComponent();
@@ -87,7 +87,6 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 						//should have errors for all of our missing document keys
 						expect(arrayLen(model.getValidationResults().errors)).toBe(8);
 					});
-					
 					it('Tests entity insert operations', function(){
 						//ensure we have an empty collection
 						model.reset().delete(truncate=true);
@@ -147,6 +146,26 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 								expect(model.reset().where('address.city',model.getTestDocument().address.city).find()).toBeComponent();
 								expect(model.reset().where('address.city',model.getTestDocument().address.city).count()).toBe(1);
 								expect(model.reset().where('address.city',model.getTestDocument().address.city).exists()).toBeTrue();
+							});
+
+							it("Tests the ability for where() to accept a struct as the first argument",function(){
+								expect(model.reset().where({'address.city':'Timbuktu'}).find(false)).toBeNull();
+								expect(model.reset().where({'address.city':'Timbuktu'}).find()).toBeComponent();
+								expect(model.reset().where({'address.city':'Timbuktu'}).find().loaded()).toBeFalse();
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).find(false)).toBeStruct();
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).find()).toBeComponent();
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).count()).toBe(1);
+								expect(model.reset().where( {'address.city': model.getTestDocument().address.city} ).exists()).toBeTrue();
+							});
+
+							it("Tests that passing a struct twice as a where() argument appends the criteria",function(){
+								model.reset()
+									.where({'address.city': model.getTestDocument().address.city} )
+									.where({'first_name':model.getTestDocument().first_name});
+
+								expect(model.get_criteria()).toHaveKey('address.city');
+								expect(model.get_criteria()).toHaveKey('first_name');
+
 							});
 
 							it("Tests entity update operations",function(){

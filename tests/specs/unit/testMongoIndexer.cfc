@@ -1,7 +1,7 @@
 /*******************************************************************************
-*	Unit Tests for cbmongodb.models.mongo.Indexer
+*	Unit Tests for cbmongodb.models.Mongo.Indexer
 *******************************************************************************/
-component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest" appMapping="/root"{
+component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 
 	function run(testResults, testBox){
 

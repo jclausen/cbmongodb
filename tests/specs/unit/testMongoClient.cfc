@@ -1,7 +1,7 @@
 /*******************************************************************************
-*	Unit Tests for cbmongodb.models.mongo.MongoClient
+*	Unit Tests for cbmongodb.models.Mongo.MongoClient
 *******************************************************************************/
-component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"  appMapping="/root"{
+component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 
 	function run(testResults, testBox){
 
@@ -22,7 +22,8 @@ component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"  appMappi
 				//person.findAll();
 				expect(person.getCollectionObject().getCollectionName()).toBe("people");
 			});
-						
+			
+			
 		});
 
 	}

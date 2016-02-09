@@ -1,12 +1,12 @@
 /*******************************************************************************
-*	Unit Tests for cbmongodb.models.mongo.MongoCollection
+*	Unit Tests for cbmongodb.models.Mongo.MongoCollection
 *******************************************************************************/
-component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest" appMapping="/root"{
-	property name="GridFS" inject="id:GridFS@cbmongodb";
+component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest"{
+	property name="GridFS" inject="GridFS@cbmongodb";
 	property name="GFSInstance";
 
 	function afterAll(){
-		if(!isNull(variables.GFSInstance)){
+		if(!isNull(VARIABLES.GFSInstance)){
 			GFSInstance.remove({});
 		}
 	}
@@ -15,17 +15,12 @@ component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest" appMapping="
 
 		describe("Test GridFS Storage Methods",function(){
 			it("Tests the ability to store a GridFS file",function(){
-				//var testFiles = DirectoryList(path=expandPath('/cbmongodb/tests/assets'),filter="*.jpeg");
-				var testFiles = DirectoryList(expandPath('/tests/assets'), false, "all", "*.jpeg");
-				
-				expect(arrayLen(testFiles)).toBeGT(0,"Test image files were not found to test GridFS methods. You may add your own images to /tests/assets/ to test the GridFS functionality");
-				
-				variables.GFSInstance = GridFS.init('cbmongo_gridfs_tests');
-				
+				var testFiles = "";//DirectoryList(path=expandPath('/tests/assets'),filter="*.jpeg");
+				expect(arrayLen(testFiles)).toBeGT(0,"Test image files were not found to test GridFS methods. You may add your own images to /cbmongodb/tests/assets/ to test the GridFS functionality");
+				VARIABLES.GFSInstance = GridFS.init('cbmongo_gridfs_tests');
 				var i = 1;
-				
-				for(var fl in testFiles){
-					var created = GFSInstance.createFile(fl);
+				for(var file in testFiles){
+					var created = GFSInstance.createFile(file);
 					expect(created).toBeString();
 					/**
 					* Test Single Record Retreival
