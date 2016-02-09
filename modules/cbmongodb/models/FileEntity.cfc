@@ -62,6 +62,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	**/
 	public function evict(){
 		variables.GFSFileObject = javacast('null',0);
+		
 		return super.evict();
 	}
 
@@ -83,7 +84,6 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 		this.setFileId(GridFSInstance.createFile(argumentCollection=arguments));
 
 		return this;
-
 	}
 
 	/**
@@ -94,14 +94,16 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 			variables.GFSFileObject = javacast('null',0);
 			GridFSInstance.removeById(getFileId());
 		}
+		
 		return super.delete(argumentCollection=arguments);
 	}
 
 	/**
 	* Alias for loadFile()
 	**/
-	public function setFile(required string filePath,deleteFile=false){
+	public function setFile(required string filePath, deleteFile=false){
 		variables.GFSFileObject = javacast('null',0);
+		
 		return this.loadFile(argumentCollection=arguments);
 	}
 
@@ -113,6 +115,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 		if(isNull(getGFSFileObject())){
 			setGFSFileObject(GridFSInstance.findById(getFileId()));
 		}
+		
 		return getGFSFileObject();
 	}
 
@@ -135,7 +138,9 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 
 	public function getMimeType(){
 		var gfsFile = getFileObject();
+		
 		if(isNull(gfsFile)) throwFileMissing();
+		
 		return gfsFile.get('fileInfo')['mimetype'];	
 	}
 
@@ -145,6 +150,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	**/
 	public function getFileInputStream(){
 		var gfsFile = getFileObject();
+		
 		if(isNull(gfsFile)) throwFileMissing();
 
 		return gfsFile.getInputStream();
@@ -193,13 +199,14 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* @param string mimeType 		The mimetype to serve the image - will convert the original mime type to the destination (e.g. - jpg to png)
 	* @param Date expiration 		An optional expiration date to specify in the header for the image content
 	**/
-	public void function writeImageToBrowser(numeric width,numeric height,any x=0,any y=0,mimeType,expiration){
+	public void function writeImageToBrowser(numeric width, numeric height, any x=0, any y=0, mimeType, expiration){
 		
 		if(!isNull(expiration) and isDate(arguments.expiration)){
 			expirationSeconds = dateDiff('s',now(),arguments.expiration);
 			cfheader(name="expires",value=GetHTTPTimeString(arguments.expiration));
 			cfheader(name="cache-control",value="max-age=#expirationSeconds#");
 		}
+		
 		if(isNull(arguments.mimeType)) arguments.mimeType = getMimeType();
 
 		var response = getPageContext().getResponse();
@@ -219,7 +226,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* @param any x			The x offset from the upper left corner to crop the image or "center"
 	* @param any y			The y offset from the upper left corner to crop the image or "center"
 	**/
-	public any function getCFImage(numeric width,numeric height,any x=0,any y=0) {
+	public any function getCFImage(numeric width, numeric height, any x=0, any y=0) {
 		return imageNew(getBufferedImage(argumentCollection=arguments));
 	}
 
@@ -232,7 +239,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* @param any x			The x offset from the upper left corner of the original image for the crop or "center" (will be recalulated to the new scale)
 	* @param any y			The y offset from the upper left corner of the original image for the crop or "center" (will be recalulated to the new scale)
 	**/
-	public any function getImageObject(numeric width,numeric height,any x=0,any y=0){
+	public any function getImageObject(numeric width, numeric height, any x=0, any y=0){
 		var ImageIO = jLoader.create("javaxt.io.Image").init(getFileInputStream());
 
 		if(arguments.x != 0 && arguments.y !=0){
@@ -253,7 +260,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* @param any x			The x offset from the upper left corner to crop the image or "center"
 	* @param any y			The y offset from the upper left corner to crop the image or "center"
 	**/
-	public function getBufferedImage(numeric width,numeric height,any x=0,any y=0){
+	public function getBufferedImage(numeric width, numeric height, any x=0, any y=0){
 		return getImageObject(argumentCollection=arguments).getBufferedImage();
 	}
 
@@ -265,7 +272,7 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 	* @param any x			The x offset from the upper left corner to crop the image or "center"
 	* @param any y			The y offset from the upper left corner to crop the image or "center"
 	**/
-	public function getImageGraphics(numeric width,numeric height,any x=0,any y=0){
+	public function getImageGraphics(numeric width, numeric height, any x=0, any y=0){
 		return getBufferedImage(argumentCollection=arguments).getGraphics();
 	}
 
@@ -310,7 +317,6 @@ component name="CFMongoFileEntity" extends="cbmongodb.models.ActiveEntity" acces
 		}
 
 		return Img.crop(imageArgs.x,imageArgs.y,destWidth,destHeight);
-
 	}
 
 	/**

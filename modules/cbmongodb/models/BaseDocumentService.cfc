@@ -17,10 +17,12 @@ component name="BaseDocumentService" database="test" collection="default" access
 	* The Application Wirebox IOC Instance
 	**/
 	property name="wirebox" inject="wirebox";
+	
 	/**
 	* The LogBox Logger for this Entity
 	**/
 	property name="logbox" inject="logbox:logger:{this}";
+	
 	/**
 	 *  The Coldbox Application Setttings Structure
 	 **/
@@ -30,6 +32,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * The MongoDB Client
 	 **/
 	property name="MongoClient" inject="id:MongoClient@cbmongodb";
+	
 	/**
 	 * The Mongo Utilities Library
 	 **/
@@ -44,38 +47,46 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 * The database client w/o a specified collection
 	 **/
 	property name="db";
+	
 	/**
 	 * This key is maintained for backward compatibility but is marked as deprecated.  
 	 * You should use the component attribute method to declare your collection name.
 	 * @deprecated
 	 **/
 	property name="collection" default="default";
+	
 	/**
 	 * The instatiated database collection to perform operations on
 	 **/
 	property name="dbInstance";
+	
 	/**
 	 * The container for the default document
 	 **/
 	property name="_default_document";
+	
 	/**
 	 * package container for the active document entity
 	 **/
 	property name="_document";
+	
 	/**
 	 * The id of the loaded document
 	 **/
 	property name="_id";
+	
 	/**
 	 * package container for the loaded document before modifications
 	 **/
 	property name="_existing";
+	
 	/**
 	 * Validation structure
 	 *
 	 * @example property name="myfield" schema=true validate="string";
 	**/
 	property name="_validation";
+	
 	/**
 	* The schema map which will be persisted for validation and typing
 	**/
@@ -158,7 +169,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 				ArrayAppend(combinedProperties, extendedProperties[i]);
 			}
 		}
-		//writeDump(combinedProperties);abort;
+		
 		for(var prop in combinedProperties){
 			
 			if(structKeyExists(prop,'schema') and prop.schema){
@@ -192,7 +203,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 					}
 
 				} catch (any error){
-					writeDump(error);abort;
+					//writeDump(error);abort;
 					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.detail#");	
 				}
 			}
@@ -236,8 +247,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 			structDelete(this,'get' & prop.name);
 			structDelete(this,'set' & prop.name);
 			
-			this['get'&accessorSuffix]=function(){return locate(prop.name);};
-			this['set'&accessorSuffix]=function(required value){return this.set(prop.name,arguments.value);};
+			this['get'&accessorSuffix] = function(){return locate(prop.name);};
+			this['set'&accessorSuffix] = function(required value){return this.set(prop.name, arguments.value);};
 		}
 	}
 

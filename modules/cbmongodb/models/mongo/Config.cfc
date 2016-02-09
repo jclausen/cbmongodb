@@ -49,6 +49,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 			username:structKeyExists(hosts[1],'username')?hosts[1].username:"",
 			password:structKeyExists(hosts[1],'password')?hosts[1].password:""
 		};
+		
 		if(structKeyExists(hosts[1],'authenticationDB')) auth['db']=hosts[1].authenticationDB;
 
 		variables.conf = { dbname = dbName, servers = jLoader.create('java.util.ArrayList').init(), auth=auth};
@@ -70,11 +71,13 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 	public function addServer(serverName, serverPort){
 		var sa = jLoader.create("com.mongodb.ServerAddress").init( serverName, serverPort );
 		variables.conf.servers.add( sa );
-	return this;
+		
+		return this;
 	}
 
 	public function removeAllServers(){
 		variables.conf.servers.clear();
+		
 		return this;
 	}
 
@@ -83,6 +86,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 		var inetAddress = createObject( "java", "java.net.InetAddress");
 		variables.hostAddress = inetAddress.getLocalHost().getHostAddress();
 		variables.hostName = inetAddress.getLocalHost().getHostName();
+		
 		return this;
 	}
 
@@ -112,12 +116,10 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 						evaluate("builder.#key#( arg )");
 				}
 			} catch (any e){
-				writeDump(var=e,top=1);
-				abort;
+				//writeDump(var=e,top=1);
+				//abort;
 				throw (message="The Mongo Client option #key# could not be found.  Please verify your clientOptions settings contain only valid MongoClientOptions settings: http://api.mongodb.org/java/current/com/mongodb/MongoClientOptions.Builder.html");
-			
 			}
-			
 		}
 
 		//Set our server selection timeout to our connect timeout if it's not specified - this prevents auth failures from taking 30000ms to return the error
@@ -126,6 +128,7 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 		}
 
 		variables.conf.MongoClientOptions = builder.build();
+
 		return variables.conf.MongoClientOptions;
 	}
 

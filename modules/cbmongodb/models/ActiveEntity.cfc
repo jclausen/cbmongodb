@@ -20,6 +20,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	property name="_limit" default=0;
 	property name="_sort";
 	property name="_operators";
+	
 	/**
 	 * A separate collection to be queried
 	 *
@@ -27,10 +28,12 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * we'll need to pass our active entity document objects rather than as comparisons
 	 **/
 	property name="xCollection";
+	
 	/**
 	 * The map reduction
 	 **/
 	property name="xReduce";
+	
 	/**
 	* Virtual Entity Constructor ( if you override it, make sure you call super.init() )
 	* */
@@ -47,6 +50,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 			'<>',
 			'like'
 		]);
+		
 		return super.init();
 	}
 
@@ -55,7 +59,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	/**
 	 * The master query method
 	 **/
-	any function query(struct criteria=get_criteria(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort()){
+	any function query(struct criteria=get_criteria(), numeric offset=get_offset(), numeric limit=get_limit(), any sort=get_sort()){
 		var results = this.getDBInstance().find(
 			criteria,
 			{"offset":arguments.offset,"limit":arguments.limit,"sort":arguments.sort}
@@ -80,7 +84,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param boolean returnInstance - if passed as true, the loaded instance will be returned.  If false, the _id value will be returned.
 	 * @param struct document - optionally pass a raw document to be saved
 	 **/
-	any function save(required document,upsert=false,returnInstance=false){
+	any function save(required document, upsert=false, returnInstance=false){
 		
 		var doc = getDbInstance().save(arguments.document,arguments.upsert);
 		
@@ -120,7 +124,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * Creates
 	 * @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
 	 **/
-	any function create(returnInstance=false,required document=get_document()){
+	any function create(returnInstance=false, required document=get_document()){
 		if(this.loaded()) throw("The create method may not be called on a loaded entity. Use the update() method to update an existing entity or reset the entity state");
 
 		if( !structKeyExists(VARIABLES,'ForceValidation') || !variables.ForceValidation || this.isValid() ){
@@ -146,7 +150,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	* @param mixed 	operator 	When passed as a valid operator, an operational query will be assembled.  When the value is not match to an operator, an "equals" criteria will be appended
 	* @param string [value] 	If a valid operator is passed, the value would provide the operational comparison 
 	**/
-	any function where(string key,any operator='=',any value){
+	any function where(string key, any operator='=', any value){
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
@@ -232,7 +236,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 *
 	 * @chainable
 	 **/
-	any function find(returnInstance=true,asJSON=false){
+	any function find(returnInstance=true, asJSON=false){
 		var results=this.limit(1).findAll();
 		if(arrayLen(results)){
 			this.entity(results[1]);
@@ -407,7 +411,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param any fieldValue		The value of the field
 	 * @param struct mapping		The mapping key for this field
 	 **/
-	 boolean function fieldIsValid(required fieldValue,required mapping){
+	 boolean function fieldIsValid(required fieldValue, required mapping){
 	 	// return true if no validation parameters are specified
 	 	if(!structKeyExists(arguments.mapping,'validate')) return true;
 
@@ -422,14 +426,16 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param string errorType		The error type to append to the validation errors array
 	 * @param any [fieldValue]		The value of the field, if any
 	 **/
-	 void function createValidationError(required mapping,required string errorType="validation",any fieldValue){
+	 void function createValidationError(required mapping, required string errorType="validation", any fieldValue){
 	 	var validations = get_validation();
 	 	validations.success=false;
+	 	
 	 	var error = {
 	 		"type":arguments.errorType,
 	 		"fieldName":mapping.name,
 	 		"mapping":mapping
 	 	};
+	 	
 	 	switch(arguments.errorType){
 	 		case "missing":
 	 			error["message"] = "Missing document field #mapping.name#";
@@ -462,6 +468,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 	}
 
 	 	arrayAppend(validations.errors,error);
+	 	
 	 	this.set_validation(validations);
 	 }
 
@@ -515,6 +522,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	any function join(required collection){
 		this.setXCollection(arguments.collection);
+		
 		return this;
 	}
 
@@ -584,6 +592,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		this.set_offset(0);
 		this.set_limit(0);
 		this.set_sort(structNew());
+		
 		//clear our cross-collection params
 		structDelete(variables,'xCollection');
 		structDelete(variables,'xReduce');

@@ -90,9 +90,10 @@ component name="MongoCollection" accessors="true"{
 	* @param struct [criteria]	The search criteria for the query
 	* @param struct [options] 	The options for the search (accepts: offset,limit,skip)
 	**/
-	public function find(required criteria={},required struct options={}){
+	public function find(required criteria={}, required struct options={}){
 
 		var results = getDBCollection().find(getMongoUtil().toMongoDocument(arguments.criteria));
+		
 		if(structKeyExists(options,'offset')) results.skip(options.offset);
 		if(structKeyExists(options,'sort')) results.sort(getMongoUtil().toMongoDocument(options.sort));
 		if(structKeyExists(options,'limit') and options.limit > 0) results.limit(options.limit);
@@ -264,7 +265,7 @@ component name="MongoCollection" accessors="true"{
 
 			var criteria = utils.newIDCriteriaObject(arguments.document['_id']);
 			
-			var doc=findOneAndReplace(criteria,arguments.document);	
+			var doc = findOneAndReplace(criteria,arguments.document);	
 		}
 
 		return getMongoUtil().toCF(doc);
@@ -278,7 +279,7 @@ component name="MongoCollection" accessors="true"{
 	* @param struct criteria 		The critera for replacement (e.g. {"_id":"123456789012456bx"})
 	* @param document 				The document which replaces the queried object
 	**/
-	public function replaceOne(required criteria,required document){
+	public function replaceOne(required criteria, required document){
 		return getMongoUtil().toCF(findOneAndReplace(argumentCollection=arguments));
 	}
 
@@ -289,7 +290,7 @@ component name="MongoCollection" accessors="true"{
 	* @param struct criteria 		The critera for update (e.g. {"_id":"123456789012456bx"})
 	* @param operation				The operational struct object which updates the queried object
 	**/
-	public function updateOne(required criteria,required operation){
+	public function updateOne(required criteria, required operation){
 		return getMongoUtil().toCF(findOneandUpdate(argumentCollection=arguments));
 	}
 
@@ -300,9 +301,9 @@ component name="MongoCollection" accessors="true"{
 	* @param struct criteria 		The critera for update (e.g. {"_id":"123456789012456bx"})
 	* @param operation 				The operational struct object which updates the queried object
 	**/
-	public function updateMany(required criteria,required operation){
+	public function updateMany(required criteria, required operation){
 
-		return getDBCollection().updateMany(toMongo(arguments.criteria),toMongo(operation));
+		return getDBCollection().updateMany(toMongo(arguments.criteria), toMongo(operation));
 	}
 
 	/**
@@ -338,7 +339,7 @@ component name="MongoCollection" accessors="true"{
 		var replaceOptions = jLoader.create('com.mongodb.client.model.FindOneAndReplaceOptions');
 		replaceOptions.returnDocument(jLoader.create('com.mongodb.client.model.ReturnDocument').AFTER);
 		
-		return getMongoUtil().toCF(this.getDBCollection().findOneAndReplace(search,update,replaceOptions));
+		return getMongoUtil().toCF(this.getDBCollection().findOneAndReplace(search, update, replaceOptions));
 
 	}
 
@@ -493,8 +494,8 @@ component name="MongoCollection" accessors="true"{
 	**/
 	public function createIndexes(required array indexes){
 
-		for(var index in arguments.index){
-			createIndex(argumentCollection=index);
+		for(var idx in arguments.index){
+			createIndex(argumentCollection=idx);
 		}
 
 	}

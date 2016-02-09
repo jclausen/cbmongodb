@@ -16,12 +16,16 @@ component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest" appMapping="
 		describe("Test GridFS Storage Methods",function(){
 			it("Tests the ability to store a GridFS file",function(){
 				//var testFiles = DirectoryList(path=expandPath('/cbmongodb/tests/assets'),filter="*.jpeg");
-				var testFiles = DirectoryList(expandPath('/tests/assets'), false, "name", "*.jpeg");
+				var testFiles = DirectoryList(expandPath('/tests/assets'), false, "all", "*.jpeg");
+				
 				expect(arrayLen(testFiles)).toBeGT(0,"Test image files were not found to test GridFS methods. You may add your own images to /tests/assets/ to test the GridFS functionality");
+				
 				variables.GFSInstance = GridFS.init('cbmongo_gridfs_tests');
+				
 				var i = 1;
-				for(var file in testFiles){
-					var created = GFSInstance.createFile(file);
+				
+				for(var fl in testFiles){
+					var created = GFSInstance.createFile(fl);
 					expect(created).toBeString();
 					/**
 					* Test Single Record Retreival

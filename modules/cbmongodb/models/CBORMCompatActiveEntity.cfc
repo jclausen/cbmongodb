@@ -11,7 +11,7 @@
 */
 component extends="cbmongodb.models.ActiveEntity"{
 	/************************************ CBORM Compat VES Methods********************************/
-	any function list(struct criteria=get_criteria(),keys=get_keys(),numeric offset=get_offset(),numeric limit=get_limit(),any sort=get_sort(),boolean asQuery=getDefaultAsQuery()){
+	any function list(struct criteria=get_criteria(), keys=get_keys(), numeric offset=get_offset(), numeric limit=get_limit(), any sort=get_sort(), boolean asQuery=getDefaultAsQuery()){
 		 results=this.query(argumentCollection=arguments);
 		 if(arguments.asQuery()){
 		 	results=this.convertToQuery(results);
@@ -27,11 +27,13 @@ component extends="cbmongodb.models.ActiveEntity"{
 
 	array function findAllWhere(required struct criteria, string sortOrder=""){
 		this.criteria(arguments.criteria);
+		
 		if(len(arguments.SortOrder)){
 			var sort=listToArray(arguments.sortOrder,' ');
 			
-			this.setSort({sort[1]=sort[2]});
+			this.setSort({sort[1]= sort[2]});
 		}
+		
 		return this.query();
 	}
 
@@ -44,51 +46,61 @@ component extends="cbmongodb.models.ActiveEntity"{
 
 	boolean function exists(required any id) {
 		arguments.entityName = this.getEntityName();
+		
 		return super.exists(argumentCollection=arguments);
 	}
 
-	any function get(required any id,boolean returnNew=true) {
+	any function get(required any id, boolean returnNew=true) {
 		arguments.entityName = this.getEntityName();
+		
 		return super.get(argumentCollection=arguments);
 	}
 
-	array function getAll(any id,string sortOrder="") {
+	array function getAll(any id, string sortOrder="") {
 		arguments.entityName = this.getEntityName();
+		
 		return super.getAll(argumentCollection=arguments);
 	}
 
-	numeric function deleteAll(boolean flush=false,boolean transactional=getUseTransactions()){
+	numeric function deleteAll(boolean flush=false, boolean transactional=getUseTransactions()){
 		arguments.entityName = this.getEntityName();
+		
 		return super.deleteAll(arguments.entityName,arguments.flush);
 	}
 
-	boolean function deleteByID(required any id, boolean flush=false,boolean transactional=getUseTransactions()){
+	boolean function deleteByID(required any id, boolean flush=false, boolean transactional=getUseTransactions()){
 		arguments.entityName = this.getEntityName();
+		
 		return super.deleteByID(argumentCollection=arguments);
 	}
 
 	any function deleteByQuery(required string query, any params, numeric max=0, numeric offset=0, boolean flush=false, boolean transactional=getUseTransactions() ){
 		arguments.datasource = this.getDatasource();
+		
 		return super.deleteByQuery(argumentCollection=arguments);
 	}
 
 	numeric function deleteWhere(boolean transactional=getUseTransactions()){
 		arguments.entityName = this.getEntityName();
+		
 		return super.deleteWhere(argumentCollection=arguments);
 	}
 
 	numeric function count(string where="", any params=structNew()){
 		arguments.entityName = this.getEntityName();
+		
 		return super.count(argumentCollection=arguments);
 	}
 
 	numeric function countWhere(){
 		arguments.entityName = this.getEntityName();
+		
 		return super.countWhere(argumentCollection=arguments);
 	}
 
 	void function evict(string collectionName, any id){
 		arguments.entityName = this.getEntityName();
+		
 		super.evict(argumentCollection=arguments);
 	}
 
@@ -98,11 +110,13 @@ component extends="cbmongodb.models.ActiveEntity"{
 
 	boolean function isSessionDirty(string datasource=this.getDatasource()){
 		arguments.datasource = this.getDatasource();
+		
 		return super.isSessionDirty(argumentCollection=arguments);
 	}
 
 	struct function getSessionStatistics(string datasource=this.getDatasource()){
 		arguments.datasource = this.getDatasource();
+		
 		return super.getSessionStatistics(argumentCollection=arguments);
 	}
 
@@ -118,5 +132,4 @@ component extends="cbmongodb.models.ActiveEntity"{
 		return this.getCollection());
 	}
 
-}
 }

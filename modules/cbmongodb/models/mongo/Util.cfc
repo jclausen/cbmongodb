@@ -13,6 +13,7 @@
 component name="MongoUtil" accessors="true"{
 	property name="MongoConfig" inject="id:MongoConfig@cbmongodb";
 	//property name="NullSupport" default="false";
+	
 	/**
 	* 
 	* CBJavaloader
@@ -200,7 +201,6 @@ component name="MongoUtil" accessors="true"{
 	}
 
 	function ensureTypesInArray(required dboArray){
-
 		for(var dbo in dboArray){
 			if(isStruct(dbo)) ensureTyping(dbo);
 		}
@@ -208,11 +208,13 @@ component name="MongoUtil" accessors="true"{
 
 	function encapsulateDBResult(dbResult){
 		var enc = {};
-		enc['getResult']=function(){return dbResult;};
-		enc['asCursor']=function(){return dbResult.iterator();};
-		enc['asArray']=function(stringify=false){return this.asArray(dbResult,stringify);};
-		enc['forEach']=function(required fn){return dbResult.forEach(fn);};
-		enc['asJSON']=function(){return serializeJSON(this.asArray(dbResult,true));};
+		
+		enc['getResult'] 	= function(){return dbResult;};
+		enc['asCursor'] 	= function(){return dbResult.iterator();};
+		enc['asArray'] 		= function(stringify=false){return this.asArray(dbResult,stringify);};
+		enc['forEach'] 		= function(required fn){return dbResult.forEach(fn);};
+		enc['asJSON'] 		= function(){return serializeJSON(this.asArray(dbResult,true));};
+		
 		return enc;
 	}
 
@@ -222,7 +224,7 @@ component name="MongoUtil" accessors="true"{
 	function asArray(dbResult){
 		var aResults = [];
 		var cursor = dbResult.iterator();
-		//WriteLog(type="Error",  file="cbmongodb", text="key-value: #cursor.toString()#");
+		
 		while(cursor.hasNext()){
 			var nextResult = cursor.next();
 			WriteLog(type="Error",  file="cbmongodb", text="key-value: #nextResult.toString()#");
@@ -280,10 +282,13 @@ component name="MongoUtil" accessors="true"{
 		if( isSimpleValue(dbObject) ){
 			dbObject = newDBObject();
 		}
+		
 		var kv = "";
+		
 		if( isSimpleValue(keyValues) ){
 			keyValues = listToArray(keyValues);
 		}
+		
 		for(kv in keyValues){
 			if( isSimpleValue( kv ) ){
 				var key = listFirst(kv, "=");
@@ -294,6 +299,7 @@ component name="MongoUtil" accessors="true"{
 			}
 			dbObject[key]=value;
 		}
+		
 		return dbObject;
 	}
 
@@ -303,9 +309,11 @@ component name="MongoUtil" accessors="true"{
 		var i = 1;
 		var items = listToArray(list);
 		var itemCount = arrayLen(items);
+		
 		for(i; i lte itemCount; i++) {
 			s.put(items[i],1);
 		}
+		
 		return s;
 	}
 

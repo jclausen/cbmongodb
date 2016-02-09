@@ -38,8 +38,11 @@ component name="CBMongoDBBaseTest" extends="coldbox.system.testing.BaseTestCase"
 		super.afterAll();
 
 		//drop all of our collections
-		application.wirebox.getInstance("People@CBMongoTestMocks").getDbInstance().drop();
-		application.wirebox.getInstance("States@CBMongoTestMocks").getDbInstance().drop();
-		application.wirebox.getInstance("Counties@CBMongoTestMocks").getDbInstance().drop();
+		// application.wirebox.getInstance("People@CBMongoTestMocks").getDbInstance().drop();
+		// application.wirebox.getInstance("States@CBMongoTestMocks").getDbInstance().drop();
+		// application.wirebox.getInstance("Counties@CBMongoTestMocks").getDbInstance().drop();
+		People.getDbInstance().drop();
+		States.getDbInstance().drop();
+		Counties.getDbInstance().drop();
 	}
 }

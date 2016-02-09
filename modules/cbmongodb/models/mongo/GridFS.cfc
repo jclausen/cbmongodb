@@ -86,18 +86,32 @@ component name="GridFS" accessors="true" {
 			if(structKeyExists(GridFSConfig,'imagestorage')){
 				var maxheight = img.height;
 				var maxwidth = img.width;
-				if(structKeyExists(GridFSConfig.imagestorage,'maxwidth') && maxwidth > GridFSConfig.imagestorage.maxwidth) maxwidth = GridFSConfig.imagestorage.maxwidth;
-				if(structKeyExists(GridFSConfig.imagestorage,'maxheight') && maxheight > GridFSConfig.imagestorage.maxheight) maxheight = GridFSConfig.imagestorage.maxheight;
+				
+				if(structKeyExists(GridFSConfig.imagestorage,'maxwidth') && maxwidth > GridFSConfig.imagestorage.maxwidth){ 
+					maxwidth = GridFSConfig.imagestorage.maxwidth;
+				}
+				
+				if(structKeyExists(GridFSConfig.imagestorage,'maxheight') && maxheight > GridFSConfig.imagestorage.maxheight){ 
+					maxheight = GridFSConfig.imagestorage.maxheight;
+				}	
 				
 				if(maxheight != img.height || maxwidth != img.width){
 					//throw an error if we are resizing without a tmp directory
-					if(!structKeyExists(GridFSConfig.imagestorage,'tmpDirectory')) throw("GridFS maximum image sizes are specified but no temporary directory has been provided for processing.  Please ensure a tmpDirectory key exists in your GridFS imagestorage configuration.");
+					if(!structKeyExists(GridFSConfig.imagestorage,'tmpDirectory')){ 
+						throw("GridFS maximum image sizes are specified but no temporary directory has been provided for processing.  Please ensure a tmpDirectory key exists in your GridFS imagestorage configuration.");
+					}	
+				
 					//ensure our directory exists
-					if(!directoryExists(expandPath(GridFSConfig.imagestorage.tmpDirectory))) directoryCreate(expandPath(GridFSConfig.imagestorage.tmpDirectory));
+					if(!directoryExists(expandPath(GridFSConfig.imagestorage.tmpDirectory))){
+						directoryCreate(expandPath(GridFSConfig.imagestorage.tmpDirectory));
+					}	
+				
 					var tmpPath = expandPath(GridFSConfig.imagestorage.tmpDirectory) & listLast(filePath,'/');
 					imageResize(img,maxwidth,maxheight);
+					
 					//create a temporary file
 					imageWrite(img,tmpPath,true);
+					
 					//reload our input stream from the tmp file
 					inputStream = jLoader.create("java.io.FileInputStream").init(tmpPath);
 				}

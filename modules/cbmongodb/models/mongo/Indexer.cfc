@@ -58,6 +58,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 		if(arguments.dbInstance.count() EQ 0){
 			sparse=true;
 		}
+		
 		//create implicit name so we can overwrite sparse settings
 		var index_name=hash(dbInstance.getCollectionName() & serializeJSON(idx));
 
@@ -76,10 +77,10 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 			if(!this.indexExists(arguments.dbInstance, index_name)){
 				if(structKeyExists(prop,'geo')){
 					structDelete(options,'sparse');
-					WriteLog(type="Error",  file="cbmongodb", text="prop-name: #prop.name#");
+					//WriteLog(type="Error",  file="cbmongodb", text="prop-name: #prop.name#");
 					arguments.dbInstance.createGeoIndex(prop.name, options);
 				} else {
-					WriteLog(type="Error",  file="cbmongodb", text="prop-name: #idx.toString()#");
+					//WriteLog(type="Error",  file="cbmongodb", text="prop-name: #idx.toString()#");
 					arguments.dbInstance.createIndex(idx, options);
 					arrayAppend(variables.indexMap, options);
 					arrayAppend(variables.indexNames, options.name);
@@ -93,11 +94,13 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 * Returns whether the index exists
 	 **/
 
-	 public function indexExists(required dbInstance,required name){
+	 public function indexExists(required dbInstance, required name){
 	 	var existing=this.getIndexInfo(arguments.dbInstance);
+		
 		for(idx in existing){
 			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name) return true;
 		}
+		
 		return false;
 	 }
 
@@ -109,16 +112,16 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 **/
 	public function indexOrder(required prop){
 		var order=1;
+
 		if(structKeyExists(prop,'indexorder')){
 			order=mongoUtil.mapOrder(prop.indexorder);
 		}
+
 		return order;
 	}
 
 	public function getIndexInfo(required dbInstance){
-
 		return arguments.dbInstance.getIndexInfo();
-
 	}
 
 	public function getMap(){
@@ -128,4 +131,5 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	public function getIndexNames(){
 		return variables.indexNames;
 	}
+	
 }

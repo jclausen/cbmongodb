@@ -92,6 +92,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 **/
 	package function distanceNear(required distance,operator="$maxDistance"){
 		var criteria=this.get_criteria();
+		
 		for(critter in criteria){
 			if( isStruct(criteria[critter]) and structKeyExists(criteria[critter],'$near') ){
 				criteria[critter]["$near"][arguments.operator]=arguments.distance;
@@ -99,7 +100,9 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 				criteria[critter]["$nearSphere"][arguments.operator]=arguments.distance;
 			}
 		}
+		
 		this.criteria(criteria);
+		
 		return this;
 	}
 
@@ -115,11 +118,13 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @return object returns the model being queried
 	 **/
 
-	package function comparison(required operation,required key, xKey, reduce=false){
+	package function comparison(required operation, required key, xKey, reduce=false){
 		if(arguments.reduce)
 			return this.geoReduce(arguments.key,argument.xKey);
-		var xName=listGetAt(arguments.xKey,1,'.');
-		var xProp=listDeleteAt(arguments.xKey,1,'.');
+		
+		var xName = listGetAt(arguments.xKey,1,'.');
+		var xProp = listDeleteAt(arguments.xKey,1,'.');
+		
 		//if we are using the self entity
 		if(xName EQ 'this'){
 			variables._keys=xProp;
@@ -127,11 +132,11 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 			return this;
 		}
 
-		var xEntity=this.getWirebox().getInstance(xName);
-		var xCriteria=this.get_criteria();
+		var xEntity = this.getWirebox().getInstance(xName);
+		var xCriteria = this.get_criteria();
 
 		//it's faster to pull our local object and pass it to the remote
-		var xArg=this.locate(arguments.key);
+		var xArg = this.locate(arguments.key);
 
 		if(isNull(xArg))
 			throw(message="Invalid GEO Comparison",extendedInfo="The key <strong>#xProp#</strong> key was not found in the #xName# entity.");
@@ -143,7 +148,8 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 		if((isArray(searchGeometry) and arrayLen(searchGeometry) == 0) || (isStruct(searchGeometry) and structIsEmpty(searchGeometry))){
 			throw(message="Invalid GEO Comparison",extendedInfo="The #arguments.key# key for this entity did not contain valid coordinates. Are you sure you're working with a loaded object?");
 		}
-		xCriteria[xProp]={"#arguments.operation#"={"$geometry"=searchGeometry}};
+		
+		xCriteria[xProp] = {"#arguments.operation#"={"$geometry"=searchGeometry}};
 		
 		xEntity.criteria(xCriteria);
 
@@ -153,14 +159,14 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	/**
 	 *
 	 **/
-	public function appropriate(operation,geometry){
+	public function appropriate(operation, geometry){
 		
 		var local_geometry=duplicate(geometry);
 
 		//convert polygons to a centroid if we are near
 
 		if(findNoCase('near',arguments.operation) and (local_geometry['type'] EQ "Polygon" OR local_geometry['type'] EQ "MultiPolygon")){
-				local_geometry=polygonCenter(local_geometry);
+			local_geometry=polygonCenter(local_geometry);
 		}
 
 		return local_geometry;
@@ -177,10 +183,13 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 **/
 	public function parseFeatureCollection(any features){
 		var featureCollection=[];
+		
 		if(isJSON(features))
 			arguments.features=deSerializeJSON(arguments.features);
+		
 		if(structKeyExists(arguments.features,'features'))
 			arguments.features=arguments.features.features;
+		
 		for(geometry in arguments.features){
 			if(structKeyExists(geometry,'geometry') and arrayLen(arguments.features) EQ 1){
 				return ensureGEOValid(geometry['geometry']);
@@ -188,8 +197,10 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 				arrayAppend(featureCollection,ensureGEOValid(geometry['geometry']));
 			}
 		}
+		
 		return featureCollection;
 	}
+	
 	/**
 	 * Finds the center point of a polygon
 	 *
@@ -221,11 +232,13 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 **/
 	public function ensureGEOValid(required geometry){
 		var valid=arguments.geometry;
+		
 		switch(valid['type']){
 			case "Polygon":
 			case "MultiPolygon":
 				//Close our polygons to make valid
-				i=1;
+				var i=1;
+				
 				for(var featureCollection in valid['coordinates'][1]){
 					poly_open=duplicate(featureCollection[1]);
 					if(arrayToList(featureCollection[arrayLen(featureCollection)]) NEQ arrayToList(poly_open)){
@@ -233,6 +246,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 					}
 					i=i+1;
 				}
+				
 				break;
 		}
 
@@ -268,6 +282,5 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	public function km(kilometers){
 		return (arguments.kilometers/1000);
 	}
-
 
 }
