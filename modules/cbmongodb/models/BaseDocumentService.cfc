@@ -158,8 +158,8 @@ component name="BaseDocumentService" database="test" collection="default" access
 				ArrayAppend(combinedProperties, extendedProperties[i]);
 			}
 		}
-		
-		for(var prop in properties){
+		//writeDump(combinedProperties);abort;
+		for(var prop in combinedProperties){
 			
 			if(structKeyExists(prop,'schema') and prop.schema){
 				try {

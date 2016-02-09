@@ -28,17 +28,17 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 *
 	 **/
 	public function applyIndex(required dbInstance, required prop, properties=[]){
-		var idx=structNew();
-		var is_unique=false;
-		var sparse=false;
-		var background=true;
+		var idx 		= {};
+		var is_unique 	= false;
+		var sparse 		= false;
+		var background 	= true;
 
 		if(structKeyExists(prop,'unique') and prop.unique){
 			is_unique=true;
 		}
 		
 		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
-			idx[prop.name]=this.indexOrder(prop);
+			idx[prop.name] = this.indexOrder(prop);
 			
 			//Now test for a combined index
 			if(structKeyExists(prop,'indexwith')){
@@ -51,7 +51,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 				idx[rel.name]=this.indexOrder(prop);
 			}
 		} else {
-			idx[arguments.prop.name]=this.indexOrder(prop);
+			idx[arguments.prop.name] = this.indexOrder(prop);
 		}
 
 		//Check whether we have records and make it sparse if we're currently empty
@@ -61,7 +61,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 		//create implicit name so we can overwrite sparse settings
 		var index_name=hash(dbInstance.getCollectionName() & serializeJSON(idx));
 
-		if(!arrayContains(variables.indexNames,index_name)){
+		if(!arrayContains(variables.indexNames, index_name)){
 			//add our index options
 			var options = {
 				"name":index_name,
@@ -73,14 +73,16 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 			/**
 			* GeoSpatial Indexes have to Re-checked against the db every time, since they will not be created on empty collections
 			**/
-			if(!this.indexExists(arguments.dbInstance,index_name)){
+			if(!this.indexExists(arguments.dbInstance, index_name)){
 				if(structKeyExists(prop,'geo')){
 					structDelete(options,'sparse');
-					arguments.dbInstance.createGeoIndex(prop.name,options);
+					WriteLog(type="Error",  file="cbmongodb", text="prop-name: #prop.name#");
+					arguments.dbInstance.createGeoIndex(prop.name, options);
 				} else {
-					arguments.dbInstance.createIndex(idx,options);
-					arrayAppend(variables.indexMap,options);
-					arrayAppend(variables.indexNames,options.name);
+					WriteLog(type="Error",  file="cbmongodb", text="prop-name: #idx.toString()#");
+					arguments.dbInstance.createIndex(idx, options);
+					arrayAppend(variables.indexMap, options);
+					arrayAppend(variables.indexNames, options.name);
 				}
 			}
 

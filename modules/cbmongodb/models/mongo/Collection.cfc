@@ -452,11 +452,11 @@ component name="MongoCollection" accessors="true"{
 		
 		try{
 		
-			this.getDBCollection().createIndex(toMongo(operation),idxOptions);
+			this.getDBCollection().createIndex(toMongo(operation), idxOptions);
 		
 		} catch(any e){
 			
-			throw("Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>");
+			throw("Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>  #idxOptions.toString()#--doc:[#toMongo(operation).toString()#]");
 		
 		}					
 
@@ -480,7 +480,7 @@ component name="MongoCollection" accessors="true"{
 
 		} catch(any e){
 
-			throw("Geo Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong> doc:[#doc.toString()#]");
+			throw("Geo Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong> #idxOptions.toString()#--doc:[#toMongo(doc).toString()#]");
 		
 		}
 
