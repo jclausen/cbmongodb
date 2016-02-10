@@ -66,6 +66,9 @@
 		    permitAPI = true
 		};
 		
+		// Activate WireBox
+		wirebox = { enabled = true, singletonReload=false };
+
 		// Module Directives
 		modules = {
 			//Turn to false in production, on for dev

@@ -26,21 +26,21 @@ component name="MongoUtil" accessors="true"{
 	* Converts a ColdFusion structure to a CFBasicDBobject, which  the Java drivers can use
 	*/
 	function toMongo(any obj){
-		if(getMetaData(obj).name != "lucee.runtime.type.StructImpl" && getMetadata(obj).getCanonicalName() == "com.mongodb.CFBasicDBObject"){
+		if(!isStruct(arguments.obj) && getMetadata(obj).getCanonicalName() == "com.mongodb.CFBasicDBObject"){
 			return obj;
 		} 
-		
-		if(isArray(obj)){
+		if(isArray(arguments.obj)){
 			var list = jLoader.create("java.util.ArrayList");
 
-			for(var member in obj){
+			for(var member in arguments.obj){
 				list.add(toMongo(member));
 			}
 
 			return list;
 			
 		} else {
-			return dbObjectnew(obj);
+		
+			return dbObjectnew(arguments.obj);
 		}
 	}
 
@@ -48,11 +48,11 @@ component name="MongoUtil" accessors="true"{
 		
 		var doc = jLoader.create('org.bson.Document');
 		doc.putAll(data);
-
+		
 		if(!structIsEmpty(data)){
 			ensureTyping(doc);
 		}
-
+		
 		return doc;
 	}
 
@@ -150,13 +150,13 @@ component name="MongoUtil" accessors="true"{
 	* Create a new instance of the CFBasicDBObject. You use these anywhere the Mongo Java driver takes a DBObject
 	*/
 	function newDBObject(){
-		var dbo = jLoader.create('com.mongodb.BasicDBObject');	
-		return dbo;
+		return jLoader.create('com.mongodb.BasicDBObject');	
 	}
 
 	function dbObjectNew(contents){
 		var dbo = newDBObject();
-		dbo.putAll(toMongoDocument(contents));
+		
+		dbo.putAll(toMongoDocument(arguments.contents));
 		
 		if(!isStruct(dbo) && ListLen(structKeyList(dbo)) > 0){
 			ensureTyping(dbo);
@@ -167,24 +167,13 @@ component name="MongoUtil" accessors="true"{
 
 	function ensureTyping(required dbo){
 		for(var i in dbo){
-			//WriteLog(type="Error",  file="cbmongodb", text="dbo[i]: #i#");
 			if(!isNull(dbo[i])){
 				if(isArray(dbo[i])){
 					ensureTypesInArray(dbo[i]);
 				} else if(isStruct(dbo[i])){
 					ensureTyping(dbo[i]);
-				} else if(!isNumeric(dbo[i]) && len(dbo[i]) != 0 && isBoolean(dbo[i]) && dbo[i] != "Empty") {
-					//WriteLog(type="Error",  file="cbmongodb", text="key-value: #lCase(trim(dbo[i]))#");
-					//dbo.put(i, javacast('boolean', dbo[i]));
-					switch(lCase(trim(dbo[i]))){
-						case "yes":
-							dbo.put(i, CreateObject("java","java.lang.Boolean").init("true"));
-						break;
-					
-						default:
-							dbo.put(i, CreateObject("java","java.lang.Boolean").init("false"));
-						break;
-					}
+				} else if(!isNumeric(dbo[i]) && len(dbo[i]) != 0 && isBoolean(dbo[i])) {
+					dbo.put(i, javacast('boolean', dbo[i]));
 				} else if(isDate(dbo[i])){
 					dbo.put(i, parseDateTime(dbo[i]));
 					var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
@@ -198,6 +187,21 @@ component name="MongoUtil" accessors="true"{
 				dbo.put(i, javacast("null", ""));				
 			}
 		}
+		
+		//Hack
+		//CF11 add two keys which break indexing  (Empty,PartialObject)
+		try
+        {
+        	dbo.remove("Empty");
+        }
+        catch(Any e){}
+
+		try
+        {
+        	dbo.remove("PartialObject");
+        }
+        catch(Any e){}
+
 	}
 
 	function ensureTypesInArray(required dboArray){
@@ -220,14 +224,14 @@ component name="MongoUtil" accessors="true"{
 
 	/**
 	* Returns the results of a dbResult object as an array of documents
-	**/
+	*/
 	function asArray(dbResult){
 		var aResults = [];
 		var cursor = dbResult.iterator();
 		
 		while(cursor.hasNext()){
 			var nextResult = cursor.next();
-			WriteLog(type="Error",  file="cbmongodb", text="key-value: #nextResult.toString()#");
+			
 			arrayAppend(aResults, nextResult);
 		}
 
@@ -237,7 +241,7 @@ component name="MongoUtil" accessors="true"{
 
 	/**
 	* Indexing Utilities
-	**/
+	*/
 	function createIndexOptions(options){
 		var idxOptions = jLoader.create("com.mongodb.client.model.IndexOptions");
 
@@ -250,8 +254,8 @@ component name="MongoUtil" accessors="true"{
 	}
 
 	/**
-	 * SQL to Mongo translated ordering statements
-	 **/
+	* SQL to Mongo translated ordering statements
+	*/
 	 numeric function mapOrder(required order){
 		var map={'asc'=1,'desc'=-1};
 		
@@ -265,12 +269,9 @@ component name="MongoUtil" accessors="true"{
 		}
 	 }
 
-	/**
-	* Utility Methods Not Currently In Use
-	**/
-
-	/**
-	* Creates a Mongo CFBasicDBObject whose order matches the order of the keyValues argument
+	//Utility Methods Not Currently In Use
+	/*
+	 Creates a Mongo CFBasicDBObject whose order matches the order of the keyValues argument
 	  keyValues can be:
 	  	1) a string in k,k format: "STATUS,TS". This will set the value for each key to "1". Useful for creating Mongo's 'all true' structs, like the "keys" argument to group()
 	    2) a string in k=v format: STATUS=1,TS=-1

@@ -12,8 +12,8 @@
 
 component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentService" accessors="true"{
 	/**
-	 * Default query arguments
-	 **/
+	* Default query arguments
+	*/
 	property name="_criteria";
 	property name="_keys" default="";
 	property name="_offset" default=0;
@@ -22,22 +22,21 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	property name="_operators";
 	
 	/**
-	 * A separate collection to be queried
-	 *
-	 * As MongoDB doesn't support joins in the RDBMS fashion,
-	 * we'll need to pass our active entity document objects rather than as comparisons
-	 **/
+	* A separate collection to be queried
+	*
+	* As MongoDB doesn't support joins in the RDBMS fashion,
+	* we'll need to pass our active entity document objects rather than as comparisons
+	*/
 	property name="xCollection";
 	
 	/**
-	 * The map reduction
-	 **/
+	* The map reduction
+	*/
 	property name="xReduce";
 	
 	/**
 	* Virtual Entity Constructor ( if you override it, make sure you call super.init() )
-	* */
-
+	*/
 	function init(){
 		this.criteria({});
 		this.set_sort({});
@@ -57,8 +56,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	/************************************** PUBLIC *********************************************/
 
 	/**
-	 * The master query method
-	 **/
+	* The master query method
+	*/
 	any function query(struct criteria=get_criteria(), numeric offset=get_offset(), numeric limit=get_limit(), any sort=get_sort()){
 		var results = this.getDBInstance().find(
 			criteria,
@@ -71,19 +70,19 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Map reduce query method
-	 **/
-	any function mr(){
-		//TODO: Implement
-	}
+	* Map reduce query method
+	*/
+	any function mapReduce(required string map, required string reduce){
+ 		return getDbInstance().mapReduce(argumentCollection=arguments);
+  	}
 
 
 	/**
-	 * Save the current entity
-	 * @param boolean upsert - insert the record if it does not exist
-	 * @param boolean returnInstance - if passed as true, the loaded instance will be returned.  If false, the _id value will be returned.
-	 * @param struct document - optionally pass a raw document to be saved
-	 **/
+	* Save the current entity
+	* @param boolean upsert - insert the record if it does not exist
+	* @param boolean returnInstance - if passed as true, the loaded instance will be returned.  If false, the _id value will be returned.
+	* @param struct document - optionally pass a raw document to be saved
+	*/
 	any function save(required document, upsert=false, returnInstance=false){
 		
 		var doc = getDbInstance().save(arguments.document,arguments.upsert);
@@ -100,11 +99,11 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Updates the loaded record
-	 *
-	 * Alias for save() with an explicit
-	 * @param returnInstance whether to return the loaded instance
-	 **/
+	* Updates the loaded record
+	*
+	* Alias for save() with an explicit
+	* @param returnInstance whether to return the loaded instance
+	*/
 	any function update(returnInstance=false){
 		if( !structKeyExists(VARIABLES,'ForceValidation') || !variables.ForceValidation || this.isValid() ){
 			return this.save(this.get_document());	
@@ -121,9 +120,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Creates
-	 * @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
-	 **/
+	* Creates
+	* @param boolean returnInstance - whether to return the loaded object. If false, the _id of the inserted record is returned
+	*/
 	any function create(returnInstance=false, required document=get_document()){
 		if(this.loaded()) throw("The create method may not be called on a loaded entity. Use the update() method to update an existing entity or reset the entity state");
 
@@ -149,32 +148,35 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	* @param string key 		The key to be queried
 	* @param mixed 	operator 	When passed as a valid operator, an operational query will be assembled.  When the value is not match to an operator, an "equals" criteria will be appended
 	* @param string [value] 	If a valid operator is passed, the value would provide the operational comparison 
-	**/
-	any function where(string key, any operator='=', any value){
+	*/
+	any function where(key,any operator='=',any value){
+
+		if(isStruct(ARGUMENTS.key)) return this.appendCriteria(ARGUMENTS.key);
+
 		if(!arrayFind(this.get_operators(),operator)){
 			return this.where(key=key,value=operator);
 		} else {
-			if(key == '_id') arguments.value = getMongoUtil().newObjectIdFromId(arguments.value);
+			if(key == '_id') ARGUMENTS.value = getMongoUtil().newObjectIdFromId(ARGUMENTS.value);
 			var criteria=this.get_criteria();
-			switch(arguments.operator){
+			switch(ARGUMENTS.operator){
 				case '!=':
 				case '<>':
-					variables._criteria[arguments.key]={"$ne"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$ne"=ARGUMENTS.value};
 					break;
 				case '>':
-					variables._criteria[arguments.key]={"$gt"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$gt"=ARGUMENTS.value};
 					break;
 				case '<':
-					variables._criteria[arguments.key]={"$lt"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$lt"=ARGUMENTS.value};
 					break;
 				case '>=':
-					variables._criteria[arguments.key]={"$gte"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$gte"=ARGUMENTS.value};
 					break;
 				case '<=':
-					variables._criteria[arguments.key]={"$lte"=arguments.value};
+					VARIABLES._criteria[ARGUMENTS.key]={"$lte"=ARGUMENTS.value};
 					break;
 				default:
-					variables._criteria[arguments.key]=arguments.value;
+					VARIABLES._criteria[ARGUMENTS.key]=ARGUMENTS.value;
 					break;
 			}
 			this.criteria(criteria);
@@ -183,10 +185,10 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Convenience function to exclude the current active entity
-	 *
-	 * If the entity is not loaded, no query restrictions will be added
-	 **/
+	* Convenience function to exclude the current active entity
+	*
+	* If the entity is not loaded, no query restrictions will be added
+	*/
 	 any function whereNotI(){
 		if(this.loaded()){
 
@@ -197,10 +199,10 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 }
 
 	/**
-	 * Set maxrows|limit for query
-	 *
-	 * @chainable
-	 **/
+	* Set maxrows|limit for query
+	*
+	* @chainable
+	*/
 	any function limit(numeric max){
 
 		this.set_limit(arguments.max);
@@ -212,7 +214,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	* Set the offset for a query
 	* 
 	* @chainable
-	**/
+	*/
 	any function offset(numeric offset){
 		this.set_offset(arguments.offset);
 
@@ -220,10 +222,10 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Set the order|sort for the upcoming query
-	 *
-	 * @chainable
-	 **/
+	* Set the order|sort for the upcoming query
+	*
+	* @chainable
+	*/
 	any function order(key,direction){
 		var sort=this.get_sort();
 		arrayAppend(sort,{key=direction});
@@ -232,10 +234,10 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * Find one record and return the query
-	 *
-	 * @chainable
-	 **/
+	* Find one record and return the query
+	*
+	* @chainable
+	*/
 	any function find(returnInstance=true, asJSON=false){
 		var results=this.limit(1).findAll();
 		if(arrayLen(results)){
@@ -258,16 +260,16 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 
 	/**
-	 * Find all records matching the current query params
-	 *
-	 * @param boolean asCursor - whether to return the array as a Mongo cursor object (e.g. cursor.next())
-	 *
-	 **/
+	* Find all records matching the current query params
+	*
+	* @param boolean asCursor - whether to return the array as a Mongo cursor object (e.g. cursor.next())
+	*
+	*/
 	any function findAll(asCursor=false,asResult=false,asJSON=false){
 		if(isNull(this.getXCollection())){
 			var results=this.query();
 		} else {
-			var results=this.mr();
+			var results=this.mapReduce();
 		}
 
 		if(arguments.asResult)
@@ -284,24 +286,24 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 
 	/**
-	 * Test whether a record matching the current criteria exists
-	 **/
+	* Test whether a record matching the current criteria exists
+	*/
 	 boolean function exists(){
 	 	 return (this.count() GT 0);
 	 }
 
 	 /**
-	  * Count the records in the current query
-	  **/
+	 * Count the records in the current query
+	 */
 	 numeric function count(){
 	 	return this.getDbInstance().count(this.get_criteria());
 	 }
 
 	/**
-	 * Delete a document, with optional truncate flag
-	 *
-	 * @param boolean truncate - with this set to false, a delete will not proceed without either a loaded entity or an existing criteria
-	 **/
+	* Delete a document, with optional truncate flag
+	*
+	* @param boolean truncate - with this set to false, a delete will not proceed without either a loaded entity or an existing criteria
+	*/
 	 boolean function delete(truncate=false){
 		var deleted=false;
 
@@ -331,7 +333,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	 /**
 	 * The core validation function for the loaded or populated entity
-	 **/
+	 */
 	 boolean function isValid(){
 	 	//reset our validation
 	 	set_validation(newValidation());
@@ -410,7 +412,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * Checks whether a field meets its validation requirement
 	 * @param any fieldValue		The value of the field
 	 * @param struct mapping		The mapping key for this field
-	 **/
+	 */
 	 boolean function fieldIsValid(required fieldValue, required mapping){
 	 	// return true if no validation parameters are specified
 	 	if(!structKeyExists(arguments.mapping,'validate')) return true;
@@ -425,7 +427,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * @param struct mapping		The mapping key (property name) for this field
 	 * @param string errorType		The error type to append to the validation errors array
 	 * @param any [fieldValue]		The value of the field, if any
-	 **/
+	 */
 	 void function createValidationError(required mapping, required string errorType="validation", any fieldValue){
 	 	var validations = get_validation();
 	 	validations.success=false;
@@ -475,14 +477,14 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 /**
 	 * Returns the results of the validation
 	 * @return null if validation has not been run on the entity | struct if validation has processed
-	 **/
+	 */
 	 any function getValidationResults(){
 	 	return get_validation();
 	 }
 
 	 /**
 	 * Returns the array of validation errors or null if validation has not been run on the entity
-	 **/
+	 */
 	 any function getValidationErrors(){
 	 	if(!isNull(get_validation()) && structKeyExists(get_validation(),'errors')){
 	 		return get_validation().errors;
@@ -491,7 +493,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	 /**
 	 * Returns the standardized validations structure
-	 **/
+	 */
 	 struct function newValidation(){
 	 	return {
 	 		"success":true,
@@ -503,14 +505,14 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	 /**
 	 * Tests whether this is a loaded entity()
-	 **/
+	 */
 	 boolean function loaded(){
 	 	 return (!isNull(this.get_id()) and structKeyExists(this.get_document(),'_id'));
 	 }
 
 	 /**
 	 * Reloads the loaded entity from the database
-	 **/
+	 */
 	 any function reload(){
 	 	 var entityId = this.get_id();
 	 	 this.reset();
@@ -543,13 +545,11 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 
-
-
 	/**************************** Package Methods *********************************/
 
 	/**
-	 * Scopes the active entity
-	 **/
+	* Scopes the active entity
+	*/
 	any function entity(struct record){
 		this.set_document(record);
 		this.set_existing(record);
@@ -558,7 +558,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 
 	/**
 	* Handles the individual key scoping for entity()
-	**/
+	*/
 	any function scopeEntity(doc){
 		for(var record in doc){
 			//ensure nulls are not handled
@@ -578,8 +578,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	}
 
 	/**
-	 * overload the upstream evict to clear query params
-	 **/
+	* overload the upstream evict to clear query params
+	*/
 	any function evict(){
 		super.evict();
 		this.clearScope();
@@ -605,4 +605,15 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 		return true;
 	}
 
+	any function appendCriteria(struct criteria){
+		
+		structAppend(
+			this.get_criteria(),
+			ARGUMENTS.criteria,
+			true
+		);
+
+		return this;
+	}
+	
 }

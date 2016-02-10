@@ -446,7 +446,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct operation 		The index operation, containing the keys to be indexed (e.g. {"lastname":-1,"firstname":1})
 	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
-	**/
+	*/
 	public function createIndex(required operation, required options={}){
 
 		var idxOptions = getMongoUtil().createIndexOptions(options);
@@ -454,7 +454,7 @@ component name="MongoCollection" accessors="true"{
 		try{
 		
 			this.getDBCollection().createIndex(toMongo(operation), idxOptions);
-		
+			
 		} catch(any e){
 			
 			throw("Index on #options['name']# could not be created.  The error returned was: <strong>#e.message#</strong>  #idxOptions.toString()#--doc:[#toMongo(operation).toString()#]");
@@ -469,7 +469,7 @@ component name="MongoCollection" accessors="true"{
 	* @param string field 			The field to index
 	* @param struct options 		The indexing options such as the index name, sparse settings, etc.
 	* @param string	geoType 		The GEOJSON spatial type to apply for the index.  Defaults to '2dsphere'.
-	**/
+	*/
 	public function createGeoIndex(required string field, required options={}, required string geoType='2dsphere'){
 
 		var idxOptions = getMongoUtil().createIndexOptions(options);
@@ -491,7 +491,7 @@ component name="MongoCollection" accessors="true"{
 	* Creates multiple indexes
 	* 
 	* @param array indexes  	The array of index structs.  Each array item should contain the key "operation", with an optional "options" key.  
-	**/
+	*/
 	public function createIndexes(required array indexes){
 
 		for(var idx in arguments.index){
@@ -509,15 +509,16 @@ component name="MongoCollection" accessors="true"{
 
 	/**
 	* Utility facade for Mongo.Util.toMongo
-	**/
+	*/
 	private function toMongo(required obj){
 		return getMongoUtil().toMongo(arguments.obj);
 	}
 
 	/**
 	* Utility facade for Mongo.Util.toMongoDocument
-	**/
+	*/
 	private function toMongoDocument(required doc){
 		return getMongoUtil().toMongoDocument(arguments.doc);
 	}
+	
 }

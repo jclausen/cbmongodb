@@ -3,6 +3,7 @@
 component{
 	// Application properties
 	this.name = hash( getCurrentTemplatePath() );
+	this.clientManagement  = true;
 	this.sessionManagement = true;
 	this.sessionTimeout = createTimeSpan(0,0,30,0);
 	this.setClientCookies = true;
@@ -17,10 +18,12 @@ component{
 	COLDBOX_APP_KEY 		 = "";
 	
 	// LOCATION MAPPINGS
-	this.mappings[ "/tests" ] = COLDBOX_APP_ROOT_PATH & "tests\";
+	//this.mappings[ "/cbox-cbmongodb" ] = COLDBOX_APP_ROOT_PATH;
+	this.mappings[ "/tests" ] = COLDBOX_APP_ROOT_PATH & "/tests";
 	this.mappings[ "/root" ] = COLDBOX_APP_ROOT_PATH;
 
-
+	this.mappings[ "/cbmongodb" ] = COLDBOX_APP_ROOT_PATH & "/modules/cbmongodb";
+	
 	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );

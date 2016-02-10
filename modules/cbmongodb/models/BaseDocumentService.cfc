@@ -118,14 +118,19 @@ component name="BaseDocumentService" database="test" collection="default" access
 		*  Make sure our injected properties exist
 		**/
 
-		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
-			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
-		} else if(isNull(getWirebox()) and structKeyExists(application,'cbController')){
-			appplication.cbController.getWirebox().autowire(this);
-		} else {
-			throw('Wirebox IOC Injection is required to use this service');
-		}
-		
+		//if(!isObject(MongoClient)){
+
+			if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
+				application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
+			
+			} else if(isNull(getWirebox()) and structKeyExists(application,'cbController')){
+				appplication.cbController.getWirebox().autowire(this);
+			
+			} else {
+				throw('Wirebox IOC Injection is required to use this service');
+			}
+		//}
+
 		this.setMongoUtil(getMongoClient().getMongoUtil());
 		this.setAppSettings(getWirebox().getBinder().getProperties());
 
@@ -141,8 +146,11 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 		//Default Document Creation
 		this.set_document(structNew());
+		
 		this.set_default_document(structNew());
+		
 		this.set_map(structNew());
+		
 		this.detect();
 
 		return this;
@@ -150,16 +158,17 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 	/*********************** INSTANTIATION AND OPTIMIZATION **********************/
 	/**
-	 * Evaluate our properties for the default document
-	 **/
+	* Evaluate our properties for the default document
+	*/
 	any function detect(){
 
+		var properties=getMetaData(this).properties;
 		var combinedProperties = [];
-		var properties = getMetaData(this).properties;
-
+		
 		//add our extended properties in case there are schema items
 		if(structKeyExists(getMetaData(this),'extends') && structKeyExists(getMetaData(this).extends,'properties')){
 			var extendedProperties = getMetaData(this).extends.properties;
+			//arrayAppend(properties,extendedProperties,true);
 			
 			for(var i=1; i <= arrayLen(properties); i++){
 				ArrayAppend(combinedProperties, properties[i]);
@@ -168,6 +177,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 			for(var i=1; i <= arrayLen(extendedProperties); i++){
 				ArrayAppend(combinedProperties, extendedProperties[i]);
 			}
+			
 		}
 		
 		for(var prop in combinedProperties){
@@ -183,8 +193,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 					if(structKeyExists(prop,"parent")){
 						
 						//Test for doubling up on our parent attribute and dot notation
-						var prop_name = listToArray(prop.name,'.');
-
+						var prop_name=listToArray(prop.name,'.');
 						if(prop_name[1] EQ prop.parent){
 							throw('IllegalAttributeException: The parent attribute &quot;'&prop.parent&'&quot; has been been duplicated in <strong>'&getMetaData(this).name&'</strong>. Use either dot notation for your property name or specify a parent attribute.')
 						}
@@ -195,24 +204,25 @@ component name="BaseDocumentService" database="test" collection="default" access
 					} else {
 						
 						this.set(prop.name,this.getPropertyDefault(prop));
+
 					}
 
 					//test for index values
 					if(structKeyExists(prop,'index')){
-						this.applyIndex(prop, properties);
+						this.applyIndex(prop, combinedProperties);
 					}
 
 				} catch (any error){
-					//writeDump(error);abort;
-					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.detail#");	
+					throw("An error ocurred while attempting to instantiate #prop.name#.  The cause of the exception was #error.message#");	
 				}
+
 			}
 
 		}
 
 		this.set_default_document(structCopy(this.get_document()));
 	}
-
+ 
 
 	/********************************* INDEXING **************************************/
 	/**
@@ -267,15 +277,15 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	/**
-	 * Populate the document object with a structure
-	 **/
+	* Populate the document object with a structure
+	*/
 	any function populate(required struct document){
 		//auto-evict a non loaded entity when populating
 		if(!this.loaded()) this.evict();
 		
-		for(var prop in arguments.document){
+		for(var prop in ARGUMENTS.document){
 			if(!isNull(locate(prop))){
-				this.set(prop,arguments.document[prop]);
+				this.set(prop,ARGUMENTS.document[prop]);
 				//normalize data
 				if(isNormalizationKey(prop)){
 					normalizeOn(prop);
@@ -286,39 +296,45 @@ component name="BaseDocumentService" database="test" collection="default" access
 	}
 
 	/**
-	 * Sets a document property
-	 **/
+	* Sets a document property
+	*/
 	any function set(required key, required value){
-		var doc 	= this.get_document();
-		var sget 	= "doc";
-		var nest 	= listToArray(getDocumentPath(arguments.key),'.');
+		var doc  = this.get_document();
+		var sget = "doc";
+		var nest = listToArray(getDocumentPath(arguments.key), ".");
 
 		//handle top level struct containers which may be out of sequence in our property array
-		if(arrayLen(nest) == 1 && isStruct(arguments.value) && structIsEmpty(arguments.value)){
-			if(!structKeyExists(doc, nest[1])) doc[nest[1]] = arguments.value;
+		if(arrayLen(nest) == 1 && isStruct(value) && structIsEmpty(value)){
+
+			if(!structKeyExists(doc, nest[1])){ 
+				doc[nest[1]]= arguments.value;
+			}	
 		} else {
 
-			for(var i=1; i <= arrayLen(nest); i=i+1){
-			  sget = sget&'.'&nest[i];
+			for(var i=1; i LT arrayLen(nest); i=i+1){
+			  sget=sget&'.'&nest[i];
 			}
 
-			if(arrayLen(nest) > 1){
-				var nested = structGet(sget);
-				//WriteLog(type="Error",  file="cbmongodb", text="key-value: #nest.toString()# : #arguments.value.toString()#");
-				nested[nest[arrayLen(nest)]] = arguments.value;
+			//cf11 return empty not structure notation
+			var nested = structGet(sget);
+
+			if(!isStruct(nested)){
+				nested = {};
 			}
+			nested[nest[arrayLen(nest)]] = arguments.value;
+
 		}
 
 		this.entity(this.get_document());
 
 		//normalize data after we've scoped our entity
-		if(isSimpleValue(value) && len(value) && isNormalizationKey(arguments.key)){
+		if(isSimpleValue(arguments.value) && len(arguments.value) && isNormalizationKey(arguments.key)){
 			normalizeOn(arguments.key);
 		}
 
 		return this;
 
-	}
+	} 
 
 	/**
 	* Appends to an existing array schema property
@@ -459,16 +475,17 @@ component name="BaseDocumentService" database="test" collection="default" access
 	* Returns the normalized data for a normalization key
 	* 
 	* @param string key 	The normalization key property name
-	**/
+	*/
 	any function getNormalizedData(required string key){
 
-		var normalizationFields = structFindValue(get_map(),key,"ALL");
+		var normalizationFields = structFindValue(get_map(), arguments.key,"ALL");
 
 		for(var found in normalizationFields){
 			var mapping = found.owner;
 			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
 				var normalizationMap = mapping;
 				var normTarget = Wirebox.getInstance(mapping.normalize).load(locate(mapping.on));
+				
 				if(normTarget.loaded()){
 					//assemble specified keys, if available
 					if(structKeyExists(mapping,'keys')){
@@ -511,18 +528,19 @@ component name="BaseDocumentService" database="test" collection="default" access
 		if(!isNull(normalizationMapping)){
 			var farData = getNormalizedData(arguments.key);
 			var nearData = locate(normalizationMapping.name);
+			
 			if(isStruct(nearData)){
 				structAppend(nearData,farData,true);	
 			} else {
 				nearData=farData;	
 			}
+			
 			if(!isNull(normData)){
-				this.set(normalizationMapping.name,nearData);	
+				this.set(normalizationMapping.name, nearData);	
 			}
 		}
 
 		return;
-
 	}
 
 
@@ -550,10 +568,10 @@ component name="BaseDocumentService" database="test" collection="default" access
 		var document=this.get_document();
 
 		//if we have an existing document key with that name, return it
-		if(structKeyExists(document,arguments.key)){
-			return document[arguments.key];
+		if(structKeyExists(document, ARGUMENTS.key)){
+			return document[ARGUMENTS.key];
 		} else {
-			var keyName = getDocumentPath(arguments.key);
+			var keyName = getDocumentPath(ARGUMENTS.key);
 			if(isDefined('document.#keyName#')){
 				return evaluate('document.#keyName#');
 			}
@@ -562,31 +580,31 @@ component name="BaseDocumentService" database="test" collection="default" access
 		return;
 	}
 
+
 	/**
 	* Returns the document path for a given property name or key
 	* @param string key 	The property name
-	**/
+	*/
 	string function getDocumentPath(required string key){
 		
-		if(structKeyExists(get_default_document(),arguments.key)) return arguments.key;
+		if(structKeyExists(get_default_document(),ARGUMENTS.key)) return ARGUMENTS.key;
 
-		var mappings = structFindValue(get_map(),arguments.key,"ALL");
-		var documentPath = arguments.key;
+		var mappings = structFindValue(get_map(),ARGUMENTS.key,"ALL");
+		var documentPath = ARGUMENTS.key;
 		for(var map in mappings){
-			if(structKeyExists(map.owner,'parent') && map.owner.name == arguments.key){
-				documentPath = map.owner.parent & '.' & arguments.key;
+			if(structKeyExists(map.owner,'parent') && map.owner.name == ARGUMENTS.key){
+				documentPath = map.owner.parent & '.' & ARGUMENTS.key;
 			}
 		}
 
 		return documentPath;
-	} 
-
-
+	}
+	
 	/**
-	 * Returns the default property value
-	 *
-	 * Used to populate the document defaults
-	 **/
+	* Returns the default property value
+	*
+	* Used to populate the document defaults
+	*/
 	any function getPropertyDefault(prop){
 		var empty_string='';
 		if(structKeyExists(prop,'default')){
@@ -618,29 +636,27 @@ component name="BaseDocumentService" database="test" collection="default" access
 			}
 		}
 		return empty_string;
-
 	}
 
 	/**
-	 * Handles correct formatting of geoJSON objects
-	 *
-	 * @param array coordinates - an array of coordinates (e.g.: [-85.570381,42.9130449])
-	 * @param array [type="Point"] - the geometry type < http://docs.mongodb.org/manual/core/2dsphere/#geojson-objects >
-	 **/
+	* Handles correct formatting of geoJSON objects
+	*
+	* @param array coordinates - an array of coordinates (e.g.: [-85.570381,42.9130449])
+	* @param array [type="Point"] - the geometry type < http://docs.mongodb.org/manual/core/2dsphere/#geojson-objects >
+	*/
 	any function toGeoJSON(array coordinates,string type='Point'){
 		var geo={
 				"type"=arguments.type,
 				"coordinates"=arguments.coordinates
 			};
-		/**
-		* serializing and deserializing ensures our quoted keys remain intact in transmission
-		**/
+		// serializing and deserializing ensures our quoted keys remain intact in transmission
+		
 		return(deserializeJSON(serializeJSON(geo)));
 	}
 
 	/**
-	 * SQL to Mongo ordering translations
-	 **/
+	* SQL to Mongo ordering translations
+	*/
 	 numeric function mapOrder(required order){
 		return getMongoUtil().mapOrder(argumentCollection=arguments);
 	 }
@@ -648,7 +664,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 	/**
 	* Returns the Mongo.Collection object for advanced operations
 	* facade for getDBInstance()
-	**/
+	*/
 	any function getCollectionObject(){
 		return this.getDBInstance();
 	}
@@ -656,22 +672,18 @@ component name="BaseDocumentService" database="test" collection="default" access
 	/**
 	* facade for Mongo.Util.toMongo
 	* @param mixed arg 		The struct or array to convert to a Mongo DBObject
-	**/
+	*/
 	any function toMongo(required arg){
-
 		return getMongoUtil().toMongo(arg);
-
 	}
 
 	/**
 	* facade for Mongo.Util.toMongoDocument
 	* 
 	* @param struct arg 	The struct to convert to a MongoDB Document Object
-	**/
+	*/
 	any function toMongoDocument(required struct arg){
-
 		return getMongoUtil().toMongoDocument(arg);
-
 	}
 
 }

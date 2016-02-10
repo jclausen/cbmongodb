@@ -8,10 +8,10 @@ component name="CBMongoDBBaseTest" extends="coldbox.system.testing.BaseTestCase"
 	property name="FileEntity" inject="Files@CBMongoTestMocks";
 	
 	this.loadColdbox=true;
-		
+	
 	function beforeAll(){
 		super.beforeAll();
-		setup();
+		
 		
 		if(!structKeyExists(application,'wirebox') and !structKeyExists(application,'cbController')) throw(message="Wirebox not found in the application scope. It is required to run this test suite. Tests aborted.")
 		//custom methods

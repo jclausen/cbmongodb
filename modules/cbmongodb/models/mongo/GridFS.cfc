@@ -43,13 +43,16 @@ component name="GridFS" accessors="true" {
 	function init(string db="", string bucket='fs'){	
 
 		//Our implementation depends on the older DB construction
+		setBucketName(arguments.bucket);
+		
 		if(len(arguments.db) > 1 ){
 			setDBInstance(arguments.db);
-			setBucketName(arguments.bucket);
 
 			setDBInstance(mongoClient.getMongo().getDb(variables.dbInstance));
+			
 			setGridInstance(jLoader.create("com.mongodb.gridfs.GridFS").init(variables.dbInstance, variables.bucketName));
-		}	
+		}
+			
 		return this;
 	}
 

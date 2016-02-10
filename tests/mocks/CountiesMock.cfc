@@ -1,13 +1,13 @@
-component name="CountiesMock" extends="cbmongodb.models.GEOEntity" database="cbmongo_unit_tests" accessors=true{
+component name="CountiesMock" extends="cbmongodb.models.GEOEntity" collection="counties" database="cbmongo_unit_tests" accessors=true{
 	/**
 	* Leave our collection property in place to ensure backward compatibility
 	* @deprecated
 	**/
-	property name="collection" default="counties";
+	//property name="collection" default="counties";
 	property name="test_documents" default="";
 	/**Schema Properties**/
-	property name="name" schema=true index=true validate="string";
-	property name="geometry" schema=true index=true validate="struct" geo=true geotype="MultiPolygon";
+	property name="name" schema="true" index=true validate="string";
+	property name="geometry" schema="true" index=true validate="struct" geo=true geotype="MultiPolygon";
 
 
 	function getTestDocuments(){
