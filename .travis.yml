@@ -5,12 +5,12 @@ sudo: required
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
   - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-  - echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
+  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
+  - echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee -a /etc/apt/sources.list.d/mongodb-org-3.2.list
 install:
-  - sudo apt-get update && sudo apt-get update && sudo apt-get --assume-yes install mongodb-org=3.2.1 mongodb-org-server=3.2.1 mongodb-org-shell=3.2.1 mongodb-org-mongos=3.2.1 mongodb-org-tools=3.2.1
+  - sudo apt-get update && sudo apt-get update && sudo apt-get --assume-yes sudo apt-get install -y mongodb-org
   - sleep 15
-  - mongod
+  - sudo service mongod start
   - mongo --version
   #Commandbox setup
   - sudo apt-get update && sudo apt-get --assume-yes install zip unzip commandbox
