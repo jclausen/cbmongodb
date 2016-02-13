@@ -2,13 +2,12 @@
 <cfparam name="url.path" 	default="#expandPath( "./CBMongoDB-APIDocs" )#">
 <cfscript>
 	docName = "CBMongoDB-APIDocs";
-	base = expandPath( "/cbmongodb" );
-
-	colddoc 	= new ColdDoc();
-	strategy 	= new colddoc.strategy.api.HTMLAPIStrategy( url.path, "ColdBox CBMongoDB v#url.version#" );
-	colddoc.setStrategy( strategy );
-
-	colddoc.generate( inputSource=base, outputDir=url.path, inputMapping="cbmongodb" );
+	base 	= expandPath( "/cbmongodb" );
+	docbox 	= new docbox.DocBox( properties = {
+		projectTitle 	= "CBORM v#url.version#",
+		outputDir 		= url.path
+	} );
+	docbox.generate( source=base, mapping="cbmongodb" );
 </cfscript>
 
 <!---
@@ -20,4 +19,3 @@
 <h1>Done!</h1>
 <a href="#docName#/index.html">Go to Docs!</a>
 </cfoutput>
-
