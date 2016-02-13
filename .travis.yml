@@ -23,15 +23,16 @@ script:
 after_success:
   - sed -i "s/$RELEASE_PLACEHOLDER/$RELEASE_VERSION/g" modules/cbmongodb/box.json
   - sed -i "s/$BUILD_PLACEHOLDER/$TRAVIS_BUILD_NUMBER/g" modules/cbmongodb/box.json
+before_deploy:
   - mkdir deploy
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
   - cd modules/cbmongodb && zip ../../deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip ./* && cd ../../
   - cp deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip
 deploy:
+  skip_cleanup: true
   provider: s3
   edge:
     branch: s3-backward-compat
-  skip_cleanup: true
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_ACCESS_SECRET
   bucket: "oss.silowebworks.com"
