@@ -8,9 +8,8 @@ before_install:
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
   - sudo echo "deb http://repo.mongodb.org/apt/ubuntu precise/mongodb-org/3.2 multiverse" | sudo tee -a /etc/apt/sources.list.d/mongodb-org-3.2.list
 install:
-  - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
   # MongoDB Manual Install - Travis' is still at 2.6
-  - sudo service mongod start
+  - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
   - mongo --version
   #Commandbox setup
   - box install
