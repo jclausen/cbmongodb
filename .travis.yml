@@ -39,3 +39,6 @@ deploy:
   bucket: "oss.silowebworks.com"
   local-dir: deploy
   acl: public_read
+  on:
+    branch: master
+    branch: development
