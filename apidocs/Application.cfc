@@ -10,5 +10,5 @@ component{
 
 	this.mappings[ "/docbox" ]  		= API_ROOT & "docbox";
 	this.mappings[ "/root" ] 			= rootPath;
-	this.mappings[ "/cbmongodb" ] 	= rootPath & "modules/cbmongodb/models";
+	this.mappings[ "/cbmongodb" ] 	= rootPath & "modules/cbmongodb";
 }
