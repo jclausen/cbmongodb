@@ -1,11 +1,18 @@
-language: java
-services: 
-  - mongodb
+language: 
+  - ruby
+  - java
 sudo: required
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
   - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
 install:
+  #MongoDB Manual Install - Travis' version is still 2.6
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.2.1.tgz -O /tmp/mongodb.tgz
+  - tar -xvf /tmp/mongodb.tgz
+  - mkdir /tmp/data
+  - ${PWD}/mongodb-linux-x86_64-3.0.4/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 --auth &> /dev/null &
+  - until nc -z localhost 27017; do echo Waiting for MongoDB; sleep 1; done
+  #Commandbox setup
   - sudo apt-get update && sudo apt-get --assume-yes install zip unzip commandbox
   - box install
   - box server start port=49616 rewritesEnable=false openBrowser=false
