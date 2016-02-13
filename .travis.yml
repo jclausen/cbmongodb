@@ -22,8 +22,8 @@ before_script:
 script:
   - box testbox run
 after_success:
-  - sudo sed -i "s/\"$RELEASE_PLACEHOLDER\"/\"$RELEASE_VERSION\"/g" modules/cbmongodb/box.json
-  - sudo sed -i "s/\"$BUILD_PLACEHOLDER\"/\"$TRAVIS_BUILD_NUMBER\"/g" modules/cbmongodb/box.json
+  - sudo sed -i "s/${RELEASE_PLACEHOLDER}/${RELEASE_VERSION}/g" modules/cbmongodb/box.json
+  - sudo sed -i "s/${BUILD_PLACEHOLDER}/${TRAVIS_BUILD_NUMBER}/g" modules/cbmongodb/box.json
 before_deploy:
   - mkdir deploy
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
