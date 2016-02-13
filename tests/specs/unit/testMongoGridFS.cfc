@@ -15,7 +15,7 @@ component name="TestGridFS" extends="tests.specs.CBMongoDBBaseTest"{
 
 		describe("Test GridFS Storage Methods",function(){
 			it("Tests the ability to store a GridFS file",function(){
-				var testFiles = DirectoryList(path=expandPath('/tests/assets'),filter="*.jpeg");
+				var testFiles = directoryList(expandPath('/tests/assets'),false,'path', '*.jpeg');
 				expect(arrayLen(testFiles)).toBeGT(0,"Test image files were not found to test GridFS methods. You may add your own images to /cbmongodb/tests/assets/ to test the GridFS functionality");
 				VARIABLES.GFSInstance = GridFS.init('cbmongo_gridfs_tests');
 				var i = 1;
