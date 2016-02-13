@@ -75,8 +75,7 @@ component extends="cbmongodb.models.ActiveEntity"{
 	}
 
 	any function deleteByQuery(required string query, any params, numeric max=0, numeric offset=0, boolean flush=false, boolean transactional=getUseTransactions() ){
-		arguments.datasource = this.getDatasource();
-		
+				
 		return super.deleteByQuery(argumentCollection=arguments);
 	}
 
@@ -109,14 +108,12 @@ component extends="cbmongodb.models.ActiveEntity"{
 	}
 
 	boolean function isSessionDirty(string datasource=this.getDatasource()){
-		arguments.datasource = this.getDatasource();
-		
+				
 		return super.isSessionDirty(argumentCollection=arguments);
 	}
 
 	struct function getSessionStatistics(string datasource=this.getDatasource()){
-		arguments.datasource = this.getDatasource();
-		
+				
 		return super.getSessionStatistics(argumentCollection=arguments);
 	}
 
@@ -129,7 +126,7 @@ component extends="cbmongodb.models.ActiveEntity"{
 	}
 
 	string function getCollectionName(){
-		return this.getCollection());
+		return this.getCollection();
 	}
 
 }
