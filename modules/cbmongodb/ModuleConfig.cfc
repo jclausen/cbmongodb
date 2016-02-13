@@ -8,13 +8,12 @@
 *
 * @link https://github.com/jclausen/cbmongodb
 */
-component{
-	property name="MongoDBConfig";
-
+component {
+	
 	// Module Properties
 	this.title 				= "CBMongoDB";
 	this.author 			= "Jon Clausen";
-	this.webURL 			= "http://https://github.com/jclausen/cbmongodb";
+	this.webURL 			= "https://github.com/jclausen/cbmongodb";
 	this.description 		= "Coldbox SDK and Virtual Entity Service for MongoDB";
 	// Our version changes with the driver version used, only the patch is updated without a full driver updated
 	this.version			= "3.2.0.4";
@@ -26,105 +25,94 @@ component{
 	this.entryPoint			= "cbmongodb";
 	// Model Namespace to use
 	this.modelNamespace		= "cbmongodb";
+	// Auto Map Models Directory
+	this.autoMapModels		= false;
 	// CF Mapping to register
 	this.cfmapping			= "cbmongodb";
 	// Module Dependencies to be loaded in order
 	this.dependencies 		= ['cbjavaloader'];
-
-	/**
-	* CBMongoDB Module Registration
-	*/
+	
+	MongoDBConfig = "";
+	
 	function configure(){
-		//Retrieve our module settings
-		parseParentSettings();
 
-		// Layout Settings
-		layoutSettings = {noLayout:true};
+		// Java Loader Settings
+		settings = {
 
-		// SES Routes
-		if(VARIABLES.MongoDBConfig.permitDocs || VARIABLES.MongoDBConfig.permitTests){
-			routes = [
-				// Module Entry Point
-				{ pattern="/", handler="Docs", action="index" },
-				// Convention Route
-				{ pattern="/:handler/:action?" }
-			];	
-		}
-		
+		};
+
+		// Custom Declared Points
+		interceptorSettings = {
+			customInterceptionPoints = ""
+		};
+
+		// Custom Declared Interceptors
+		interceptors = [
+		];
+
 	}
 
 	/**
-	* CBMongoDB Module Activation - Fires when the module is loaded
+	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		//Retrieve our module settings
+		parseParentSettings();
 		
 		//ensure cbjavaloader is an activated module
 		if(!Wirebox.getColdbox().getModuleService().isModuleActive('cbjavaloader')){
 			Wirebox.getColdbox().getModuleService().reload('cbjavaloader');	
 		}
 		
-		var modulePath = getDirectoryFromPath(getCurrentTemplatePath());
-		var jLoader = Wirebox.getInstance("loader@cbjavaloader");
-		jLoader.appendPaths(modulePath & '/lib/');
-	 	
-
+		// load MongoDB jars
+		wirebox.getInstance("loader@cbjavaloader").appendPaths(expandPath("/cbmongodb") & "/lib");
+		
 		/**
 		* Main Configuration Object Singleton
 		**/
 		binder.map("MongoConfig@cbmongodb")
-			.to('cbmongodb.models.Mongo.Config')
-			.initWith(VARIABLES.MongoDBConfig)
+			.to('#moduleMapping#.models.mongo.Config')
+			.initWith(configStruct=variables.MongoDBConfig)
 			.asSingleton();
 
 		/**	
 		* Utility Classes
 		**/
 
-		//models.Mongo.Util
+		//models.mongo.Util
 		binder.map("MongoUtil@cbmongodb")
-			.to("cbmongodb.models.Mongo.Util")
-			.initWith()
+			.to("#moduleMapping#.models.mongo.Util")
 			.asSingleton();
 
 		//indexer
 		binder.map("MongoIndexer@cbmongodb")
-			.to("cbmongodb.models.Mongo.Indexer")
+			.to("#moduleMapping#.models.mongo.Indexer")
 			.asSingleton();
 
 		/**
 		* Manual Instantiation Instances
 		**/
 
-		//models.Mongo.Collection
+		//models.mongo.Collection
 		binder.map("MongoCollection@cbmongodb")
-			.to('cbmongodb.models.Mongo.Collection')
+			.to('#moduleMapping#.models.mongo.Collection')
 			.noInit();
 
 
-		//models.Mongo.GridFS
+		//models.mongo.GridFS
 		binder.map("GridFS@cbmongodb")
-			.to('cbmongodb.models.Mongo.GridFS')
-			.noInit();
+			.to('#moduleMapping#.models.mongo.GridFS');
 
 		/**
 		* The Mongo Client Singleton
 		**/
 		binder.map( "MongoClient@cbmongodb" )
-			.to( "cbmongodb.models.Mongo.Client" )
-			.initArg(name="MongoConfig",ref="MongoConfig@cbmongodb")
+			.to( "#moduleMapping#.models.mongo.Client" )
 			.asSingleton();
-
-		/**
-		* DSL Mappings for Our Test Mocks
-		**/
-		binder.map("People@CBMongoTestMocks").to("cbmongodb.tests.mocks.ActiveEntityMock");
-		binder.map("Counties@CBMongoTestMocks").to("cbmongodb.tests.mocks.CountiesMock");
-		binder.map("States@CBMongoTestMocks").to("cbmongodb.tests.mocks.StatesMock");
-		binder.map("Files@CBMongoTestMocks").to("cbmongodb.tests.mocks.FileEntityMock");
 	}
 
 	/**
-	* CBMongoDB Module Deactivation - Fired when the module is unloaded
+	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
 		if(Wirebox.containsInstance("MongoClient@cbmongodb")){
@@ -170,24 +158,24 @@ component{
 			//whether to permit generic API access (future implementation)
 			permitAPI = true,
 			//GridFS settings - this key is omitted by default
-			//GridFS = {
-				// "imagestorage":{
-				// 	//whether to store the cfimage metadata
-				// 	"metadata":true,
-				// 	//the max allowed width of images in the GridFS store
-				// 	"maxwidth":1000,
-				// 	//the max allowed height of images in the GridFS store
-				// 	"maxheight":1000,
-				// 	//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
-				// 	"tmpDirectory":"/includes/tmp/"
-				// }
-			//}
+			GridFS = {
+				"imagestorage":{
+					//whether to store the cfimage metadata
+					"metadata":true,
+					//the max allowed width of images in the GridFS store
+					"maxwidth":1000,
+					//the max allowed height of images in the GridFS store
+					"maxheight":1000,
+					//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
+					"tmpDirectory":"/includes/tmp/"
+				}
+			}
 		};
 
 		// Incorporate settings
 		structAppend( configStruct.MongoDB, MongoDBSettings, true );
 
-		VARIABLES.MongoDBConfig = configStruct.MongoDB;
+		variables.MongoDBConfig = configStruct.MongoDB;
 
 	}
 

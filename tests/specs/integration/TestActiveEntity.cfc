@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Integration Test for /cfmongodb/models/ActiveEntity.cfc
 *******************************************************************************/
-component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
+component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 	
 	function beforeAll(){
 		//custom methods
@@ -90,7 +90,7 @@ component name="TestModelActiveEntity" extends="cbmongodb.tests.specs.CBMongoDBB
 					it('Tests entity insert operations', function(){
 						//ensure we have an empty collection
 						model.reset().delete(truncate=true);
-						expect(model.count()).toBe(0)
+						expect(model.count()).toBe(0);
 						expect(model.reset().populate(variables.people.getTestDocument())).toBeComponent();
 						var document_id=model.create();
 						expect(document_id).toBeString();

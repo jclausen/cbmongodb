@@ -1,4 +1,4 @@
-component name="CBMongoDBBaseTest" extends="testbox.system.BaseSpec"{
+component name="CBMongoDBBaseTest" extends="coldbox.system.testing.BaseTestCase" appMapping="/root"{
 	property name="MongoUtil" inject="MongoUtil@cbmongodb";
 	property name="MongoClient" inject="MongoClient@cbmongodb";
 	property name="Wirebox" inject="wirebox";
@@ -6,8 +6,12 @@ component name="CBMongoDBBaseTest" extends="testbox.system.BaseSpec"{
 	property name="States" inject="States@CBMongoTestMocks";
 	property name="Counties" inject="Counties@CBMongoTestMocks";
 	property name="FileEntity" inject="Files@CBMongoTestMocks";
-		
+	
+	this.loadColdbox=true;
+	
 	function beforeAll(){
+		super.beforeAll();
+		
 		
 		if(!structKeyExists(application,'wirebox') and !structKeyExists(application,'cbController')) throw(message="Wirebox not found in the application scope. It is required to run this test suite. Tests aborted.")
 		//custom methods
@@ -22,9 +26,10 @@ component name="CBMongoDBBaseTest" extends="testbox.system.BaseSpec"{
 	}
 
 	function afterAll(){
-		  //drop all of our collections
-          People.getDbInstance().drop();
-          States.getDbInstance().drop();
-          Counties.getDbInstance().drop(); 
+	  super.afterAll();	
+	  //drop all of our collections
+      People.getDbInstance().drop();
+      States.getDbInstance().drop();
+      Counties.getDbInstance().drop(); 
 	}
 }

@@ -1,3 +1,14 @@
-.DS_Store
-*/.DS_Store
-/tests/assets/tmp
+.settings
+logs/*.log
+settings.xml
+.netbeans
+web.config
+server.json
+test/results/*.properties
+test/results/*.html
+test/results/*.log
+/apidocs/CBMongoDB-APIDocs/
+modules/cbi18n/
+modules/cbjavaloader/
+modules/cborm/
+modules/cbvalidation/

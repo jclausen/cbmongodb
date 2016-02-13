@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Integration Test for /cfmongodb/models/FileEntity.cfc
 *******************************************************************************/
-component name="TestModelFileEntity" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
+component name="TestModelFileEntity" extends="tests.specs.CBMongoDBBaseTest"{
 	
 	function beforeAll(){
 		//custom methods
@@ -28,7 +28,8 @@ component name="TestModelFileEntity" extends="cbmongodb.tests.specs.CBMongoDBBas
 				expect(FileEntity.getPerson()).toHaveKey('last_name');
 				//test that validation has failed because we don't have a file set
 				expect(FileEntity.isValid()).toBeFalse();
-				var testFiles = DirectoryList(path=expandPath('/cbmongodb/tests/assets'),filter="*.jpeg");
+				//var testFiles = DirectoryList(path=expandPath('/cbmongodb/tests/assets'),filter="*.jpeg");
+				var testFiles = "";
 				//make sure we have at least two files to test
 				expect(arrayLen(testFiles)).toBeGT(1,"Test image files were not found to test GridFS methods. You may add your own images to /cbmongodb/tests/assets/ to test the GridFS functionality");
 				var testFile1 = testFiles[1];
