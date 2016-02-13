@@ -3,7 +3,6 @@ logs/*.log
 settings.xml
 .netbeans
 web.config
-server.json
 coldbox
 testbox
 test/results/*.properties
