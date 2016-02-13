@@ -6,8 +6,8 @@ CBMongoDB applies an Active Record pattern to manage MongoDB documents and schem
 The module makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
 
 - <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.2.0.4 <em>(Release Date: 12/12/2015)</em>
-- <strong>Mongo Java Driver Version:</strong> 3.2.0
+- <strong>Module Version:</strong> 3.2.1.0 <em>(Release Date: 12/12/2015)</em>
+- <strong>Mongo Java Driver Version:</strong> 3.2.1
 
 Changelog:
 ----------
