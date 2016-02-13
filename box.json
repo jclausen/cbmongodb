@@ -8,5 +8,13 @@
         "coldbox":"coldbox",
         "cbjavaloader":"modules/cbjavaloader",
         "testbox":"testbox"
-    }
+    },
+    
+    "testbox"           : {
+        "runner" : [
+            {
+                "lucee":"http://localhost:49616/coldbox/tests/runner.cfm"
+            }
+        ]
+    },
 }

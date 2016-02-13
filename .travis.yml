@@ -1,0 +1,18 @@
+language: java
+services: 
+  - mongodb
+sudo: false
+before_install:
+  - mkdir /tmp/bin
+  - export PATH=$PATH:/tmp/bin
+install:
+  - gpg --keyserver keys.gnupg.net --recv-key 6DA70622
+  - gpg -a --export 6DA70622 | sudo apt-key add -
+  - echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
+  - sudo apt-get update && sudo apt-get --assume-yes install commandbox
+  - box install
+  - box server start --openBrowser=false
+before_script:
+  - curl http://localhost:49616/
+script:
+  - curl http://localhost:49616/tests/runner.cfm

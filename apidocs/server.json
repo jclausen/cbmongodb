@@ -1,0 +1,8 @@
+{
+    "web":{
+        "http":{
+            "port":8511
+        }
+    },
+    "force":true
+}
