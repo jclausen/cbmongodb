@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Unit Tests for cbmongodb.models.Mongo.MongoClient
 *******************************************************************************/
-component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
+component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 
 	function run(testResults, testBox){
 

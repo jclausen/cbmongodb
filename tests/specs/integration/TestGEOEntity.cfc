@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Integration Test for /cfmongodb/models/GEOEntity.cfc
 *******************************************************************************/
-component name="TestModelGEOEntity" extends="cbmongodb.tests.specs.CBMongoDBBaseTest" accessors=true{
+component name="TestModelGEOEntity" extends="tests.specs.CBMongoDBBaseTest" accessors=true{
 	
 	function beforeAll(){
 		//custom methods

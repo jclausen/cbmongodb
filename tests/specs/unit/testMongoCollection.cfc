@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Unit Tests for cbmongodb.models.Mongo.MongoCollection
 *******************************************************************************/
-component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
+component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 
 	function run(testResults, testBox){
 
@@ -15,7 +15,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 				for(i=1;i <= 1000;i=i+1){
 					arrayAppend(
 						testDocs,
-						{"iteration":i,"date":javacast('java.util.Date',now()),"boolean": javacast('boolean',i-i),"textString":"I am record number #i# in the collection"}
+						{"iteration":i,"date":javacast('java.util.Date',fix(now())),"boolean": javacast('boolean',i-i),"textString":"I am record number #i# in the collection"}
 					);
 				}
 				
@@ -161,7 +161,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 
 					it("tests findOneAndReplace",function(){
 						//pases automatically since updateOne() is a facade
-					})
+					});
 
 				});
 
