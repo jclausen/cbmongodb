@@ -27,12 +27,10 @@ after_success:
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
   - cd modules/cbmongodb && zip ../../deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip ./* && cd ../../
   - cp deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip
-  - ls
-before_deploy:
-  # Fix s3 deploy issues https://github.com/travis-ci/travis-ci/issues/4776
-  - rvm 1.9.3 do gem install aws-sdk -v 2.1.36
 deploy:
   provider: s3
+  edge:
+    branch: s3-backward-compat
   skip_cleanup: true
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_ACCESS_SECRET
