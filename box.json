@@ -13,7 +13,7 @@
     "testbox"           : {
         "runner" : [
             {
-                "lucee":"http://localhost:49616/coldbox/tests/runner.cfm"
+                "default":"http://localhost:49616/tests/runner.cfm"
             }
         ]
     },

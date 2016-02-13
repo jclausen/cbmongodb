@@ -33,8 +33,6 @@ component{
 
 	// request start
 	public boolean function onRequestStart(String targetPage){
-		//writeDump(this);abort;
-		// Process ColdBox Request
 		/*if( findNoCase('index.cfm',listLast(arguments.targetPage,"/")) ){
 			application.cbBootstrap.onRequestStart( arguments.targetPage );
 		}*/

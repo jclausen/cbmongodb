@@ -8,10 +8,29 @@ before_install:
 install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
   - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
-  - sudo apt-get update && sudo apt-get --assume-yes install commandbox
+  - sudo apt-get update && sudo apt-get --assume-yes install zip unzip commandbox
   - box install
-  - box server start port=49616 openBrowser=false
+  - box server start port=49616 rewritesEnable=false openBrowser=false
+env:
+  - RELEASE_VERSION=3.2.1.0
 before_script:
   - curl http://localhost:49616/
 script:
-  - curl http://localhost:49616/tests/runner.cfm?recurse=true&reporter=text
+  - box testbox run
+after_success:
+  - sed -i 's/@release.number@/$RELEASE_VERSION/g' modules/cbmongodb/box.json
+  - sed -i 's/@build.number@/$TRAVIS_BUILD_NUMBER/g' modules/cbmongodb/box.json
+  - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
+  - zip cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip releasecbmongodb/modules/*
+  - cp cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip cbmongodb-$TRAVIS_BRANCH-latest.zip 
+deploy:
+  provider: s3
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_ACCESS_SECRET
+  bucket: "oss.silowebworks.com"
+  skip_cleanup: true
+  file: cbmongodb-$TRAVIS_BRANCH-latest.zip
+  file: cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip
+  on:
+    branch: master
+    branch: development  
