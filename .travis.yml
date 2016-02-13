@@ -22,7 +22,7 @@ after_success:
   - sed -i 's/@build.number@/$TRAVIS_BUILD_NUMBER/g' modules/cbmongodb/box.json
   - mkdir deploy
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
-  - zip deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip modules/modules/*
+  - zip deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip modules/cbmongodb/*
   - cp deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip 
 deploy:
   provider: s3
