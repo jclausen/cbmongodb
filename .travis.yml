@@ -21,11 +21,9 @@ after_success:
   - sed -i 's/@release.number@/"$RELEASE_VERSION"/g' modules/cbmongodb/box.json
   - sed -i 's/@build.number@/"$TRAVIS_BUILD_NUMBER"/g' modules/cbmongodb/box.json
   - mkdir deploy
-  - cd modules/cbmongodb
-  - cp ../../README.md ./  && cp ../../LICENSE ./
-  - zip ../../deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip /*
-  - cp ../../deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip ../../deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip 
-  - cd ../../
+  - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
+  - zip -j deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip modules/cbmongodb/*
+  - cp deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip 
 deploy:
   provider: s3
   access_key_id: $AWS_ACCESS_KEY
