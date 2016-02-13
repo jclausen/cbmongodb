@@ -1,6 +1,4 @@
-language: 
-  - ruby
-  - java
+language: java
 sudo: required
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
@@ -36,6 +34,7 @@ deploy:
   bucket: "oss.silowebworks.com"
   local-dir: deploy
   skip_cleanup: true
+  acl: public_read
   on:
     branch: master
     branch: development
