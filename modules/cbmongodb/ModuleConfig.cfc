@@ -71,7 +71,7 @@ component {
 		* Main Configuration Object Singleton
 		**/
 		binder.map("MongoConfig@cbmongodb")
-			.to('#moduleMapping#.models.mongo.Config')
+			.to('#moduleMapping#.models.Mongo.Config')
 			.initWith(configStruct=variables.MongoDBConfig)
 			.asSingleton();
 
@@ -79,35 +79,35 @@ component {
 		* Utility Classes
 		**/
 
-		//models.mongo.Util
+		//models.Mongo.Util
 		binder.map("MongoUtil@cbmongodb")
-			.to("#moduleMapping#.models.mongo.Util")
+			.to("#moduleMapping#.models.Mongo.Util")
 			.asSingleton();
 
 		//indexer
 		binder.map("MongoIndexer@cbmongodb")
-			.to("#moduleMapping#.models.mongo.Indexer")
+			.to("#moduleMapping#.models.Mongo.Indexer")
 			.asSingleton();
 
 		/**
 		* Manual Instantiation Instances
 		**/
 
-		//models.mongo.Collection
+		//models.Mongo.Collection
 		binder.map("MongoCollection@cbmongodb")
-			.to('#moduleMapping#.models.mongo.Collection')
+			.to('#moduleMapping#.models.Mongo.Collection')
 			.noInit();
 
 
-		//models.mongo.GridFS
+		//models.Mongo.GridFS
 		binder.map("GridFS@cbmongodb")
-			.to('#moduleMapping#.models.mongo.GridFS');
+			.to('#moduleMapping#.models.Mongo.GridFS');
 
 		/**
 		* The Mongo Client Singleton
 		**/
 		binder.map( "MongoClient@cbmongodb" )
-			.to( "#moduleMapping#.models.mongo.Client" )
+			.to( "#moduleMapping#.models.Mongo.Client" )
 			.asSingleton();
 	}
 
