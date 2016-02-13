@@ -18,17 +18,10 @@
 		{ "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" } 
 	],
 	"contributors"		: [
-		"Jon Clausen <jon_clausen@silowebworks.com"
+		"Sana Ullah <sanaullah73@gmail.com>"
 	],
-	"ignore"			: ["tests/assets"],
-	"testbox"			: {
-		"runner" : ["tests/runner.cfm"]
-	},
 	"dependencies" 	:{
 		"cbjavaloader" : "1.0.0"
-	},
-	"devdependencies" : {
-		"testbox" : ">2.0"		
 	}
 	
 }
