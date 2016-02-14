@@ -10,7 +10,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 
 	function afterAll(){
         super.afterAll();
-        var a = b;
+       // var a = b;
 	}
 
 	function run(testResults, testBox){

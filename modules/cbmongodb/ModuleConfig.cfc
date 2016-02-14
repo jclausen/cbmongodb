@@ -73,6 +73,7 @@ component {
 		binder.map("MongoConfig@cbmongodb")
 			.to('#moduleMapping#.models.Mongo.Config')
 			.initWith(configStruct=variables.MongoDBConfig)
+			.threadSafe()
 			.asSingleton();
 
 		/**	
@@ -108,6 +109,7 @@ component {
 		**/
 		binder.map( "MongoClient@cbmongodb" )
 			.to( "#moduleMapping#.models.Mongo.Client" )
+			.threadSafe()
 			.asSingleton();
 	}
 
