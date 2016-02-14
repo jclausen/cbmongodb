@@ -6,6 +6,7 @@ before_install:
   - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
   - sudo echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee -a /etc/apt/sources.list.d/mongodb-org-3.2.list
+
 install:
   # MongoDB Manual Install - Travis' is still at 2.6
   - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
@@ -13,24 +14,30 @@ install:
   #Commandbox setup
   - box install
   - box server start port=49616 rewritesEnable=false openBrowser=false
+
 env:
   - RELEASE_VERSION='3.2.1.0'
   - RELEASE_PLACEHOLDER='@release.number@'
   - BUILD_PLACEHOLDER='@build.number@'
+
 before_script:
   - curl http://localhost:49616/
+
 script: > 
     if box testbox run | grep "\[Failures: [1-9][0-9]\?\]\|<[^>]*>";  then exit 1; fi
+
 after_success:
   - sudo sed -i "s/$RELEASE_PLACEHOLDER/${RELEASE_VERSION}/g;" 'modules/cbmongodb/box.json'
   - sleep 2
   - sudo sed -i "s/$BUILD_PLACEHOLDER/${TRAVIS_BUILD_NUMBER}/g" 'modules/cbmongodb/box.json'
   - sleep 2
+
 before_deploy:
   - mkdir deploy
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
   - cd modules/cbmongodb && sudo zip -r "../../deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./* && cd ../../
   - cp "deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" "deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip"
+
 deploy:
   skip_cleanup: true
   provider: s3
@@ -40,6 +47,4 @@ deploy:
   bucket: "oss.silowebworks.com"
   local-dir: deploy
   acl: public_read
-  on:
-    branch: master
-    branch: development
+  all_branches: true
