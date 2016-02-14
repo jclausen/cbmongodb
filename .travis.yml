@@ -24,7 +24,9 @@ before_script:
   - curl http://localhost:49616/
 
 script: > 
-    if box testbox run | grep "\[Failures: [1-9][0-9]\?\]\|<[^>]*>";  then exit 1; fi
+    testResults="echo $(box testbox run)"
+    echo $testResults
+    if $testResults | grep "\[Failures: [1-9][0-9]\?\]\|<[^>]*>";  then exit 1; fi    
 
 after_success:
   - sudo sed -i "s/$RELEASE_PLACEHOLDER/${RELEASE_VERSION}/g;" 'modules/cbmongodb/box.json'
