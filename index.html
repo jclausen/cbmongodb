@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>CBMongoDB by jclausen</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>CBMongoDB</h1>
+        <h2>MongoDB Connectivity and Active Entity Service for the Coldbox Framework</h2>
+        <a href="https://github.com/jclausen/cbmongodb" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="mongodb-module-for-coldbox" class="anchor" href="#mongodb-module-for-coldbox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>MongoDB Module for Coldbox</h1>
+
+<p>CBMongoDB applies an Active Record to manage MongoDB documents and schema using a familiar syntax for CRUD operations, recordset processing and retrieval. It makes direct use of and provides a CFML interface to the Mongo 3.0 Java driver for advanced operations.</p>
+
+<ul>
+<li>
+<strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+</li>
+<li>
+<strong>Module Version:</strong> 3.1.0.3 <em>(Release Date: 12/12/2015)</em>
+</li>
+<li>
+<strong>Mongo Java Driver Version:</strong> 3.1.0</li>
+<li>
+<strong>Compatibility Note:</strong> This module is no longer compatible with the CFMongoDB module, due to conflicting configuration keys.</li>
+</ul>
+
+<h2>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changelog:</h2>
+
+<p><strong>Patch v3.2.0.3</strong></p>
+
+<ol>
+<li>Fixes issues with ACF Compatibility</li>
+</ol>
+
+<p><strong>Patch v3.2.0.2</strong></p>
+
+<ol>
+<li>Fixes issues with unexpected driver return types</li>
+<li>Adds <code>offset()</code> helper method (alias for <code>set_offset()</code>) to ActiveEntity</li>
+<li>Adds <code>isObjectId()</code> helper method to MongoUtil for detecting whether an object is a Mongo _id string</li>
+</ol>
+
+<p><strong>Patch v3.2.0.1</strong></p>
+
+<ol>
+<li>Fixes issues with module load/unload connection operations</li>
+<li>Adds GridFS operational support</li>
+<li>Adds GridFS FileEntity model</li>
+<li>Fixes issues with <code>_id</code> queries not being typed appropriately</li>
+<li>Fixes error when attempting to truncate a collection</li>
+</ol>
+
+<p><strong>Release v3.2.0.0</strong></p>
+
+<ol>
+<li>Updates MongoDB Java driver to version 3.2.0</li>
+<li>Adds support for readConcern configuration option</li>
+</ol>
+
+<p><strong>Patch v3.1.0.4:</strong></p>
+
+<ol>
+<li>Adds validation methods for entities and support for new property <code>ForceValidation</code>, which will prevent saving of documents which do not validate</li>
+<li>Adds auto-normalization capabilities for schema properties.  When attributes are configured, schema will auto-normalize when set() and populate() methods are called.</li>
+<li>Implements full support for component accessors on all schema properties.  Var safe accessor closures are generated to allow recursion through an underscore delimiter (e.g. <code>getFirstLevel_SecondLevel()</code> to retrieve <code>getDocument().FirstLevel.SecondLevel</code>)</li>
+<li>Fixes native CFML data types not being sanitized on deeply nested structs and arrays.</li>
+<li>Add getDocument() and asStruct() utility methods, which can be used on unloaded and unloaded entities.</li>
+<li>Adds append() and prepend() functions to assit in managing document schema arrays.</li>
+<li>Fixes issues with property maps not being defined correctly and correct casting of boolean property defaults.</li>
+<li>Adds MongoIndexer singleton to delegate index management away from Entity instances.</li>
+</ol>
+
+<p><strong>Patch v3.1.0.3:</strong></p>
+
+<ol>
+<li>Fixes issue with connections not being pooled accurately and adds connection closing to module unload</li>
+<li>Moves module bindings to onLoad() to ensure availability of cbjavaloader module</li>
+<li>Changes return type of all single record retrievals inserts and updates to native structs and adds auto-stringification of _id (eliminates the need for toString())</li>
+<li>Ensures version of returned object from findOneAndUpdate/findOneAndReplace operations is the after-save version</li>
+</ol>
+
+<p><strong>Major Release v3.1.0:</strong></p>
+
+<ol>
+<li> Removes Requirement For CFMongoDB Module</li>
+<li> Adds Requirement for CBJavaloader Module</li>
+<li> Implements MongoDB 3.0 Driver</li>
+<li> Implements the ability to use multiple databases</li>
+<li> Implements the ability to configure databases at the entity level</li>
+<li> Implements Native Collection Methods for the 3.0 MongoCollection</li>
+<li> Implements CFML <a href="https://docs.mongodb.org/manual/aggregation/">Aggregation</a> methods while allowing direct access to native driver methods </li>
+<li> Implements CFML <a href="https://docs.mongodb.org/manual/core/map-reduce/">Map-Reduce</a> methods</li>
+<li> Demonstrates 52% reduction in query execution times and database operations from the previous version</li>
+<li>Implements handlers for API documentation (/cmbongodb/docs) and Unit Tests (/cbmongodb/tests)</li>
+<li>Fixes issue with near() GEOSpatial operations on Polygon objects</li>
+<li>Re-factors Test Suite to Require the Framework Context</li>
+<li>Adds an asJSON argument to find() and findAll() entity queries</li>
+<li>Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()</li>
+</ol>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/jclausen/cbmongodb/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/jclausen/cbmongodb/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/jclausen/cbmongodb"></a> is maintained by <a href="https://github.com/jclausen">jclausen</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+            <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-135296-10");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
