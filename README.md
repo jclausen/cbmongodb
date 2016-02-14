@@ -11,7 +11,7 @@ The module makes direct use of and provides a CFML interface to the Mongo v3+ Ja
 
 Changelog:
 ----------
-**v3.2.1.0
+**v3.2.1.0**
 
 1. Updates Mongo Driver to v3.2.1.0
 2. Compatibility fixes for CF11 by @sanaullah
