@@ -14,7 +14,7 @@ Changelog:
 **v3.2.1.0**
 
 1. Updates Mongo Driver to v3.2.1.0
-2. Compatibility fixes for CF11 by @sanaullah
+2. ACF11 compatibility updates
 3. Refactors module to use coldbox module skeleton
 4. Adds automated Travis CI builds and deployments for source and new `cbmongodb-be` slug to Forgebox
 
