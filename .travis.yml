@@ -25,8 +25,8 @@ before_script:
 
 script: > 
     testResults="echo $(box testbox run)";
-    printf $testResults;
-    if echo $testResults | grep "\[Failures: [1-9][0-9]\?\]\|<[^>]*>";  then exit 1; fi    
+    echo "$testResults";
+    if grep "\[Failures: [1-9][0-9]\?\]\|<t[^>]*>\|<b[^>]*>" <<< $testResults;  then echo "FAILED"; fi
 
 after_success:
   - sudo sed -i "s/$RELEASE_PLACEHOLDER/${RELEASE_VERSION}/g;" 'modules/cbmongodb/box.json'
