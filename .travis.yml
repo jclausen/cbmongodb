@@ -37,8 +37,8 @@ after_success:
 before_deploy:
   - mkdir deploy
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
-  - cd modules/cbmongodb && sudo zip -r "../../deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./* && cd ../../
-  - cp "deploy/cbmongodb-$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" "deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip"
+  - cd modules/cbmongodb && sudo zip -r "../../deploy/cbmongodb-v$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./* && cd ../../
+  - cp "deploy/cbmongodb-v$TRAVIS_BRANCH-$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" "deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip"
 
 deploy:
   skip_cleanup: true
