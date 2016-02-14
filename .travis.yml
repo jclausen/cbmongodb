@@ -24,8 +24,8 @@ before_script:
   - curl http://localhost:49616/
 
 script: > 
-    testResults="echo $(box testbox run)"
-    echo $testResults
+    testResults="echo $(box testbox run)";
+    echo $testResults;
     if $testResults | grep "\[Failures: [1-9][0-9]\?\]\|<[^>]*>";  then exit 1; fi    
 
 after_success:
