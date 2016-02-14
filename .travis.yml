@@ -22,8 +22,8 @@ before_script:
 script: > 
     if box testbox run | grep "\[Failures: [1-9][0-9]\?\]\|<br>\|</TD>";  then exit 1; fi
 after_success:
-  - sudo sed -i "s/${RELEASE_PLACEHOLDER}/${RELEASE_VERSION}/g" modules/cbmongodb/box.json
-  - sudo sed -i "s/${BUILD_PLACEHOLDER}/${TRAVIS_BUILD_NUMBER}/g" modules/cbmongodb/box.json
+  - sudo sed -i "s/$RELEASE_PLACEHOLDER/${RELEASE_VERSION}/g" modules/cbmongodb/box.json
+  - sudo sed -i "s/$BUILD_PLACEHOLDER/${TRAVIS_BUILD_NUMBER}/g" modules/cbmongodb/box.json
 before_deploy:
   - mkdir deploy
   - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
