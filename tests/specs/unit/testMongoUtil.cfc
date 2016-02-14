@@ -1,7 +1,7 @@
 /*******************************************************************************
 *	Unit Tests for cbmongodb.models.Mongo.MongoUtil
 *******************************************************************************/
-component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"{
+component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 
 	function run(testResults, testBox){
 
@@ -52,7 +52,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 						var encapsulation = MongoUtil.encapsulateDBResult(dbResult);
 						expect(encapsulation.asArray()).toBeArray();
 						//test our auto-stringification of the _id value
-						expect(encapsulation.asArray()[1]['_id']).toBeString()
+						expect(encapsulation.asArray()[1]['_id']).toBeString();
 						expect(arrayLen(encapsulation.asArray())).toBe(5);
 						expect(getMetadata(encapsulation.asCursor()).getCanonicalName()).toBe("com.mongodb.MongoBatchCursorAdapter");
 						expect(encapsulation.asCursor().hasNext()).toBeTrue();
@@ -67,7 +67,7 @@ component name="TestMongoUtil" extends="cbmongodb.tests.specs.CBMongoDBBaseTest"
 				});
 
 			});
-		})
+		});
 	}
 
 }
