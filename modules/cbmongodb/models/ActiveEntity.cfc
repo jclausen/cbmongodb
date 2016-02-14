@@ -307,16 +307,16 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 boolean function delete(truncate=false){
 		var deleted=false;
 
-		if(!truncate and !this.loaded() and !this.criteriaExists()){
+		if(!truncate && !this.loaded() && !this.criteriaExists()){
 			//protect from an accidental truncation
 			throw(type="InvalidData",message='No loaded record or criteria specified. If you wish to truncate this collection, pass the truncate=true flag to this method');
 		
-		} else if(!this.loaded() and this.criteriaExists()){
+		} else if(!this.loaded() && this.criteriaExists()){
 			//delete by criteria
 			deleted=javacast('boolean',getDBInstance().remove(this.get_criteria()).getDeletedCount());	
 			this.reset();
 		
-		} else if(!this.loaded() and !this.criteriaExists() and truncate){
+		} else if(!this.loaded() && !this.criteriaExists() && truncate){
 			//authorized truncation
 			deleted = javacast('boolean',this.getDBInstance().remove(criteria={}).getDeletedCount());
 		
@@ -507,7 +507,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 * Tests whether this is a loaded entity()
 	 */
 	 boolean function loaded(){
-	 	 return (!isNull(this.get_id()) and structKeyExists(this.get_document(),'_id'));
+	 	 return (!isNull(this.get_id()) && structKeyExists(this.get_document(),'_id'));
 	 }
 
 	 /**

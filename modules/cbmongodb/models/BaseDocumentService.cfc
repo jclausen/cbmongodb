@@ -120,10 +120,10 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 		//if(!isObject(MongoClient)){
 
-			if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
+			if(isNull(getWirebox()) && structKeyExists(application,'wirebox')){
 				application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
 			
-			} else if(isNull(getWirebox()) and structKeyExists(application,'cbController')){
+			} else if(isNull(getWirebox()) && structKeyExists(application,'cbController')){
 				appplication.cbController.getWirebox().autowire(this);
 			
 			} else {
@@ -182,7 +182,7 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		for(var prop in combinedProperties){
 			
-			if(structKeyExists(prop,'schema') and prop.schema){
+			if(structKeyExists(prop,'schema') && prop.schema){
 				try {
 
 					//add the property to your our map
