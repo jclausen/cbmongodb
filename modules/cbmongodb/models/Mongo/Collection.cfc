@@ -35,7 +35,7 @@ component name="MongoCollection" accessors="true"{
 	* Constructor - Must be manually instantiated with the Mongo Collection Object
 	* 
 	* @param java:com.mongodb.MongoCollectionImpl dbCollection 	The MongoDB Collection Object
-	**/
+	*/
 	public function init(dbCollectionInstance){
 		//if, for some reason, we need to instantiate manually
 		//if(isNull(MongoUtil)) application.wirebox.autowire(this);
@@ -77,7 +77,7 @@ component name="MongoCollection" accessors="true"{
 	* Counts the number of records, by restriction or in total
 	* 
 	* @param struct [criteria]	A criteria struct which restricts the counted document
-	**/
+	*/
 	public function count(criteria={}){
 
 		return getDBCollection().count(getMongoUtil().toMongo(arguments.criteria));
@@ -96,7 +96,7 @@ component name="MongoCollection" accessors="true"{
 		
 		if(structKeyExists(options,'offset')) results.skip(options.offset);
 		if(structKeyExists(options,'sort')) results.sort(getMongoUtil().toMongoDocument(options.sort));
-		if(structKeyExists(options,'limit') and options.limit > 0) results.limit(options.limit);
+		if(structKeyExists(options,'limit') && options.limit > 0) results.limit(options.limit);
 			
 		return getMongoUtil().encapsulateDBResult(results);
 
@@ -109,7 +109,7 @@ component name="MongoCollection" accessors="true"{
 	* @return mixed result|null 	Returns the result if found or returns null if the document was not found
 	*/
 	public function findById(required id){
-		var qId = getMongoUtil().newIDCriteriaObject(ARGUMENTS.id);
+		var qId = getMongoUtil().newIDCriteriaObject(arguments.id);
 
 		var results = this.find(qId).asCursor();
 		var firstResult = results.tryNext();
@@ -167,7 +167,7 @@ component name="MongoCollection" accessors="true"{
 	/**
 	* Returns the list of distinct values for a specified field name
 	* 
-	**/
+	*/
 	public function distinct(required string fieldName, struct criteria={}){
 		//FIXME: Not currently operational - casting issue?
 		//var distinct = getDBCollection().distinct(arguments.fieldName,toMongo(arguments.criteria));
@@ -182,7 +182,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param string map 		 The javascript map command <a href="https://docs.mongodb.org/manual/core/map-reduce/">Docs</a>
 	* @param string reduce 		 The javascript reduction command <a href="https://docs.mongodb.org/manual/core/map-reduce/">Docs</a>
-	**/
+	*/
 	public function mapReduce(required string map, required string reduce){
 		
 		var mr = getDbCollection().mapReduce(arguments.map,arguments.reduce);
@@ -201,7 +201,7 @@ component name="MongoCollection" accessors="true"{
 	* Inserts a single document
 	* 
 	* @param required struct document 	The document to be inserted
-	**/
+	*/
 	public function insertOne(required document){
 
 		var doc = getMongoUtil().toMongoDocument(document);
@@ -217,7 +217,7 @@ component name="MongoCollection" accessors="true"{
 	* Inserts an array of document
 	* 
 	* @param array docs 	An array of structs which are the documents to be inserted
-	**/
+	*/
 	public function insertMany(required array docs){
 
 		var mongoDocs = jLoader.create("java.util.ArrayList");
@@ -252,7 +252,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct document 		The document to be saved
 	* @param boolean upsert			Whether the document should be added if it cannot be found
-	**/
+	*/
 	public function save(required document,required upsert=false){
 
 		var utils = getMongoUtil();
@@ -278,7 +278,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The critera for replacement (e.g. {"_id":"123456789012456bx"})
 	* @param document 				The document which replaces the queried object
-	**/
+	*/
 	public function replaceOne(required criteria, required document){
 		return getMongoUtil().toCF(findOneAndReplace(argumentCollection=arguments));
 	}
@@ -289,7 +289,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The critera for update (e.g. {"_id":"123456789012456bx"})
 	* @param operation				The operational struct object which updates the queried object
-	**/
+	*/
 	public function updateOne(required criteria, required operation){
 		return getMongoUtil().toCF(findOneandUpdate(argumentCollection=arguments));
 	}
@@ -300,7 +300,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The critera for update (e.g. {"_id":"123456789012456bx"})
 	* @param operation 				The operational struct object which updates the queried object
-	**/
+	*/
 	public function updateMany(required criteria, required operation){
 
 		return getDBCollection().updateMany(toMongo(arguments.criteria), toMongo(operation));
@@ -311,7 +311,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The critera for update (e.g. {"_id":"123456789012456bx"})
 	* @param operation 				The operational struct object which updates the queried object
-	**/
+	*/
 	public function findOneAndUpdate(required criteria,required operation){
 
 		var updateOptions = jLoader.create('com.mongodb.client.model.FindOneAndUpdateOptions');
@@ -327,7 +327,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The critera for replacement (e.g. {"_id":"123456789012456bx"})
 	* @param document 				The document which replaces the queried object
-	**/
+	*/
 	public function findOneAndReplace(required criteria,required document){
 
 		var utils = getMongoUtil();
@@ -354,7 +354,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The criteria for the deletion (e.g. {"_id":"123456789012456bx"})
 	* @param struct [options] 		Any options which should be applied to the deletion
-	**/
+	*/
 	public function findOneAndDelete(required struct criteria,options){
 
 		if(isNull(options)){
@@ -373,7 +373,7 @@ component name="MongoCollection" accessors="true"{
 	* 
 	* @param struct criteria 		The criteria for the document deletion
 	* @param boolean multiple 		Whether to delete multiple records. Defaults to true
-	**/
+	*/
 	public function remove(required criteria,multiple=true){
 
 		if(arguments.multiple){
@@ -388,7 +388,7 @@ component name="MongoCollection" accessors="true"{
 	* Deletes a single document by criteria
 	* 
 	* @param struct criteria 		The critera for deletion (e.g. {"_id":"123456789012456bx"})
-	**/
+	*/
 	public function deleteOne(required criteria){
 
 		return getDBCollection().deleteOne(getMongoUtil().toMongo(arguments.criteria));
@@ -399,7 +399,7 @@ component name="MongoCollection" accessors="true"{
 	* Deletes many documents by criteria
 	* 
 	* @param struct criteria 		The critera for deletion (e.g. {"created":{"$lt":now()}})
-	**/
+	*/
 	public function deleteMany(required criteria={}){
 		
 		return getDBCollection().deleteMany(getMongoUtil().toMongo(arguments.criteria));

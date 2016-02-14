@@ -129,7 +129,7 @@ component name="MongoUtil" accessors="true"{
 	* Whether this doc is an instance of a CFMongoDB CFBasicDBObject
 	*/
 	function isCFBasicDBObject( doc ){
-		return NOT isSimpleValue( doc ) AND getMetadata( doc ).getCanonicalName() eq "com.mongodb.CFBasicDBObject";
+		return NOT isSimpleValue( doc ) && getMetadata( doc ).getCanonicalName() == "com.mongodb.CFBasicDBObject";
 	}
 
 	function isObjectIdString(required sId){
@@ -178,12 +178,12 @@ component name="MongoUtil" accessors="true"{
 					dbo.put(i, parseDateTime(dbo[i]));
 					var castDate = jLoader.create('java.util.Date').init(dbo[i].getTime());
 					dbo.put(i, castDate);
-				} else if(NullSupport and isSimpleValue(dbo[i]) and len(dbo[i]) == 0){
+				} else if(NullSupport && isSimpleValue(dbo[i]) && len(dbo[i]) == 0){
 					dbo.put(i, javacast('null',0));
 				} else if (i == '_id' && isObjectIdString(dbo[i])){
 					dbo.put(i, newObjectIDFromID(dbo[i]));
 				}	
-			} else if(nullSupport and IsSimpleValue(dbo[i]) and len(dbo[i]) eq 0){
+			} else if(nullSupport && IsSimpleValue(dbo[i]) && len(dbo[i]) eq 0){
 				dbo.put(i, javacast("null", ""));				
 			}
 		}

@@ -18,8 +18,8 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 *
 	 * @return object returns the model being queried
 	 * @usage   city.where('status','At Home').within('geometry','Person.address.location').findAll();
-	 **/
-	public function within(required key, xKey, reduce=false){
+	 */
+	public function within(required key, xKey, reduce = false){
 		return this.comparison('$geoWithin',arguments.key,arguments.xKey,arguments.reduce);
 	}
 
@@ -33,8 +33,8 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 *
 	 * @reversible the foreign key may be passed as the local key
 	 * @usage   this.where('road.construction',FALSE).intersects('road.geometry','commuters.route').findAll()
-	 **/
-	public function intersects(required key, xKey, reduce=false){
+	 */
+	public function intersects(required key, xKey, reduce = false){
 		return this.comparison('$geoIntersects',arguments.key,arguments.xKey,arguments.reduce);
 	}
 
@@ -46,8 +46,8 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @param string xKey - The key of the remote collection to use in the format [collection].field[.subfield (if the collection is passed as 'self' the current collection will be used)
 	* @param boolean reduce - Whether to perform the query as a map reduce. Map reductions take more time but may be re-used
 	* @usage   this.where('person.awake',true).whereNotI().near('person.location','person.location').findAll()
-	**/
-	public function near(required key, xKey, reduce=false){
+	*/
+	public function near(required key, xKey, reduce = false){
 		return this.comparison('$near',arguments.key,arguments.xKey,arguments.reduce);
 	}
 
@@ -59,8 +59,8 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @param boolean reduce - Whether to perform the query as a map reduce. Map reductions take more time but may be re-used
 	 *
 	 * @usage	this.where('city','Grand Rapids').where('state','Michigan').within('city.geometry','restaurants.location').findAll()
-	 **/
-	public function isWithin(required key, xKey, reduce=false){
+	 */
+	public function isWithin(required key, xKey, reduce = false){
 		return this.comparison('$geoWithin',arguments.key,arguments.xKey,arguments.reduce);
 	}
 
@@ -71,7 +71,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @param numeric distance - the maximum distance in units (meters) from the point or polygon boundary (for conversions, use the miles(),feet(), and km() functions)
 	*
 	* @usage this.near('state','County.geography').maxDistance(this.miles(50)).findAll()
-	**/
+	*/
 	public function maxDistance(required distance){
 		return this.distanceNear(distance);
 	}
@@ -82,7 +82,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	* @chainable
 	* @param numeric distance - the maximum distance in units (meters) from the point or polygon boundary (for conversions, use the miles(),feet(), and km() functions)
 	* @usage see maxDistance()
-	**/
+	*/
 	public function minDistance(required distance){
 		return this.distanceNear(distance,"$minDistance");
 	}
@@ -116,7 +116,7 @@ component name="GEOEntityService" extends="cbmongodb.models.ActiveEntity" access
 	 * @param boolean reduce - Whether to perform the query as a map reduce. Map reductions take more time but may be re-used
 	 *
 	 * @return object returns the model being queried
-	 **/
+	 */
 
 	package function comparison(required operation, required key, xKey, reduce=false){
 		if(arguments.reduce)

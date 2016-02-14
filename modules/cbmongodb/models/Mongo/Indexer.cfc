@@ -32,7 +32,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 		var is_unique=false;
 		var sparse=false;
 		var background=true;
-		if(structKeyExists(prop,'unique') and prop.unique){
+		if(structKeyExists(prop,'unique') && prop.unique){
 			is_unique=true;
 		}
 		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
@@ -91,7 +91,7 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 	var existing=this.getIndexInfo(arguments.dbInstance);
 		
 		for(idx in existing){
-			if(structKeyExists(idx,'name') and idx['name'] EQ arguments.name) return true;
+			if(structKeyExists(idx,'name') && idx['name'] == arguments.name) return true;
 		}
 		
 		return false;
