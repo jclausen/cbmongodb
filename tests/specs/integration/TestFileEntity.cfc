@@ -121,7 +121,7 @@ component name="TestModelFileEntity" extends="tests.specs.CBMongoDBBaseTest"{
 						var fileExtension = writeable.getExtension();
 						var fileObj = writeable.getFileObject();
 						var fileName = "BDDTestImage#writeable.getFileId()#.#fileExtension#";
-						var filePath = expandPath('/cbmongodb/tests/assets/tmp');
+						var filePath = expandPath('/tests/assets/tmp');
 						if(!directoryExists(filePath)) directoryCreate(filePath);
 
 						var written = writeable.writeTo(filePath & '/' & fileName);
