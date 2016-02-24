@@ -4,9 +4,9 @@ dist: trusty
 
 env:
   global:
-    - RELEASE_VERSION='3.2.1.0'
-    - RELEASE_PLACEHOLDER='@release.number@'
-    - BUILD_PLACEHOLDER='@build.number@'
+    - RELEASE_VERSION="3.2.1.0"
+    - RELEASE_PLACEHOLDER="@release.number@"
+    - BUILD_PLACEHOLDER="@build.number@"
 
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
@@ -43,7 +43,20 @@ before_deploy:
   - cp "deploy/cbmongodb-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" "deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip"
 
 deploy:
-  all_branches: true
+  on:
+    branch: master
+  skip_cleanup: true
+  provider: s3
+  #AWS Credentials need to be set in Travis
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_ACCESS_SECRET
+  bucket: "oss.silowebworks.com"
+  local-dir: deploy
+  acl: public_read
+
+deploy:
+  on:
+    branch: development
   skip_cleanup: true
   provider: s3
   #AWS Credentials need to be set in Travis
