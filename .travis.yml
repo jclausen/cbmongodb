@@ -4,7 +4,7 @@ dist: trusty
 
 env:
   global:
-    - RELEASE_VERSION="3.2.1.0"
+    - RELEASE_VERSION="3.2.1.1"
     - RELEASE_PLACEHOLDER="@release.number@"
     - BUILD_PLACEHOLDER="@build.number@"
 

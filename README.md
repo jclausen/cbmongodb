@@ -11,6 +11,11 @@ The module makes direct use of and provides a CFML interface to the Mongo v3+ Ja
 
 Changelog:
 ----------
+**v3.2.1.1**
+
+1. Syntax corrections
+2. Reverts auto-eviction to pre-v3.2.0.4 spec to prevent removal of normalized data prior to `populate()`
+
 **v3.2.1.0**
 
 1. Updates Mongo Driver to v3.2.1.0
