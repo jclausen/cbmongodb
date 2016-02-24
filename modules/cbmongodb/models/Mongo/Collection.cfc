@@ -438,7 +438,7 @@ component name="MongoCollection" accessors="true"{
 	* @param string indexName 
 	**/
 	public function dropIndex(string indexName,criteria){
-		return getDbCollection.dropIndex(!isNull(indexName)?indexName:toMongo(criteria));
+		return getDbCollection().dropIndex(!isNull(indexName)?indexName:toMongo(criteria));
 	}
 
 	/**
