@@ -15,6 +15,7 @@ Changelog:
 
 1. Syntax corrections
 2. Reverts auto-eviction to pre-v3.2.0.4 spec to prevent removal of normalized data prior to `populate()`
+3. Ensures legacy index names, which weren't keyed off of the collection are dropped and re-created using new naming conventions
 
 **v3.2.1.0**
 
