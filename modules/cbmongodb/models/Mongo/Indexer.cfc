@@ -55,6 +55,12 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 		if(arguments.dbInstance.count() EQ 0){
 			sparse=true;
 		}
+		
+		//ensure any legacy indexes are dropped and recreated
+		var legacyIndexName = hash(serializeJSON(idx));
+		if(indexExists(dbInstance,legacyIndexName)) dbInstance.dropIndex(legacyIndexName);
+
+		
 		//create implicit name so we can overwrite sparse settings
 		var index_name=hash(dbInstance.getCollectionName() & serializeJSON(idx));
 		if(!arrayContains(variables.indexNames,index_name)){
