@@ -1,6 +1,13 @@
 language: java
 sudo: required
 dist: trusty
+
+env:
+  global:
+    - RELEASE_VERSION="3.2.1.1"
+    - RELEASE_PLACEHOLDER="@release.number@"
+    - BUILD_PLACEHOLDER="@build.number@"
+
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
   - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
@@ -15,18 +22,13 @@ install:
   - box install
   - box server start port=49616 rewritesEnable=false openBrowser=false
 
-env:
-  - RELEASE_VERSION='3.2.1.0'
-  - RELEASE_PLACEHOLDER='@release.number@'
-  - BUILD_PLACEHOLDER='@build.number@'
-
 before_script:
   - curl http://localhost:49616/
 
 script: > 
     testResults="echo $(box testbox run)";
     echo "$testResults";
-    if grep -i "\[Failures: [1-9][0-9]\?\]\|<t[^>]*>\|<b[^>]*>" <<< $testResults;  then exit 1; fi
+    if grep -i "\[Failures: [1-9][0-9]\?[0-9]\?\]\|\[Errors: [1-9][0-9]\?[0-9]\?\]\|<t[^>]*>\|<b[^>]*>" <<< $testResults;  then exit 1; fi
 
 after_success:
   - sudo sed -i "s/$RELEASE_PLACEHOLDER/${RELEASE_VERSION}/g;" 'modules/cbmongodb/box.json'
@@ -41,6 +43,8 @@ before_deploy:
   - cp "deploy/cbmongodb-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" "deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip"
 
 deploy:
+  on:
+    branch: master
   skip_cleanup: true
   provider: s3
   #AWS Credentials need to be set in Travis
@@ -49,4 +53,15 @@ deploy:
   bucket: "oss.silowebworks.com"
   local-dir: deploy
   acl: public_read
-  all_branches: true
+
+deploy:
+  on:
+    branch: development
+  skip_cleanup: true
+  provider: s3
+  #AWS Credentials need to be set in Travis
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_ACCESS_SECRET
+  bucket: "oss.silowebworks.com"
+  local-dir: deploy
+  acl: public_read
