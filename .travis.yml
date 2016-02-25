@@ -44,19 +44,9 @@ before_deploy:
 
 deploy:
   on:
-    branch: master
-  skip_cleanup: true
-  provider: s3
-  #AWS Credentials need to be set in Travis
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_ACCESS_SECRET
-  bucket: "oss.silowebworks.com"
-  local-dir: deploy
-  acl: public_read
-
-deploy:
-  on:
-    branch: development
+    branch: 
+      - master
+      - development
   skip_cleanup: true
   provider: s3
   #AWS Credentials need to be set in Travis
