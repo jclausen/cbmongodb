@@ -4,7 +4,7 @@
 	docName = "CBMongoDB-APIDocs";
 	base 	= expandPath( "/cbmongodb" );
 	docbox 	= new docbox.DocBox( properties = {
-		projectTitle 	= "CBORM v#url.version#",
+		projectTitle 	= "CBMongoDB v#url.version#",
 		outputDir 		= url.path
 	} );
 	docbox.generate( source=base, mapping="cbmongodb" );
