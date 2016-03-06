@@ -88,17 +88,19 @@ component name="MongoCollection" accessors="true"{
 	* Facade for the drivers find method. Encapuslates the result with a number of utility methods
 	* 
 	* @param struct [criteria]	The search criteria for the query
-	* @param struct [options] 	The options for the search (accepts: offset,limit,skip)
+	* @param struct [options] 	The options for the search (accepts: offset,limit, skip, projection)
 	*/
 	public function find(required criteria={}, required struct options={}){
 
 		var results = getDBCollection().find(getMongoUtil().toMongoDocument(arguments.criteria));
 		
-		if(structKeyExists(options,'offset')) results.skip(options.offset);
-		if(structKeyExists(options,'sort')) results.sort(getMongoUtil().toMongoDocument(options.sort));
-		if(structKeyExists(options,'limit') && options.limit > 0) results.limit(options.limit);
+		if( structKeyExists( options, 'offset' ) ) results.skip(options.offset);
+		if( structKeyExists( options, 'sort' ) ) results.sort(getMongoUtil().toMongoDocument(options.sort));
+		if( structKeyExists( options, 'limit' ) && options.limit > 0) results.limit(options.limit);
+		if( structKeyExists( options, 'projection' ) ) results.projection( getMongoUtil().toMongo(options.projection) );
 			
 		return getMongoUtil().encapsulateDBResult(results);
+		
 
 	}
 
@@ -130,22 +132,23 @@ component name="MongoCollection" accessors="true"{
 	* @param struct [projection] 	A projection to be used on items in the collection (e.g. {"name":{$toUpper:"$firstName"}})
 	* @param mixed sort 			A string or struct used to sort the results (e.g. "name" or {"name":-1}).  Must be included within the projection key name
 	*/
-	public function aggregate(struct criteria, required struct group, struct projection,sort){
+	public function aggregate(required struct criteria={}, struct group, struct projection,sort){
 		
 		if(isNull(arguments.criteria) and isNull(arguments.projection)) 
 			throw(type="MissingArgumentException",message="Neither a critera or projection argument were provided. For custom aggregations, please see the aggregation() method.");
 		
 		var proj = [];
 
-		if(!isNull(arguments.criteria)){
-			arrayAppend(proj,{"$match":arguments.criteria});
-		}
+		arrayAppend(proj,{"$match":arguments.criteria});
+
 		if(!isNull(arguments.projection)){
 			arrayAppend(proj,{"$project":arguments.projection});
 		}
 
-		arrayAppend(proj,{"$group":arguments.group});
-
+		if( !isNull( arguments.group ) ){
+			arrayAppend(proj,{"$group":arguments.group});	
+		}
+		
 		if(!isNull(arguments.sort)){
 			if(isStruct(arguments.sort)){
 				arrayAppend(proj,{"$sort":arguments.sort});
