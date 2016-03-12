@@ -121,15 +121,13 @@ component name="GridFS" accessors="true" {
 
 				if(structKeyExists(GridFSConfig.imagestorage,'metadata') && GridFSConfig.imagestorage.metadata){
 					img = imageRead(isDefined('tmpPath')?tmpPath:arguments.filePath);
-					fileData['image']=structCopy(img);
+					fileData['image']=duplicate(img);
 				}
 			}
 		}
 
 		var created = GridInstance.createFile(inputStream,arguments.fileName);
-
-		created.setContentType(fileData.mimetype);
-
+		
 		created.put('fileInfo', mongoUtil.toMongo(fileData));
 
 		created.save();
