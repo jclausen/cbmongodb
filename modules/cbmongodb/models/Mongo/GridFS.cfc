@@ -108,12 +108,18 @@ component name="GridFS" accessors="true" {
 					if(!directoryExists(expandPath(GridFSConfig.imagestorage.tmpDirectory))){
 						directoryCreate(expandPath(GridFSConfig.imagestorage.tmpDirectory));
 					}	
-				
-					var tmpPath = expandPath(GridFSConfig.imagestorage.tmpDirectory) & listLast(filePath,'/');
-					imageResize(img,maxwidth,maxheight);
 					
+					//cleanup OS directory separator and replace with generic symbol
+					var cleanedFilePath = REReplace(filePath, "(\\|/)", "|", "all");
+					
+					//TODO: this path shoud be within module for all temp files, GridFSConfig.imagestorage.tmpDirectory 
+					var tmpPath = expandPath(GridFSConfig.imagestorage.tmpDirectory) & listLast(cleanedFilePath,'|');
+					
+					imageResize(img, maxwidth, maxheight);
+					//WriteLog(type="Error", file="cbmongodb", text="#tmpPath#");
+
 					//create a temporary file
-					imageWrite(img,tmpPath,true);
+					imageWrite(img, tmpPath, true);
 					
 					//reload our input stream from the tmp file
 					inputStream = jLoader.create("java.io.FileInputStream").init(tmpPath);
