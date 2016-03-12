@@ -73,7 +73,7 @@ component name="GridFS" accessors="true" {
 		var inputStream = jLoader.create("java.io.FileInputStream").init(filePath);
 		
 		//create a file name from our path if not specified
-		if(isNull(arguments.fileName)) arguments.fileName = listLast(filePath,'/');
+		if( isNull( arguments.fileName ) ) arguments.fileName = listLast(filePath,'/');
 			//default file data storage
 			var fileData = {
 				"name":arguments.fileName,
@@ -126,7 +126,7 @@ component name="GridFS" accessors="true" {
 						"height":img[ "height" ],
 						"width":img[ "width" ]
 					};
-					
+
 					if( structKeyExists( img, "colormodel" ) ) fileData[ "image" ][ "colormodel" ] = img[ "colormodel" ];
 				}
 			}
@@ -180,6 +180,7 @@ component name="GridFS" accessors="true" {
 	**/
 	function findOne(required struct criteria){
 		if(isNull(GridInstance)) throw("GridFS not initialized.");
+		if( structKeyExists( arguments.criteria, "_id" ) ) arguments.criteria[ "_id" ] = mongoUtil.newObjectIdFromId( arguments.criteria[ "_id" ] );
 
 		return GridInstance.findOne(mongoUtil.toMongo(arguments.criteria));
 
