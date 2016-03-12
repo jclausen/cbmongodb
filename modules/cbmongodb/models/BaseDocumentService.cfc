@@ -483,7 +483,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
 				var normalizationMap = mapping;
 				var normTarget = Wirebox.getInstance(mapping.normalize).load(locate(mapping.on));
-				
 				if(normTarget.loaded()){
 					//assemble specified keys, if available
 					if(structKeyExists(mapping,'keys')){
@@ -525,6 +524,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 		if(!isNull(normalizationMapping)){
 			var farData = getNormalizedData(arguments.key);
+			
+			if( isNull( farData ) ) throw( "Normalized data could not be found for model #getMetaData( this ).name# on key #arguments.key#" );
+
 			var nearData = locate(normalizationMapping.name);
 			
 			if(isStruct(nearData)){

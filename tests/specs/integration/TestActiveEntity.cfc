@@ -100,6 +100,24 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 						
 						expect(model.whereNotI().count()).toBe(0);
 
+						var criteria = {
+							"phone.home": "616-515-2121"
+						};
+
+						var projection = MongoUtil.toMongo({
+							"first_name":1,
+							"last_name":1
+						});
+
+						var projected = model.reset().getCollectionObject().find(
+							
+							criteria = criteria
+						
+						).getResult().projection( projection ).iterator().tryNext();
+
+						writeDump(var=projected);
+						abort;
+
 						describe("Test auto-normalization",function(){							
 							it("Tests auto-normalization methods on a nested field of the target",function(){
 								//create our counties
