@@ -121,10 +121,17 @@ component name="GridFS" accessors="true" {
 
 				if(structKeyExists(GridFSConfig.imagestorage,'metadata') && GridFSConfig.imagestorage.metadata){
 					img = imageRead(isDefined('tmpPath')?tmpPath:arguments.filePath);
-					fileData['image']=duplicate(img);
+
+					fileData[ "image" ]={
+						"height":img[ "height" ],
+						"width":img[ "width" ]
+					};
+					
+					if( structKeyExists( img, "colormodel" ) ) fileData[ "image" ][ "colormodel" ] = img[ "colormodel" ];
 				}
 			}
 		}
+
 
 		var created = GridInstance.createFile(inputStream,arguments.fileName);
 		
