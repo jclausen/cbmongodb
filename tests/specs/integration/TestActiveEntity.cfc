@@ -115,8 +115,11 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 						
 						).getResult().projection( projection ).iterator().tryNext();
 
-						writeDump(var=projected);
-						abort;
+						expect( isNull( projected ) ).toBeFalse();
+						expect( projected ).toHaveKey( "first_name" );
+						expect( projected ).toHaveKey( "last_name" );
+						expect( structKeyExists( projected, "phone" ) ).toBeFalse();
+
 
 						describe("Test auto-normalization",function(){							
 							it("Tests auto-normalization methods on a nested field of the target",function(){
