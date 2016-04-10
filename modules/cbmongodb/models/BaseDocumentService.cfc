@@ -283,7 +283,14 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		for(var prop in ARGUMENTS.document){
 			if(!isNull(locate(prop))){
-				this.set(prop,ARGUMENTS.document[prop]);
+				
+				if( isStruct( ARGUMENTS.document[prop] ) ){
+					var existing = this.locate( prop );
+					structAppend( ARGUMENTS.document[ prop ], existing, false );
+				} 
+					
+				this.set(prop,ARGUMENTS.document[prop]);	
+				
 				//normalize data
 				if(isNormalizationKey(prop)){
 					normalizeOn(prop);
