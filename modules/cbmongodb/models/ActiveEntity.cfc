@@ -370,19 +370,17 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 			&& 
 	 			( 
 	 				structKeyExists(mapping,"required")
-	 				 || 
+	 				 ||
 	 				(
-	 				isArray(fieldValue)
-	 				 || 
-	 				isStruct(fieldValue)
-	 				 || 
+	 				 !isSimpleValue( fieldValue )
+	 				 ||
 	 				 ( 
-	 				 	isSimpleValue(fieldValue) 
-	 				 	&& 
+	 				 	isSimpleValue(fieldValue)
+	 				 	&&
 	 				 	len(fieldValue) 
 	 				 )
-	 				)  
-	 			) 
+	 				)
+	 			)
 	 			&& 
 	 			!fieldIsValid(fieldValue,mapping)
 	 		){
