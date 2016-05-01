@@ -551,7 +551,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	any function entity(struct record){
 	
 		//ensure the entity _id is always cast as a string
-		record[ "_id" ] = record[ "_id" ].toString();
+		if( structKeyExists( record, '_id' ) &&  getMongoUtil().isObjectId( record[ "_id" ] ) ){		
+			record[ "_id" ] = record[ "_id" ].toString();	
+		}
 
 		this.set_document(record);
 		this.set_existing(record);
