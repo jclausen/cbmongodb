@@ -549,8 +549,13 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	* Scopes the active entity
 	*/
 	any function entity(struct record){
+	
+		//ensure the entity _id is always cast as a string
+		record[ "_id" ] = record[ "_id" ].toString();
+
 		this.set_document(record);
 		this.set_existing(record);
+	
 		this.scopeEntity(this.get_document());
 	}
 
