@@ -272,6 +272,8 @@ component name="MongoCollection" accessors="true"{
 		} else {
 
 			var criteria = utils.newIDCriteriaObject(arguments.document['_id']);
+
+			arguments.document[ "_id" ] = getMongoUtil().newObjectIdFromId( arguments.document['_id'] );
 			
 			var doc = findOneAndReplace(criteria,arguments.document);	
 		}
