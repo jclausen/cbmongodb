@@ -117,19 +117,15 @@ component name="BaseDocumentService" database="test" collection="default" access
 		* 
 		*  Make sure our injected properties exist
 		**/
-
-		//if(!isObject(MongoClient)){
-
-			if(isNull(getWirebox()) && structKeyExists(application,'wirebox')){
-				application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
-			
-			} else if(isNull(getWirebox()) && structKeyExists(application,'cbController')){
-				appplication.cbController.getWirebox().autowire(this);
-			
-			} else {
-				throw('Wirebox IOC Injection is required to use this service');
-			}
-		//}
+		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
+			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
+		
+		} else if(isNull(getWirebox()) and structKeyExists(application,'cbController')){
+			application.cbController.getWirebox().autowire(this);
+		
+		} else {
+			throw('Wirebox IOC Injection is required to use this service');
+		}
 
 		this.setMongoUtil(getMongoClient().getMongoUtil());
 		this.setAppSettings(getWirebox().getBinder().getProperties());
@@ -283,7 +279,14 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		for(var prop in ARGUMENTS.document){
 			if(!isNull(locate(prop))){
-				this.set(prop,ARGUMENTS.document[prop]);
+				
+				if( isStruct( ARGUMENTS.document[prop] ) ){
+					var existing = this.locate( prop );
+					structAppend( ARGUMENTS.document[ prop ], existing, false );
+				} 
+					
+				this.set(prop,ARGUMENTS.document[prop]);	
+				
 				//normalize data
 				if(isNormalizationKey(prop)){
 					normalizeOn(prop);

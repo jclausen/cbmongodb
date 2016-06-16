@@ -123,6 +123,7 @@ component name="MongoCollection" accessors="true"{
 	}
 
 
+
 	/**
 	* Performs an aggregation operation on the collection using match or projection
 	* <br><br>See <a href="https://docs.mongodb.org/manual/aggregation/">https://docs.mongodb.org/manual/aggregation/</a> for more information and commands
@@ -131,24 +132,28 @@ component name="MongoCollection" accessors="true"{
 	* @param struct group 			The group by operational command (e.g. {"_id":"$orderId","$sum":"amount"} where $orderId references the orderId key in the document)
 	* @param struct [projection] 	A projection to be used on items in the collection (e.g. {"name":{$toUpper:"$firstName"}})
 	* @param mixed sort 			A string or struct used to sort the results (e.g. "name" or {"name":-1}).  Must be included within the projection key name
+	* @param struct groupMatch      An additional match on the grouped values to append to the aggregation ( e.g. {"amount":{"$gte":100}} )
 	*/
-	public function aggregate(required struct criteria={}, struct group, struct projection,sort){
+	public function aggregate( struct criteria, required struct group, struct projection, sort, groupMatch ){
 		
 		if(isNull(arguments.criteria) and isNull(arguments.projection)) 
 			throw(type="MissingArgumentException",message="Neither a critera or projection argument were provided. For custom aggregations, please see the aggregation() method.");
 		
 		var proj = [];
 
-		arrayAppend(proj,{"$match":arguments.criteria});
-
+		if(!isNull(arguments.criteria)){
+			arrayAppend(proj,{"$match":arguments.criteria});
+		}
 		if(!isNull(arguments.projection)){
 			arrayAppend(proj,{"$project":arguments.projection});
 		}
 
-		if( !isNull( arguments.group ) ){
-			arrayAppend(proj,{"$group":arguments.group});	
+		arrayAppend(proj,{"$group":arguments.group});
+
+		if( !isNull( arguments.groupMatch ) ){
+			arrayAppend(proj,{"$match":arguments.groupMatch});
 		}
-		
+
 		if(!isNull(arguments.sort)){
 			if(isStruct(arguments.sort)){
 				arrayAppend(proj,{"$sort":arguments.sort});
@@ -267,6 +272,8 @@ component name="MongoCollection" accessors="true"{
 		} else {
 
 			var criteria = utils.newIDCriteriaObject(arguments.document['_id']);
+
+			arguments.document[ "_id" ] = getMongoUtil().newObjectIdFromId( arguments.document['_id'] );
 			
 			var doc = findOneAndReplace(criteria,arguments.document);	
 		}

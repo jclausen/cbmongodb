@@ -169,7 +169,7 @@ component {
 					//the max allowed height of images in the GridFS store
 					"maxheight":1000,
 					//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
-					"tmpDirectory":"/includes/tmp/"
+					"tmpDirectory":"/cbmongodb/tmp/"
 				}
 			}
 		};

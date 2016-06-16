@@ -1,4 +1,4 @@
-<cfcomponent output="false" hint="My App Configuration">
+<cfcomponent output="false" hint="cbmongodb module Configuration">
 <cfscript>
 	// Configure ColdBox Application
 	function configure(){
@@ -6,7 +6,7 @@
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= "Development Shell",
+			appName 				= "cbmongodb-module",
 
 			//Development Settings
 			reinitPassword			= "",
@@ -23,7 +23,7 @@
 			missingTemplateHandler	= "",
 
 			//Extension Points
-			ApplicationHelper 				= "",
+			ApplicationHelper 			= "",
 			coldboxExtensionsLocation 	= "",
 			modulesExternalLocation		= [],
 			pluginsExternalLocation 	= "",
@@ -50,12 +50,12 @@
 		//Mongo DB settings
 		MongoDB = {
 		    //an array of servers to connect to
-		    hosts= [
-		    {
-		        serverName='127.0.0.1',
-		        serverPort='27017'
-		    }
-		  ],
+			hosts= [
+				{
+					serverName='127.0.0.1',
+					serverPort='27017'
+				}
+			],
 		    //The default database to connect to
 		    db  = "test",
 		    //whether to permit viewing of the API documentation
@@ -63,7 +63,20 @@
 		    //whether to permit unit tests to run
 		    permitTests = true,
 		    //whether to permit API access to the Generic API (future implementation)
-		    permitAPI = true
+		    permitAPI = true,
+		    //GridFS settings - this key is omitted by default
+			GridFS = {
+				"imagestorage":{
+					//whether to store the cfimage metadata
+					"metadata":true,
+					//the max allowed width of images in the GridFS store
+					"maxwidth":1000,
+					//the max allowed height of images in the GridFS store
+					"maxheight":1000,
+					//The path within the site root with trailing slash to use for resizing images (required if maxheight or max width are specified)
+					"tmpDirectory":"/tests/assets/tmp/"
+				}
+			}
 		};
 		
 		// Activate WireBox
@@ -81,7 +94,7 @@
 			appenders = {
 				files={class="coldbox.system.logging.appenders.RollingFileAppender",
 					properties = {
-						filename = coldbox.appName, filePath="/#appMapping#/logs"
+						filename = coldbox.appName, filePath="/logs"
 					}
 				}
 			},
