@@ -7,9 +7,7 @@ settings.xml
 web.config
 coldbox
 testbox
-test/results/*.properties
-test/results/*.html
-test/results/*.log
+tests/results
 apidocs
 !apidocs/box.json
 !apidocs/server.json

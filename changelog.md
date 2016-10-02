@@ -1,6 +1,15 @@
 Changelog:
 ----------
 **v3.2.1.1**
+1. ACF Compatibility Updates
+2. Cleanup validation conditionals
+3. Adds the ability to pass an additional match condition on a grouped aggregation - Allows for an additional match clause to limit the grouped results
+4. Fixes casting errors on loaded entity save
+5. Ensure entity _id is always cast as a string
+6. Fixes merge issue with struct merge on population
+7. Add check for _id in record struct
+
+**v3.2.1.1**
 
 1. Syntax corrections
 2. Reverts auto-eviction to pre-v3.2.0.4 spec to prevent removal of normalized data prior to `populate()`
