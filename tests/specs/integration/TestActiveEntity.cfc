@@ -99,6 +99,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 				expect(model.reset().populate(variables.people.getTestDocument())).toBeComponent();
 				var document_id=model.create();
 				expect(document_id).toBeString();
+				VARIABLES.testDocumentID = document_id;
 				//test entity load
 				expect(model.reset().load(document_id).loaded()).toBeTrue();
 				
@@ -137,8 +138,10 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 					expect(county_id).toBeString("County Id is not a string");
 					break;
 				}
+				expect( VARIABLES ).toHaveKey( "testDocumentID", "A Document ID does not exist to test normalization" );
 
-				expect(isNull(document_id)).toBeFalse("A Document ID does not exist to test normalization");
+				var document_id = VARIABLES.testDocumentID;
+
 				var Normie = model.reset().load(document_id);
 				expect(Normie.loaded()).toBeTrue("The test document could not be reloaded to test normalization");
 				model.set('county.id',county_id);
