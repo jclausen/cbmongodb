@@ -10,7 +10,11 @@ testbox
 test/results/*.properties
 test/results/*.html
 test/results/*.log
-/apidocs/CBMongoDB-APIDocs/
-/apidocs/docbox
+apidocs
+!apidocs/box.json
+!apidocs/server.json
+!apidocs/Application.cfc
+artifacts
+build
 modules/*
 !modules/cbmongodb

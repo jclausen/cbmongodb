@@ -1,8 +1,9 @@
 {
     "web":{
         "http":{
-            "port":8511
+            "port":"8511"
         }
     },
-    "force":true
+    "force":true,
+    "openbrowser":"false"
 }

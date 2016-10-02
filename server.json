@@ -1,4 +1,6 @@
 {
+    "name":"cbmongodb",
+    "force":true,
     "web":{
         "http":{
             "port":"50680"

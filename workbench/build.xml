@@ -148,18 +148,9 @@
     	<echo>Running Tests for ${project.name}</echo>
     	
     	<!-- Determine Test target: Are we jenkins or local or travis -->
-        <if>
-			<not><equals arg1="${environment}" arg2="auto" /></not>
-			<then>
-				<property name="test.target" value="run" />
-				<property name="isTravis" value="true" />
-			</then>
-			<else>
-				<property name="test.target" value="run-junit" />
-				<property name="isTravis" value="false" />
-			</else>
-		</if>
-
+        
+		<property name="test.target" value="run" />
+		
     	<!-- Run the tests against the default server -->
     	<subant target="${test.target}">
           	<fileset dir="tests" includes="test.xml"/>
