@@ -42,7 +42,7 @@ deploy:
   secret_access_key: $AWS_ACCESS_SECRET
   bucket: "oss.silowebworks.com"
   local-dir: s3deploy
-  upload-dir: oldbox-modules/cbmongodb
+  upload-dir: coldbox-modules/cbmongodb
   acl: public_read
 
 after_deploy:
