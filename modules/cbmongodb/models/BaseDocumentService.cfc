@@ -117,19 +117,15 @@ component name="BaseDocumentService" database="test" collection="default" access
 		* 
 		*  Make sure our injected properties exist
 		**/
-
-		//if(!isObject(MongoClient)){
-
-			if(isNull(getWirebox()) && structKeyExists(application,'wirebox')){
-				application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
-			
-			} else if(isNull(getWirebox()) && structKeyExists(application,'cbController')){
-				appplication.cbController.getWirebox().autowire(this);
-			
-			} else {
-				throw('Wirebox IOC Injection is required to use this service');
-			}
-		//}
+		if(isNull(getWirebox()) and structKeyExists(application,'wirebox')){
+			application.wirebox.autowire(target=this,targetID=getMetadata(this).name);
+		
+		} else if(isNull(getWirebox()) and structKeyExists(application,'cbController')){
+			application.cbController.getWirebox().autowire(this);
+		
+		} else {
+			throw('Wirebox IOC Injection is required to use this service');
+		}
 
 		this.setMongoUtil(getMongoClient().getMongoUtil());
 		this.setAppSettings(getWirebox().getBinder().getProperties());
@@ -258,10 +254,13 @@ component name="BaseDocumentService" database="test" collection="default" access
 			structDelete(this,'set' & prop.name);
 			
 			this['get'&accessorSuffix] = function(){return locate(prop.name);};
+			variables['get'&accessorSuffix] = this['get'&accessorSuffix];
 			this['set'&accessorSuffix] = function(required value){return this.set(prop.name, arguments.value);};
+			variables['set'&accessorSuffix] = this['set'&accessorSuffix];
+
 		}
 	}
-
+	
 	boolean function hasExistingAccessor(required string suffix){
 		if(structKeyExists(getMetadata(this),'functions')){
 			var functions = getMetaData(this).functions;
@@ -283,7 +282,14 @@ component name="BaseDocumentService" database="test" collection="default" access
 		
 		for(var prop in ARGUMENTS.document){
 			if(!isNull(locate(prop))){
-				this.set(prop,ARGUMENTS.document[prop]);
+				
+				if( isStruct( ARGUMENTS.document[prop] ) ){
+					var existing = this.locate( prop );
+					structAppend( ARGUMENTS.document[ prop ], existing, false );
+				} 
+					
+				this.set(prop,ARGUMENTS.document[prop]);	
+				
 				//normalize data
 				if(isNormalizationKey(prop)){
 					normalizeOn(prop);
@@ -483,7 +489,6 @@ component name="BaseDocumentService" database="test" collection="default" access
 			if(structKeyExists(mapping,'normalize') && structKeyExists(mapping,'on') && mapping.on == key && !isNull(locate(mapping.on)) ){
 				var normalizationMap = mapping;
 				var normTarget = Wirebox.getInstance(mapping.normalize).load(locate(mapping.on));
-				
 				if(normTarget.loaded()){
 					//assemble specified keys, if available
 					if(structKeyExists(mapping,'keys')){
@@ -525,6 +530,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 
 		if(!isNull(normalizationMapping)){
 			var farData = getNormalizedData(arguments.key);
+			
+			if( isNull( farData ) ) throw( "Normalized data could not be found for model #getMetaData( this ).name# on key #arguments.key#" );
+
 			var nearData = locate(normalizationMapping.name);
 			
 			if(isStruct(nearData)){

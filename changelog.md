@@ -1,16 +1,14 @@
-
-MongoDB Module for Coldbox
-==========================
-
-CBMongoDB applies an Active Record pattern to manage MongoDB documents and schema.  It allows the use of a familiar syntax for CRUD operations, recordset processing and retrieval. 
-The module makes direct use of and provides a CFML interface to the Mongo v3+ Java driver for advanced operations.
-
-- <strong>Compatibility:</strong> ColdFusion 9.0.1+/Lucee 4.2+ w/ Coldbox 4+
-- <strong>Module Version:</strong> 3.2.1.0 <em>(Release Date: 12/12/2015)</em>
-- <strong>Mongo Java Driver Version:</strong> 3.2.1
-
 Changelog:
 ----------
+**v3.2.1.1**
+1. ACF Compatibility Updates
+2. Cleanup validation conditionals
+3. Adds the ability to pass an additional match condition on a grouped aggregation - Allows for an additional match clause to limit the grouped results
+4. Fixes casting errors on loaded entity save
+5. Ensure entity _id is always cast as a string
+6. Fixes merge issue with struct merge on population
+7. Add check for _id in record struct
+
 **v3.2.1.1**
 
 1. Syntax corrections
@@ -93,71 +91,3 @@ Changelog:
 12. Re-factors Test Suite to Require the Framework Context
 13. Adds an asJSON argument to find() and findAll() entity queries
 14. Encapsulates all Collection Result queries to provide the following delivery methods:  .asResult() - MongoIterable,  .asCursor() - MongoIterator, .asArray(), asJSON()
-
-
-[Installation and Usage Instructions](https://github.com/jclausen/cbmongodb/wiki)
---------------------------------------------------------------------------------
-
-<ul class="wiki-pages" data-filterable-for="wiki-pages-filter" data-filterable-type="substring">
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki" class="wiki-page-link">Home</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/1.-Installation-&amp;-Configuration" class="wiki-page-link">1. Installation &amp; Configuration</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/1A.-Advanced-Connections" class="wiki-page-link">1A. Advanced Connections</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2.-Usage" class="wiki-page-link">2. Usage</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2A.-Creating-Documents" class="wiki-page-link">2A. Creating Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2B.-Validation" class="wiki-page-link">2B. Validation</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2C.-Loading-and-Querying-Documents" class="wiki-page-link">2C. Loading and Querying Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/2E.-Deleting-Documents" class="wiki-page-link">2E. Deleting Documents</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/3.-GridFS-File-Storage" class="wiki-page-link">3. GridFS File Storage</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/4.-Geospatial-Functions" class="wiki-page-link">4. Geospatial Functions</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/5.-Map-Reduce" class="wiki-page-link">5. Map Reduce</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/6.-Aggregation" class="wiki-page-link">6. Aggregation</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/7.-Advanced-Usage" class="wiki-page-link">7. Advanced Usage</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/8.-Issues" class="wiki-page-link">8. Issues</a></strong>
-    </li>
-    <li>
-      <strong><a href="https://github.com/jclausen/cbmongodb/wiki/9.-Get-Involved" class="wiki-page-link">9. Get Involved</a></strong>
-    </li>
-  </ul>
-
-Issues
---------------
-
-***NULL* support:** At the present time, in order to maintain compatibility for ACF, the conventions of this module assume a lack of full null support.  As such, testing for null values must be done with `len(field)`, and empty schema document properties are inserted as empty strings. The option for full null support is planned in a future patch.
-
-Issues with the module may be [posted here](https://github.com/jclausen/cbmongodb).
-
-
-Getting Involved
-----------------
-
-Fork -- Commit -- Request a pull, contributions are welcome. For bug fixes and feature additions, commits with unit tests written (cbmongodb/tests/specs/) would be peachy.  Feel free to add issues or feature suggestions as they arise in your development. 
-
-
-

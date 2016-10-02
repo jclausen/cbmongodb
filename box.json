@@ -1,20 +1,19 @@
 {
     "dependencies":{
-        "coldbox":"4.1.0+00002",
-        "cbjavaloader":"1.0.0",
-        "testbox":"2.2.0"
+        "coldbox":"^4.1.0+00002",
+        "cbjavaloader":"^1.0.0",
+        "testbox":"^2.3.0+00044"
     },
     "installPaths":{
         "coldbox":"coldbox",
         "cbjavaloader":"modules/cbjavaloader",
         "testbox":"testbox"
     },
-    
-    "testbox"           : {
-        "runner" : [
+    "testbox":{
+        "runner":[
             {
-                "default":"http://localhost:49616/tests/runner.cfm"
+                "default":"http://localhost:50680/tests/runner.cfm"
             }
         ]
-    },
+    }
 }

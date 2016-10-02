@@ -80,7 +80,7 @@ component name="MongoCollection" accessors="true"{
 	*/
 	public function count(criteria={}){
 
-		return getDBCollection().count(getMongoUtil().toMongo(arguments.criteria));
+		return getDBCollection().count( getMongoUtil().toMongo( arguments.criteria ) );
 
 	}
 
@@ -88,17 +88,19 @@ component name="MongoCollection" accessors="true"{
 	* Facade for the drivers find method. Encapuslates the result with a number of utility methods
 	* 
 	* @param struct [criteria]	The search criteria for the query
-	* @param struct [options] 	The options for the search (accepts: offset,limit,skip)
+	* @param struct [options] 	The options for the search (accepts: offset,limit, skip, projection)
 	*/
-	public function find(required criteria={}, required struct options={}){
+	public function find( required criteria={}, required struct options={} ){
 
-		var results = getDBCollection().find(getMongoUtil().toMongoDocument(arguments.criteria));
+		var results = getDBCollection().find( getMongoUtil().toMongoDocument( arguments.criteria ) );
 		
-		if(structKeyExists(options,'offset')) results.skip(options.offset);
-		if(structKeyExists(options,'sort')) results.sort(getMongoUtil().toMongoDocument(options.sort));
-		if(structKeyExists(options,'limit') && options.limit > 0) results.limit(options.limit);
+		if( structKeyExists( options, 'offset' ) ) results.skip( options.offset );
+		if( structKeyExists( options, 'sort' ) ) results.sort( getMongoUtil().toMongoDocument( options.sort ) );
+		if( structKeyExists( options, 'limit' ) && options.limit > 0) results.limit( options.limit );
+		if( structKeyExists( options, 'projection' ) ) results.projection( getMongoUtil().toMongo( options.projection ) );
 			
 		return getMongoUtil().encapsulateDBResult(results);
+		
 
 	}
 
@@ -108,7 +110,7 @@ component name="MongoCollection" accessors="true"{
 	* @param mixed id 				The id of the document to be retrieved - may be either a BSON object or string
 	* @return mixed result|null 	Returns the result if found or returns null if the document was not found
 	*/
-	public function findById(required id){
+	public function findById( required id ){
 		var qId = getMongoUtil().newIDCriteriaObject(arguments.id);
 
 		var results = this.find(qId).asCursor();
@@ -121,6 +123,7 @@ component name="MongoCollection" accessors="true"{
 	}
 
 
+
 	/**
 	* Performs an aggregation operation on the collection using match or projection
 	* <br><br>See <a href="https://docs.mongodb.org/manual/aggregation/">https://docs.mongodb.org/manual/aggregation/</a> for more information and commands
@@ -129,8 +132,9 @@ component name="MongoCollection" accessors="true"{
 	* @param struct group 			The group by operational command (e.g. {"_id":"$orderId","$sum":"amount"} where $orderId references the orderId key in the document)
 	* @param struct [projection] 	A projection to be used on items in the collection (e.g. {"name":{$toUpper:"$firstName"}})
 	* @param mixed sort 			A string or struct used to sort the results (e.g. "name" or {"name":-1}).  Must be included within the projection key name
+	* @param struct groupMatch      An additional match on the grouped values to append to the aggregation ( e.g. {"amount":{"$gte":100}} )
 	*/
-	public function aggregate(struct criteria, required struct group, struct projection,sort){
+	public function aggregate( struct criteria, required struct group, struct projection, sort, groupMatch ){
 		
 		if(isNull(arguments.criteria) and isNull(arguments.projection)) 
 			throw(type="MissingArgumentException",message="Neither a critera or projection argument were provided. For custom aggregations, please see the aggregation() method.");
@@ -145,6 +149,10 @@ component name="MongoCollection" accessors="true"{
 		}
 
 		arrayAppend(proj,{"$group":arguments.group});
+
+		if( !isNull( arguments.groupMatch ) ){
+			arrayAppend(proj,{"$match":arguments.groupMatch});
+		}
 
 		if(!isNull(arguments.sort)){
 			if(isStruct(arguments.sort)){
@@ -264,8 +272,10 @@ component name="MongoCollection" accessors="true"{
 		} else {
 
 			var criteria = utils.newIDCriteriaObject(arguments.document['_id']);
+
+			arguments.document[ "_id" ] = getMongoUtil().newObjectIdFromId( arguments.document['_id'] );
 			
-			var doc = findOneAndReplace(criteria,arguments.document);	
+			var doc = findOneAndReplace( criteria, arguments.document);	
 		}
 
 		return getMongoUtil().toCF(doc);
@@ -280,7 +290,11 @@ component name="MongoCollection" accessors="true"{
 	* @param document 				The document which replaces the queried object
 	*/
 	public function replaceOne(required criteria, required document){
+
+		structAppend( arguments.document, arguments.criteria, true );
+
 		return getMongoUtil().toCF(findOneAndReplace(argumentCollection=arguments));
+		
 	}
 
 	/**

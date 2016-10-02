@@ -370,19 +370,17 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	 			&& 
 	 			( 
 	 				structKeyExists(mapping,"required")
-	 				 || 
+	 				 ||
 	 				(
-	 				isArray(fieldValue)
-	 				 || 
-	 				isStruct(fieldValue)
-	 				 || 
+	 				 !isSimpleValue( fieldValue )
+	 				 ||
 	 				 ( 
-	 				 	isSimpleValue(fieldValue) 
-	 				 	&& 
+	 				 	isSimpleValue(fieldValue)
+	 				 	&&
 	 				 	len(fieldValue) 
 	 				 )
-	 				)  
-	 			) 
+	 				)
+	 			)
 	 			&& 
 	 			!fieldIsValid(fieldValue,mapping)
 	 		){
@@ -551,8 +549,17 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	* Scopes the active entity
 	*/
 	any function entity(struct record){
+		//ensure our default document is merged in to handle any changes
+		structAppend( arguments.record, get_default_document(), false );
+		
+		//ensure the entity _id is always cast as a string
+		if( structKeyExists( record, '_id' ) &&  getMongoUtil().isObjectId( record[ "_id" ] ) ){		
+			record[ "_id" ] = record[ "_id" ].toString();	
+		}
+
 		this.set_document(record);
 		this.set_existing(record);
+	
 		this.scopeEntity(this.get_document());
 	}
 

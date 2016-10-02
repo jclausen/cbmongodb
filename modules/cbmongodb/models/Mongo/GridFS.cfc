@@ -73,7 +73,7 @@ component name="GridFS" accessors="true" {
 		var inputStream = jLoader.create("java.io.FileInputStream").init(filePath);
 		
 		//create a file name from our path if not specified
-		if(isNull(arguments.fileName)) arguments.fileName = listLast(filePath,'/');
+		if( isNull( arguments.fileName ) ) arguments.fileName = listLast(filePath,'/');
 			//default file data storage
 			var fileData = {
 				"name":arguments.fileName,
@@ -108,12 +108,18 @@ component name="GridFS" accessors="true" {
 					if(!directoryExists(expandPath(GridFSConfig.imagestorage.tmpDirectory))){
 						directoryCreate(expandPath(GridFSConfig.imagestorage.tmpDirectory));
 					}	
-				
-					var tmpPath = expandPath(GridFSConfig.imagestorage.tmpDirectory) & listLast(filePath,'/');
-					imageResize(img,maxwidth,maxheight);
 					
+					//cleanup OS directory separator and replace with generic symbol
+					var cleanedFilePath = REReplace(filePath, "(\\|/)", "|", "all");
+					
+					//TODO: this path shoud be within module for all temp files, GridFSConfig.imagestorage.tmpDirectory 
+					var tmpPath = expandPath(GridFSConfig.imagestorage.tmpDirectory) & listLast(cleanedFilePath,'|');
+					
+					imageResize(img, maxwidth, maxheight);
+					//WriteLog(type="Error", file="cbmongodb", text="#tmpPath#");
+
 					//create a temporary file
-					imageWrite(img,tmpPath,true);
+					imageWrite(img, tmpPath, true);
 					
 					//reload our input stream from the tmp file
 					inputStream = jLoader.create("java.io.FileInputStream").init(tmpPath);
@@ -121,15 +127,20 @@ component name="GridFS" accessors="true" {
 
 				if(structKeyExists(GridFSConfig.imagestorage,'metadata') && GridFSConfig.imagestorage.metadata){
 					img = imageRead(isDefined('tmpPath')?tmpPath:arguments.filePath);
-					fileData['image']=structCopy(img);
+
+					fileData[ "image" ]={
+						"height":img[ "height" ],
+						"width":img[ "width" ]
+					};
+
+					if( structKeyExists( img, "colormodel" ) ) fileData[ "image" ][ "colormodel" ] = img[ "colormodel" ];
 				}
 			}
 		}
 
+
 		var created = GridInstance.createFile(inputStream,arguments.fileName);
-
-		created.setContentType(fileData.mimetype);
-
+		
 		created.put('fileInfo', mongoUtil.toMongo(fileData));
 
 		created.save();
@@ -175,6 +186,7 @@ component name="GridFS" accessors="true" {
 	**/
 	function findOne(required struct criteria){
 		if(isNull(GridInstance)) throw("GridFS not initialized.");
+		if( structKeyExists( arguments.criteria, "_id" ) ) arguments.criteria[ "_id" ] = mongoUtil.newObjectIdFromId( arguments.criteria[ "_id" ] );
 
 		return GridInstance.findOne(mongoUtil.toMongo(arguments.criteria));
 

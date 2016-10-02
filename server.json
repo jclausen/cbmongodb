@@ -1,7 +1,9 @@
 {
+    "name":"cbmongodb",
+    "force":true,
     "web":{
         "http":{
-            "port":"49616"
+            "port":"50680"
         },
         "rewrites":{
             "enabled":"false"

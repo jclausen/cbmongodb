@@ -5,6 +5,7 @@
 	"slug"				: "cbmongodb",
 	"type"				: "modules",
 	"keywords"			: "nosql,mongo,mongodb,sdk",
+	"location"			: "http://oss.silowebworks.com.s3.amazonaws.com/coldbox-modules/cbmongodb/@build.version@/cbmongodb-@build.version@.zip",
 	"homepage"			: "https://github.com/jclausen/cbmongodb",
 	"documentation"		: "https://github.com/jclausen/cbmongodb/wiki",
 	"changelog"			: "https://github.com/jclausen/cbmongodb/blob/master/README.md",
@@ -22,7 +23,7 @@
 		"Sana Ullah <sanaullah73@gmail.com>"
 	],
 	"dependencies" 	:{
-		"cbjavaloader" : "1.0.0"
+		"cbjavaloader" : "stable"
 	}
 	
 }
