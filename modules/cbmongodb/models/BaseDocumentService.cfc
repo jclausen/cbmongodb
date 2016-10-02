@@ -254,10 +254,13 @@ component name="BaseDocumentService" database="test" collection="default" access
 			structDelete(this,'set' & prop.name);
 			
 			this['get'&accessorSuffix] = function(){return locate(prop.name);};
+			variables['get'&accessorSuffix] = this['get'&accessorSuffix];
 			this['set'&accessorSuffix] = function(required value){return this.set(prop.name, arguments.value);};
+			variables['set'&accessorSuffix] = this['set'&accessorSuffix];
+
 		}
 	}
-
+	
 	boolean function hasExistingAccessor(required string suffix){
 		if(structKeyExists(getMetadata(this),'functions')){
 			var functions = getMetaData(this).functions;
