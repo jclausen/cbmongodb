@@ -18,7 +18,8 @@ install:
   # MongoDB Manual Install - Travis' is still at 2.6
   - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
   - mongo --version
-  - mongod
+  - mkdir $TRAVIS_BUILD_DIR/mongodb
+  - mongod --fork  --dbpath $TRAVIS_BUILD_DIR/mongodb/ --logpath $TRAVIS_BUILD_DIR/mongodb.log
   # Test that the box binary is available and ready for our tests
   - box version
 
