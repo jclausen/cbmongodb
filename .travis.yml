@@ -18,29 +18,16 @@ install:
   # MongoDB Manual Install - Travis' is still at 2.6
   - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
   - mongo --version
-  #Commandbox setup
-  - box install
-  - box server start port=49616 rewritesEnable=false openBrowser=false
+  # Test that the box binary is available and ready for our tests
+  - box version
 
-before_script:
-  - curl http://localhost:49616/
-
-script: > 
-    testResults="echo $(box testbox run)";
-    echo "$testResults";
-    if grep -i "\[Failures: [1-9][0-9]\?[0-9]\?\]\|\[Errors: [1-9][0-9]\?[0-9]\?\]\|<t[^>]*>\|<b[^>]*>" <<< $testResults;  then exit 1; fi
-
-after_success:
-  - sudo sed -i "s/$RELEASE_PLACEHOLDER/${RELEASE_VERSION}/g;" 'modules/cbmongodb/box.json'
-  - sleep 2
-  - sudo sed -i "s/$BUILD_PLACEHOLDER/${TRAVIS_BUILD_NUMBER}/g" 'modules/cbmongodb/box.json'
-  - sleep 2
+script:
+  - sudo ant -DisTravis=true -f workbench/build.xml
 
 before_deploy:
-  - mkdir deploy
-  - cp README.md modules/cbmongodb/  && cp LICENSE modules/cbmongodb
-  - cd modules/cbmongodb && sudo zip -r "../../deploy/cbmongodb-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" ./* && cd ../../
-  - cp "deploy/cbmongodb-$TRAVIS_BRANCH-v$RELEASE_VERSION+$TRAVIS_BUILD_NUMBER.zip" "deploy/cbmongodb-$TRAVIS_BRANCH-latest.zip"
+  - mkdir s3deploy
+  - cp -r ./artifacts/cbmongodb/* ./s3deploy/
+  - rm -f ./s3deploy/box-repo.json
 
 deploy:
   on:
@@ -53,5 +40,9 @@ deploy:
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_ACCESS_SECRET
   bucket: "oss.silowebworks.com"
-  local-dir: deploy
+  local-dir: s3deploy
+  upload-dir: oldbox-modules/cbmongodb
   acl: public_read
+
+after_deploy:
+  - cd $TRAVIS_BUILD_DIR/build && box forgebox login username=$FORGEBOX_USERNAME password=$FORGEBOX_PASSWORD && box forgebox publish
