@@ -58,7 +58,8 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	/**
 	* The master query method
 	*/
-	any function query(struct criteria=get_criteria(), numeric offset=get_offset(), numeric limit=get_limit(), any sort=get_sort()){
+	any function query(struct criteria=get_criteria(), numeric offset=variables._offset, numeric limit=variables._limit, any sort=variables._sort){
+
 		var results = this.getDBInstance().find(
 			criteria,
 			{"offset":arguments.offset,"limit":arguments.limit,"sort":arguments.sort}
@@ -226,10 +227,35 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 	*
 	* @chainable
 	*/
-	any function order(key,direction){
-		var sort=this.get_sort();
-		arrayAppend(sort,{key=direction});
-		this.set_sort(sort);
+
+	/**
+	* Set the order|sort for the upcoming query
+	*
+	* @chainable
+	* @key the key to sort by
+	* @direction the direction in which to sort
+	*/
+	any function order( key, direction ){
+
+		if( !isNumeric( direction ) ){
+			switch( lcase( direction ) ){
+				case "desc":
+					arguments.direction = -1;
+					break;
+				case "asc":
+					arguments.direction = 1;
+					break;
+				default: 
+					throw( 
+						type="CBMongodb.InvalidSortException",
+						message="The value #arguments.direction# could not be parsed in to a valid MongoDB sort direction"
+					);
+
+			}
+		}
+	
+		variables._sort[ key ] = arguments.direction;
+		
 		return this;
 	}
 

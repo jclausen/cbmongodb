@@ -44,4 +44,25 @@ component name="ActiveEntityMock" extends="cbmongodb.models.ActiveEntity" collec
 		};
 	}
 
+	function getTestDocument2(){
+		return {
+		'first_name'='firstname_'&toString(createUUID()),
+		'last_name'='lastname_'&toString(createUUID()),
+		'testvar'='here',
+		'address'={
+			'street'='8901 Anywhere Court',
+			'city'='Chicago',
+			'state'='IL',
+			'postalcode'='60622',
+			'country'='USA',
+			'location'=this.toGeoJSON([-85.570381,42.9130449])
+		},
+		'phone'={
+			'home'='312-515-2121',
+			'work'='312-321-7654',
+			'mobile'='312-987-6543'
+		}
+		};
+	}
+
 }

@@ -29,6 +29,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 				//var scope our references for the remaining tests
 				VARIABLES.model=variables.people;
 				VARIABLES.person=variables.people.getTestDocument();
+				VARIABLES.person2=variables.people.getTestDocument2();
 					
 			});
 
@@ -51,7 +52,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 
 		describe("Verifies CRUD Functionality",function(){
 			it("Tests basic validation",function(){
-				expect(model.populate(person)).toBeComponent();
+				expect( model.populate( person ) ).toBeComponent();
 				expect(model.isValid()).toBeTrue();
 				expect(model.getValidationResults()).toHaveKey('success');
 				expect(model.getValidationResults()).toHaveKey('errors');
@@ -92,6 +93,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 				//should have errors for all of our missing document keys
 				expect(arrayLen(model.getValidationResults().errors)).toBe(8);
 			});
+
 			it('Tests entity insert operations', function(){
 				//ensure we have an empty collection
 				model.reset().delete(truncate=true);
@@ -166,6 +168,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 		});
 
 		describe("Tests General Entity Operations",function(){
+
 			it("Tests entity retrieval operations",function(){
 				//test our single record queries
 				expect(model.reset().where('address.city','Timbuktu').find(false)).toBeNull();
@@ -223,6 +226,40 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest"{
 				//test our limit()
 				expect(arrayLen(model.reset().limit(1).findAll())).toBe(1);
 				expect(arrayLen(model.reset().get(document_id).whereNotI().findAll())).toBe(1);
+			});
+
+
+			it( "Tests the order() method", function(  ){
+				expect( model.reset().populate( variables.people.getTestDocument2() ) ).toBeComponent();
+				var document_id=model.create();
+				expect( document_id ).toBeString();
+
+				model.reset();
+				model.order( "address.city", "asc" );
+
+				var results = model.findAll();
+
+				expect( results ).toBeArray();
+
+				expect( arrayLen( results ) ).toBe( 3 );
+
+				expect( results[ 1 ].address.city ).toBe( "Chicago" );
+				expect( results[ 2 ].address.city ).toBe( "Chicago" );
+				expect( results[ 3 ].address.city ).toBe( "Grand Rapids" );
+
+				model.reset();
+				model.order( "address.city", "desc" );
+
+				var results = model.findAll();
+
+				expect( results ).toBeArray();
+
+				expect( arrayLen( results ) ).toBe( 3 );
+
+				expect( results[ 1 ].address.city ).toBe( "Grand Rapids" );
+				expect( results[ 2 ].address.city ).toBe( "Chicago" );
+				expect( results[ 3 ].address.city ).toBe( "Chicago" );
+
 			});
 
 			it("Tests cursor operations and entity deletion",function(){

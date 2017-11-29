@@ -311,7 +311,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 		if(arrayLen(nest) == 1 && isStruct(value) && structIsEmpty(value)){
 
 			if(!structKeyExists(doc, nest[1])){ 
+
 				doc[nest[1]]= arguments.value;
+			
 			}	
 		} else {
 
@@ -320,9 +322,9 @@ component name="BaseDocumentService" database="test" collection="default" access
 			}
 
 			//cf11 return empty not structure notation
-			var nested = structGet(sget);
+			var nested = structGet( sget );
 
-			if(!isStruct(nested)){
+			if( !isStruct( nested ) ){
 				nested = {};
 			}
 			nested[nest[arrayLen(nest)]] = arguments.value;
@@ -453,10 +455,10 @@ component name="BaseDocumentService" database="test" collection="default" access
 	 **/
 	any function evict(){
 
-		structDelete(variables,'_id');
+		structDelete( variables, '_id' );
 		
-		this.set_document(structCopy(this.get_default_document()));
-		this.set_existing(structCopy(this.get_document()));
+		this.set_document( structCopy( this.get_default_document() ) );
+		this.set_existing( structCopy( this.get_document() ) );
 	}
 
 		/*********************** Auto Normalization Methods **********************/
