@@ -1,5 +1,9 @@
 Changelog:
 ----------
+**v3.5.1.0**
+1. Updates MongoDB driver to v3.5.0
+2. Fixes an issue with incorrect sort results when using the ActiveEntity order() function
+
 **v3.2.1.1**
 1. ACF Compatibility Updates
 2. Cleanup validation conditionals
