@@ -1,10 +1,10 @@
 <cfparam name="url.version" default="0">
-<cfparam name="url.path" 	default="#expandPath( "./CBMongoDB-APIDocs" )#">
+<cfparam name="url.path" 	default="#expandPath( "./cbmongodb-APIDocs" )#">
 <cfscript>
-	docName = "CBMongoDB-APIDocs";
+	docName = "cbmongodb-APIDocs";
 	base 	= expandPath( "/cbmongodb" );
 	docbox 	= new docbox.DocBox( properties = {
-		projectTitle 	= "CBMongoDB v#url.version#",
+		projectTitle 	= "cbmongodb v#url.version#",
 		outputDir 		= url.path
 	} );
 	docbox.generate( source=base, mapping="cbmongodb" );
@@ -19,3 +19,4 @@
 <h1>Done!</h1>
 <a href="#docName#/index.html">Go to Docs!</a>
 </cfoutput>
+
