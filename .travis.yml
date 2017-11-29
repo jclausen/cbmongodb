@@ -10,15 +10,16 @@ env:
     - ENGINE=lucee@5
 
 before_install:
+   # CommandBox Keys
+  - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
+  - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a
+    /etc/apt/sources.list.d/commandbox.list
    # MongoDB Manual Install - Travis' is still at 2.6
   - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
   - mongo --version
   - mkdir $TRAVIS_BUILD_DIR/mongodb
   - mongod --fork  --dbpath $TRAVIS_BUILD_DIR/mongodb/ --logpath $TRAVIS_BUILD_DIR/mongodb.log
-  # CommandBox Keys
-  - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
-  - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a
-    /etc/apt/sources.list.d/commandbox.list
+ 
 
 install:
   # Install Commandbox
