@@ -2,12 +2,14 @@
     "dependencies":{
         "coldbox":"^4.1.0+00002",
         "cbjavaloader":"^1.0.0",
-        "testbox":"^2.3.0+00044"
+        "testbox":"^2.3.0+00044",
+        "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
     },
     "installPaths":{
-        "coldbox":"coldbox",
-        "cbjavaloader":"modules/cbjavaloader",
-        "testbox":"testbox"
+        "coldbox":"coldbox/",
+        "cbjavaloader":"modules/cbjavaloader/",
+        "testbox":"testbox/",
+        "workbench":"workbench/"
     },
     "testbox":{
         "runner":[

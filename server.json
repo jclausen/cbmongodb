@@ -4,9 +4,6 @@
     "web":{
         "http":{
             "port":"50680"
-        },
-        "rewrites":{
-            "enabled":"false"
         }
     },
     "openbrowser":"false"

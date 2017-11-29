@@ -4,9 +4,10 @@ dist: trusty
 
 env:
   global:
-    - RELEASE_VERSION="3.2.1.1"
-    - RELEASE_PLACEHOLDER="@release.number@"
-    - BUILD_PLACEHOLDER="@build.number@"
+    - MODULE_ID=cbmongodb
+  matrix:
+    - ENGINE=lucee@4.5
+    - ENGINE=lucee@5
 
 before_install:
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
@@ -22,7 +23,9 @@ install:
   - mongod --fork  --dbpath $TRAVIS_BUILD_DIR/mongodb/ --logpath $TRAVIS_BUILD_DIR/mongodb.log
   # Test that the box binary is available and ready for our tests
   - box version
-
+  # If using auto-publish, you will need to provide your API token with this line:
+  - box config set endpoints.forgebox.APIToken=$FORGEBOX_API_TOKEN > /dev/null
+  
 script:
   - sudo ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -f workbench/build.xml
 
@@ -46,4 +49,4 @@ deploy:
   acl: public_read
 
 after_deploy:
-  - cd $TRAVIS_BUILD_DIR/build && box forgebox login username=$FORGEBOX_USERNAME password=$FORGEBOX_PASSWORD && box forgebox publish
+  - cd $TRAVIS_BUILD_DIR/build && box forgebox publish
