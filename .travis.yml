@@ -39,6 +39,7 @@ script:
   # add our module-specific build properties
   - printf "\nmodule.name=$MODULE_ID" >> workbench/build.properties
   - printf "\ncfengine=$ENGINE" >> workbench/build.properties
+  - printf "\nbuild.branch=$TRAVIS_BRANCH" >> workbench/build.properties
   # execute our build
   - sudo ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -f workbench/build.xml
 
@@ -60,6 +61,8 @@ deploy:
   on:
     branch: 
       - master
+      - development
+    condition: "$ENGINE = lucee@4.5"
   skip_cleanup: true
   provider: s3
   #AWS Credentials need to be set in Travis
