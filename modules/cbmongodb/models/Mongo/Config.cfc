@@ -43,8 +43,6 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 		var MongoClientOptions = structKeyExists(configStruct,'clientOptions')?configStruct.clientOptions:{};
 
 
-		establishHostInfo();
-		
 		var auth = {
 			username:structKeyExists(hosts[1],'username')?hosts[1].username:"",
 			password:structKeyExists(hosts[1],'password')?hosts[1].password:""
@@ -77,15 +75,6 @@ component accessors="true" output="false" hint="Main configuration for MongoDB C
 
 	public function removeAllServers(){
 		variables.conf.servers.clear();
-		
-		return this;
-	}
-
-    public function establishHostInfo(){
-		// environment decisions can often be made from this information
-		var inetAddress = createObject( "java", "java.net.InetAddress");
-		variables.hostAddress = inetAddress.getLocalHost().getHostAddress();
-		variables.hostName = inetAddress.getLocalHost().getHostName();
 		
 		return this;
 	}
