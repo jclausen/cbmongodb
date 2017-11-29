@@ -10,28 +10,44 @@ env:
     - ENGINE=lucee@5
 
 before_install:
+  # CommandBox Keys
   - sudo apt-key adv --keyserver keys.gnupg.net --recv 6DA70622
-  - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a /etc/apt/sources.list.d/commandbox.list
-  - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-  - sudo echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.2 multiverse" | sudo tee -a /etc/apt/sources.list.d/mongodb-org-3.2.list
+  - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a
+    /etc/apt/sources.list.d/commandbox.list
 
 install:
-  # MongoDB Manual Install - Travis' is still at 2.6
-  - sudo apt-get update && sudo apt-get --assume-yes install mongodb-org zip unzip commandbox
-  - mongo --version
-  - mkdir $TRAVIS_BUILD_DIR/mongodb
-  - mongod --fork  --dbpath $TRAVIS_BUILD_DIR/mongodb/ --logpath $TRAVIS_BUILD_DIR/mongodb.log
+  # Install Commandbox
+  - sudo apt-get update && sudo apt-get --assume-yes install rsync jq commandbox
   # Test that the box binary is available and ready for our tests
   - box version
   # If using auto-publish, you will need to provide your API token with this line:
   - box config set endpoints.forgebox.APIToken=$FORGEBOX_API_TOKEN > /dev/null
-  
+  # Setup for our tests
+  - mkdir tests/results
+  - sudo chmod -R 775 tests/results
+
+# Build script - note module versioning is passed to ANT
 script:
+  # run our dependency install to ensure the workbench is in place
+  - box install
+  # add our module-specific build properties
+  - printf "\nmodule.name=$MODULE_ID" >> workbench/build.properties
+  - printf "\ncfengine=$ENGINE" >> workbench/build.properties
+  # execute our build
   - sudo ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -f workbench/build.xml
 
+after_failure:
+  - cd $TRAVIS_BUILD_DIR
+  # Display the contents of our root directory
+  # Spit out our Commandbox log in case we need to debug
+  - box server log name=$ENGINE
+  - cat `box system-log`
+
+# Only executed when merging to master 
 before_deploy:
-  - mkdir s3deploy
-  - cp -r ./artifacts/cbmongodb/* ./s3deploy/
+  - cd $TRAVIS_BUILD_DIR
+  - mkdir -p s3deploy
+  - rsync -av ./artifacts/$MODULE_ID/ ./s3deploy/
   - rm -f ./s3deploy/box-repo.json
 
 deploy:
