@@ -9,7 +9,7 @@
         "coldbox":"coldbox/",
         "cbjavaloader":"modules/cbjavaloader/",
         "testbox":"testbox/",
-        "workbench":"workbench"
+        "workbench":"workbench/"
     },
     "testbox":{
         "runner":[
