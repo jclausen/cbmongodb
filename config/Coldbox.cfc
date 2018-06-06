@@ -49,13 +49,25 @@
 
 		//Mongo DB settings
 		MongoDB = {
-		    //an array of servers to connect to
-			hosts= [
+		    //Cluster configurations
+			host = 
 				{
-					serverName='127.0.0.1',
-					serverPort='27017'
+				    serverName='cluster name',
+				    username='username',
+				    password="password",
+				    authenticationDB="test"
 				}
-			],
+			,
+			
+			//the default client options
+			clientOptions = {
+				//The connection timeout in ms (if omitted, the timeout is 30000ms)
+				"retryWrites" = true,
+				"connectTimeoutMS":30000,
+				"serverSelectionTimeout":8000,
+				"socketTimeoutMS":30000
+
+			},
 		    //The default database to connect to
 		    db  = "test",
 		    //whether to permit viewing of the API documentation
