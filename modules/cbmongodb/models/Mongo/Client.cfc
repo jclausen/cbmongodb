@@ -77,32 +77,13 @@ component name="MongoClient" accessors="true"{
 	* Our connection to the Mongo Server
 	*/
 	public function connect(required dbName=getMongoConfig().getDBName()){
-
 		var MongoConfigSettings = MongoConfig.getDefaults();
-
 		//Ensure only a single connection to each database
 		if(structKeyExists(variables.databases,arguments.dbName)) return variables.databases[arguments.dbName];
 
 		//New database connections
 		var MongoDb = variables.mongo;
-		
-		if(structKeyExists(MongoConfigSettings,'auth') && len(MongoConfigSettings.auth.username) && len(MongoConfigSettings.auth.password)){
-		
-			var MongoCredentials = jLoader.create('java.util.ArrayList');
-			var MongoServers = jLoader.create('java.util.ArrayList');
-		
-			 for (var mongoServer in MongoConfigSettings.servers){
-			 	MongoCredentials.add(createCredential(MongoConfigSettings.auth.username,MongoConfigSettings.auth.password,structKeyExists(MongoConfigSettings.auth,'db')?MongoConfigSettings.auth.db:'admin'));
-			 }
-		
-			 MongoDb.init(MongoConfig.getServers(),MongoCredentials, getMongoConfig().getMongoClientOptions() );
-		
-		} else {
-			
-			MongoDb.init( variables.mongoConfig.getServers(), getMongoConfig().getMongoClientOptions() );
-		
-		}
-
+		MongoDb.init( MongoConfigSettings.clientUri );
 		var connection = MongoDb.getDatabase(arguments.dbName);
 		variables.databases[arguments.dbName]=connection;
 		
