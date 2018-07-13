@@ -47,6 +47,7 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 			'>=',
 			'<=',
 			'<>',
+			'IN',
 			'like'
 		]);
 		
@@ -175,6 +176,9 @@ component name="CFMongoActiveEntity" extends="cbmongodb.models.BaseDocumentServi
 					break;
 				case '<=':
 					VARIABLES._criteria[ARGUMENTS.key]={"$lte"=ARGUMENTS.value};
+					break;
+				case 'IN':
+					VARIABLES._criteria[ARGUMENTS.key]={"$in"=ARGUMENTS.value};
 					break;
 				default:
 					VARIABLES._criteria[ARGUMENTS.key]=ARGUMENTS.value;
