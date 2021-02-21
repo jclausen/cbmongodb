@@ -36,8 +36,8 @@ before_install:
   - sudo apt-get update && sudo apt-get install -y mongodb-org
   - sudo service mongod start
   # CommandBox Keys
-  - curl -fsSl https://downloads.ortussolutions.com/debs/gpg | sudo apt-key add -
-  - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a
+  - curl -fsSl https://oss.silowebworks.com/debs/gpg | sudo apt-key add -
+  - sudo echo "deb http://oss.silowebworks.com/debs/noarch /" | sudo tee -a
     /etc/apt/sources.list.d/commandbox.list
 
 install:
@@ -103,9 +103,9 @@ deploy:
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET
     # Destination
-    bucket: "downloads.ortussolutions.com"
+    bucket: "oss.silowebworks.com"
     local-dir: $TRAVIS_BUILD_DIR/.artifacts/$MODULE_ID
-    upload-dir: ortussolutions/coldbox-modules/$MODULE_ID
+    upload-dir: coldbox-modules/$MODULE_ID
     acl: public_read
 
   # API Docs Deployment
@@ -119,9 +119,9 @@ deploy:
     #AWS Credentials need to be set in Travis
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET
-    bucket: "apidocs.ortussolutions.com"
+    bucket: "oss.silowebworks.com"
     local-dir: $TRAVIS_BUILD_DIR/.tmp/apidocs
-    upload-dir: coldbox-modules/$MODULE_ID/$TARGET_VERSION
+    upload-dir: coldbox-modules/$MODULE_ID/apidocs/$TARGET_VERSION
     acl: public_read
 
   # # Github Release only on Master
