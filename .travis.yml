@@ -1,7 +1,7 @@
-language: node_js
+language: java
 
-node_js:
-  - 13
+jdk:
+  - openjdk11
 
 env:
   # Fill out these global variables for build process
@@ -27,9 +27,7 @@ before_script:
 before_install:
   # Mongodb
   - sudo apt-get update && sudo apt install -y gnupg
-  - wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-  - echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
-  - sudo apt-get update && sudo apt-get install -y mongodb-org
+  - sudo apt-get install -y mongodb
   - sudo service mongod start
   # CommandBox Keys
   - curl -fsSl https://oss.silowebworks.com/debs/gpg | sudo apt-key add -
@@ -38,10 +36,7 @@ before_install:
 
 install:
   - sudo apt update
-  - sudo apt-get install openjdk-13-jdk
   - java --version
-  # Check node
-  - node -v && npm -v
   # Install Commandbox
   - sudo apt -y install rsync jq commandbox
   # - supd apt install -y npm
