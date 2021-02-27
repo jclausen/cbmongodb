@@ -222,7 +222,7 @@ component{
 
 		fileWrite(
 			variables.cwd & "changelog-latest.md",
-			fileRead( variables.cwd & 'changelog.md' ).split( '#### [' )[2].trim() & chr( 13 ) & chr( 10 )
+			fileRead( variables.cwd & 'changelog.md' ).split( '#### \[' )[2].trim() & chr( 13 ) & chr( 10 )
 		);
 
 		print
