@@ -178,6 +178,64 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest" {
 				expect( normalizedCountyTwo.name ).toBe( county.name );
 				expect( normalizedCountyTwo ).toHaveKey( "geometry" );
 			} );
+
+			it( "Tests normalization methods on an array of relationships", function(){
+				var testStateId = States.reset()
+										.populate( States.getTestDocument() )
+										.create();
+				expect( testStateId ).toBeString();
+				var testState = States.load( testStateId );
+				expect( testState.getCounties() ).toBeArray().toHaveLength( 0 );
+
+				Counties.getDBInstance().drop();
+
+				if( !Counties.findAll().len() ){
+					for ( var county in Counties.getTestDocuments() ) {
+						var county_id = Counties
+							.reset()
+							.populate( county )
+							.create();
+						expect( county_id ).toBeString( "County Id is not a string" );
+					}
+				}
+
+				var countyRecords = Counties.findAll();
+				expect( countyRecords ).toHaveLength( Counties.getTestDocuments().len() );
+
+				countyRecords.each( function( county ){
+					testState.addCounties( county );
+				} );
+
+				testState.update();
+
+				debug( Counties.findAll() );
+
+				expect( testState.get_document() ).toHaveKey( "counties" );
+				expect( testState.get_document()[ "counties" ] ).toBeArray().toHaveLength( countyRecords.len() );
+				expect( testState.get_document()[ "counties" ][ 1 ] ).toBeString();
+
+				var retreivedCounties = testState.getCounties();
+
+				expect( retreivedCounties ).toBeArray().toHaveLength( countyRecords.len() );
+
+				expect( retreivedCounties[ 1 ] ).toBeStruct().toHaveKey( "id" ).toHaveKey( "name" );
+
+				testState.removeCounties( countyRecords[ 1 ] );
+
+				testState.update();
+
+				var retreivedCounties = testState.getCounties();
+
+				expect( retreivedCounties ).toBeArray().toHaveLength( countyRecords.len() - 1 );
+
+				expect( retreivedCounties[ 1 ] ).toBeStruct().toHaveKey( "id" ).toHaveKey( "name" );
+
+				testState.setCounties([]);
+				testState.update();
+
+				expect( testState.getCounties() ).toBeArray().toHaveLength( 0 );
+
+			});
 		} );
 
 		describe( "Tests General Entity Operations", function(){
