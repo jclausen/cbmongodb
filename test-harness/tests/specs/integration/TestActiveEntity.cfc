@@ -35,7 +35,7 @@ component name="TestModelActiveEntity" extends="tests.specs.CBMongoDBBaseTest" {
 				var testData = variables.people.getTestDocument();
 				model.reset().populate( testData );
 				for ( var prop in getMetadata( model ).properties ) {
-					if ( structKeyExists( prop, "schema" ) && prop.schema ) {
+					if ( structKeyExists( prop, "schema" ) && ( !len( prop.schema) || prop.schema ) ) {
 						var setter = model[ "set" & replace( prop.name, ".", "_", "ALL" ) ];
 						var getter = model[ "get" & replace( prop.name, ".", "_", "ALL" ) ];
 						expect( setter( model.locate( prop.name ) ) ).toBeComponent();

@@ -20,10 +20,14 @@ component name="TestModelFileEntity" extends="tests.specs.CBMongoDBBaseTest" {
 					.reset()
 					.populate( variables.people.getTestDocument() )
 					.create();
+
 				expect( personId ).toBeString();
 
+
 				var FileEntity = VARIABLES.FileEntity;
+
 				FileEntity.setPerson_id( personId );
+
 				// test our normalization
 				expect( FileEntity.getPerson() ).toBeStruct();
 				expect( FileEntity.getPerson() ).toHaveKey( "first_name" );
@@ -41,8 +45,8 @@ component name="TestModelFileEntity" extends="tests.specs.CBMongoDBBaseTest" {
 					1,
 					"Test image files were not found to test GridFS methods. You may add your own images to /cbmongodb/tests/assets/ to test the GridFS functionality"
 				);
-				var testFile1 = testFiles[ 1 ];
-				var testFile2 = testFiles[ 2 ];
+				variables.testFile1 = testFiles[ 1 ];
+				variables.testFile2 = testFiles[ 2 ];
 				// now set some file associations
 				FileEntity.loadFile( testFile1 );
 				expect( FileEntity.getFileId() ).toBeString();
