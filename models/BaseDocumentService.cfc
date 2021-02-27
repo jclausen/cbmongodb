@@ -531,12 +531,13 @@ component
 	 * @param string key 	The normalization key property name
 	 */
 	any function getNormalizedData( required string key ){
+
 		var normalizationFields = structFindValue( get_map(), arguments.key, "ALL" );
 
 		for ( var found in normalizationFields ) {
 			var mapping = found.owner;
 			if (
-				structKeyExists( mapping, "normalize" ) && structKeyExists( mapping, "on" ) && mapping.on == key && !isNull(
+				structKeyExists( mapping, "normalize" ) && structKeyExists( mapping, "on" ) && mapping.on == arguments.key && !isNull(
 					locate( mapping.on )
 				)
 			) {
@@ -693,12 +694,16 @@ component
 				case "integer":
 					return 0;
 				case "array":
-					return arrayNew( 1 );
+					return [];
 				case "struct":
-					return structNew();
+					return {};
 				default:
 					break;
 			}
+		} else if ( prop.keyExists( "normalize" ) && prop.keyExists( "on" ) ){
+			return {};
+		} else if ( prop.keyExists( "normalize" ) ){
+			return [];
 		}
 		return empty_string;
 	}
