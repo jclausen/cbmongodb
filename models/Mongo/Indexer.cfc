@@ -1,23 +1,28 @@
 /**
-*
-* Mongo Indexer
-*
-* Maintains and Tracks Collection Indexes for MongoDB Collection Instances 
-*
-* @singleton
-* @package cbmongodb.models.Mongo
-* @author Jon Clausen <jon_clausen@silowebworks.com>
-* @license Apache v2.0 <http://www.apache.org/licenses/>
-* 
-*/
-component name="MongoIndexer" accessors="true" scope="cachebox"{
+ *
+ * Mongo Indexer
+ *
+ * Maintains and Tracks Collection Indexes for MongoDB Collection Instances
+ *
+ * @singleton
+ * @package cbmongodb.models.Mongo
+ * @author Jon Clausen <jon_clausen@silowebworks.com>
+ * @license Apache v2.0 <http: // www.apache.org / licenses/>
+ *
+ */
+component
+	name     ="MongoIndexer"
+	accessors="true"
+	scope    ="cachebox"
+{
+
 	property name="mongoUtil" inject="id:MongoUtil@cbmongodb";
-	
+
 	public function init(){
-		structAppend(variables,{
-			"indexMap":[],
-			"indexNames":[]
-		});
+		structAppend(
+			variables,
+			{ "indexMap" : [], "indexNames" : [] }
+		);
 	}
 
 	/**
@@ -27,65 +32,68 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 * @param struct properties - the full properties structure (required if prop contains and "indexwith" attribute)
 	 *
 	 **/
-	public function applyIndex(required dbInstance, required prop, properties=[]){
-		var idx=structNew();
-		var is_unique=false;
-		var sparse=false;
-		var background=true;
-		if(structKeyExists(prop,'unique') && prop.unique){
-			is_unique=true;
+	public function applyIndex(
+		required dbInstance,
+		required prop,
+		properties = []
+	){
+		var idx        = structNew();
+		var is_unique  = false;
+		var sparse     = false;
+		var background = true;
+		if ( structKeyExists( prop, "unique" ) && prop.unique ) {
+			is_unique = true;
 		}
-		if(structKeyExists(prop,'indexwith') or structKeyExists(prop,'indexorder')){
-			idx[prop.name]=this.indexOrder(prop);
-			//Now test for a combined index
-			if(structKeyExists(prop,'indexwith')){
-				//re-find our relation since structFind() isn't reliable with nested structs
-				for(var rel in properties){
-					if(rel.name eq prop.indexwith){
+		if ( structKeyExists( prop, "indexwith" ) or structKeyExists( prop, "indexorder" ) ) {
+			idx[ prop.name ] = this.indexOrder( prop );
+			// Now test for a combined index
+			if ( structKeyExists( prop, "indexwith" ) ) {
+				// re-find our relation since structFind() isn't reliable with nested structs
+				for ( var rel in properties ) {
+					if ( rel.name eq prop.indexwith ) {
 						break;
 					}
 				}
-				idx[rel.name]=this.indexOrder(prop);
+				idx[ rel.name ] = this.indexOrder( prop );
 			}
 		} else {
-			idx[arguments.prop.name]=this.indexOrder(prop);
+			idx[ arguments.prop.name ] = this.indexOrder( prop );
 		}
 
-		//Check whether we have records and make it sparse if we're currently empty
-		if(arguments.dbInstance.count() EQ 0){
-			sparse=true;
+		// Check whether we have records and make it sparse if we're currently empty
+		if ( arguments.dbInstance.count() EQ 0 ) {
+			sparse = true;
 		}
-		
-		//ensure any legacy indexes are dropped and recreated
-		var legacyIndexName = hash(serializeJSON(idx));
-		if(indexExists(dbInstance,legacyIndexName)) dbInstance.dropIndex(legacyIndexName);
 
-		
-		//create implicit name so we can overwrite sparse settings
-		var index_name=hash(dbInstance.getCollectionName() & serializeJSON(idx));
-		if(!arrayContains(variables.indexNames,index_name)){
-			//add our index options
+		// ensure any legacy indexes are dropped and recreated
+		var legacyIndexName = hash( serializeJSON( idx ) );
+		if ( indexExists( dbInstance, legacyIndexName ) ) dbInstance.dropIndex( legacyIndexName );
+
+
+		// create implicit name so we can overwrite sparse settings
+		var index_name = hash( dbInstance.getCollectionName() & serializeJSON( idx ) );
+		if ( !arrayContains( variables.indexNames, index_name ) ) {
+			// add our index options
 			var options = {
-				"name":index_name,
-				"sparse":sparse,
-				"background":background,
-				"unique":is_unique
+				"name"       : index_name,
+				"sparse"     : sparse,
+				"background" : background,
+				"unique"     : is_unique
 			};
 
 			/**
-			* GeoSpatial Indexes have to Re-checked against the db every time, since they will not be created on empty collections
-			**/
-			if(!this.indexExists(arguments.dbInstance,index_name)){
-				if(structKeyExists(prop,'geo')){
-					structDelete(options,'sparse');
-					arguments.dbInstance.createGeoIndex(prop.name,options);
+			 * GeoSpatial Indexes have to Re-checked against the db every time, since they will not be created on empty collections
+			 **/
+			if ( !this.indexExists( arguments.dbInstance, index_name ) ) {
+				if ( structKeyExists( prop, "geo" ) ) {
+					structDelete( options, "sparse" );
+					arguments.dbInstance.createGeoIndex( prop.name, options );
 				} else {
-					arguments.dbInstance.createIndex(idx,options);
-					arrayAppend(variables.indexMap,options);
-					arrayAppend(variables.indexNames,options.name);
+					arguments.dbInstance.createIndex( idx, options );
+					arrayAppend( variables.indexMap, options );
+					arrayAppend( variables.indexNames, options.name );
 				}
 			}
-
 		}
 	}
 
@@ -93,15 +101,15 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 * Returns whether the index exists
 	 **/
 
-	 public function indexExists(required dbInstance, required name){
-	 	var existing=this.getIndexInfo(arguments.dbInstance);
-		
-		for(idx in existing){
-			if(structKeyExists(idx,'name') && idx['name'] == arguments.name) return true;
+	public function indexExists( required dbInstance, required name ){
+		var existing = this.getIndexInfo( arguments.dbInstance );
+
+		for ( idx in existing ) {
+			if ( structKeyExists( idx, "name" ) && idx[ "name" ] == arguments.name ) return true;
 		}
-		
+
 		return false;
-	 }
+	}
 
 	/**
 	 * Returns the index sort option
@@ -109,17 +117,17 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	 * @param any prop (e.g. - ASC/DESC||1/-1)
 	 * @return numeric order
 	 **/
-	public function indexOrder(required prop){
-		var order=1;
+	public function indexOrder( required prop ){
+		var order = 1;
 
-		if(structKeyExists(prop,'indexorder')){
-			order=mongoUtil.mapOrder(prop.indexorder);
+		if ( structKeyExists( prop, "indexorder" ) ) {
+			order = mongoUtil.mapOrder( prop.indexorder );
 		}
 
 		return order;
 	}
 
-	public function getIndexInfo(required dbInstance){
+	public function getIndexInfo( required dbInstance ){
 		return arguments.dbInstance.getIndexInfo();
 	}
 
@@ -130,5 +138,5 @@ component name="MongoIndexer" accessors="true" scope="cachebox"{
 	public function getIndexNames(){
 		return variables.indexNames;
 	}
-	
+
 }
