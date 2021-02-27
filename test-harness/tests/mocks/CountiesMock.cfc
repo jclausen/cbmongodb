@@ -9,7 +9,6 @@ component name="CountiesMock" extends="cbmongodb.models.GEOEntity" collection="c
 	property name="name" schema="true" index=true validate="string";
 	property name="geometry" schema="true" index=true validate="struct" geo=true geotype="MultiPolygon";
 
-
 	function getTestDocuments(){
 		return [
 			{'name'='Kent','geometry'=parseFeatureCollection(fileRead('https://raw.githubusercontent.com/jclausen/world.geo.json/master/countries/USA/MI/Kent.geo.json'))},
