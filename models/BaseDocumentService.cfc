@@ -30,9 +30,9 @@ component
 	property name="logbox" inject="logbox:logger:{this}";
 
 	/**
-	 *  The Coldbox Application Setttings Structure
+	 *  The module settings object
 	 **/
-	property name="appSettings";
+	property name="moduleSettings" inject="coldbox:moduleSettings:cbmongodb";
 
 	/**
 	 * The MongoDB Client
@@ -135,7 +135,6 @@ component
 		}
 
 		this.setMongoUtil( getMongoClient().getMongoUtil() );
-		this.setAppSettings( getWirebox().getBinder().getProperties() );
 
 		// Connect to Mongo
 		this.setDb( this.getMongoClient() );

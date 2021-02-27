@@ -23,10 +23,11 @@ component name="GridFS" accessors="true" {
 	 * CBJavaloader
 	 **/
 	property name="jLoader" inject="id:loader@cbjavaloader";
+
 	/**
-	 * Application Settings
+	 *  The module settings object
 	 **/
-	property name="appSettings" inject="wirebox:properties";
+	property name="moduleSettings" inject="coldbox:moduleSettings:cbmongodb";
 	/**
 	 * Core GridFS connection properties
 	 **/
@@ -92,8 +93,8 @@ component name="GridFS" accessors="true" {
 		};
 
 		// image storage processing - skipped if GridFS settings are not enabled
-		if ( structKeyExists( appSettings.MongoDB, "GridFS" ) && isReadableImage( filePath ) ) {
-			var GridFSConfig = appSettings.MongoDB.GridFS;
+		if ( structKeyExists( moduleSettings, "GridFS" ) && isReadableImage( filePath ) ) {
+			var GridFSConfig = moduleSettings.GridFS;
 			var img          = imageRead( filePath );
 
 			if ( structKeyExists( GridFSConfig, "imagestorage" ) ) {
