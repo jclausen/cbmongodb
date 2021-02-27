@@ -2,10 +2,16 @@
 
 ## [4.0.0] - Unreleased
 
+### Added
+- Added the ability to specify a to-many relationship which will store an array of ids and will re-normalize a collection when the getter is called
+- Added MongoDB interceptor and `MongoDBpreInsert`, `MongoDBpreSave`, `MongoDBpostSave`, and `MongoDBpostLoad` interception points
 ### Changed
 - Release structure to correct semvar - decoupled driver version from release version
 - MongoDB Java Driver to 3.10.2
 - Module development build and test harness to new framework
+
+### Fixed
+- Fixed support for `IN` (`$in`) queries on identifiers, which were being cast wrong in the criteria
 ## [3.5.0.1] - 2017-11-29
 
 ### Changed
