@@ -26,5 +26,5 @@ Apache License, Version 2.0.
 Just drop into your modules folder or use the `box` cli to install
 
 ```bash
-box install stachebox
+box install cbmongodb
 ```
