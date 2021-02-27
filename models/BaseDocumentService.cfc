@@ -296,6 +296,17 @@ component
 				return this.set( prop.name, arguments.value );
 			};
 			variables[ "set" & accessorSuffix ] = this[ "set" & accessorSuffix ];
+
+			if( structkeyExists( prop, "normalize" ) && !structKeyExists( prop, "on" ) ){
+				this[ "add" & accessorSuffix ] = function( required value ){
+					return this.append( prop.name, arguments.value );
+				};
+				variables[ "add" & accessorSuffix ] = this[ "add" & accessorSuffix ];
+				this[ "remove" & accessorSuffix ] = function( required value ){
+					return this.removeFromCollection( prop.name, arguments.value );
+				};
+				variables[ "remove" & accessorSuffix ] = this[ "remove" & accessorSuffix ];
+			}
 		}
 	}
 
@@ -316,18 +327,18 @@ component
 	 * Populate the document object with a structure
 	 */
 	any function populate( required struct document ){
-		for ( var prop in ARGUMENTS.document ) {
+		for ( var prop in arguments.document ) {
 			if ( !isNull( locate( prop ) ) ) {
-				if ( isStruct( ARGUMENTS.document[ prop ] ) ) {
+				if ( isStruct( arguments.document[ prop ] ) ) {
 					var existing = this.locate( prop );
 					structAppend(
-						ARGUMENTS.document[ prop ],
+						arguments.document[ prop ],
 						existing,
 						false
 					);
 				}
 
-				this.set( prop, ARGUMENTS.document[ prop ] );
+				this.set( prop, arguments.document[ prop ] );
 
 				// normalize data
 				if ( isNormalizationKey( prop ) ) {
@@ -385,6 +396,15 @@ component
 		required string key,
 		required any value
 	){
+		if( isInstanceOf( arguments.value, "BaseDocumentService" ) ){
+			arguments.value = arguments.value.get_document();
+		}
+
+		if( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ){
+			arguments.value[ "id" ] = arguments.value[ "_id" ];
+			arguments.value.delete( "_id" );
+		}
+
 		var doc  = this.get_document();
 		var sget = "doc";
 		var nest = listToArray( key, "." );
@@ -413,6 +433,16 @@ component
 		required string key,
 		required any value
 	){
+
+		if( isInstanceOf( arguments.value, "BaseDocumentService" ) ){
+			arguments.value = arguments.value.get_document();
+		}
+
+		if( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ){
+			arguments.value[ "id" ] = arguments.value[ "_id" ];
+			arguments.value.delete( "_id" );
+		}
+
 		var doc  = this.get_document();
 		var sget = "doc";
 		var nest = listToArray( key, "." );
@@ -431,6 +461,55 @@ component
 		);
 
 		this.entity( this.get_document() );
+		return this;
+	}
+
+	/**
+	 * Removes an item from an existing array property
+	 *
+	 * @key  The key of the collection property
+	 * @value  any  Either the identifier or the object to be removed
+	 **/
+	any function removeFromCollection(
+		required string key,
+		required any value
+	){
+		if( isInstanceOf( arguments.value, "BaseDocumentService" ) ){
+			arguments.value = arguments.value.get_document();
+		}
+
+		if( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ){
+			arguments.value[ "id" ] = arguments.value[ "_id" ];
+			arguments.value.delete( "_id" );
+		}
+
+		var doc  = this.get_document();
+		var sget = "doc";
+		var nest = listToArray( key, "." );
+
+		for ( var i = 1; i LT arrayLen( nest ); i = i + 1 ) {
+			sget = sget & "." & nest[ i ];
+		}
+
+		var nested = structGet( sget );
+
+		if ( !isArray( nested[ nest[ arrayLen( nest ) ] ] ) ) throw( "Schema field #key# is not a valid array." );
+		var collection = nested[ nest[ arrayLen( nest ) ] ];
+
+		var valueKey = isSimpleValue( arguments.value ) ? arguments.value : value.id;
+
+		this.set(
+			key,
+			collection.filter(
+				function( item ){
+					var itemKey = isSimpleValue( item ) ? item : item.id;
+					return itemKey != valueKey;
+				}
+			)
+		);
+
+		this.entity( this.get_document() );
+
 		return this;
 	}
 
@@ -525,6 +604,20 @@ component
 	}
 
 	/**
+	 * Determines whether a property is a normalization collection
+	 * @param string key 		The property name
+	 **/
+	 boolean function isNormalizationCollection( required string key ){
+		var normalizationFields = structFindValue( get_map(), key, "ALL" );
+		for ( var found in normalizationFields ) {
+			var mapping = found.owner;
+			if ( structKeyExists( mapping, "normalize" ) && !structKeyExists( mapping, "on" ) )
+				return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Returns the normalized data for a normalization key
 	 *
 	 * @param string key 	The normalization key property name
@@ -606,6 +699,84 @@ component
 		return;
 	}
 
+	struct function denormalizeFields( required array keys, required struct document ){
+		arguments.keys.each( function( key ){
+			if( document.keyExists( key ) ){
+				document[ key ] = document[ key ].map( function( item ){ return isSimpleValue( item ) ? item : item.id; } );
+			} else {
+				throw( message="A property with the name of #key# could not be found in the document", extraInfo=document );
+			}
+		} );
+
+		return document;
+	}
+
+	/**
+	 * Eager loads a collection relationship
+	 *
+	 * @key   string     The key of the collection to be loaded
+	 */
+	void function eagerLoadCollection( required key  ){
+		var map = get_map();
+
+		if( !map.keyExists( arguments.key ) ){
+			throw( message="A property with the name of #arguments.key# could not be found in the current instance", extraInfo={ "properties" : map } );
+		} else if( !map[ arguments.key ].keyExists( "normalize" ) ){
+			throw( message="The property #arguments.key# does not contain a normalization attribute", extraInfo=map[ arguments.key ] );
+		}
+
+		var document = this.get_document();
+
+		if ( structKeyExists( document, arguments.key ) ) {
+			var values = document[ arguments.key ];
+		} else {
+			var keyName = getDocumentPath( arguments.key );
+			if ( isDefined( "document.#keyName#" ) ) {
+				var values = evaluate( "document.#keyName#" );
+			}
+		}
+
+		// exit out if we have no content or were already eager loaded
+		if( !values.len() || !isSimpleValue( values[ 1 ] ) ) return;
+
+		var keyValues = values.map( function( item ){ return isSimpleValue( item ) ? item : item.id; } );
+
+		var relation = wirebox.getInstance( map[ arguments.key ].normalize );
+
+		var relCollection =  relation
+								.where(
+									"_id",
+									"IN",
+									keyValues
+								)
+								.findAll();
+
+		set(
+			arguments.key,
+			keyValues.map( function( id ){
+				var found = relCollection.find( function( doc ){ return doc[ "_id" ] == id; } );
+				if( !found ){
+					throw( "A document with an identifier of #id# was not found in the MongoDB collection #relation.collectionName#" )
+				}
+				var doc = structCopy( relCollection[ found ] );
+				doc[ "id" ] = doc[ "_id" ];
+				structDelete( doc, "_id" );
+				return map[ key ].keyExists( "keys" )
+						? doc.reduce(
+							function( result, docKey, val ){
+								if( listContains( map[ key ].keys, docKey ) ){
+									result[ docKey ] = doc[ docKey ];
+								}
+								return result;
+							}, {} )
+						: doc;
+			} )
+		);
+
+
+
+	}
+
 
 	/********************************* Document Object Location, Searching and Query Utils ****************************************/
 
@@ -627,13 +798,15 @@ component
 	 * @usage locate('key.subkey.subsubkey.waydowndeepsubkey')
 	 **/
 	any function locate( string key ){
+		if( isNormalizationCollection( arguments.key ) ) eagerLoadCollection( arguments.key );
+
 		var document = this.get_document();
 
 		// if we have an existing document key with that name, return it
-		if ( structKeyExists( document, ARGUMENTS.key ) ) {
-			return document[ ARGUMENTS.key ];
+		if ( structKeyExists( document, arguments.key ) ) {
+			return document[ arguments.key ];
 		} else {
-			var keyName = getDocumentPath( ARGUMENTS.key );
+			var keyName = getDocumentPath( arguments.key );
 			if ( isDefined( "document.#keyName#" ) ) {
 				return evaluate( "document.#keyName#" );
 			}
@@ -651,15 +824,15 @@ component
 		if (
 			structKeyExists(
 				get_default_document(),
-				ARGUMENTS.key
+				arguments.key
 			)
-		) return ARGUMENTS.key;
+		) return arguments.key;
 
-		var mappings     = structFindValue( get_map(), ARGUMENTS.key, "ALL" );
-		var documentPath = ARGUMENTS.key;
+		var mappings     = structFindValue( get_map(), arguments.key, "ALL" );
+		var documentPath = arguments.key;
 		for ( var map in mappings ) {
-			if ( structKeyExists( map.owner, "parent" ) && map.owner.name == ARGUMENTS.key ) {
-				documentPath = map.owner.parent & "." & ARGUMENTS.key;
+			if ( structKeyExists( map.owner, "parent" ) && map.owner.name == arguments.key ) {
+				documentPath = map.owner.parent & "." & arguments.key;
 			}
 		}
 

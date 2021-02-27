@@ -39,6 +39,8 @@ component
 	 */
 	property name="xReduce";
 
+	property name="interceptorService";
+
 	/**
 	 * Virtual Entity Constructor ( if you override it, make sure you call super.init() )
 	 */
@@ -46,7 +48,9 @@ component
 		this.criteria( {} );
 		this.set_sort( {} );
 		// Valid operators for where() clauses
-		this.set_operators( [ "=", "!=", ">=", "<=", "<>", "like" ] );
+		this.set_operators( [ "=", "!=", ">=", "<=", "<>", "like", "LIKE", "in" , "IN" ] );
+
+		variables.interceptorService = application.cbController.getInterceptorService();
 
 		return super.init();
 	}
@@ -96,15 +100,21 @@ component
 	 * @param struct document - optionally pass a raw document to be saved
 	 */
 	any function save(
-		required document,
+		required document = variables._document,
 		upsert         = false,
 		returnInstance = false
 	){
+
+		variables.interceptorService.processState( "MongoDBPreSave", { "document" : arguments.document, "entity" : this } );
+
 		var doc = getDbInstance().save( arguments.document, arguments.upsert );
 
 		if ( arguments.upsert ) {
 			this.evict().load( doc );
 		}
+
+		variables.interceptorService.processState( "MongoDBPostSave", { "document" : get_document(), "entity" : this } );
+
 
 		if ( arguments.returnInstance ) {
 			return this;
@@ -147,7 +157,14 @@ component
 			);
 
 		if ( !structKeyExists( VARIABLES, "ForceValidation" ) || !variables.ForceValidation || this.isValid() ) {
+
+			variables.interceptorService.processState( "MongoDBPreInsert", { "document" : arguments.document, "entity" : this } );
+
+			variables.interceptorService.processState( "MongoDBPreSave", { "document" : arguments.document, "entity" : this } );
+
 			var doc = getDbInstance().insertOne( arguments.document );
+
+			variables.interceptorService.processState( "MongoDBPostSave", { "document" : doc, "entity" : this } );
 
 			this.set_document( doc );
 
@@ -172,32 +189,37 @@ component
 	 * @param string [value] 	If a valid operator is passed, the value would provide the operational comparison
 	 */
 	any function where( key, any operator = "=", any value ){
-		if ( isStruct( ARGUMENTS.key ) ) return this.appendCriteria( ARGUMENTS.key );
+		if ( isStruct( arguments.key ) ) return this.appendCriteria( arguments.key );
 
 		if ( !arrayFind( this.get_operators(), operator ) ) {
 			return this.where( key = key, value = operator );
 		} else {
-			if ( key == "_id" ) ARGUMENTS.value = getMongoUtil().newObjectIdFromId( ARGUMENTS.value );
+			if ( key == "_id" ) arguments.value = !isArray( arguments.value )
+													? getMongoUtil().newObjectIdFromId( arguments.value )
+													: arguments.value.map( function( id ){ return getMongoUtil().newObjectIdFromId( id ); } );
 			var criteria = this.get_criteria();
-			switch ( ARGUMENTS.operator ) {
+			switch ( lcase( arguments.operator ) ) {
 				case "!=":
 				case "<>":
-					VARIABLES._criteria[ ARGUMENTS.key ] = { "$ne" : ARGUMENTS.value };
+					VARIABLES._criteria[ arguments.key ] = { "$ne" : arguments.value };
 					break;
 				case ">":
-					VARIABLES._criteria[ ARGUMENTS.key ] = { "$gt" : ARGUMENTS.value };
+					VARIABLES._criteria[ arguments.key ] = { "$gt" : arguments.value };
 					break;
 				case "<":
-					VARIABLES._criteria[ ARGUMENTS.key ] = { "$lt" : ARGUMENTS.value };
+					VARIABLES._criteria[ arguments.key ] = { "$lt" : arguments.value };
 					break;
 				case ">=":
-					VARIABLES._criteria[ ARGUMENTS.key ] = { "$gte" : ARGUMENTS.value };
+					VARIABLES._criteria[ arguments.key ] = { "$gte" : arguments.value };
 					break;
 				case "<=":
-					VARIABLES._criteria[ ARGUMENTS.key ] = { "$lte" : ARGUMENTS.value };
+					VARIABLES._criteria[ arguments.key ] = { "$lte" : arguments.value };
+					break;
+				case "in":
+					VARIABLES._criteria[ arguments.key ] = { "$in" : arguments.value };
 					break;
 				default:
-					VARIABLES._criteria[ ARGUMENTS.key ] = ARGUMENTS.value;
+					VARIABLES._criteria[ arguments.key ] = arguments.value;
 					break;
 			}
 			this.criteria( criteria );
@@ -695,7 +717,7 @@ component
 	any function appendCriteria( struct criteria ){
 		structAppend(
 			this.get_criteria(),
-			ARGUMENTS.criteria,
+			arguments.criteria,
 			true
 		);
 
