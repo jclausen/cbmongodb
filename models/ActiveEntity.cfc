@@ -661,6 +661,8 @@ component
 		this.set_existing( record );
 
 		this.scopeEntity( this.get_document() );
+
+		return this;
 	}
 
 	/**
