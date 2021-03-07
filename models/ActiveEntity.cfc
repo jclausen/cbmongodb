@@ -131,7 +131,7 @@ component
 	 */
 	any function update( returnInstance = false ){
 		if ( !structKeyExists( VARIABLES, "ForceValidation" ) || !variables.ForceValidation || this.isValid() ) {
-			return this.save( docuemnt=this.get_document(), upsert=false, returnInstance=arguments.returnInstance );
+			return this.save( document=this.get_document(), upsert=false, returnInstance=arguments.returnInstance );
 		} else {
 			var errorMessage = "Document could not be inserted as it did not validate.  Errors: ";
 
