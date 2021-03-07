@@ -3,7 +3,6 @@ component accessors="true" {
 	property name="wirebox" inject="wirebox";
 	property name="migrationsCollection" default="cfmigrations";
 	property name="documentService";
-	property name="Migration" provider="Migration@cbmongodb";
 
 
 	boolean function isReady() {
@@ -13,17 +12,23 @@ component accessors="true" {
 	function install( runAll = false ) {}
 
 	public void function uninstall() {
-		getMigration().getDbInstance().drop();
+		newMigration().getDbInstance().drop();
 	}
 
 	public void function reset() {
-		getMigration().getDb().drop();
+
+		var appDatabases = newMigration().getDb().getDatabases();
+
+		appDatabases.keyArray().each( function( dbName ){
+			appDatabases[ dbName ].drop();
+		} );
+
 	}
 
 	array function findProcessed() {
 
-		getMigration()
-			.sort( "migrationRan", "desc" )
+		return newMigration()
+			.order( "migrationRan", "desc" )
 			.findAll()
 			.map( function( entry ){
 				return entry[ "name" ]
@@ -40,12 +45,12 @@ component accessors="true" {
 	private void function logMigration( direction, componentName ) {
 		switch( direction ){
 			case "down":{
-				getMigration().getCollection().findOneAndDelete( { "name" : arguments.componentName } );
+				newMigration().getCollection().findOneAndDelete( { "name" : arguments.componentName } );
 				break;
 			}
 			default:{
-				getMigration().create(
-					{
+				newMigration().create(
+					document = {
 						"name" : arguments.componentName,
 						"migrationRan" : now()
 					}
@@ -83,6 +88,10 @@ component accessors="true" {
 		logMigration( direction, migrationStruct.componentName );
 
 		postProcessHook( migrationStruct );
+	}
+
+	function newMigration(){
+		return variables.wirebox.getInstance( "cbmongodb.models.migrations.Migration" );
 	}
 
 }
