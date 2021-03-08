@@ -5,28 +5,28 @@ component accessors="true" {
 	property name="documentService";
 
 
-	boolean function isReady() {
+	boolean function isReady(){
 		return true;
 	}
 
-	function install( runAll = false ) {}
+	function install( runAll = false ){
+	}
 
-	public void function uninstall() {
+	public void function uninstall(){
 		newMigration().getDbInstance().drop();
 	}
 
-	public void function reset() {
-
+	public void function reset(){
 		var appDatabases = newMigration().getDb().getDatabases();
 
-		appDatabases.keyArray().each( function( dbName ){
-			appDatabases[ dbName ].drop();
-		} );
-
+		appDatabases
+			.keyArray()
+			.each( function( dbName ){
+				appDatabases[ dbName ].drop();
+			} );
 	}
 
-	array function findProcessed() {
-
+	array function findProcessed(){
 		return newMigration()
 			.order( "migrationRan", "desc" )
 			.findAll()
@@ -36,22 +36,22 @@ component accessors="true" {
 	}
 
 
-	boolean function isMigrationRan( componentName ) {
+	boolean function isMigrationRan( componentName ){
 		var processed = findProcessed();
 		return processed.contains( componentName );
 	}
 
 
-	private void function logMigration( direction, componentName ) {
-		switch( direction ){
-			case "down":{
+	private void function logMigration( direction, componentName ){
+		switch ( direction ) {
+			case "down": {
 				newMigration().getCollection().findOneAndDelete( { "name" : arguments.componentName } );
 				break;
 			}
-			default:{
+			default: {
 				newMigration().create(
 					document = {
-						"name" : arguments.componentName,
+						"name"         : arguments.componentName,
 						"migrationRan" : now()
 					}
 				);
@@ -65,8 +65,7 @@ component accessors="true" {
 		migrationStruct,
 		postProcessHook,
 		preProcessHook
-	) {
-
+	){
 		var migrationRan = isMigrationRan( migrationStruct.componentName );
 
 		if ( migrationRan && direction == "up" ) {
@@ -81,11 +80,11 @@ component accessors="true" {
 
 		preProcessHook( migrationStruct );
 
-		invoke(
-			migration,
-			direction
+		invoke( migration, direction );
+		logMigration(
+			direction,
+			migrationStruct.componentName
 		);
-		logMigration( direction, migrationStruct.componentName );
 
 		postProcessHook( migrationStruct );
 	}

@@ -48,7 +48,17 @@ component
 		this.criteria( {} );
 		this.set_sort( {} );
 		// Valid operators for where() clauses
-		this.set_operators( [ "=", "!=", ">=", "<=", "<>", "like", "LIKE", "in" , "IN" ] );
+		this.set_operators( [
+			"=",
+			"!=",
+			">=",
+			"<=",
+			"<>",
+			"like",
+			"LIKE",
+			"in",
+			"IN"
+		] );
 
 		variables.interceptorService = application.cbController.getInterceptorService();
 
@@ -101,11 +111,16 @@ component
 	 */
 	any function save(
 		required document = variables._document,
-		upsert         = false,
-		returnInstance = false
+		upsert            = false,
+		returnInstance    = false
 	){
-
-		variables.interceptorService.processState( "MongoDBPreSave", { "document" : arguments.document, "entity" : this } );
+		variables.interceptorService.processState(
+			"MongoDBPreSave",
+			{
+				"document" : arguments.document,
+				"entity"   : this
+			}
+		);
 
 		var doc = getDbInstance().save( arguments.document, arguments.upsert );
 
@@ -113,7 +128,13 @@ component
 			this.evict().load( doc );
 		}
 
-		variables.interceptorService.processState( "MongoDBPostSave", { "document" : get_document(), "entity" : this } );
+		variables.interceptorService.processState(
+			"MongoDBPostSave",
+			{
+				"document" : get_document(),
+				"entity"   : this
+			}
+		);
 
 
 		if ( arguments.returnInstance ) {
@@ -131,7 +152,11 @@ component
 	 */
 	any function update( returnInstance = false ){
 		if ( !structKeyExists( VARIABLES, "ForceValidation" ) || !variables.ForceValidation || this.isValid() ) {
-			return this.save( document=this.get_document(), upsert=false, returnInstance=arguments.returnInstance );
+			return this.save(
+				document       = this.get_document(),
+				upsert         = false,
+				returnInstance = arguments.returnInstance
+			);
 		} else {
 			var errorMessage = "Document could not be inserted as it did not validate.  Errors: ";
 
@@ -157,14 +182,28 @@ component
 			);
 
 		if ( !structKeyExists( VARIABLES, "ForceValidation" ) || !variables.ForceValidation || this.isValid() ) {
+			variables.interceptorService.processState(
+				"MongoDBPreInsert",
+				{
+					"document" : arguments.document,
+					"entity"   : this
+				}
+			);
 
-			variables.interceptorService.processState( "MongoDBPreInsert", { "document" : arguments.document, "entity" : this } );
-
-			variables.interceptorService.processState( "MongoDBPreSave", { "document" : arguments.document, "entity" : this } );
+			variables.interceptorService.processState(
+				"MongoDBPreSave",
+				{
+					"document" : arguments.document,
+					"entity"   : this
+				}
+			);
 
 			var doc = getDbInstance().insertOne( arguments.document );
 
-			variables.interceptorService.processState( "MongoDBPostSave", { "document" : doc, "entity" : this } );
+			variables.interceptorService.processState(
+				"MongoDBPostSave",
+				{ "document" : doc, "entity" : this }
+			);
 
 			this.set_document( doc );
 
@@ -195,10 +234,12 @@ component
 			return this.where( key = key, value = operator );
 		} else {
 			if ( key == "_id" ) arguments.value = !isArray( arguments.value )
-													? getMongoUtil().newObjectIdFromId( arguments.value )
-													: arguments.value.map( function( id ){ return getMongoUtil().newObjectIdFromId( id ); } );
+			 ? getMongoUtil().newObjectIdFromId( arguments.value )
+			 : arguments.value.map( function( id ){
+				return getMongoUtil().newObjectIdFromId( id );
+			} );
 			var criteria = this.get_criteria();
-			switch ( lcase( arguments.operator ) ) {
+			switch ( lCase( arguments.operator ) ) {
 				case "!=":
 				case "<>":
 					VARIABLES._criteria[ arguments.key ] = { "$ne" : arguments.value };

@@ -297,12 +297,12 @@ component
 			};
 			variables[ "set" & accessorSuffix ] = this[ "set" & accessorSuffix ];
 
-			if( structkeyExists( prop, "normalize" ) && !structKeyExists( prop, "on" ) ){
+			if ( structKeyExists( prop, "normalize" ) && !structKeyExists( prop, "on" ) ) {
 				this[ "add" & accessorSuffix ] = function( required value ){
 					return this.append( prop.name, arguments.value );
 				};
 				variables[ "add" & accessorSuffix ] = this[ "add" & accessorSuffix ];
-				this[ "remove" & accessorSuffix ] = function( required value ){
+				this[ "remove" & accessorSuffix ]   = function( required value ){
 					return this.removeFromCollection( prop.name, arguments.value );
 				};
 				variables[ "remove" & accessorSuffix ] = this[ "remove" & accessorSuffix ];
@@ -396,11 +396,16 @@ component
 		required string key,
 		required any value
 	){
-		if( isInstanceOf( arguments.value, "BaseDocumentService" ) ){
+		if (
+			isInstanceOf(
+				arguments.value,
+				"BaseDocumentService"
+			)
+		) {
 			arguments.value = arguments.value.get_document();
 		}
 
-		if( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ){
+		if ( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ) {
 			arguments.value[ "id" ] = arguments.value[ "_id" ];
 			arguments.value.delete( "_id" );
 		}
@@ -433,12 +438,16 @@ component
 		required string key,
 		required any value
 	){
-
-		if( isInstanceOf( arguments.value, "BaseDocumentService" ) ){
+		if (
+			isInstanceOf(
+				arguments.value,
+				"BaseDocumentService"
+			)
+		) {
 			arguments.value = arguments.value.get_document();
 		}
 
-		if( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ){
+		if ( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ) {
 			arguments.value[ "id" ] = arguments.value[ "_id" ];
 			arguments.value.delete( "_id" );
 		}
@@ -474,11 +483,16 @@ component
 		required string key,
 		required any value
 	){
-		if( isInstanceOf( arguments.value, "BaseDocumentService" ) ){
+		if (
+			isInstanceOf(
+				arguments.value,
+				"BaseDocumentService"
+			)
+		) {
 			arguments.value = arguments.value.get_document();
 		}
 
-		if( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ){
+		if ( isStruct( arguments.value ) && arguments.value.keyExists( "_id" ) ) {
 			arguments.value[ "id" ] = arguments.value[ "_id" ];
 			arguments.value.delete( "_id" );
 		}
@@ -500,12 +514,10 @@ component
 
 		this.set(
 			key,
-			collection.filter(
-				function( item ){
-					var itemKey = isSimpleValue( item ) ? item : item.id;
-					return itemKey != valueKey;
-				}
-			)
+			collection.filter( function( item ){
+				var itemKey = isSimpleValue( item ) ? item : item.id;
+				return itemKey != valueKey;
+			} )
 		);
 
 		this.entity( this.get_document() );
@@ -607,12 +619,11 @@ component
 	 * Determines whether a property is a normalization collection
 	 * @param string key 		The property name
 	 **/
-	 boolean function isNormalizationCollection( required string key ){
+	boolean function isNormalizationCollection( required string key ){
 		var normalizationFields = structFindValue( get_map(), key, "ALL" );
 		for ( var found in normalizationFields ) {
 			var mapping = found.owner;
-			if ( structKeyExists( mapping, "normalize" ) && !structKeyExists( mapping, "on" ) )
-				return true;
+			if ( structKeyExists( mapping, "normalize" ) && !structKeyExists( mapping, "on" ) ) return true;
 		}
 		return false;
 	}
@@ -623,7 +634,6 @@ component
 	 * @param string key 	The normalization key property name
 	 */
 	any function getNormalizedData( required string key ){
-
 		var normalizationFields = structFindValue( get_map(), arguments.key, "ALL" );
 
 		for ( var found in normalizationFields ) {
@@ -699,12 +709,20 @@ component
 		return;
 	}
 
-	struct function denormalizeFields( required array keys, required struct document ){
+	struct function denormalizeFields(
+		required array keys,
+		required struct document
+	){
 		arguments.keys.each( function( key ){
-			if( document.keyExists( key ) ){
-				document[ key ] = document[ key ].map( function( item ){ return isSimpleValue( item ) ? item : item.id; } );
+			if ( document.keyExists( key ) ) {
+				document[ key ] = document[ key ].map( function( item ){
+					return isSimpleValue( item ) ? item : item.id;
+				} );
 			} else {
-				throw( message="A property with the name of #key# could not be found in the document", extraInfo=document );
+				throw(
+					message   = "A property with the name of #key# could not be found in the document",
+					extraInfo = document
+				);
 			}
 		} );
 
@@ -716,13 +734,19 @@ component
 	 *
 	 * @key   string     The key of the collection to be loaded
 	 */
-	void function eagerLoadCollection( required key  ){
+	void function eagerLoadCollection( required key ){
 		var map = get_map();
 
-		if( !map.keyExists( arguments.key ) ){
-			throw( message="A property with the name of #arguments.key# could not be found in the current instance", extraInfo={ "properties" : map } );
-		} else if( !map[ arguments.key ].keyExists( "normalize" ) ){
-			throw( message="The property #arguments.key# does not contain a normalization attribute", extraInfo=map[ arguments.key ] );
+		if ( !map.keyExists( arguments.key ) ) {
+			throw(
+				message   = "A property with the name of #arguments.key# could not be found in the current instance",
+				extraInfo = { "properties" : map }
+			);
+		} else if ( !map[ arguments.key ].keyExists( "normalize" ) ) {
+			throw(
+				message   = "The property #arguments.key# does not contain a normalization attribute",
+				extraInfo = map[ arguments.key ]
+			);
 		}
 
 		var document = this.get_document();
@@ -737,44 +761,40 @@ component
 		}
 
 		// exit out if we have no content or were already eager loaded
-		if( !values.len() || !isSimpleValue( values[ 1 ] ) ) return;
+		if ( !values.len() || !isSimpleValue( values[ 1 ] ) ) return;
 
-		var keyValues = values.map( function( item ){ return isSimpleValue( item ) ? item : item.id; } );
+		var keyValues = values.map( function( item ){
+			return isSimpleValue( item ) ? item : item.id;
+		} );
 
 		var relation = wirebox.getInstance( map[ arguments.key ].normalize );
 
-		var relCollection =  relation
-								.where(
-									"_id",
-									"IN",
-									keyValues
-								)
-								.findAll();
+		var relCollection = relation.where( "_id", "IN", keyValues ).findAll();
 
 		set(
 			arguments.key,
 			keyValues.map( function( id ){
-				var found = relCollection.find( function( doc ){ return doc[ "_id" ] == id; } );
-				if( !found ){
-					throw( "A document with an identifier of #id# was not found in the MongoDB collection #relation.collectionName#" )
+				var found = relCollection.find( function( doc ){
+					return doc[ "_id" ] == id;
+				} );
+				if ( !found ) {
+					throw(
+						"A document with an identifier of #id# was not found in the MongoDB collection #relation.collectionName#"
+					)
 				}
-				var doc = structCopy( relCollection[ found ] );
+				var doc     = structCopy( relCollection[ found ] );
 				doc[ "id" ] = doc[ "_id" ];
 				structDelete( doc, "_id" );
 				return map[ key ].keyExists( "keys" )
-						? doc.reduce(
-							function( result, docKey, val ){
-								if( listContains( map[ key ].keys, docKey ) ){
-									result[ docKey ] = doc[ docKey ];
-								}
-								return result;
-							}, {} )
-						: doc;
+				 ? doc.reduce( function( result, docKey, val ){
+					if ( listContains( map[ key ].keys, docKey ) ) {
+						result[ docKey ] = doc[ docKey ];
+					}
+					return result;
+				}, {} )
+				 : doc;
 			} )
 		);
-
-
-
 	}
 
 
@@ -798,7 +818,7 @@ component
 	 * @usage locate('key.subkey.subsubkey.waydowndeepsubkey')
 	 **/
 	any function locate( string key ){
-		if( isNormalizationCollection( arguments.key ) ) eagerLoadCollection( arguments.key );
+		if ( isNormalizationCollection( arguments.key ) ) eagerLoadCollection( arguments.key );
 
 		var document = this.get_document();
 
@@ -872,9 +892,9 @@ component
 				default:
 					break;
 			}
-		} else if ( prop.keyExists( "normalize" ) && prop.keyExists( "on" ) ){
+		} else if ( prop.keyExists( "normalize" ) && prop.keyExists( "on" ) ) {
 			return {};
-		} else if ( prop.keyExists( "normalize" ) ){
+		} else if ( prop.keyExists( "normalize" ) ) {
 			return [];
 		}
 		return empty_string;
