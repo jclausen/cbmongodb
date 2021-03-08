@@ -5,6 +5,7 @@
 ### Added
 - Added the ability to specify a to-many relationship which will store an array of ids and will re-normalize a collection when the getter is called
 - Added MongoDB interceptor and `MongoDBpreInsert`, `MongoDBpreSave`, `MongoDBpostSave`, and `MongoDBpostLoad` interception points
+- Added `MongoDBMigrationManager` for use with `cfmigrations`
 ### Changed
 - Release structure to correct semvar - decoupled driver version from release version
 - MongoDB Java Driver to 3.10.2
