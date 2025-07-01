@@ -1,5 +1,8 @@
 Changelog:
 ----------
+**v3.11.1.0**
+1. Updates MongoDB driver to v3.11.0
+
 **v3.5.1.0**
 1. Updates MongoDB driver to v3.5.0
 2. Fixes an issue with incorrect sort results when using the ActiveEntity order() function
