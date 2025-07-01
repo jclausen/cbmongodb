@@ -6,9 +6,9 @@
         "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
     },
     "installPaths":{
-        "coldbox":"coldbox",
+        "coldbox":"coldbox/",
         "cbjavaloader":"modules/cbjavaloader/",
-        "testbox":"testbox",
+        "testbox":"testbox/",
         "workbench":"workbench/"
     },
     "testbox":{
