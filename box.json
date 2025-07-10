@@ -1,21 +1,77 @@
 {
-    "dependencies":{
-        "coldbox":"^4.1.0+00002",
-        "cbjavaloader":"^1.0.0",
-        "testbox":"^2.3.0+00044",
-        "workbench":"git+https://github.com/Ortus-Solutions/unified-workbench.git"
+    "name":"cbmongodb",
+    "version":"1.0.0",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/cbmongodb/@build.version@/cbmongodb-@build.version@.zip",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "homepage":"https://github.com/coldbox-modules/cbmongodb",
+    "changelog":"https://github.com/coldbox-modules/cbmongodb/blob/master/changelog.md",
+    "documentation":"https://github.com/coldbox-modules/cbmongodb/wiki",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-modules/cbmongodb"
     },
-    "installPaths":{
-        "coldbox":"coldbox/",
-        "cbjavaloader":"modules/cbjavaloader/",
-        "testbox":"testbox/",
-        "workbench":"workbench/"
+    "bugs":"https://github.com/coldbox-modules/cbmongodb",
+    "shortDescription":"A Coldbox Module and Virtual Entity Service for MongoDB",
+    "slug":"cbmongodb",
+    "type":"modules",
+    "keywords":"nosql,mongo,mongodb,sdk",
+    "engines":[
+        {
+            "type":"lucee",
+            "version":">5"
+        },
+        {
+            "type":"adobe",
+            "version":">2021"
+        }
+    ],
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
+        "Sana Ullah <sanaullah73@gmail.com>"
+    ],
+    "dependencies":{
+        "cbjavaloader":"stable"
+    },
+    "devDependencies":{
+        "commandbox-boxlang":"*",
+        "commandbox-cfformat":"*",
+        "commandbox-docbox":"*"
+    },
+    "ignore":[
+        "**/.*",
+        "test-harness",
+        "/server*.json"
+    ],
+    "scripts":{
+        "build:module":"task run taskFile=build/Build.cfc :projectName=`package show slug` :version=`package show version`",
+        "build:docs":"task run taskFile=build/Build.cfc target=docs :projectName=`package show slug` :version=`package show version`",
+        "install:dependencies":"install --force && cd test-harness && install --force",
+        "release":"recipe build/release.boxr",
+        "format":"cfformat run helpers,models,test-harness/tests/,ModuleConfig.cfc --overwrite",
+        "format:watch":"cfformat watch helpers,models,test-harness/tests/,ModuleConfig.cfc ./.cfformat.json",
+        "format:check":"cfformat check helpers,models,test-harness/tests/,ModuleConfig.cfc ./.cfformat.json",
+        "start:boxlang":"server start serverConfigFile=server-boxlang-cfml@1.json",
+        "start:lucee":"server start serverConfigFile=server-lucee@5.json",
+        "start:2023":"server start serverConfigFile=server-adobe@2023.json",
+        "stop:boxlang":"server stop serverConfigFile=server-boxlang-cfml@1.json",
+        "stop:lucee":"server stop serverConfigFile=server-lucee@5.json",
+        "stop:2023":"server stop serverConfigFile=server-adobe@2023.json",
+        "logs:boxlang":"server log serverConfigFile=server-boxlang-cfml@1.json",
+        "logs:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
+        "logs:2023":"server log serverConfigFile=server-adobe@2023.json --follow",
+        "forget:lucee":"server forget serverConfigFile=server-lucee@5.json",
+        "forget:2023":"server forget serverConfigFile=server-adobe@2023.json",
+        "forget:boxlang":"server forget serverConfigFile=server-boxlang-cfml@1.json"
     },
     "testbox":{
-        "runner":[
-            {
-                "default":"http://localhost:50680/tests/runner.cfm"
-            }
-        ]
+        "runner":"http://localhost:60299/tests/runner.cfm"
+    },
+    "installPaths":{
+        "cbjavaloader":"modules/cbjavaloader/"
     }
 }

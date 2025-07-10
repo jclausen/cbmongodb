@@ -1,0 +1,27 @@
+{
+    "name":"cbmongodb-lucee@5",
+    "app":{
+        "serverHomeDirectory":".engine/lucee5",
+        "cfengine":"lucee@5"
+    },
+    "web":{
+        "http":{
+            "port":"60299"
+        },
+        "rewrites":{
+            "enable":"true"
+        },
+        "webroot":"test-harness",
+        "aliases":{
+            "/moduleroot/cbmongodb":"../"
+        }
+    },
+    "JVM":{
+        "heapSize":"768",
+        "javaVersion":"openjdk11_jre"
+    },
+    "openBrowser":"false",
+    "cfconfig":{
+        "file":".cfconfig.json"
+    }
+}

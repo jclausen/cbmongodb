@@ -1,19 +1,21 @@
+# Artifacts and temp folders
+.artifacts/**
+.tmp/**
 .DS_Store
-Thumbs.db
-.settings
-logs/*
-settings.xml
-.netbeans
-/bower_components/*
-/bower_components
-/node_modules/*
-/node_modules
-tests/results/*
-apidocs/docbox/
-artifacts/
-workbench/*
-build/*
-modules/*
-!modules/cbmongodb
-coldbox
-testbox
+
+# Engine + Secrets
+.env
+.engine/**
+
+# Dependencies
+test-harness/coldbox/**
+test-harness/docbox/**
+test-harness/testbox/**
+test-harness/logs/**
+test-harness/modules/**
+
+# modules
+modules/**
+
+# log files
+logs/**
