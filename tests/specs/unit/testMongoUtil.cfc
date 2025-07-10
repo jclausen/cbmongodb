@@ -54,7 +54,7 @@ component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 						//test our auto-stringification of the _id value
 						expect(encapsulation.asArray()[1]['_id']).toBeString();
 						expect(arrayLen(encapsulation.asArray())).toBe(5);
-						expect(getMetadata(encapsulation.asCursor()).getCanonicalName()).toBe("com.mongodb.MongoBatchCursorAdapter");
+						expect(getMetadata(encapsulation.asCursor()).getCanonicalName()).toBe("com.mongodb.client.internal.MongoBatchCursorAdapter");
 						expect(encapsulation.asCursor().hasNext()).toBeTrue();
 						var next = encapsulation.asCursor().next();
 						expect(next).toHaveKey("one");

@@ -65,7 +65,7 @@ component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest"{
 						expect(arrayLen(emptyResult.asArray())).toBe(0);
 						expect(emptyResult.asJSON()).toBeTypeOf('string');
 						expect(deSerializeJSON(emptyResult.asJSON())).toBeArray();
-						expect(getMetaData(emptyResult.asCursor()).getName()).toBe('com.mongodb.MongoBatchCursorAdapter');
+						expect(getMetaData(emptyResult.asCursor()).getName()).toBe('com.mongodb.client.internal.MongoBatchCursorAdapter');
 						expect(emptyResult.asCursor().hasNext()).toBeFalse();
 
 						var singleResult = variables.collection.find({"iteration":500});

@@ -86,7 +86,10 @@ component name="MongoClient" accessors="true"{
 		//New database connections
 		var MongoDb = variables.mongo;
 		
-		if(structKeyExists(MongoConfigSettings,'auth') && len(MongoConfigSettings.auth.username) && len(MongoConfigSettings.auth.password)){
+		if( structKeyExists( MongoConfigSettings, "connectionString" ) ){
+			var MongoClientURI = jLoader.create( "com.mongodb.MongoClientURI" ).init( MongoConfigSettings.connectionString );
+			MongoDb.init( MongoClientURI );
+		} else if(structKeyExists(MongoConfigSettings,'auth') && len(MongoConfigSettings.auth.username) && len(MongoConfigSettings.auth.password)){
 		
 			var MongoCredentials = jLoader.create('java.util.ArrayList');
 			var MongoServers = jLoader.create('java.util.ArrayList');
