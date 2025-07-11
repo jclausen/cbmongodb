@@ -14,7 +14,7 @@ jobs:
     services:
       mongodb:
         # Docker Hub image
-        image: mongodb/mongodb-community-server:${{ matrix.mongodbVersion }}
+        image: mongodb/mongodb-community-server:8.0-ubi9
         ports:
           - 27017:27017
     env:
