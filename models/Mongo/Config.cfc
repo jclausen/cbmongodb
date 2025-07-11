@@ -59,9 +59,9 @@ component
 
 		variables.conf = {
 			connectionString : configStruct.connectionString ?: "",
-			dbname  : dbName,
-			servers : jLoader.create( "java.util.ArrayList" ).init(),
-			auth    : auth,
+			dbname           : dbName,
+			servers          : jLoader.create( "java.util.ArrayList" ).init(),
+			auth             : auth
 		};
 
 		var item = "";
