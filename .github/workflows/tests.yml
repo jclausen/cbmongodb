@@ -32,18 +32,23 @@ jobs:
         include:
           - coldboxVersion: "be"
             cfengine: "lucee@5"
+            mongodbVersion: "8.0-ubi9"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "lucee@6"
+            mongodbVersion: "8.0-ubi9"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "adobe@2023"
+            mongodbVersion: "8.0-ubi9"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "adobe@2025"
+            mongodbVersion: "8.0-ubi9"
             experimental: true
           - coldboxVersion: "be"
             cfengine: "boxlang-cfml@1"
+            mongodbVersion: "8.0-ubi9"
             experimental: true
     steps:
       - name: Checkout Repository

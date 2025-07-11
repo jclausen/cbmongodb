@@ -232,7 +232,7 @@ component name="MongoUtil" accessors="true" {
 	 */
 	function asArray( dbResult ){
 		var aResults = [];
-		var cursor   = dbResult.iterator();
+		var cursor   = dbResult.cursor();
 
 		while ( cursor.hasNext() ) {
 			var nextResult = cursor.next();
