@@ -43,7 +43,7 @@ component name="TestMongoUtil" extends="tests.specs.CBMongoDBBaseTest" {
 					var doc = MongoUtil.toMongoDocument( { "one" : 1, "two" : 2, "three" : 3 } );
 					variables.activeCollection.insertOne( doc );
 				}
-				expect( variables.activeCollection.count() ).toBe( 5 );
+				expect( variables.activeCollection.countDocuments() ).toBe( 5 );
 				describe( "Tests dbResult manipulation methods", function(){
 					it( "tests the encapsulateDBResult() method", function(){
 						var dbResult      = variables.activeCollection.find();

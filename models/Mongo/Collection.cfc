@@ -73,7 +73,7 @@ component name="MongoCollection" accessors="true" {
 	 * @param struct [criteria]	A criteria struct which restricts the counted document
 	 */
 	public function count( criteria = {} ){
-		return getDBCollection().count( getMongoUtil().toMongo( arguments.criteria ) );
+		return getDBCollection().countDocuments( getMongoUtil().toMongo( arguments.criteria ) );
 	}
 
 	/**

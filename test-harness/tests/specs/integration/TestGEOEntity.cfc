@@ -73,9 +73,11 @@ component
 						expect( kent ).toBeComponent();
 
 						expect(
-							kent.whereNotI()
-								.near( "geometry", "this.geometry" )
-								.count()
+							arrayLen(
+								kent.whereNotI()
+									.near( "geometry", "this.geometry" )
+									.findAll()
+							)
 						).toBe( 3 );
 					} );
 				} );
