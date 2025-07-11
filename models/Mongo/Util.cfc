@@ -231,17 +231,7 @@ component name="MongoUtil" accessors="true" {
 	 * Returns the results of a dbResult object as an array of documents
 	 */
 	function asArray( dbResult ){
-		var aResults = [];
-		var cursor   = dbResult.cursor();
-
-		while ( cursor.hasNext() ) {
-			var nextResult = cursor.next();
-
-			arrayAppend( aResults, nextResult );
-		}
-
-		cursor.close();
-		return toCF( aResults );
+		return toCF( dbResult.into( createObject( "java", "java.util.ArrayList" ).init() ) );
 	}
 
 	/**
