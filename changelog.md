@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Updates MongoDb Driver to v4.9.1
 * MongoDB v7/8 compatibility
+* Drop support for Adobe < 2023
+* Drop support for Lucee < 5
 
 ## [v3.11.1.0]
 
