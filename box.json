@@ -35,7 +35,22 @@
         "Sana Ullah <sanaullah73@gmail.com>"
     ],
     "dependencies":{
-        "cbjavaloader":"stable"
+        "cbjavaloader":"stable",
+        "mongodb-legacy-driver":"jar:https://search.maven.org/remotecontent?filepath=org/mongodb/mongodb-driver-legacy/4.9.1/mongodb-driver-legacy-4.9.1.jar",
+        "mongodb-bson":"jar:https://search.maven.org/remotecontent?filepath=org/mongodb/bson/4.9.1/bson-4.9.1.jar",
+        "mongodb-driver-core":"jar:https://search.maven.org/remotecontent?filepath=org/mongodb/mongodb-driver-core/4.9.1/mongodb-driver-core-4.9.1.jar",
+        "mongodb-driver-sync":"jar:https://search.maven.org/remotecontent?filepath=org/mongodb/mongodb-driver-sync/4.9.1/mongodb-driver-sync-4.9.1.jar",
+        "slf4j-api":"jar:https://search.maven.org/remotecontent?filepath=org/slf4j/slf4j-api/1.7.6/slf4j-api-1.7.6.jar",
+        "javaxt-core":"jar:https://www.javaxt.com/maven/javaxt/javaxt-core/1.7.8/javaxt-core-1.7.8.jar"
+    },
+    "installPaths":{
+        "cbjavaloader":"modules/cbjavaloader/",
+        "mongodb-legacy-driver":"lib/mongodb-legacy-driver/",
+        "mongodb-bson":"lib/mongodb-bson/",
+        "mongodb-driver-core":"lib/mongodb-driver-core/",
+        "mongodb-driver-sync":"lib/mongodb-driver-sync/",
+        "slf4j-api":"lib/slf4j-api/",
+        "javaxt-core":"lib/javaxt-core/"
     },
     "devDependencies":{
         "commandbox-boxlang":"*",
@@ -70,8 +85,5 @@
     },
     "testbox":{
         "runner":"http://localhost:60299/tests/runner.cfm"
-    },
-    "installPaths":{
-        "cbjavaloader":"modules/cbjavaloader/"
     }
 }
