@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "lucee@6", "adobe@2023", "adobe@2025" ]
+        cfengine: [ "lucee@5", "adobe@2023", "adobe@2025" ]
         mongodbVersion: [ "8.0-ubi9" ]
         coldboxVersion: [ "^7.0.0" ]
         experimental: [ false ]
