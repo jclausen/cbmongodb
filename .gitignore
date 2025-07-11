@@ -17,5 +17,8 @@ test-harness/modules/**
 # modules
 modules/**
 
+# java dependencies
+lib/**
+
 # log files
 logs/**
