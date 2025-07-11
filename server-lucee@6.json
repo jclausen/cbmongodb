@@ -11,17 +11,17 @@
         "rewrites":{
             "enable":"true"
         },
-		"webroot": "test-harness",
-		"aliases":{
+        "webroot":"test-harness",
+        "aliases":{
             "/moduleroot/cbmongodb":"../"
         }
     },
     "openBrowser":"false",
-	"JVM":{
+    "JVM":{
         "heapSize":"768",
         "javaVersion":"openjdk21_jre"
     },
-	"cfconfig": {
-		"file" : ".cfconfig.json"
-	}
+    "cfconfig":{
+        "file":".cfconfig.json"
+    }
 }
