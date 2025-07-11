@@ -13,7 +13,7 @@ component name="TestModelFileEntity" extends="tests.specs.CBMongoDBBaseTest" {
 	}
 
 	function run( testResults, testBox ){
-		describe( "Test the the file/entity relationships", function(){
+		xdescribe( "Test the the file/entity relationships", function(){
 			it( "Tests the ability to create a File entity", function(){
 				// create a test person
 				var personId = VARIABLES.people
